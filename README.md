@@ -22,3 +22,17 @@
 10. whoever submitted the branch will create a new branch with the next features name they will be working on
 
 11. We will merge to master at the end of each sprint. All PR's must be approved and merged beforehand!
+
+
+##GIT MASTER SCHEDULE
+***Git Masters, if you need a PR merged ask the person who was GM before you***
+
+Week 2: Taylor Belk
+Week 3: Noah Stoeckel
+Week 4: Arpita Sinha
+Week 5: Andrey Yurlov
+Week 6: Alex Bezruchko
+Week 7: Taylor Belk
+Week 8: Noah Stoeckel
+Week 9: Arpita Sinha
+Week 10: Alex Bezruchko
