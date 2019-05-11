@@ -1,6 +1,6 @@
 #Git Flow/Rules
 ## ****DO NOT PULL FROM/CLONE FROM MASTER, DEVELOPMENT ONLY*****
-###Steps: 
+##Steps: 
  1. git clone from development branch
  
  2. create a branch with the feature name you are working on and your initials ex: nav-bar-tb
