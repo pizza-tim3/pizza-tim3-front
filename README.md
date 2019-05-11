@@ -1,6 +1,6 @@
 #Git Flow/Rules
 ## ****DO NOT PULL FROM/CLONE FROM MASTER, DEVELOPMENT ONLY*****
-##Steps: 
+**Steps:** 
  1. git clone from development branch
  
  2. create a branch with the feature name you are working on and your initials ex: nav-bar-tb
@@ -13,7 +13,7 @@
  
  6. when you feel ready to do a pull request.. DON'T! Pull from development first, check the incoming changes and VERIFY that everything still works BEFORE you do your pull request!
  
- 7. any pull requests MUST HAVE A CODE REVIEW from someone else on the team. Just post in slack you need someone to look and approve. ***DONT JUST APPROVE THE CODE, ACTUALLY REVIEW IT*** find at least one thing they did well and one thing they can improve (if possible) this will be good practice for when we have to do it in the real world. If there are some changes you recommend try to zoom with them and go over why you think this would work better/ what your thought process is with it. I know it takes time, but everyone will come out a better dev by the end of our awesome project if we do this. 
+ 7. any pull requests ***MUST HAVE A CODE REVIEW*** from someone else on the team. Just post in slack you need someone to look and approve. ***DONT JUST APPROVE THE CODE, ACTUALLY REVIEW IT*** find at least one thing they did well and one thing they can improve (if possible) this will be good practice for when we have to do it in the real world. If there are some changes you recommend try to zoom with them and go over why you think this would work better/ what your thought process is with it. I know it takes time, but everyone will come out a better dev by the end of our awesome project if we do this. 
  
 8. once your pull request is approved to go to development, whoever approves and pull requests needs to let the whole team know that there have been changes and specify what feature was changed/add so people know to expect changes regarding what they are working on.
 
