@@ -3,13 +3,13 @@ import './App.css';
 import { Route } from 'react-router-dom';
 import UserDashboard from './components/user-dashboard/user-dashboard';
 import Nav from './components/nav/nav';
-import Events from './events/events';
+import Events from './components/events/events';
 import Favorites from './components/favorites/favorites';
 import Footer from './components/footer/footer';
 import FriendsList from './components/friends-lists/friends-list';
 import Landing from './components/landing-page/landing';
 import Login from './components/login/login';
-import PlacesSearch from './events/search/places-search';
+import PlacesSearch from './components/events/search/places-search';
 
 function App() {
   return (
