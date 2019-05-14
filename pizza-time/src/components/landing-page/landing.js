@@ -1,10 +1,14 @@
 import React from 'react';
 
+import {
+    Wrap,
+} from '../../styles/landingStyles.js';
+
 const Landing = () => {
     return(
-        <div>
+        <Wrap>
             Landing Works!
-        </div>
+        </Wrap>
     );
 }
 
