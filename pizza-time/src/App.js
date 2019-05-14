@@ -1,14 +1,15 @@
 import React from 'react';
 import './App.css';
 import { Route } from 'react-router-dom';
-import UserDashboard from './user-dashboard/user-dashboard';
-import Nav from './nav/nav';
+import UserDashboard from './components/user-dashboard/user-dashboard';
+import Nav from './components/nav/nav';
 import Events from './events/events';
-import Favorites from './favorites/favorites';
-import Footer from './footer/footer';
-import FriendsList from './friends-lists/friends-list';
-import Landing from './landing-page/landing';
-import Login from './login/login';
+import Favorites from './components/favorites/favorites';
+import Footer from './components/footer/footer';
+import FriendsList from './components/friends-lists/friends-list';
+import Landing from './components/landing-page/landing';
+import Login from './components/login/login';
+import PlacesSearch from './events/search/places-search';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Route path='/home' component={Landing} />
       <Route path='/user-home' component={UserDashboard} />
       <Route path='/events' component={Events} />
+      <Route path='/events/search' component={PlacesSearch} />
       <Route path='/favorites' component={Favorites} />
       <Route path='/friendslist' component={FriendsList} />
       <Route path='/' component={Footer} />
