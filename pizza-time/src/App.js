@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import firebaseApp from "./firebase/firebaseApp";
 import "./App.css";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Private from "./components/private/Private";
 import UserDashboard from "./components/user-dashboard/user-dashboard";
@@ -45,21 +45,23 @@ function App() {
       {/* setting these up seperately initially so we can nav to each path 
     to see what we are working on can combine them as neccessary later */}
       <Route path="/" component={Nav} />
-      <Route path="/register" component={Register} />
-      <Route path="/login" component={Login} />
-      <Route path="/home" component={Landing} />
-      <Route path="/user-home" component={UserDashboard} />
-      <Route path="/events" component={Events} />
-      <Route path="/events/search" component={PlacesSearch} />
-      <Route path="/favorites" component={Favorites} />
-      <Route path="/friendslist" component={FriendsList} />
+      <Switch>
+        <Route path="/register" component={Register} />
+        <Route path="/login" component={Login} />
+        <Route path="/home" component={Landing} />
+        <Route path="/user-home" component={UserDashboard} />
+        <Route path="/events" component={Events} />
+        <Route path="/events/search" component={PlacesSearch} />
+        <Route path="/favorites" component={Favorites} />
+        <Route path="/friendslist" component={FriendsList} />
 
-      {/* <PrivateRoute
-        exact
-        path="/private"
-        component={Private}
-        authenticated={authenticated} //pass global authenticated status here
-      /> */}
+        <PrivateRoute
+          exact
+          path="/private"
+          component={Private}
+          authenticated={authenticated} //pass global authenticated status here
+        />
+      </Switch>
       <Route path="/" component={Footer} />
     </div>
   );
