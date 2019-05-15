@@ -15,6 +15,16 @@ const Nav = () => {
           &nbsp;|&nbsp;
           <NavLink to="/private">Private</NavLink>
           &nbsp;|&nbsp;
+          <NavLink to="/user-home">User-Home</NavLink>
+          &nbsp;|&nbsp;
+          <NavLink to="/events">Events</NavLink>
+          &nbsp;|&nbsp;
+          <NavLink to="/events/search">Places Search</NavLink>
+          &nbsp;|&nbsp;
+          <NavLink to="/favorites">Favorites</NavLink>
+          &nbsp;|&nbsp;
+          <NavLink to="/friendslist">Friends List</NavLink>
+          &nbsp;|&nbsp;
           <button onClick={() => firebaseApp.auth().signOut()}>Logout</button>
         </nav>
       </header>
