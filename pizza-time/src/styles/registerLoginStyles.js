@@ -65,6 +65,12 @@ export const Wrap = styled.div`
           width: 140px;
           height: 42px;
         }
+
+        &:hover {
+          background-color: #FF5C00;
+          color: #fff;
+          border: 1px solid #FF5C00;
+        }
     }
     
     p {
@@ -74,8 +80,9 @@ export const Wrap = styled.div`
       color: #737373;
       margin-top: 30px;
 
-      span {
+      .link {
         color: #FF5C00;
+        text-decoration: none;
       }
     }
   `;

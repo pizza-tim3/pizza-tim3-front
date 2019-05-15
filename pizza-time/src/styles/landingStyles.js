@@ -30,10 +30,10 @@ export const Wrap = styled.div`
       align-items: center;
 
       h1 {
-        font-size: 52px;
+        font-size: 56px;
         color: #fff;
         font-family: 'Molle', cursive;
-          @media(min-width: 900px) { font-size: 58px; }
+          @media(min-width: 900px) { font-size: 60px; }
           @media(min-width: 1100px) { font-size: 68px; }
       }
 

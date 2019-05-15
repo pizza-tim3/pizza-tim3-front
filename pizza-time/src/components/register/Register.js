@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import firebaseApp from "../../firebase/firebaseApp";
+import { Link } from 'react-router-dom';
 
 import {
   Wrap,
@@ -60,8 +61,11 @@ export default function Register(props) {
               setPassword(e.target.value);
             }}
           />
-          <button type="submit">REGISTER</button>
-          <p>Already have an account?<br/><span>Sign In Here</span></p>
+          <button type="submit">Sign Up</button>
+          <p>Already have an account?
+            <br/>
+            <Link className="link">Sign In Here</Link>
+          </p>
         </Form>
         {/* {error && <p>{error}</p>} */}
     </Wrap>
