@@ -15,6 +15,7 @@ import Login from "./components/login/login";
 import Register from "./components/register/Register";
 import PlacesSearch from "./components/events/search/places-search";
 
+
 function App() {
   //placeholder state, realistically this will be in redux or some reducer
   const [authenticated, setAuthenticated] = useState(false);
