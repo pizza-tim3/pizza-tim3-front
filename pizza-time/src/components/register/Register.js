@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import firebaseApp from "../firebase/firebaseApp";
+import firebaseApp from "../../firebase/firebaseApp";
 
 export default function Register(props) {
   /*These are the useState hooks.

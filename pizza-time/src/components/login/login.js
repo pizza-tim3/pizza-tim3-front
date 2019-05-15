@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import firebaseApp from "../base";
+import firebaseApp from "../../firebase/firebaseApp";
 
 //need this import for "firebase.auth.Auth.Persistence.LOCAL" constant
 import firebase from "firebase/app";
