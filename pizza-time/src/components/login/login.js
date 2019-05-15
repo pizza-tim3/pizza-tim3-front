@@ -5,7 +5,8 @@ import firebaseApp from "../../firebase/firebaseApp";
 import firebase from "firebase/app";
 import "firebase/auth";
 
-export default function Login() {
+export default function Login(props) {
+  console.log(props);
   //state === state object, dispatch function
   const [state, dispatch] = useReducer(
     //reducer function
@@ -47,6 +48,7 @@ export default function Login() {
       //get the token off of the current user
       //token to send to the backend to display data
       const token = await firebaseApp.auth().currentUser.getIdToken();
+      props.history.push("/");
     } catch (err) {
       // Handle Errors here.
       const errorCode = err.code;
