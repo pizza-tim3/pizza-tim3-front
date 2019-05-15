@@ -45,7 +45,6 @@ function App() {
     <div className="App">
       {/* setting these up seperately initially so we can nav to each path 
     to see what we are working on can combine them as neccessary later */}
-      <Route path="/" component={Nav} />
       <Switch>
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
@@ -63,7 +62,6 @@ function App() {
           authenticated={authenticated} //pass global authenticated status here
         />
       </Switch>
-      <Route path="/" component={Footer} />
     </div>
   );
 }
