@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import firebaseApp from "../../firebase/firebaseApp";
 
+import {
+  Wrap,
+  Form,
+} from '../../styles/registerLoginStyles.js';
+
 export default function Register(props) {
   /*These are the useState hooks.
     The first element in the array is the `value`, 
@@ -32,40 +37,33 @@ export default function Register(props) {
     }
   };
   return (
-    <>
-      <h2>Register</h2>
-      <form onSubmit={submit}>
-        <div>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input
-              name="email"
-              id="email"
-              type="text"
-              value={email}
-              onChange={e => {
-                setEmail(e.target.value);
-              }}
-            />
-          </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input
-              name="password"
-              id="password"
-              type="text"
-              value={password}
-              onChange={e => {
-                setPassword(e.target.value);
-              }}
-            />
-          </div>
-        </div>
-        <div>
-          <button type="submit">Register</button>
-        </div>
-      </form>
-      {error && <p>{error}</p>}
-    </>
+    <Wrap>
+        <Form onSubmit={submit}>
+          <h1>Pizza Time</h1>
+          <input
+            name="email"
+            id="email"
+            type="text"
+            value={email}
+            placeholder="Email"
+            onChange={e => {
+              setEmail(e.target.value);
+            }}
+          />
+          <input
+            name="password"
+            id="password"
+            type="text"
+            value={password}
+            placeholder="Password"
+            onChange={e => {
+              setPassword(e.target.value);
+            }}
+          />
+          <button type="submit">REGISTER</button>
+          <p>Already have an account?<br/><span>Sign In Here</span></p>
+        </Form>
+        {/* {error && <p>{error}</p>} */}
+    </Wrap>
   );
 }
