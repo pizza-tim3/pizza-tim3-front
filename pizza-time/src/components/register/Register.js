@@ -4,7 +4,7 @@ import firebaseApp from "../../firebase/firebaseApp";
 import {
   Wrap,
   Form,
-} from '../../styles/registerStyles.js';
+} from '../../styles/registerLoginStyles.js';
 
 export default function Register(props) {
   /*These are the useState hooks.

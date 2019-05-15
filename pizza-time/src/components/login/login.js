@@ -5,6 +5,11 @@ import firebaseApp from "../../firebase/firebaseApp";
 import firebase from "firebase/app";
 import "firebase/auth";
 
+import {
+  Wrap,
+  Form,
+} from '../../styles/registerLoginStyles.js';
+
 export default function Login(props) {
   console.log(props);
   //state === state object, dispatch function
@@ -57,40 +62,33 @@ export default function Login(props) {
     }
   };
   return (
-    <>
-      <h2>Login</h2>
-      <form onSubmit={submit}>
-        <div>
-          <div>
-            <label htmlFor="email">Email</label>
-            <input
-              name="email"
-              id="email"
-              type="text"
-              value={state.email}
-              onChange={e => {
-                dispatch({ type: "SET_EMAIL", payload: e.target.value });
-              }}
-            />
-          </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input
-              name="password"
-              id="password"
-              type="text"
-              value={state.password}
-              onChange={e => {
-                dispatch({ type: "SET_PASSWORD", payload: e.target.value });
-              }}
-            />
-          </div>
-        </div>
-        <div>
-          <button type="submit">Login</button>
-        </div>
-      </form>
-      {state.error && <p>{state.error}</p>}
-    </>
+    <Wrap>
+      <Form onSubmit={submit}>
+        <h1>Pizza Time</h1>
+        <input
+          name="email"
+          id="email"
+          type="text"
+          value={state.email}
+          placeholder="Email"
+          onChange={e => {
+            dispatch({ type: "SET_EMAIL", payload: e.target.value });
+          }}
+        />
+        <input
+          name="password"
+          id="password"
+          type="text"
+          value={state.password}
+          placeholder="Password"
+          onChange={e => {
+            dispatch({ type: "SET_PASSWORD", payload: e.target.value });
+          }}
+        />
+        <button type="submit">LOGIN</button>
+        <p>Already have an account?<br/><span>Sign In Here</span></p>
+      </Form>
+      {/* {state.error && <p>{state.error}</p>} */}
+    </Wrap>
   );
 }
