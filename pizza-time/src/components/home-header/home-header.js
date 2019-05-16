@@ -27,7 +27,7 @@ const Nav = () => {
         <h1>Let's Get Pizza</h1>
         <div className="userBox">
           <img className="user" src={image} onClick={ToggleNav}/>
-            <ReactCSSTransitionGroup >
+            <ReactCSSTransitionGroup transitionName="navToggle" transitionEnterTimeout={100} transitionLeaveTimeout={100}>
               {userNav ? <div className="userNav"/> : null}
             </ReactCSSTransitionGroup>
         </div>

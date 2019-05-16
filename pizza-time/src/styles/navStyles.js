@@ -34,6 +34,28 @@ export const Wrap = styled.div`
           position: relative;
         }
 
+        .navToggle-enter {
+          opacity: 0.01;
+          height: 0px;
+        }
+
+        .navToggle-enter.navToggle-enter-active {
+          opacity: 1;
+          height: 150px;
+          transition: 200ms;
+        }
+
+        .navToggle-leave {
+          opacity: 1;
+          height: 150px;
+        }
+
+        // .navToggle-leave.navToggle-leave-active {
+        //   opacity: 0.01;
+        //   height: 0px;
+        //   transition: 300ms;
+        // }
+
         .userNav {
           width: 56px;
           height: 150px;
