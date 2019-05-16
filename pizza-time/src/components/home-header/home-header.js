@@ -12,14 +12,24 @@ import UserImage from '../../assets/user.png';
 
 const Nav = () => {
   const [ image ] = useState(UserImage);
+  const [ userNav, setUserNave ] = useState(false);
+
+  const ToggleNav = e => {
+    e.preventDefault();
+    setUserNave(!userNav);
+  }
 
   return (
+    
     <Wrap>
+      {console.log(userNav)}
       <Inner>
         <h1>Let's Get Pizza</h1>
         <div className="userBox">
-
+          <img className="user" src={image} onClick={ToggleNav}/>
+          {userNav ? <div className="userNav"></div> : null}
         </div>
+
         {/* <div className="navBox">
             <button className="newEventBtn">New Event</button>
         </div> */}
