@@ -8,7 +8,7 @@ export const Wrap = styled.div`
 
   export const Inner = styled.div`
     width: 100%;
-    padding: 20px 0;
+    padding: 15px 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -21,8 +21,17 @@ export const Wrap = styled.div`
         margin-left: 20px;
       }
 
-      .navBox {
+      .userBox {
+        width: 56px;
+        height: 56px;
+        border-radius: 50%;
+        border: 1px solid #fff;
+        background-color: #fff;
         margin-right: 20px;
+      }
+
+      // .navBox {
+      //   margin-right: 20px;
 
         // .newEventBtn {
         //   padding: 8px;

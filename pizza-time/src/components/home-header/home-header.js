@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import firebaseApp from "../../firebase/firebaseApp";
 
@@ -7,11 +7,19 @@ import {
   Inner,
 } from '../../styles/navStyles.js';
 
+// TEST IMAGE
+import UserImage from '../../assets/user.png';
+
 const Nav = () => {
+  const [ image ] = useState(UserImage);
+
   return (
     <Wrap>
       <Inner>
         <h1>Let's Get Pizza</h1>
+        <div className="userBox">
+
+        </div>
         {/* <div className="navBox">
             <button className="newEventBtn">New Event</button>
         </div> */}
