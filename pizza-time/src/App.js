@@ -8,9 +8,9 @@ import UserDashboard from "./components/user-dashboard/user-dashboard";
 import Events from "./components/events/events";
 import Favorites from "./components/favorites/favorites";
 import FriendsList from "./components/friends-lists/friends-list";
-import Landing from "./components/landing-page/landing";
-import Login from "./components/login/login";
-import Register from "./components/register/Register";
+import Landing from "./containers/landing-page/landing";
+import Login from "./containers/login/login";
+import Register from "./containers/register/Register";
 import PlacesSearch from "./components/events/search/places-search";
 
 
