@@ -1,8 +1,39 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 import img from '../assets/user.png';
 
 // console.log(props.image);
+
+const slideInTop = keyframes`
+from {
+  // transform: translateY(-100%);
+  // transform: scaleY(0.1);
+  opacity: 0;
+  height: 0;
+}
+to {
+  transform: translateY(0);
+  transform: scaleY(1);
+  opacity: 1;
+  height: 150;
+}
+`;
+
+const slideOutBottom = keyframes`
+from {
+  // transform: translateY(0);
+  // transform: scaleY(1);
+  opacity: 1;
+  height: 150;
+}
+to {
+  // transform: translateY(30%);
+  // transform: scaleY(0.8);
+  opacity: 0;
+  height: 0;
+}
+`;
+
 export const Wrap = styled.div`
   width: 100%;
   border: 1px solid red;
@@ -35,26 +66,12 @@ export const Wrap = styled.div`
         }
 
         .navToggle-enter {
-          opacity: 0.01;
-          height: 0px;
-        }
-
-        .navToggle-enter.navToggle-enter-active {
-          opacity: 1;
-          height: 150px;
-          transition: 200ms;
+          animation: ${slideInTop} 0.2s forwards;
         }
 
         .navToggle-leave {
-          opacity: 1;
-          height: 150px;
+          animation: ${slideOutBottom} 0.2s forwards;
         }
-
-        // .navToggle-leave.navToggle-leave-active {
-        //   opacity: 0.01;
-        //   height: 0px;
-        //   transition: 300ms;
-        // }
 
         .userNav {
           width: 56px;
@@ -66,6 +83,7 @@ export const Wrap = styled.div`
           box-shadow: 0 0 7px 0px #D2D2D2;
           border-radius: 24px;
           z-index: 1;
+          // transform: scaleY(0.8);
         }
       }
 
