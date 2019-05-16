@@ -46,7 +46,7 @@ function App() {
       <Switch>
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
-        <Route path="/user-home" component={UserDashboard} />
+        <Route path="/home" component={UserDashboard} />
         <Route path="/events" component={Events} />
         <Route path="/events/search" component={PlacesSearch} />
         <Route path="/favorites" component={Favorites} />

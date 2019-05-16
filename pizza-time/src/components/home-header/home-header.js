@@ -2,11 +2,16 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import firebaseApp from "../../firebase/firebaseApp";
 
+import {
+  Wrap,
+  Inner,
+} from '../../styles/navStyles.js';
+
 const Nav = () => {
   return (
-    <div>
-      <header>
-        <nav>
+    <Wrap>
+      <Inner navtype="events">
+        {/* <nav>
           <NavLink to="/register">Register</NavLink>
           &nbsp;|&nbsp;
           <NavLink to="/login"> Login</NavLink>
@@ -26,9 +31,9 @@ const Nav = () => {
           <NavLink to="/friendslist">Friends List</NavLink>
           &nbsp;|&nbsp;
           <button onClick={() => firebaseApp.auth().signOut()}>Logout</button>
-        </nav>
-      </header>
-    </div>
+        </nav> */}
+      </Inner>
+    </Wrap>
   );
 };
 

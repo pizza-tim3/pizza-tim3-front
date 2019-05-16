@@ -2,7 +2,7 @@ import React from 'react';
 import SearchBar from './search-bar';
 import GoogleMap from './map';
 
-import Nav from '../../nav/nav.js';
+import Nav from '../../home-header/home-header.js';
 import Footer from '../../footer/footer.js';
 
 const PlacesSearch = () => {
