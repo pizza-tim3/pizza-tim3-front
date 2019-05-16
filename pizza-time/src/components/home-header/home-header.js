@@ -1,12 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import firebaseApp from "../../firebase/firebaseApp";
 
+import {
+  Wrap,
+  Inner,
+} from '../../styles/navStyles.js';
+
+// TEST IMAGE
+import UserImage from '../../assets/user.png';
+
 const Nav = () => {
+  const [ image ] = useState(UserImage);
+
   return (
-    <div>
-      <header>
-        <nav>
+    <Wrap>
+      <Inner>
+        <h1>Let's Get Pizza</h1>
+        <div className="userBox">
+
+        </div>
+        {/* <div className="navBox">
+            <button className="newEventBtn">New Event</button>
+        </div> */}
+        {/* <nav>
           <NavLink to="/register">Register</NavLink>
           &nbsp;|&nbsp;
           <NavLink to="/login"> Login</NavLink>
@@ -26,9 +43,9 @@ const Nav = () => {
           <NavLink to="/friendslist">Friends List</NavLink>
           &nbsp;|&nbsp;
           <button onClick={() => firebaseApp.auth().signOut()}>Logout</button>
-        </nav>
-      </header>
-    </div>
+        </nav> */}
+      </Inner>
+    </Wrap>
   );
 };
 

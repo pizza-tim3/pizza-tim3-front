@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Nav from '../nav/nav.js';
+import Nav from '../home-header/home-header.js';
 import Footer from '../footer/footer.js';
 
 const Events = () => {

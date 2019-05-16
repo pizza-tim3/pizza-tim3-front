@@ -1,16 +1,17 @@
 import React from 'react';
 
-import Nav from '../nav/nav.js';
+import Nav from '../home-header/home-header.js';
 import Footer from '../footer/footer.js';
 
-const FriendsList = () => {
+const Favorites = () => {
     return(
         <div>
             <Nav />
-            FriendsList Works!
+            <h2> Favorites Works! </h2>
             <Footer />
         </div>
+        
     );
-}
+};
 
-export default FriendsList 
+export default Favorites 
