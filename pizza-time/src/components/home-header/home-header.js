@@ -26,10 +26,11 @@ const Nav = () => {
       <Inner>
         <h1>Let's Get Pizza</h1>
         <div className="userBox">
+          <button className="newEventBtn">Create New Event</button>
           <img className="user" src={image} onClick={ToggleNav}/>
-            <ReactCSSTransitionGroup transitionName="navToggle" transitionEnterTimeout={100} transitionLeaveTimeout={100}>
-              {userNav ? <div className="userNav"/> : null}
-            </ReactCSSTransitionGroup>
+          <ReactCSSTransitionGroup transitionName="navToggle" transitionEnterTimeout={100} transitionLeaveTimeout={100}>
+            {userNav ? <div className="userNav"/> : null}
+          </ReactCSSTransitionGroup>
         </div>
 
         {/* <div className="navBox">
