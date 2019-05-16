@@ -10,7 +10,11 @@ import {
 const Nav = () => {
   return (
     <Wrap>
-      <Inner navtype="events">
+      <Inner>
+        <h1>Let's Get Pizza</h1>
+        {/* <div className="navBox">
+            <button className="newEventBtn">New Event</button>
+        </div> */}
         {/* <nav>
           <NavLink to="/register">Register</NavLink>
           &nbsp;|&nbsp;
