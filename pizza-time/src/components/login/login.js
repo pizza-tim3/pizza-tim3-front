@@ -89,7 +89,7 @@ export default function Login(props) {
         <button type="submit">Sign In</button>
         <p>Dont have an account?
           <br/>
-          <Link className="link">Sign Up Here</Link>
+          <Link to="/register" className="link">Sign Up Here</Link>
         </p>
       </Form>
       {/* {state.error && <p>{state.error}</p>} */}

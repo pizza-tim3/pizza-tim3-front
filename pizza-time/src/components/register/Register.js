@@ -64,7 +64,7 @@ export default function Register(props) {
           <button type="submit">Sign Up</button>
           <p>Already have an account?
             <br/>
-            <Link className="link">Sign In Here</Link>
+            <Link to="/login" className="link">Sign In Here</Link>
           </p>
         </Form>
         {/* {error && <p>{error}</p>} */}
