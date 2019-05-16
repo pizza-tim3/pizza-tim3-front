@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import firebaseApp from "../../firebase/firebaseApp";
+import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import {
   Wrap,
@@ -22,12 +23,13 @@ const Nav = () => {
   return (
     
     <Wrap>
-      {console.log(userNav)}
       <Inner>
         <h1>Let's Get Pizza</h1>
         <div className="userBox">
           <img className="user" src={image} onClick={ToggleNav}/>
-          {userNav ? <div className="userNav"></div> : null}
+            <ReactCSSTransitionGroup >
+              {userNav ? <div className="userNav"/> : null}
+            </ReactCSSTransitionGroup>
         </div>
 
         {/* <div className="navBox">
