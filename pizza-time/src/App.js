@@ -13,6 +13,7 @@ import Login from "./containers/login/login";
 import Register from "./containers/register/Register";
 import PlacesSearch from "./components/events/search/places-search";
 
+import UsersList from "./../src/admin/UsersList";
 
 function App() {
   //placeholder state, realistically this will be in redux or some reducer
@@ -44,6 +45,7 @@ function App() {
       {/* setting these up seperately initially so we can nav to each path 
     to see what we are working on can combine them as neccessary later */}
       <Switch>
+        <Route exact path="/admin/users" component={UsersList} />
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
         <Route path="/home" component={UserDashboard} />
