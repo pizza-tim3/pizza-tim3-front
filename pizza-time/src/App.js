@@ -45,6 +45,7 @@ function App() {
       {/* setting these up seperately initially so we can nav to each path 
     to see what we are working on can combine them as neccessary later */}
       <Switch>
+        <Route exact path="/admin/users" component={UsersList} />
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
         <Route path="/home" component={UserDashboard} />
@@ -53,7 +54,6 @@ function App() {
         <Route path="/favorites" component={Favorites} />
         <Route path="/friendslist" component={FriendsList} />
         <Route path="/" component={Landing} />
-        <Route path="/admin/users" component={UsersList} />
 
         <PrivateRoute
           exact
