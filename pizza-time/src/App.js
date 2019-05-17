@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import firebaseApp from "./firebase/firebaseApp";
 import "./App.css";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Link } from "react-router-dom";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Private from "./components/private/Private";
 import UserDashboard from "./containers/user-dashboard/user-dashboard";
@@ -12,7 +12,6 @@ import Landing from "./containers/landing-page/landing";
 import Login from "./containers/login/login";
 import Register from "./containers/register/Register";
 import PlacesSearch from "./components/events/search/places-search";
-
 
 function App() {
   //placeholder state, realistically this will be in redux or some reducer
@@ -28,9 +27,15 @@ function App() {
       //firebase
       if (user) {
         //HANDLE USER STATE IN REDUX/COMPONENT STATE
+
+        //set local storage to store last login state
+        localStorage.setItem("lastLoginState", "1");
         setAuthenticated(true);
       } else {
         //NO USER, CLEAR THE USER
+
+        //remove local storage login state
+        localStorage.removeItem("lastLoginState");
         setAuthenticated(false);
       }
     });
@@ -52,6 +57,7 @@ function App() {
         <Route path="/favorites" component={Favorites} />
         <Route path="/friendslist" component={FriendsList} />
         <Route path="/" component={Landing} />
+        {/* TODO Change landing to exact */}
 
         <PrivateRoute
           exact
