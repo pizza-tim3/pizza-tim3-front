@@ -27,6 +27,7 @@ export default function Private() {
       <button onClick={makeRequestWithFireBaseToken}>
         Make Private Request
       </button>
+      <button onClick={() => firebaseApp.auth().signOut()}>Logout</button>
     </div>
   );
 }
