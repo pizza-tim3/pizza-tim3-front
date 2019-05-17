@@ -13,6 +13,7 @@ import Login from "./containers/login/login";
 import Register from "./containers/register/Register";
 import PlacesSearch from "./components/events/search/places-search";
 
+import UsersList from "./../src/admin/usersList";
 
 function App() {
   //placeholder state, realistically this will be in redux or some reducer
@@ -52,6 +53,7 @@ function App() {
         <Route path="/favorites" component={Favorites} />
         <Route path="/friendslist" component={FriendsList} />
         <Route path="/" component={Landing} />
+        <Route path="/admin/users" component={UsersList} />
 
         <PrivateRoute
           exact
