@@ -1,11 +1,9 @@
 import React, { useState } from "react";
 import firebaseApp from "../../firebase/firebaseApp";
-import { Link } from 'react-router-dom';
+import { googleProvider } from "../../firebase/authProviders";
+import { Link } from "react-router-dom";
 
-import {
-  Wrap,
-  Form,
-} from '../../styles/registerLoginStyles.js';
+import { Wrap, Form } from "../../styles/registerLoginStyles.js";
 
 export default function Register(props) {
   /*These are the useState hooks.
@@ -37,37 +35,56 @@ export default function Register(props) {
       setError(errorMessage);
     }
   };
+
+  const signInWithGoogle = async e => {
+    e.preventDefault();
+    try {
+      const result = await firebaseApp.auth().signInWithPopup(googleProvider);
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      //const token = result.credential.accessToken;
+      // The signed-in user info.
+      //const user = result.user;
+    } catch (err) {
+      setError(err.message);
+    }
+  };
   return (
     <Wrap>
-        <Form onSubmit={submit}>
-          <h1>Pizza Time</h1>
-          <input
-            name="email"
-            id="email"
-            type="text"
-            value={email}
-            placeholder="Email"
-            onChange={e => {
-              setEmail(e.target.value);
-            }}
-          />
-          <input
-            name="password"
-            id="password"
-            type="text"
-            value={password}
-            placeholder="Password"
-            onChange={e => {
-              setPassword(e.target.value);
-            }}
-          />
-          <button type="submit">Sign Up</button>
-          <p>Already have an account?
-            <br/>
-            <Link to="/login" className="link">Sign In Here</Link>
-          </p>
-        </Form>
-        {/* {error && <p>{error}</p>} */}
+      <Form onSubmit={submit}>
+        <h1>Pizza Time</h1>
+        <input
+          name="email"
+          id="email"
+          type="text"
+          value={email}
+          placeholder="Email"
+          onChange={e => {
+            setEmail(e.target.value);
+          }}
+        />
+        <input
+          name="password"
+          id="password"
+          type="text"
+          value={password}
+          placeholder="Password"
+          onChange={e => {
+            setPassword(e.target.value);
+          }}
+        />
+        <button type="submit">Sign Up</button>
+        <button onClick={signInWithGoogle} type="button">
+          Sign In With Google
+        </button>
+        <p>
+          Already have an account?
+          <br />
+          <Link to="/login" className="link">
+            Sign In Here
+          </Link>
+        </p>
+      </Form>
+      {/* {error && <p>{error}</p>} */}
     </Wrap>
   );
 }
