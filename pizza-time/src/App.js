@@ -12,6 +12,7 @@ import Landing from "./containers/landing-page/landing";
 import Login from "./containers/login/login";
 import Register from "./containers/register/Register";
 import PlacesSearch from "./components/events/search/places-search";
+import UsersList from "./../src/admin/UsersList";
 
 function App() {
   //placeholder state, realistically this will be in redux or some reducer
