@@ -2,10 +2,17 @@ import styled from 'styled-components';
 
 export const Wrap = styled.div`
   width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
 `;
 
   export const Inner = styled.div`
     width: 100%;
+      @media(min-width: 1100px) {
+        width: 1100px;
+      }
 
       .tabBox {
         display: flex;
@@ -40,6 +47,6 @@ export const Wrap = styled.div`
         }
 
       .tab {
-        margin: 40px 0 0 0;
+        margin: 20px 0 0 0;
       }
   `;

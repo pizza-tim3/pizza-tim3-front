@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import Nav from '../../components/home-header/home-header.js';
+import Card from '../../components/card/card.js';
 import Footer from '../../components/footer/footer.js';
 
 import {
@@ -15,15 +16,21 @@ const UserDashboard = () => {
             <Nav />
             <Wrap>
                 <Inner>
-                    <Tabs defaultIndex={1} onSelect={index => console.log(index)}>
+                    <Tabs defaultIndex={1}>
                         <TabList className="tabBox">
                             <Tab className="filterBtn" selectedClassName="filterBtnActive">Upcoming</Tab>
                             <Tab className="filterBtn" selectedClassName="filterBtnActive">Pending</Tab>
                             <Tab className="filterBtn" selectedClassName="filterBtnActive">Past</Tab>
                         </TabList>
-                        <TabPanel className="tab">Tab 1</TabPanel>
-                        <TabPanel>Tab 2</TabPanel>
-                        <TabPanel>Tab 3</TabPanel>
+                        <TabPanel className="tab">
+                            <Card />
+                        </TabPanel>
+                        <TabPanel>
+                            <Card />
+                        </TabPanel>
+                        <TabPanel>
+                            <Card />
+                        </TabPanel>
                     </Tabs>
                 </Inner>
             </Wrap>
