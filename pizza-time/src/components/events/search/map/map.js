@@ -90,18 +90,18 @@ const GoogleMap = () => {
         if(status === window.google.maps.places.PlacesServiceStatus.OK) {
           for(let i = 0; i < results.length; i++){
               data.push(results[i]);
+              //##TODO CREATE MARKER FUNCTION AND HAVE ONE DISPLAYED FOR EACH SEARCH RESULT
           }
         } else {
           console.log('there was an error')
+          //##TODO write error to search list 
         }
 
+        //then we set the state to our data array
         setData(data);
       });
     }
     
-      // console.log('data from state:', placesData)
-      // console.log(lat, lng)
-      // console.log(data)
       return (
         <div className="map-search">
           <PlacesList data={placesData}/>
@@ -111,6 +111,7 @@ const GoogleMap = () => {
       );
 };
 
+//creates a script tag to import the google api
 function loadScript(url) {
   var index = window.document.getElementsByTagName("script")[0]; //---------grab the first script tag
   let script = window.document.createElement("script"); //------------------create new script tag
