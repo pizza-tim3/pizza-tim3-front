@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from "react";
 import firebaseApp from "./firebase/firebaseApp";
 import "./App.css";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Link } from "react-router-dom";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Private from "./components/private/Private";
-import UserDashboard from "./components/user-dashboard/user-dashboard";
+import UserDashboard from "./containers/user-dashboard/user-dashboard";
 import Events from "./components/events/events";
-import Favorites from "./components/favorites/favorites";
-import FriendsList from "./components/friends-lists/friends-list";
-import Landing from "./components/landing-page/landing";
-import Login from "./components/login/login";
-import Register from "./components/register/Register";
+import Favorites from "./containers/favorites/favorites";
+import FriendsList from "./containers/friends-lists/friends-list";
+import Landing from "./containers/landing-page/landing";
+import Login from "./containers/login/login";
+import Register from "./containers/register/Register";
 import PlacesSearch from "./components/events/search/places-search";
 
+import UsersList from "./../src/admin/UsersList";
 
 function App() {
   //placeholder state, realistically this will be in redux or some reducer
@@ -28,9 +29,15 @@ function App() {
       //firebase
       if (user) {
         //HANDLE USER STATE IN REDUX/COMPONENT STATE
+
+        //set local storage to store last login state
+        localStorage.setItem("lastLoginState", "1");
         setAuthenticated(true);
       } else {
         //NO USER, CLEAR THE USER
+
+        //remove local storage login state
+        localStorage.removeItem("lastLoginState");
         setAuthenticated(false);
       }
     });
@@ -44,14 +51,16 @@ function App() {
       {/* setting these up seperately initially so we can nav to each path 
     to see what we are working on can combine them as neccessary later */}
       <Switch>
+        <Route exact path="/admin/users" component={UsersList} />
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
-        <Route path="/home" component={Landing} />
-        <Route path="/user-home" component={UserDashboard} />
+        <Route path="/home" component={UserDashboard} />
         <Route path="/events" component={Events} />
         <Route path="/search" component={PlacesSearch} />
         <Route path="/favorites" component={Favorites} />
         <Route path="/friendslist" component={FriendsList} />
+        <Route path="/" component={Landing} />
+        {/* TODO Change landing to exact */}
 
         <PrivateRoute
           exact

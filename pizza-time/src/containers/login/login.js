@@ -1,5 +1,6 @@
 import React, { useReducer } from "react";
 import firebaseApp from "../../firebase/firebaseApp";
+import { Link } from 'react-router-dom';
 
 //need this import for "firebase.auth.Auth.Persistence.LOCAL" constant
 import firebase from "firebase/app";
@@ -85,8 +86,11 @@ export default function Login(props) {
             dispatch({ type: "SET_PASSWORD", payload: e.target.value });
           }}
         />
-        <button type="submit">LOGIN</button>
-        <p>Already have an account?<br/><span>Sign In Here</span></p>
+        <button type="submit">Sign In</button>
+        <p>Dont have an account?
+          <br/>
+          <Link to="/register" className="link">Sign Up Here</Link>
+        </p>
       </Form>
       {/* {state.error && <p>{state.error}</p>} */}
     </Wrap>

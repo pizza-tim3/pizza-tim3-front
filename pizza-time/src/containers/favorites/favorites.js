@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Nav from '../nav/nav.js';
-import Footer from '../footer/footer.js';
+import Nav from '../../components/home-header/home-header.js';
+import Footer from '../../components/footer/footer.js';
 
 const Favorites = () => {
     return(

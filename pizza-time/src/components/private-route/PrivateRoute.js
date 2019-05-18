@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Route, Redirect } from "react-router-dom";
 
 /*  
@@ -18,13 +18,13 @@ export default function PrivateRoute({
   return (
     <Route
       {...rest}
-      render={props =>
-        authenticated === true ? (
-          <Component {...props} {...rest} />
-        ) : (
-          <Redirect to="/login" />
-        )
-      }
+      render={props => {
+        if (authenticated === true) return <Component {...props} {...rest} />;
+        else if (localStorage.getItem("lastLoginState"))
+          //checks local storage for logged in status
+          return <h1>Loading</h1>;
+        else return <Redirect to="/login" />;
+      }}
     />
   );
 }
