@@ -1,0 +1,26 @@
+
+#map {
+    margin: 100px auto;
+    height: 30em;
+    width: 50%;
+  }
+
+.map-search {
+  width: 80%;
+  height: auto;
+  margin: 2em auto;
+  display: flex;
+}
+
+.card{
+  border: 1px solid black;
+  margin: 5px;
+  padding: 5px;
+}
+
+.card-container {
+  margin-top: 6.5em;
+  width: 50%;
+  text-align: left;
+}
+  
