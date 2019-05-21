@@ -9,9 +9,7 @@ export const Inner = styled.div`
   margin: 0px auto;
   box-shadow: 0 0 6px 0px #DFDFDF;
   margin-top: 20px;
-    @media(min-width: 1100px) {
-      width: 100%;
-    }
+    @media(min-width: 1100px) { width: 100%; }
 `;
 
   export const Content = styled.div`
@@ -45,22 +43,19 @@ export const Inner = styled.div`
         text-align: left;
         margin: -3px 0 0 10px;
 
-        p {
-          font-family: 'Montserrat', sans-serif;
-          font-size: 15px;
-            &:nth-child(2) {
-              padding: 5px 0 5px 0;
-                @media(min-width: 600px) { padding: 6px 0 6px 0; }
-                @media(min-width: 900px) { padding: 8px 0 8px 0; }
-                @media(min-width: 1100px) { padding: 10px 0 10px 0; }
-            }
+          p {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 15px;
+              &:nth-child(2) {
+                padding: 5px 0 5px 0;
+                  @media(min-width: 600px) { padding: 6px 0 6px 0; }
+                  @media(min-width: 900px) { padding: 8px 0 8px 0; }
+                  @media(min-width: 1100px) { padding: 10px 0 10px 0; }
+              }
 
-            @media(min-width: 600px) { font-size: 16px; }
-
-            span {
-              font-weight: 500;
-            }
-        }
+              @media(min-width: 600px) { font-size: 16px; }
+              span { font-weight: 500; }
+          }
       }
   `;
 
