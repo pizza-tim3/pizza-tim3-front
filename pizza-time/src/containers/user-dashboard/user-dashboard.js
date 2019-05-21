@@ -27,6 +27,7 @@ const UserDashboard = () => {
                         </TabPanel>
                         <TabPanel>
                             <Card />
+                            <Card />
                         </TabPanel>
                         <TabPanel>
                             <Card />

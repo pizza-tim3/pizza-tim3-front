@@ -59,7 +59,7 @@ function App() {
         <Route path="/search" component={PlacesSearch} />
         <Route path="/favorites" component={Favorites} />
         <Route path="/friendslist" component={FriendsList} />
-        <Route path="/" component={Landing} />
+        <Route exact path="/" component={Landing} />
         {/* TODO Change landing to exact */}
 
         <PrivateRoute
