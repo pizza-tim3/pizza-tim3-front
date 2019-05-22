@@ -1,15 +1,12 @@
 import React, { useReducer } from "react";
 import firebaseApp from "../../firebase/firebaseApp";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 //need this import for "firebase.auth.Auth.Persistence.LOCAL" constant
 import firebase from "firebase/app";
 import "firebase/auth";
 
-import {
-  Wrap,
-  Form,
-} from '../../styles/registerLoginStyles.js';
+import { Wrap, Form } from "../../styles/registerLoginStyles.js";
 
 export default function Login(props) {
   console.log(props);
@@ -62,6 +59,20 @@ export default function Login(props) {
       dispatch({ type: "SET_ERROR", payload: err.message });
     }
   };
+
+  const signInWithGoogle = async e => {
+    e.preventDefault();
+    try {
+      const result = await firebaseApp.auth().signInWithPopup(googleProvider);
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      //const token = result.credential.accessToken;
+      // The signed-in user info.
+      //const user = result.user;
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   return (
     <Wrap>
       <Form onSubmit={submit}>
@@ -87,9 +98,15 @@ export default function Login(props) {
           }}
         />
         <button type="submit">Sign In</button>
-        <p>Dont have an account?
-          <br/>
-          <Link to="/register" className="link">Sign Up Here</Link>
+        <button onClick={signInWithGoogle} type="button">
+          Sign In With Google
+        </button>
+        <p>
+          Dont have an account?
+          <br />
+          <Link to="/register" className="link">
+            Sign Up Here
+          </Link>
         </p>
       </Form>
       {/* {state.error && <p>{state.error}</p>} */}
