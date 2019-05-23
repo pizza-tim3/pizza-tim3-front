@@ -5,10 +5,9 @@ import Footer from "../footer/footer.js";
 // import PlacesSearch from "./search/places-search.js";
 import Info from "./info.js";
 // import axios from "axios";
-import data from "../../data/data";
-
 // import Participants from "./../events/participants.js"
 // import Discussion from "./../events/discussion.js";
+import data from "../../data/data";
 
 class EventView extends React.Component {
   constructor(props) {
