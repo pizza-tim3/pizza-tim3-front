@@ -1,6 +1,7 @@
 import React, { useReducer } from "react";
 import firebaseApp from "../../firebase/firebaseApp";
 import { Link } from "react-router-dom";
+import { googleProvider } from "../../firebase/authProviders";
 
 //need this import for "firebase.auth.Auth.Persistence.LOCAL" constant
 import firebase from "firebase/app";
@@ -68,9 +69,7 @@ export default function Login(props) {
       //const token = result.credential.accessToken;
       // The signed-in user info.
       //const user = result.user;
-    } catch (err) {
-      setError(err.message);
-    }
+    } catch (err) {}
   };
 
   return (
