@@ -54,8 +54,8 @@ function App() {
         <Route exact path="/admin/users" component={UsersList} />
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
-        <Route path="/home" component={UserDashboard} />
-        <Route path="/events" component={Events} />
+        <Route exact path="/user" component={UserDashboard} />
+        <Route exact path="/events" component={Events} />
         <Route path="/search" component={PlacesSearch} />
         <Route path="/favorites" component={Favorites} />
         <Route path="/friendslist" component={FriendsList} />
