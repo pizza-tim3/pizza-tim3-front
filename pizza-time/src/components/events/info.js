@@ -2,6 +2,7 @@ import React from "react";
 import Calendar from "react-calendar";
 // import moment from "moment";
 import PlacesSearch from "./search/places-search.js";
+import { EventBox, EventRow, Inner } from "../../styles/eventStyles";
 
 class Info extends React.Component {
   constructor(props) {
@@ -15,23 +16,23 @@ class Info extends React.Component {
 
   render() {
     return (
-      <div>
+      <EventBox>
         {!this.props.event.location ? (
           <div> Loading...</div>
         ) : (
-          <div>
-            <div>
-              <h1>{this.props.event.name}</h1>
-              <button>Save</button>
-            </div>
+          <Inner>
+            <EventRow>
+              <h1>Name: {this.props.event.name}</h1>
+              <button className="btn-save">Save</button>
+            </EventRow>
 
-            <div>
+            <EventRow>
               <h2>Date:</h2>
               <Calendar onChange={this.onChange} value={this.state.date} />
               <span>By Invite Only: {this.props.inviteOnly}</span>
-            </div>
+            </EventRow>
 
-            <div>
+            <EventRow>
               <div>
                 <h1>Location</h1>
                 <PlacesSearch />
@@ -43,10 +44,10 @@ class Info extends React.Component {
                 {/* <address>{this.props.event.location.address}</address> */}
                 <div>Google Map</div>
               </div>
-            </div>
-          </div>
+            </EventRow>
+          </Inner>
         )}
-      </div>
+      </EventBox>
     );
   }
 }
