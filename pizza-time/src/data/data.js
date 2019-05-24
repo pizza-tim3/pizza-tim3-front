@@ -2,6 +2,7 @@ export const events = [
   {
     id: 1,
     user_id: 4,
+    name: "Joes Bday!",
     location: {
       name: "Pizza Joint",
     },
@@ -31,11 +32,12 @@ export const events = [
   },
   {
     id: 2,
+    user_id: 6,
+    name: "Loris nameday!",
     location: {
       name: "Pete`s Pizza",
     },
     event_date: "2019-07-30 18:18:54",
-    user_id: 6,
     attending_users: [
       {
         user_id: 23,
@@ -53,11 +55,12 @@ export const events = [
   },
   {
     id: 3,
+    user_id: 4,
+    name: "Petes Graduation!",
     location: {
       name: "Guiseppe`s Pizza",
     },
     event_date: "2019-12-30 16:18:54",
-    user_id: 4,
     attending_users: [
       {
         user_id: 2,

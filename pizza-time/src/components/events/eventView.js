@@ -2,10 +2,9 @@ import React from "react";
 
 import Nav from "../home-header/home-header.js";
 import Footer from "../footer/footer.js";
-// import PlacesSearch from "./search/places-search.js";
 import Info from "./info.js";
 // import axios from "axios";
-// import Participants from "./../events/participants.js"
+import Participants from "./../events/participants.js";
 // import Discussion from "./../events/discussion.js";
 import data from "../../data/data";
 
@@ -20,7 +19,7 @@ class EventView extends React.Component {
   componentDidMount() {
     // Add axios call for prospective backend api
 
-    // const id = this.props.match.params.id;
+    const id = this.props.match.params.id;
     // axios
     // .get(`https://pizza-tim3-be.herokuapp.com/api/events/${id}`)
     // .then(response => {
@@ -33,7 +32,7 @@ class EventView extends React.Component {
 
     // Map through events and set the state to the response
     const currentEvent = data.filter(event => {
-      if (event.id === 2) {
+      if (Number(event.id) === Number(id)) {
         return true;
       }
     });
@@ -49,11 +48,18 @@ class EventView extends React.Component {
     return (
       <div>
         <Nav />
-        <Info event={this.state.event} inviteOnly={this.state.inviteOnly} />
-        {/* <PlacesSearch /> */}
+        {this.state.event ? (
+          <div>
+            <Info event={this.state.event} inviteOnly={this.state.inviteOnly} />
+            {/* <PlacesSearch/> */}
 
-        {/* <Participants /> */}
-        {/* <Discussion /> */}
+            <Participants event={this.state.event} />
+            {/* <Discussion /> */}
+          </div>
+        ) : (
+          <div />
+        )}
+
         <Footer />
       </div>
     );

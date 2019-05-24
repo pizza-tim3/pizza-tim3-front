@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "firebase": "^6.0.2",
+    "moment": "^2.24.0",
     "react": "^16.8.6",
     "react-addons-css-transition-group": "^15.6.2",
     "react-calendar": "^2.19.0",
