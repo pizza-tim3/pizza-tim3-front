@@ -1,8 +1,8 @@
 import React from "react";
 import Calendar from "react-calendar";
 // import moment from "moment";
-import PlacesSearch from "./search/places-search.js";
-import { EventBox, EventRow, Inner } from "../../styles/eventStyles";
+import PlacesSearch from "../create-new-event/search/places-search";
+import { EventBox, EventRow, Inner } from "../../../styles/eventStyles";
 
 class Info extends React.Component {
   constructor(props) {
