@@ -1,8 +1,6 @@
 import React from 'react';
 import SearchBar from './search/search-bar';
 import GoogleMap from './map/map';
-import Nav from '../../home-header/home-header';
-import Footer from '../../footer/footer';
 
 const PlacesSearch = (props) => {
     return(

@@ -1,12 +1,12 @@
 import React, {useState, useEffect} from 'react';
 import './events.css';
 
-import Nav from '../home-header/home-header.js';
-import Footer from '../footer/footer.js';
-import PlacesSearch from './search/places-search.js';
+import Nav from '../../home-header/home-header';
+import Footer from '../../footer/footer.js';
 import DatePicker from './date/date-picker';
 import FriendPicker from './friendPicker/friendPicker';
 import ConfirmationPage from './confirmation/confirmation';
+import PlacesSearch from './search/places-search';
 
 const CreateNewEvent = () => {
     const [pageOne, setPageOne] = useState(false);

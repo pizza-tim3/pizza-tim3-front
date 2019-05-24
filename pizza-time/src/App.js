@@ -5,14 +5,13 @@ import { Route, Switch, Link } from "react-router-dom";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Private from "./components/private/Private";
 import UserDashboard from "./containers/user-dashboard/user-dashboard";
-import CreateNewEvent from "./components/events/create-new-event";
-import EventView from "./components/events/eventView";
+import CreateNewEvent from "./components/events/create-new-event/create-new-event";
+import EventView from "./components/events/SingleEvent/eventView";
 import Favorites from "./containers/favorites/favorites";
 import FriendsList from "./containers/friends-lists/friends-list";
 import Landing from "./containers/landing-page/landing";
 import Login from "./containers/login/login";
 import Register from "./containers/register/Register";
-import PlacesSearch from "./components/events/search/places-search";
 
 import UsersList from "./../src/admin/UsersList";
 
@@ -58,7 +57,6 @@ function App() {
         <Route path="/home" component={UserDashboard} />
         <Route path="/create-event" component={CreateNewEvent} />
         <Route exact path="/event/:id" component={EventView} />
-        <Route path="/search" component={PlacesSearch} />
         <Route path="/favorites" component={Favorites} />
         <Route path="/friendslist" component={FriendsList} />
         <Route exact path="/" component={Landing} />

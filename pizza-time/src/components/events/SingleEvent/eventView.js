@@ -1,12 +1,12 @@
 import React from "react";
 
-import Nav from "../home-header/home-header.js";
-import Footer from "../footer/footer.js";
+import Nav from "../../home-header/home-header.js";
+import Footer from "../../footer/footer.js";
 import Info from "./info.js";
 // import axios from "axios";
-import Participants from "./../events/participants.js";
-import Discussion from "./../events/discussion.js";
-import data from "../../data/data";
+import Participants from "./participants";
+import Discussion from "./discussion";
+import data from "../../../data/data";
 
 class EventView extends React.Component {
   constructor(props) {
