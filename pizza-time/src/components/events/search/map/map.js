@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './map.css';
 import PlacesList from '../list/places-list';
+import axios from 'axios';
 
 const GoogleMap = () => {
     const [lat, setLat] = useState();
@@ -102,9 +103,17 @@ const GoogleMap = () => {
       });
     }
     
+    // adds placeId to database
+    const handleOnClick = (placeId) => {
+      let placeid = {google_place_id : placeId};
+      axios.post('http://localhost:5500/api/placesId/', placeid)
+        .then(res => console.log('returned from post:', res))
+        .catch(e => console.log(e))
+    }
+
       return (
         <div className="map-search">
-          <PlacesList data={placesData}/>
+          <PlacesList data={placesData} handleClick={handleOnClick}/>
           <div id="map">
           </div>
         </div>
