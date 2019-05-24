@@ -10,17 +10,22 @@
   height: auto;
   margin: 2em auto;
   display: flex;
+  flex-direction: column;
 }
 
 .card{
+  justify-content: center;
   border: 1px solid black;
+  border-radius: 10px;
   margin: 5px;
-  padding: 5px;
+  padding: 10px;
+  margin: 15px auto;
 }
 
 .card-container {
-  margin-top: 6.5em;
+  margin: 0 auto;
   width: 50%;
   text-align: left;
+  justify-items: center;
 }
   
