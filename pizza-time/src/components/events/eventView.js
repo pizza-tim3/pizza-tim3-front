@@ -5,7 +5,7 @@ import Footer from "../footer/footer.js";
 import Info from "./info.js";
 // import axios from "axios";
 import Participants from "./../events/participants.js";
-// import Discussion from "./../events/discussion.js";
+import Discussion from "./../events/discussion.js";
 import data from "../../data/data";
 
 class EventView extends React.Component {
@@ -51,10 +51,8 @@ class EventView extends React.Component {
         {this.state.event ? (
           <div>
             <Info event={this.state.event} inviteOnly={this.state.inviteOnly} />
-            {/* <PlacesSearch/> */}
-
             <Participants event={this.state.event} />
-            {/* <Discussion /> */}
+            <Discussion event={this.state.event} />
           </div>
         ) : (
           <div />
