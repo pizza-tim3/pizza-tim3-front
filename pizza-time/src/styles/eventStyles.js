@@ -93,6 +93,13 @@ export const EventRow = styled.div`
       margin-top: 0px;
       margin-right: 15px;
     }
+    button {
+      margin-left: 15px;
+    }
+    img {
+      height: 40px;
+      width: 40px;
+    }
   }
   :first-child {
     border-bottom: 2px solid black;

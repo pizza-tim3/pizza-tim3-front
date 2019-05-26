@@ -44,7 +44,6 @@ class EventView extends React.Component {
   }
   componentDidUpdate(prevProps) {
     // Typical usage (don't forget to compare props):
-    console.log(prevProps);
     const newId = this.props.match.params.id;
     if (newId !== prevProps.match.params.id) {
       const currentEvent = data.filter(event => {
@@ -59,7 +58,6 @@ class EventView extends React.Component {
     }
   }
   toggleSwitch = () => {
-    console.log("Im fiiired.");
     this.setState(prevState => {
       const stateCopy = { ...this.state };
       stateCopy.event.inviteOnly = !prevState.event.inviteOnly;
