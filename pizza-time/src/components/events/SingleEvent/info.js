@@ -1,8 +1,8 @@
 import React from "react";
 import Calendar from "react-calendar";
-// import moment from "moment";
 import PlacesSearch from "../create-new-event/search/places-search";
-import { EventBox, EventRow, Inner } from "../../../styles/eventStyles";
+
+import { EventBox, EventRow, Inner, Toggle } from "../../../styles/eventStyles";
 
 class Info extends React.Component {
   constructor(props) {
@@ -11,7 +11,10 @@ class Info extends React.Component {
       date: new Date(),
     };
   }
-
+  inviteHandler = e => {
+    // e.preventDefault();
+    this.props.toggleSwitch();
+  };
   onChange = date => this.setState({ date });
 
   render() {
@@ -27,9 +30,23 @@ class Info extends React.Component {
             </EventRow>
 
             <EventRow>
-              <h2>Date:</h2>
-              <Calendar onChange={this.onChange} value={this.state.date} />
-              <span>By Invite Only: {this.props.inviteOnly}</span>
+              <div className="calendar">
+                <h2>Date:</h2>
+                <Calendar onChange={this.onChange} value={this.state.date} />
+              </div>
+              <div className="invite">
+                <h2>By Invite Only: </h2>
+                <Toggle>
+                  <label class="switch">
+                    <input onClick={this.inviteHandler} type="checkbox" />
+                    <span class="slider" />
+                  </label>
+                </Toggle>
+                {/* <div>
+                  <input type="checkbox">
+                  <span class="slider round"></span>
+                </div> */}
+              </div>
             </EventRow>
 
             <EventRow>
