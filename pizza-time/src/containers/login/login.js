@@ -61,7 +61,6 @@ export default function Login(props) {
     }
   };
 
-<<<<<<< HEAD
   const signInWithGoogle = async e => {
     e.preventDefault();
     try {
@@ -72,20 +71,6 @@ export default function Login(props) {
       //this contains user info that can be stored globally
     } catch (err) {}
   };
-=======
-  // const signInWithGoogle = async e => {
-  //   e.preventDefault();
-  //   try {
-  //     const result = await firebaseApp.auth().signInWithPopup(googleProvider);
-  //     // This gives you a Google Access Token. You can use it to access the Google API.
-  //     //const token = result.credential.accessToken;
-  //     // The signed-in user info.
-  //     //const user = result.user;
-  //   } catch (err) {
-  //     setError(err.message);
-  //   }
-  // };
->>>>>>> development
 
   return (
     <Wrap>
