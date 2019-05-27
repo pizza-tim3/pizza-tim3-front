@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { colors, fonts, media } from '../styles/variables.js';
 
 export const CardBox = styled.div`
   width: 100%;
@@ -7,9 +8,9 @@ export const CardBox = styled.div`
 export const Inner = styled.div`
   width: 86%;
   margin: 0px auto;
-  box-shadow: 0 0 6px 0px #DFDFDF;
+  box-shadow: 0 0 6px 0px ${colors.shadow};
   margin-top: 20px;
-    @media(min-width: 1100px) { width: 100%; }
+    ${media.desktop} { width: 100%; }
 `;
 
   export const Content = styled.div`
@@ -17,22 +18,22 @@ export const Inner = styled.div`
     justify-content: flex-start;
     align-items: center;
     padding: 15px 0 15px 0;
-      @media(min-width: 600px) { padding: 25px 0 25px 0; }
+      ${media.mobile} { padding: 25px 0 25px 0; }
 
       img {
         width: 90px;
         height: 80px;
         margin: 0 10px 0 20px;
-          @media(min-width: 600px) {
+          ${media.mobile} {
             width: 100px;
             height: 90px;
             margin-left: 25px;
           }
-          @media(min-width: 900px) {
+          ${media.tablet} {
             width: 120px;
             height: 110px;
           }
-          @media(min-width: 1100px) {
+          ${media.desktop} {
             width: 130px;
             height: 120px;
             margin-left: 30px;
@@ -44,16 +45,16 @@ export const Inner = styled.div`
         margin: -3px 0 0 10px;
 
           p {
-            font-family: 'Montserrat', sans-serif;
+            font-family: ${fonts.primary};
             font-size: 15px;
               &:nth-child(2) {
                 padding: 5px 0 5px 0;
-                  @media(min-width: 600px) { padding: 6px 0 6px 0; }
-                  @media(min-width: 900px) { padding: 8px 0 8px 0; }
-                  @media(min-width: 1100px) { padding: 10px 0 10px 0; }
+                  ${media.mobile} { padding: 6px 0 6px 0; }
+                  ${media.tablet} { padding: 8px 0 8px 0; }
+                  ${media.desktop} { padding: 10px 0 10px 0; }
               }
 
-              @media(min-width: 600px) { font-size: 16px; }
+              ${media.mobile} { font-size: 16px; }
               span { font-weight: 500; }
           }
       }
@@ -63,8 +64,8 @@ export const Inner = styled.div`
     display: flex;
     justify-content: space-between;
     padding: 12px 0 12px 0;
-    background-color: #F5F5F5;
-      @media(min-width: 600px) { padding: 12px 0 12px 0;}
+    background-color: ${colors.lightGray};
+     ${media.mobile} { padding: 12px 0 12px 0;}
 
       .comment {
         cursor: pointer;
@@ -72,19 +73,19 @@ export const Inner = styled.div`
             width: 36px;
             height: 36px;
             margin: 4px 0 0 20px;
-              @media(min-width: 600px) {
+              ${media.mobile} {
                 width: 40px;
                 height: 40px;
               }
           }
     
           p {
-            color: #fff;
+            color: ${colors.white};
             position: absolute;
             margin: -29px 0 0 34px;
             font-weight: 500;
-            font-family: 'Montserrat', sans-serif;
-              @media(min-width: 600px) { margin: -31px 0 0 36px; }
+            font-family: ${fonts.primary};
+              ${media.mobile} { margin: -31px 0 0 36px; }
           }
       }
 
@@ -92,10 +93,10 @@ export const Inner = styled.div`
         margin-right: 20px;
 
           button {
-            border: 1px solid #FF5C00;
-            background-color: #FF5C00;
-            color: #fff;
-            font-family: 'Montserrat', sans-serif;
+            border: 1px solid ${colors.primary};
+            background-color: ${colors.primary};
+            color: ${colors.white};
+            font-family: ${fonts.primary};
             font-weight: 600;
             font-size: 15px;
             margin: 4px 10px 0 0;
@@ -104,14 +105,14 @@ export const Inner = styled.div`
             border-radius: 3px;
               &:nth-child(2) {
                 margin-right: 0;
-                border: 1px solid #fff;
-                background-color: #fff;
-                color: grey;
-                box-shadow: 0 0 6px 0px #DFDFDF;
-                  &:hover { color: #000; }
+                border: 1px solid ${colors.white};
+                background-color: ${colors.white};
+                color: ${colors.gray};
+                box-shadow: 0 0 6px 0px ${colors.shadow};
+                  &:hover { color: ${colors.black}; }
               }
 
-              @media(min-width: 600px) {
+              ${media.mobile} {
                 padding: 0 16px 0 16px;
                 height: 34px;
               }

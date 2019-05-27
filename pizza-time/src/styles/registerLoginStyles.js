@@ -1,10 +1,11 @@
 import styled from 'styled-components';
+import { colors, fonts, media } from '../styles/variables.js';
 
 export const Wrap = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
-  background: linear-gradient(155.4deg, #FFD338 0%, #FF5C00 99.11%);
+  background: linear-gradient(155.4deg, ${colors.secondary} 0%, ${colors.primary} 99.11%);
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
@@ -17,33 +18,33 @@ export const Wrap = styled.div`
     flex-flow: column nowrap;
     align-items: center;
     padding: 34px;
-    background-color: #fff;
+    background-color: ${colors.white};
 
     h1 {
       font-size: 48px;
-      color: #000;
-      font-family: 'Molle', cursive;
+      color: ${colors.black};
+      font-family: ${fonts.secondary};
       padding: 5px 0 40px 0;
-      background: linear-gradient(155.4deg, #FFD338 0%, #FF5C00 99.11%);
+      background: linear-gradient(155.4deg, ${colors.secondary} 0%, ${colors.primary} 99.11%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-        @media(min-width: 900px) { font-size: 52px; }
-        @media(min-width: 1100px) { font-size: 58px; }
+        ${media.tablet} { font-size: 52px; }
+        ${media.desktop} { font-size: 58px; }
     }
 
     input {
       padding: 8px 0 8px 8px;
-      border: 1px solid #fff;
+      border: 1px solid ${colors.white};
       margin-bottom: 20px;
       font-family: 'Montserrat', sans-serif;
-      box-shadow: 0 0 7px 0px #D2D2D2;
-      color: #929292;
-      ::placeholder { color: #929292; }
-        @media(min-width: 900px) {
+      box-shadow: 0 0 7px 0px ${colors.shadow};
+      color: ${colors.formPlaceholder};
+      ::placeholder { color: ${colors.formPlaceholder}; }
+        ${media.tablet} {
           width: 230px;
           padding: 10px 0 10px 10px;
         }
-        @media(min-width: 1100px) {
+        ${media.desktop} {
           width: 260px;
           padding: 12px 0 12px 12px;
         }
@@ -53,35 +54,35 @@ export const Wrap = styled.div`
       margin-top: 16px;
       width: 130px;
       height: 38px;
-      background-color: #fff;
-      border: 1px solid #fff;
-      box-shadow: 0 0 7px 0px #D2D2D2;
-      font-family: 'Montserrat', sans-serif;
+      background-color: ${colors.white};
+      border: 1px solid ${colors.white};
+      box-shadow: 0 0 7px 0px ${colors.shadow};
+      font-family: ${fonts.primary};
       font-weight: 600;
       font-size: 15px;
-      color: #737373;
-        @media(min-width: 1100px) {
+      color: ${colors.gray};
+        ${media.desktop} {
           margin-top: 22px;
           width: 140px;
           height: 42px;
         }
 
         &:hover {
-          background-color: #FF5C00;
-          color: #fff;
-          border: 1px solid #FF5C00;
+          background-color: ${colors.primary};
+          color: ${colors.white};
+          border: 1px solid ${colors.primary};
         }
     }
     
     p {
-      font-family: 'Montserrat', sans-serif;
+      font-family: ${fonts.primary};
       font-size: 14px;
       line-height: 20px;
-      color: #737373;
+      color: ${colors.gray};
       margin-top: 30px;
 
       .link {
-        color: #FF5C00;
+        color: ${colors.primary};
         text-decoration: none;
       }
     }

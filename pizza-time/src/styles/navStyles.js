@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components';
+import { colors, fonts, media } from '../styles/variables.js';
 
 import img from '../assets/user.png';
 
@@ -28,7 +29,7 @@ to {
 
 export const Wrap = styled.div`
   width: 100%;
-  background: linear-gradient(155.4deg, #FFD338 0%, #FF5C00 99.11%);
+  background: linear-gradient(155.4deg, ${colors.secondary} 0%, ${colors.primary} 99.11%);
 `;
 
   export const Inner = styled.div`
@@ -40,11 +41,11 @@ export const Wrap = styled.div`
 
       h1 {
         font-size: 26px;
-        font-family: 'Montserrat', sans-serif;
-        color: #fff;
+        font-family: ${fonts.primary};
+        color: ${colors.white};
         font-weight: 600;
         margin-left: 20px;
-          @media(min-width: 900px) { font-size: 30px; }
+          ${media.tablet} { font-size: 30px; }
       }
 
       .userBox {
@@ -56,19 +57,19 @@ export const Wrap = styled.div`
           margin-right: 14px;
           padding: 8px;
           width: 180px;
-          background-color: #fff;
-          border: 1px solid #fff;
+          background-color: ${colors.white};
+          border: 1px solid ${colors.white};
           border-radius: 14px;
           color: grey;
-          font-family: 'Montserrat', sans-serif;
+          font-family: ${fonts.primary};
           font-size: 14px;
           font-weight: 600;
           visibility: hidden;
             &:hover {
-              color: #000;
+              color: ${colors.black};
             }
 
-            @media(min-width: 900px) { visibility: visible; }
+            ${media.tablet} { visibility: visible; }
         }
 
         .user {
@@ -78,7 +79,7 @@ export const Wrap = styled.div`
           margin-right: 20px;
           z-index: 2;
           position: relative;
-            @media(min-width: 900px) {
+            ${media.tablet} {
               height: 56px;
               width: 56px;
             }
@@ -91,10 +92,10 @@ export const Wrap = styled.div`
           width: 46px;
           height: 120px;
           position: absolute;
-          background-color: #fff;
+          background-color: ${colors.white};
           margin-top: -20px;
           right: 20px;
-          box-shadow: 0 0 7px 0px #D2D2D2;
+          box-shadow: 0 0 7px 0px ${colors.shadow};
           border-radius: 24px;
           z-index: 1;
             @media(min-width: 900px) {
