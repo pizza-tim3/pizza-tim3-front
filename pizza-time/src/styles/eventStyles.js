@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { colors, fonts, media } from "../styles/variables.js";
 
 export const EventBox = styled.div`
   width: 100%;
