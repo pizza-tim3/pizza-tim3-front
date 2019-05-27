@@ -1,21 +1,15 @@
 import styled from 'styled-components';
-
-// font-family: 'Molle', cursive;
-// font-family: 'Montserrat', sans-serif;
+import { colors, fonts, media } from '../styles/variables.js';
 
 export const Wrap = styled.div`
   width: 100%;
   height: 100%;
   position: absolute;
-  background: linear-gradient(155.4deg, #FFD338 0%, #FF5C00 99.11%);
+  background: linear-gradient(155.4deg, ${colors.secondary} 0%, ${colors.primary} 99.11%);
   display: flex;
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-
-    // MEDIA FOR TESTING PURPOSES
-    // @media(min-width: 900px) { border: 1px solid red; }
-    // @media(min-width: 1100px) { border: 1px solid blue; }
 `;
 
   export const Inner = styled.div`
@@ -31,23 +25,23 @@ export const Wrap = styled.div`
 
       h1 {
         font-size: 56px;
-        color: #fff;
-        font-family: 'Molle', cursive;
-          @media(min-width: 900px) { font-size: 60px; }
-          @media(min-width: 1100px) { font-size: 68px; }
+        color: ${colors.white};
+        font-family: ${fonts.secondary};
+          ${media.tablet} { font-size: 60px; }
+          ${media.desktop} { font-size: 68px; }
       }
 
       p {
         margin-top: 10px;
         font-size: 15px;
-        color: #fff;
-        font-family: 'Montserrat', sans-serif;
+        color: ${colors.white};
+        font-family: ${fonts.primary};
         line-height: 18px;
-          @media(min-width: 900px) {
+          ${media.tablet} {
             font-size: 16px;
             line-height: 22px;
           }
-          @media(min-width: 1100px) { 
+          ${media.desktop} { 
             font-size: 18px;
             line-height: 26px;
           }
@@ -58,22 +52,22 @@ export const Wrap = styled.div`
       display: flex;
       justify-content: center;
       margin-top: 54px;
-        @media(min-width: 900px) { margin-top: 62px; }
-        @media(min-width: 1100px) { margin-top: 70px; }
+        ${media.tablet} { margin-top: 62px; }
+        ${media.desktop} { margin-top: 70px; }
 
         .loginBtn, .registerBtn {
-          border: 3px solid #fff;
+          border: 3px solid ${colors.white};
           padding: 10px 20px;
-          color: #fff;
+          color: ${colors.white};
           text-decoration: none;
           margin: 0 6px;
-          font-family: 'Montserrat', sans-serif;
+          font-family: ${fonts.primary};
           font-weight: 600;
           font-size: 15px;
-            @media(min-width: 900px) {
+            ${media.tablet} {
               &:hover {
-                background-color: #fff;
-                color: #000;
+                background-color: ${colors.white};
+                color: ${colors.black};
               }
             }
         }
