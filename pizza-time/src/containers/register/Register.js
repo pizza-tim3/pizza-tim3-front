@@ -19,6 +19,31 @@ const registerWithBackend = async userObj => {
   return await fetch(url, data).then(res => res.json());
 };
 
+// takes the result from a register with pop up call
+const registerWithPopup = async result => {
+  console.log(result);
+  const {
+    user: { uid },
+    additionalUserInfo: {
+      profile: { email, family_name, given_name, name, picture }
+    }
+  } = result;
+
+  // make object to send to backend
+  const userObj = {
+    email,
+    username: name,
+    first_name: given_name,
+    last_name: family_name,
+    firebase_uid: uid
+  };
+  //send information to backend
+  console.log(userObj);
+  const response = await registerWithBackend(userObj);
+  console.log(response);
+  return response;
+};
+
 export default function Register(props) {
   /*These are the useState hooks.
     The first element in the array is the `value`, 
@@ -69,13 +94,24 @@ export default function Register(props) {
   const signInWithGoogle = async e => {
     e.preventDefault();
     try {
+      // sign in/register with popup window
       const result = await firebaseApp.auth().signInWithPopup(googleProvider);
-      console.log(result);
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      //const token = result.credential.accessToken;
-      // The signed-in user info.
-      //const user = result.user;
+      const {
+        additionalUserInfo: { isNewUser }
+      } = result;
+      //check to see if the users new
+      if (isNewUser) {
+        // register uses information on our backend
+        const user = await registerWithPopup(result);
+        // set state with user
+      } else if (/**user dne on backend */ false) {
+        //this would be an error on our db's part
+      } else {
+        //get user info from backend by uid
+      }
+      // TODO set global user info
     } catch (err) {
+      console.log(err);
       setError(err.message);
     }
   };

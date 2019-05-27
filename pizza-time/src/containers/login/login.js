@@ -65,10 +65,10 @@ export default function Login(props) {
     e.preventDefault();
     try {
       const result = await firebaseApp.auth().signInWithPopup(googleProvider);
-      // This gives you a Google Access Token. You can use it to access the Google API.
-      //const token = result.credential.accessToken;
-      // The signed-in user info.
-      //const user = result.user;
+      // const {
+      //   additionalUserInfo
+      // } = result;
+      //this contains user info that can be stored globally
     } catch (err) {}
   };
 
