@@ -1,0 +1,17 @@
+.searchBar {
+    margin: 0 auto;
+    margin-top: 20px;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+.searchBar h2 {
+    padding: 5px 20px 5px 5px;
+}
+
+#bar {
+    width: 20em;
+    padding: 5px;
+    border-radius: 10px;
+}
