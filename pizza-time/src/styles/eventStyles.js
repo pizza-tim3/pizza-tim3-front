@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { colors, fonts, media } from "../styles/variables.js";
 
 export const EventBox = styled.div`
   width: 100%;
@@ -13,7 +12,7 @@ export const Inner = styled.div`
   flex-direction: column;
   padding: 15px 0 15px 0;
   width: 90%;
-  ${media.mobile} {
+  @media (min-width: 600px) {
     padding: 25px 0 25px 0;
     width: 900px;
   }
@@ -74,34 +73,56 @@ export const EventRow = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 15px auto;
-  ${media.mobile} {
+  
+  .invite {
+    display: flex;
+    align-items: end;
+    justify-content: flex-end;
+   
+    }
+
+    h2 {
+      display: flex;
+      margin-top: 0px;
+      margin-right: 15px;
+    }
+    button {
+      margin-left: 15px;
+    }
+    img {
+      height: 40px;
+      width: 40px;
+    }
+  }
+  :first-child {
+    border-bottom: 2px solid black;
+  }
+  @media (min-width: 600px) {
     margin: 0px 25px 34px;
   }
-
   .btn-save {
     margin-top: 16px;
     width: 130px;
     height: 38px;
-    background-color: ${colors.primary};
-    border: 1px solid ${colors.white};
-    box-shadow: 0 0 7px 0px ${colors.shadow};
-    font-family: ${fonts.primary};
+    background-color: #ff5c00;
+    border: 1px solid #fff;
+    box-shadow: 0 0 7px 0px #d2d2d2;
+    font-family: "Montserrat", sans-serif;
     font-weight: 600;
     font-size: 15px;
-    color: ${colors.white};
+    color: #fff;
 
-    ${media.desktop} {
+    @media (min-width: 1100px) {
       margin-top: 22px;
       width: 140px;
       height: 42px;
     }
 
     &:hover {
-      color: ${colors.gray};
-      background-color: ${colors.white};
-      border: 1px solid ${colors.primary};
+      color: #737373;
+      background-color: #fff;
+      border: 1px solid #ff5c00;
       cursor: pointer;
     }
-  }
   }
 `;
