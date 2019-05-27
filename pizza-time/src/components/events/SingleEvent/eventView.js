@@ -13,13 +13,13 @@ class EventView extends React.Component {
     super(props);
     this.state = {
       event: {},
-      inviteOnly: true,
+      id: null,
     };
   }
+
   componentDidMount() {
     // Add axios call for prospective backend api
 
-    const id = this.props.match.params.id;
     // axios
     // .get(`https://pizza-tim3-be.herokuapp.com/api/events/${id}`)
     // .then(response => {
@@ -31,18 +31,40 @@ class EventView extends React.Component {
     // });
 
     // Map through events and set the state to the response
+    const currentId = this.props.match.params.id;
     const currentEvent = data.filter(event => {
-      if (Number(event.id) === Number(id)) {
+      if (Number(event.id) === Number(currentId)) {
         return true;
       }
     });
     this.setState({
       event: currentEvent[0],
+      id: currentId,
     });
   }
-  // onLoad setState to
-  // .get('url/events/:id')
-  // onClick post or put to ('url/events)
+  componentDidUpdate(prevProps) {
+    // Typical usage (don't forget to compare props):
+    const newId = this.props.match.params.id;
+    if (newId !== prevProps.match.params.id) {
+      const currentEvent = data.filter(event => {
+        if (Number(event.id) === Number(newId)) {
+          return true;
+        }
+      });
+      this.setState({
+        event: currentEvent[0],
+        id: newId,
+      });
+    }
+  }
+  toggleSwitch = () => {
+    this.setState(prevState => {
+      const stateCopy = { ...this.state };
+      stateCopy.event.inviteOnly = !prevState.event.inviteOnly;
+      return stateCopy;
+    });
+  };
+  // onClick put to ('url/events)
 
   render() {
     return (
@@ -50,7 +72,7 @@ class EventView extends React.Component {
         <Nav />
         {this.state.event ? (
           <div>
-            <Info event={this.state.event} inviteOnly={this.state.inviteOnly} />
+            <Info event={this.state.event} toggleSwitch={this.toggleSwitch} />
             <Participants event={this.state.event} />
             <Discussion event={this.state.event} />
           </div>
