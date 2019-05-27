@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { colors, fonts, media } from '../styles/variables.js';
 
 export const EventBox = styled.div`
   width: 100%;
@@ -7,15 +8,15 @@ export const EventBox = styled.div`
 export const Inner = styled.div`
   display: flex;
   margin: 0px auto;
-  box-shadow: 0 0 6px 0px #dfdfdf;
+  box-shadow: 0 0 6px 0px ${colors.shadow};
   margin-top: 20px;
   flex-direction: column;
   padding: 15px 0 15px 0;
   width: 90%;
-  @media (min-width: 600px) {
-    padding: 25px 0 25px 0;
-    width: 900px;
-  }
+   ${media.mobile} {
+      padding: 25px 0 25px 0;
+      width: 900px;
+    }
 `;
 
 export const Toggle = styled.span`
@@ -106,5 +107,4 @@ export const EventRow = styled.div`
       border: 1px solid ${colors.primary};
       cursor: pointer;
     }
-  }
 `;
