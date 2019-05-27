@@ -74,6 +74,10 @@ export const EventRow = styled.div`
   justify-content: space-between;
   padding: 15px auto;
 
+  :first-child {
+    border-bottom: 2px solid ${colors.black};
+  }
+
   ${media.mobile} {
     margin: 0px 25px 34px;
   }
