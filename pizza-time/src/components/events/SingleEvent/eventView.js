@@ -7,7 +7,7 @@ import Info from "./info.js";
 import Participants from "./participants";
 import Discussion from "./discussion";
 import data from "../../../data/data";
-
+import { Inner } from "../../../styles/eventStyles";
 class EventView extends React.Component {
   constructor(props) {
     super(props);
@@ -71,11 +71,11 @@ class EventView extends React.Component {
       <div>
         <Nav />
         {this.state.event ? (
-          <div>
+          <Inner>
             <Info event={this.state.event} toggleSwitch={this.toggleSwitch} />
             <Participants event={this.state.event} />
             <Discussion event={this.state.event} />
-          </div>
+          </Inner>
         ) : (
           <div />
         )}

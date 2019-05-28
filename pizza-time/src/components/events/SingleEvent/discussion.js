@@ -1,4 +1,5 @@
 import React from "react";
+import { EventRow } from "../../../styles/eventStyles";
 
 class Discussion extends React.Component {
   constructor(props) {
@@ -11,7 +12,10 @@ class Discussion extends React.Component {
   render() {
     return (
       <div>
-        <h1>Discussion</h1>
+        <EventRow className="event-invited">
+          <h3>Discussion</h3>
+          <hr />
+        </EventRow>
       </div>
     );
   }

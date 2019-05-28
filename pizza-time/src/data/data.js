@@ -46,14 +46,17 @@ export const events = [
       {
         user_id: 23,
         name: "Lori",
+        pending: false,
       },
       {
         user_id: 77,
         name: "Ana",
+        pending: true,
       },
       {
         user_id: 55,
         name: "Carole",
+        pending: false,
       },
     ],
   },
@@ -71,18 +74,26 @@ export const events = [
       {
         user_id: 2,
         name: "Stew",
+        pending: true,
+        logo: "",
       },
       {
         user_id: 7,
         name: "Pete",
+        pending: true,
+        logo: "",
       },
       {
         user_id: 14,
         name: "Teri",
+        pending: true,
+        logo: "",
       },
       {
         user_id: 19,
         name: "Chuck",
+        pending: true,
+        logo: "",
       },
     ],
   },

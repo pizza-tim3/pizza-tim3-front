@@ -45,6 +45,15 @@ export const Inner = styled.div`
         cursor: pointer;
       }
   }
+
+  .invited {
+    display: flex;
+    justify-content: space-between;
+
+    h4 {
+      text-align: left;
+    }
+
   // ${media.mobile} {
   //   padding: 25px 0 25px 0;
   //   width: 900px;
@@ -111,7 +120,12 @@ export const EventRow = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 15px auto;
-
+  align-items: center;
+  hr {
+    width: 80%;
+    border-bottom: 2px solid ${colors.primary};
+    margin-right: 0;
+  }
   .event {
     width: 50%;
     &.location {
@@ -125,12 +139,35 @@ export const EventRow = styled.div`
     }
     &.map {
       width: 50%;
+      align-self: start;
     }
     img {
       width: 90%;
     }
   }
 
+  .event-users {
+    align-items: center;
+    hr {
+      border-top: 3px solid ${colors.primary};
+      width: 70%;
+      margin-right: 0;
+    }
+    img {
+      width: 40px;
+      height: 40px;
+      margin-right: 5px;
+      :last-child {
+        padding: 8px;
+      }
+    }
+  }
+  .event-invite {
+    img {
+      max-width: 50px;
+      max-height: 50px;
+    }
+  }
   ${media.mobile} {
     margin: 0px 25px 34px;
   }

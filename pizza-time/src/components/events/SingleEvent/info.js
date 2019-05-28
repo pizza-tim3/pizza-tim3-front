@@ -43,7 +43,7 @@ class Info extends React.Component {
         {!this.props.event.location ? (
           <div> Loading...</div>
         ) : (
-          <Inner>
+          <EventBox>
             <div className="event-header">
               <h1>Name: {this.props.event.name}</h1>
               <button className="btn-save">Save</button>
@@ -114,7 +114,7 @@ class Info extends React.Component {
                 </div>
               </EventRow>
             </EventColumn>
-          </Inner>
+          </EventBox>
         )}
       </EventBox>
     );
