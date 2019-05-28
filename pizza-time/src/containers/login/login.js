@@ -1,6 +1,7 @@
 import React, { useReducer } from "react";
 import firebaseApp from "../../firebase/firebaseApp";
 import { Link } from "react-router-dom";
+import { googleProvider } from "../../firebase/authProviders";
 
 //need this import for "firebase.auth.Auth.Persistence.LOCAL" constant
 import firebase from "firebase/app";
@@ -60,18 +61,16 @@ export default function Login(props) {
     }
   };
 
-  // const signInWithGoogle = async e => {
-  //   e.preventDefault();
-  //   try {
-  //     const result = await firebaseApp.auth().signInWithPopup(googleProvider);
-  //     // This gives you a Google Access Token. You can use it to access the Google API.
-  //     //const token = result.credential.accessToken;
-  //     // The signed-in user info.
-  //     //const user = result.user;
-  //   } catch (err) {
-  //     setError(err.message);
-  //   }
-  // };
+  const signInWithGoogle = async e => {
+    e.preventDefault();
+    try {
+      const result = await firebaseApp.auth().signInWithPopup(googleProvider);
+      // const {
+      //   additionalUserInfo
+      // } = result;
+      //this contains user info that can be stored globally
+    } catch (err) {}
+  };
 
   return (
     <Wrap>

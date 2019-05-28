@@ -2,6 +2,7 @@ export const events = [
   {
     id: 1,
     user_id: 4,
+    inviteOnly: true,
     name: "Joes Bday!",
     location: {
       name: "Pizza Joint",
@@ -33,6 +34,7 @@ export const events = [
   {
     id: 2,
     user_id: 6,
+    inviteOnly: true,
     name: "Loris nameday!",
     location: {
       name: "Pete`s Pizza",
@@ -56,6 +58,7 @@ export const events = [
   {
     id: 3,
     user_id: 4,
+    inviteOnly: true,
     name: "Petes Graduation!",
     location: {
       name: "Guiseppe`s Pizza",
