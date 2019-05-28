@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors, fonts, media } from '../styles/variables.js';
+import { colors, fonts, media } from "../styles/variables.js";
 
 export const EventBox = styled.div`
   width: 100%;
@@ -12,11 +12,43 @@ export const Inner = styled.div`
   margin-top: 20px;
   flex-direction: column;
   padding: 15px 0 15px 0;
-  width: 90%;
-   ${media.mobile} {
-      padding: 25px 0 25px 0;
-      width: 900px;
-    }
+  width: 80%;
+
+  .event-header {
+    border-bottom: 2px solid ${colors.black} !important;
+    display: flex;
+    justify-content: space-between;
+    margin: 0px 25px 15px 25px;
+    padding: 20px 0px;
+    .btn-save {
+      margin-top: 16px;
+      width: 130px;
+      height: 38px;
+      background-color: ${colors.primary};
+      border: 1px solid ${colors.white};
+      box-shadow: 0 0 7px 0px ${colors.shadow};
+      font-family: ${fonts.primary};
+      font-weight: 600;
+      font-size: 15px;
+      color: ${colors.white};
+  
+      ${media.desktop} {
+        margin-top: 22px;
+        width: 140px;
+        height: 42px;
+      }
+  
+      &:hover {
+        color: ${colors.gray};
+        background-color: ${colors.white};
+        border: 1px solid ${colors.primary};
+        cursor: pointer;
+      }
+  }
+  // ${media.mobile} {
+  //   padding: 25px 0 25px 0;
+  //   width: 900px;
+  // }
 `;
 
 export const Toggle = styled.span`
@@ -70,41 +102,36 @@ export const Toggle = styled.span`
     transform: translateX(26px);
   }
 `;
+
+export const EventColumn = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 export const EventRow = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 15px auto;
 
-  :first-child {
-    border-bottom: 2px solid ${colors.black};
+  .event {
+    width: 50%;
+    &.location {
+      display: flex;
+      flex-direction: column;
+      img {
+        width: 90%;
+        margin: 0px auto 20px;
+        height: 200px;
+      }
+    }
+    &.map {
+      width: 50%;
+    }
+    img {
+      width: 90%;
+    }
   }
 
   ${media.mobile} {
     margin: 0px 25px 34px;
   }
-
-  .btn-save {
-    margin-top: 16px;
-    width: 130px;
-    height: 38px;
-    background-color: ${colors.primary};
-    border: 1px solid ${colors.white};
-    box-shadow: 0 0 7px 0px ${colors.shadow};
-    font-family: ${fonts.primary};
-    font-weight: 600;
-    font-size: 15px;
-    color: ${colors.white};
-
-    ${media.desktop} {
-      margin-top: 22px;
-      width: 140px;
-      height: 42px;
-    }
-
-    &:hover {
-      color: ${colors.gray};
-      background-color: ${colors.white};
-      border: 1px solid ${colors.primary};
-      cursor: pointer;
-    }
 `;

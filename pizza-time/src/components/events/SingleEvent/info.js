@@ -2,7 +2,13 @@ import React from "react";
 import Calendar from "react-calendar";
 import PlacesSearch from "../create-new-event/search/places-search";
 import calendar from "./../../../assets/calendar.svg";
-import { EventBox, EventRow, Inner, Toggle } from "../../../styles/eventStyles";
+import {
+  EventBox,
+  EventRow,
+  Inner,
+  Toggle,
+  EventColumn,
+} from "../../../styles/eventStyles";
 import { Modal } from "react-bootstrap";
 
 class Info extends React.Component {
@@ -38,10 +44,10 @@ class Info extends React.Component {
           <div> Loading...</div>
         ) : (
           <Inner>
-            <EventRow>
+            <div className="event-header">
               <h1>Name: {this.props.event.name}</h1>
               <button className="btn-save">Save</button>
-            </EventRow>
+            </div>
 
             <EventRow>
               {/* Modal */}
@@ -86,19 +92,28 @@ class Info extends React.Component {
               </div>
             </EventRow>
 
-            <EventRow>
-              <div>
+            <EventColumn>
+              <EventRow>
                 <h1>Location</h1>
-                <PlacesSearch />
-              </div>
-              <div>
-                <img alt="location" />
-                <h2>{this.props.event.date}</h2>
-                <h1>{this.props.event.location.name}</h1>
-
-                <div>Google Map</div>
-              </div>
-            </EventRow>
+                <input placeholder="search" />
+                {/* <PlacesSearch /> */}
+              </EventRow>
+              <EventRow>
+                <div className="event location">
+                  <img
+                    alt="location"
+                    src="https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.scandichotels.com%2Fimagevault%2Fpublishedmedia%2Fqn6infvg30381stkubky%2Fscandic-sundsvall-city-restaurant-verket-10.jpg&f=1"
+                  />
+                  <div>
+                    <h4>Place: {this.props.event.location.name}</h4>
+                    <address>{this.props.event.location.address}</address>
+                  </div>
+                </div>
+                <div className="event map">
+                  <img src="https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fgeoinfoindia.files.wordpress.com%2F2015%2F04%2Fgoogle-map.jpg&f=1" />
+                </div>
+              </EventRow>
+            </EventColumn>
           </Inner>
         )}
       </EventBox>

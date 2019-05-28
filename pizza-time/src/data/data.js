@@ -5,7 +5,8 @@ export const events = [
     inviteOnly: true,
     name: "Joes Bday!",
     location: {
-      name: "Pizza Joint",
+      name: "5 Slices Guys",
+      address: "143 Main st, Rockville, MD 20853",
     },
     event_date: "2019-03-14 13:18:54",
     attending_users: [
@@ -38,6 +39,7 @@ export const events = [
     name: "Loris nameday!",
     location: {
       name: "Pete`s Pizza",
+      address: "143 Main st, Rockville, MD 20853",
     },
     event_date: "2019-07-30 18:18:54",
     attending_users: [
@@ -62,6 +64,7 @@ export const events = [
     name: "Petes Graduation!",
     location: {
       name: "Guiseppe`s Pizza",
+      address: "143 Main st, Rockville, MD 20853",
     },
     event_date: "2019-12-30 16:18:54",
     attending_users: [
