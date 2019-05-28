@@ -14,6 +14,7 @@ const Participants = props => {
         <hr />
       </EventRow>
       <EventRow>
+        {/* Shows list of invited users */}
         <div className="event-users">
           <img src={user1} alt="user1" />
           <img src={user2} alt="user2" />
@@ -22,6 +23,7 @@ const Participants = props => {
           <img src={plus} alt="plus" />
         </div>
         <div className="event-invite">
+          {/* Invite more users ui */}
           <img src={invite} alt="invite " />
         </div>
       </EventRow>
