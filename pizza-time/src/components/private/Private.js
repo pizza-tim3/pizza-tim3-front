@@ -1,21 +1,6 @@
 import React, { useState, useEffect } from "react";
 import firebaseApp from "../../firebase/firebaseApp";
-
-const makeRequestWithFireBaseToken = async (url, method) => {
-  //get the token off of the current user
-  //idealistically this could be on some global state
-  const token = await firebaseApp.auth().currentUser.getIdToken();
-
-  const options = {
-    method: method.toUpperCase(), // *GET, POST, PUT, DELETE, etc.
-    headers: {
-      Authorization: token
-    }
-  };
-  const responseFromServer = await fetch(url, options);
-  const json = await responseFromServer.json();
-  console.log(json);
-};
+import authorizedRequest from "../../firebase/authorizedRequest";
 
 export default function Private() {
   const [uid, setUid] = useState(null);
@@ -34,20 +19,14 @@ export default function Private() {
       <h1>This is a Private component</h1>
       <button
         onClick={() => {
-          makeRequestWithFireBaseToken(
-            "http://localhost:5500/restricted",
-            "get"
-          );
+          authorizedRequest("http://localhost:5500/restricted", "get");
         }}
       >
         Make Private Request
       </button>
       <button
         onClick={() => {
-          makeRequestWithFireBaseToken(
-            `http://localhost:5500/restricted/${uid}`,
-            "get"
-          );
+          authorizedRequest(`http://localhost:5500/restricted/${uid}`, "get");
         }}
       >
         Make Private User Specific Request
