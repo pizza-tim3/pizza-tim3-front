@@ -3,7 +3,7 @@ import './map.css';
 import PlacesList from '../list/places-list';
 import axios from 'axios';
 
-const GoogleMap = () => {
+const GoogleMap = (props) => {
     const [lat, setLat] = useState();
     const [lng, setLng] = useState();
     const [placesData, setData] = useState([])
@@ -109,6 +109,8 @@ const GoogleMap = () => {
       axios.post('http://localhost:5500/api/placesId/', placeid)
         .then(res => console.log('returned from post:', res))
         .catch(e => console.log(e))
+
+      props.getId(placeId);
     }
 
       return (
