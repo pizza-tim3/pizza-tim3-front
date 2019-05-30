@@ -6,9 +6,10 @@ import axios from 'axios';
 const GoogleMap = (props) => {
     const [lat, setLat] = useState();
     const [lng, setLng] = useState();
-    const [placesData, setData] = useState([])
+    const [placesData, setData] = useState([]);
+    const API_KEY = process.env.REACT_APP_GOOGLE_PLACES_API_KEY;
+    const url = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places&callback=initMap`;
     let service;
-    let url = "https://maps.googleapis.com/maps/api/js?key=AIzaSyA4QgeLdTkXC_ulBAtLDmaY8nEaqZeRtsE&libraries=places&callback=initMap"
     let data = [];
     //used in place of componentDidMount to render the map
     useEffect(() => {

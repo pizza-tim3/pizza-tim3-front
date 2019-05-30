@@ -5,8 +5,9 @@ import React, { useState, useEffect } from 'react';
 const Details = (props) => {
   const [data, setData] = useState([]);
   const [loading, setIsLoading] = useState(false);
+  const API_KEY = process.env.REACT_APP_GOOGLE_PLACES_API_KEY;
   
-  let url = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyA4QgeLdTkXC_ulBAtLDmaY8nEaqZeRtsE&libraries=places&callback=initMap';
+  let url = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places&callback=initMap`;
 
   useEffect(() => {
     renderMap();
