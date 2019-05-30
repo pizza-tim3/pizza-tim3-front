@@ -23,6 +23,7 @@ export default function Private() {
     setData(json);
   };
 
+  // make sure the user trying to modify anything is the same user that's making the request
   const makeUserSpecificRestrictedRequest = async () => {
     const json = await authorizedRequest(
       `http://localhost:5500/api/restricted/${uid}`,
@@ -30,22 +31,31 @@ export default function Private() {
     );
     setData(json);
   };
+
+  // promote user to admin
   const promoteUserToAdmin = async () => {
     const json = await authorizedRequest(
       `http://localhost:5500/api/admin/promote/${uid}`,
       "get"
     );
-    setData(json);
-  };
-  const makeAdminRequiredRequest = async () => {
-    const json = await authorizedRequest(
-      `http://localhost:5500/api/restricted/${uid}/admin`,
-      "get"
-    );
+    // when you update custom claims you need to refresh the users token
+    //  for the changes totake effect
+    await firebaseApp.auth().currentUser.getIdToken(true);
     setData(json);
   };
 
-  const revokedAdminStatus = async () => {
+  const demoteAdminStatus = async () => {
+    const json = await authorizedRequest(
+      `http://localhost:5500/api/admin/demote/${uid}`,
+      "put"
+    );
+    // when you update custom claims you need to refresh the users token
+    //  for the changes totake effect
+    await firebaseApp.auth().currentUser.getIdToken(true);
+    setData(json);
+  };
+
+  const makeAdminRequiredRequest = async () => {
     const json = await authorizedRequest(
       `http://localhost:5500/api/restricted/${uid}/admin`,
       "get"
@@ -61,10 +71,10 @@ export default function Private() {
         Make Private User Specific Request
       </button>
       <button onClick={promoteUserToAdmin}>Make User an Admin</button>
+      <button onClick={demoteAdminStatus}>Revoke user's admin status</button>
       <button onClick={makeAdminRequiredRequest}>
         Make admin protected request
       </button>
-      <button onClick={revokedAdminStatus}>Revoke user's admin status</button>
       <button onClick={() => firebaseApp.auth().signOut()}>Logout</button>
       {data && data.message ? <p>{data.message}</p> : null}
       {data && data.error ? <p style={{ color: "red" }}>{data.error}</p> : null}
