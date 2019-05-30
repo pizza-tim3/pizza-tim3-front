@@ -61,7 +61,6 @@ export default function Login(props) {
     }
   };
 
-  //TODO implement a sign in with google
   //TODO added checks to make sure that the registered users registered on our back and
   const signInWithGoogle = async e => {
     e.preventDefault();
@@ -99,9 +98,9 @@ export default function Login(props) {
           }}
         />
         <button type="submit">Sign In</button>
-        {/* <button onClick={signInWithGoogle} type="button">
+        <button onClick={signInWithGoogle} type="button">
           Sign In With Google
-        </button> */}
+        </button>
         <p>
           Dont have an account?
           <br />
