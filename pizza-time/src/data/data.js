@@ -8,7 +8,7 @@ export const events = [
       name: "5 Slices Guys",
       address: "143 Main st, Rockville, MD 20853",
     },
-    event_date: "2019-03-14 13:18:54",
+    event_date: new Date(),
     attending_users: [
       {
         user_id: 13,
@@ -45,7 +45,7 @@ export const events = [
       name: "Pete`s Pizza",
       address: "143 Main st, Rockville, MD 20853",
     },
-    event_date: "2019-07-30 18:18:54",
+    event_date: new Date(),
     attending_users: [
       {
         user_id: 23,
@@ -77,7 +77,7 @@ export const events = [
       name: "Guiseppe`s Pizza",
       address: "143 Main st, Rockville, MD 20853",
     },
-    event_date: "2019-12-30 16:18:54",
+    event_date: new Date(),
     attending_users: [
       {
         user_id: 2,

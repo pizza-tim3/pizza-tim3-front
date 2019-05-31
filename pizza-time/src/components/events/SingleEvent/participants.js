@@ -17,7 +17,6 @@ class Participants extends React.Component {
   componentDidMount() {
     const spans = document.getElementsByClassName("more-user");
     const span = spans[0];
-    // const close = document.getElementsByClassName("close-more");
     const addUserButton = document.getElementsByClassName("add-user");
 
     span.style.display = "none";
@@ -25,7 +24,6 @@ class Participants extends React.Component {
 
     if (addUserButton[0]) {
       addUserButton[0].onclick = function() {
-        // console.log("Clicked");
         if (span.style.display === "none") {
           span.style.display = "flex";
           span.className = "more";
@@ -33,7 +31,6 @@ class Participants extends React.Component {
             const close = document.getElementsByClassName("close-more");
 
             close[0].onclick = function() {
-              console.log("Close was clicked;");
               span.style.display = "none";
               span.className = "";
             };
