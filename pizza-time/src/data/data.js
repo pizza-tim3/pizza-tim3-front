@@ -31,6 +31,10 @@ export const events = [
         pending: true,
       },
     ],
+    comments: [
+      { user_id: 3, comment: "This is a greate place" },
+      { user_id: 15, comment: "Boy, oh boy" },
+    ],
   },
   {
     id: 2,
@@ -58,6 +62,10 @@ export const events = [
         name: "Carole",
         pending: false,
       },
+    ],
+    comments: [
+      { user_id: 6, comment: "This is a not bad" },
+      { user_id: 35, comment: "can not wait" },
     ],
   },
   {
@@ -95,6 +103,10 @@ export const events = [
         pending: true,
         logo: "",
       },
+    ],
+    comments: [
+      { user_id: 3, comment: "This is a greate place" },
+      { user_id: 15, comment: "Boy, oh boy" },
     ],
   },
 ];

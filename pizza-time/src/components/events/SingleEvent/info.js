@@ -45,16 +45,15 @@ class Info extends React.Component {
         ) : (
           <EventBox>
             <div className="event-header">
-              <h1>Name: {this.props.event.name}</h1>
+              <h1>
+                <b>Event</b>: {this.props.event.name}
+              </h1>
               <button className="btn-save">Save</button>
             </div>
 
-            <EventRow>
+            <EventRow className="event-date">
               {/* Modal */}
               <Modal show={this.state.show} onHide={this.handleClose}>
-                <Modal.Header closeButton>
-                  <Modal.Title>Pick a date</Modal.Title>
-                </Modal.Header>
                 <Modal.Body>
                   <h1>Pick a date:</h1>
                   {/* Calendar */}
@@ -66,23 +65,20 @@ class Info extends React.Component {
                 </Modal.Body>
                 <Modal.Footer>
                   {/* Close Calendar */}
-                  <button variant="secondary" onClick={this.handleClose}>
-                    Close
+
+                  <button className="btn-save" onClick={this.handleClose}>
+                    Save
                   </button>
                 </Modal.Footer>
               </Modal>
               <div className="calendar">
                 <h2>
-                  Date:
-                  <img
-                    src={calendar}
-                    alt="calendar"
-                    onClick={this.handleShow}
-                  />
+                  <b>Date</b>:<span>{this.props.event.event_date}</span>
                 </h2>
+                <img src={calendar} alt="calendar" onClick={this.handleShow} />
               </div>
-              <div className="invite">
-                <h2>By Invite Only: </h2>
+              <div className="invite-switch">
+                <h3>By Invite Only: </h3>
                 <Toggle>
                   <label className="switch">
                     <input onClick={this.inviteHandler} type="checkbox" />
@@ -93,7 +89,7 @@ class Info extends React.Component {
             </EventRow>
 
             <EventColumn>
-              <EventRow>
+              <EventRow className="event-location">
                 <h1>Location</h1>
                 <input placeholder="search" />
                 {/* <PlacesSearch /> */}

@@ -25,5 +25,23 @@
 
 .react-calendar {
   min-width: 100%;
-  /* margin: 0px auto; */
+  padding: 8px;
+}
+.btn-save {
+  width: 130px;
+  height: 38px;
+  background-color: #ff5c00;
+  border: 1px solid #ffffff;
+  box-shadow: 0 0 7px 0px #d2d2d2;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 600;
+  font-size: 15px;
+  color: #ffffff;
+}
+
+.btn-save:hover {
+  color: #737373;
+  background-color: #fff;
+  border: 1px solid #ff5c00;
+  cursor: pointer;
 }
