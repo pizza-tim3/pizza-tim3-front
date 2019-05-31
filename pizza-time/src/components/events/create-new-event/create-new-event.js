@@ -1,5 +1,4 @@
 import React, {useState, useEffect} from 'react';
-import './events.css';
 import Loading from '../../loading/loading';
 import DatePicker from './date/date-picker';
 import FriendPicker from './friendPicker/friendPicker';

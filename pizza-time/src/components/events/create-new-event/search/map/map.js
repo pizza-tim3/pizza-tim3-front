@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './map.css';
 import PlacesList from '../list/places-list';
 import axios from 'axios';
 
