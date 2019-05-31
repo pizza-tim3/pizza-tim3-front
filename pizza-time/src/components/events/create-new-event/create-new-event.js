@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import './events.css';
+import Loading from '../../loading/loading';
 import DatePicker from './date/date-picker';
 import FriendPicker from './friendPicker/friendPicker';
 import ConfirmationPage from './confirmation/confirmation';
@@ -21,13 +22,11 @@ const CreateNewEvent = () => {
         // setPageThree(true);
     }, [])
 
-    const handleNextPage = () => {
-        setPage(page + 1);
-    }
+    const handleNextPage = () => setPage(page + 1);
 
     if(isLoading) {
         return(
-            <div>Loading....</div>
+            <Loading />
     )} else {
 
         switch(page) {

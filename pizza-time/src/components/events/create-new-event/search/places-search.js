@@ -3,14 +3,9 @@ import SearchBar from './search/search-bar';
 import GoogleMap from './map/map';
 
 const PlacesSearch = (props) => {
-
     const [placeId, setPlaceId] = useState('');
+    const handleGetPlaceId = (id) => setPlaceId(id);
 
-    const handleGetPlaceId = (id) => {
-        setPlaceId(id);
-    }
-
-    console.log(placeId)
     return(
         <div className="places-search-wrapper">
             <h1>Pick a place near you or search somewhere else!</h1>
