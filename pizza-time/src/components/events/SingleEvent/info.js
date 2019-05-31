@@ -22,6 +22,15 @@ class Info extends React.Component {
     this.handleClose = this.handleClose.bind(this);
   }
 
+  componentDidMount() {
+    // if (this.props.event !== "undefined") {
+    const eventDate = new Date(this.props.event.event_date);
+    console.log(eventDate);
+    this.setState({
+      date: eventDate,
+    });
+    // }
+  }
   // Switch handlers for evnts inviteOnly property
   inviteHandler = e => {
     this.props.toggleSwitch();
@@ -40,7 +49,7 @@ class Info extends React.Component {
   render() {
     return (
       <EventBox>
-        {!this.props.event.location ? (
+        {!this.props.event ? (
           <div> Loading...</div>
         ) : (
           <EventBox>
@@ -73,7 +82,7 @@ class Info extends React.Component {
               </Modal>
               <div className="calendar">
                 <h2>
-                  <b>Date</b>:<span>{this.props.event.event_date}</span>
+                  <b>Date</b>:<span>{this.state.date.toISOString()}</span>
                 </h2>
                 <img src={calendar} alt="calendar" onClick={this.handleShow} />
               </div>

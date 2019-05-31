@@ -79,7 +79,7 @@ class EventView extends React.Component {
     return (
       <div>
         <Nav />
-        {this.state.event ? (
+        {Object.keys(this.state.event).length ? (
           <Inner>
             <Info event={this.state.event} toggleSwitch={this.toggleSwitch} />
             <Participants addUser={this.addUser} event={this.state.event} />
