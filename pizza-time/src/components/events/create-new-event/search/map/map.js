@@ -12,8 +12,10 @@ const GoogleMap = (props) => {
     let service;
     let data = [];
     //used in place of componentDidMount to render the map
+    
     useEffect(() => {
-      renderMap()
+      // eslint-disable-next-line (react-hooks/exhaustive-deps)
+      renderMap();
     }, []);
 
     //renderMap will call the loadScript function and pass in the URL, this creates the DOM script element that is needed in order to 

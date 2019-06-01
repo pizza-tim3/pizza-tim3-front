@@ -8,10 +8,7 @@ import NameAndDetails from './name-details/name-details';
 
 const CreateNewEvent = () => {
     const [page, setPage] = useState(1);
-    const [readyToConfirm, setReadyToConfirm] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
-    const [placeId, setPlaceId] = useState('');
-
 
     useEffect(() => {
         setTimeout(() => {

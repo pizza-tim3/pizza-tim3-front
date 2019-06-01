@@ -3,6 +3,7 @@ import React from 'react';
 //props from map : data={placesData} handleClick = {handleOnClick}
 
 const PlacesList = (props) => {
+    console.log(props.data);
     return(
         <div className='card-container'>
             <h1>Results:</h1>

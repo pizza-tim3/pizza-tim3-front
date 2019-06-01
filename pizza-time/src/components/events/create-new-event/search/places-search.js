@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState} from 'react';
 import SearchBar from './search/search-bar';
 import GoogleMap from './map/map';
 
