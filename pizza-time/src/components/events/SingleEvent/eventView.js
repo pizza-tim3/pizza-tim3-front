@@ -3,7 +3,7 @@ import React from "react";
 import Nav from "../../home-header/home-header.js";
 import Footer from "../../footer/footer.js";
 import Info from "./info.js";
-// import axios from "axios";
+import axios from "axios";
 import Participants from "./participants";
 import Discussion from "./discussion";
 import data from "../../../data/data";
@@ -13,25 +13,26 @@ class EventView extends React.Component {
     super(props);
     this.state = {
       event: {},
-      id: null,
+      id: null
     };
   }
 
   componentDidMount() {
     // Add axios call for prospective backend api
-
+    const currentId = this.props.match.params.id;
     // axios
-    // .get(`https://pizza-tim3-be.herokuapp.com/api/events/${id}`)
-    // .then(response => {
-    // })
-    // .catch(err => {
-    // this.setState({
-    //   event: data,
-    // });
-    // });
+    //   .get(`https://pizza-tim3-be.herokuapp.com/api/events/${currentId}`)
+    //   .then(response => {
+    //     console.log(response);
+    //   })
+    //   .catch(err => {
+    //     this.setState({
+    //       event: data
+    //     });
+    //   });
 
     // Map through events and set the state to the response
-    const currentId = this.props.match.params.id;
+
     // console.log(currentId);
     // console.log(data);/
     const currentEvent = data.filter(
@@ -39,7 +40,7 @@ class EventView extends React.Component {
     );
     this.setState({
       event: currentEvent[0],
-      id: currentId,
+      id: currentId
     });
     // console.log(this.state.event);
   }
@@ -54,7 +55,7 @@ class EventView extends React.Component {
       });
       this.setState({
         event: currentEvent[0],
-        id: newId,
+        id: newId
       });
     }
   }
@@ -63,7 +64,7 @@ class EventView extends React.Component {
     stateEvent.attending_users.push(user);
 
     this.setState({
-      event: stateEvent,
+      event: stateEvent
     });
   };
   toggleSwitch = () => {
