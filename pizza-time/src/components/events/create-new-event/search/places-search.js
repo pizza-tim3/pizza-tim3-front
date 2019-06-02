@@ -3,22 +3,24 @@ import SearchBar from './search/search-bar';
 import GoogleMap from './map/map';
 
 import {
-    Wrap,
-    Inner,
-} from '../../../../styles/placesSearchStyles';
+    PlacesSearchWrap,
+    PlacesSearchInner,
+} from '../../../../styles/placesSearchStyles.js';
 
 const PlacesSearch = (props) => {
     const [placeId, setPlaceId] = useState('');
-    const handleGetPlaceId = (id) => setPlaceId(id);
+    const handleGetPlaceId = id => setPlaceId(id);
 
     return(
-        <Wrap>
-            <Inner>
+        <PlacesSearchWrap>
+            <PlacesSearchInner>
                 <SearchBar />
                 <GoogleMap getId={handleGetPlaceId}/>
-                <button className="next" onClick={() => {props.handleClick()}}>Next Step</button>
-            </Inner>
-        </Wrap>
+                <button 
+                    className="next"
+                    onClick={() => props.handleClick()}>Next Step</button>
+            </PlacesSearchInner>
+        </PlacesSearchWrap>
     )
 }
 

@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { colors, fonts, media } from '../styles/variables.js';
 
-export const Wrap = styled.div`
+export const PlacesSearchWrap = styled.div`
   width: 100%;
   height: 100%;
   background: linear-gradient(155.4deg, ${colors.secondary} 0%, ${colors.primary} 99.11%);
@@ -11,7 +11,7 @@ export const Wrap = styled.div`
   align-items: center;
 `;
 
-  export const Inner = styled.div`
+  export const PlacesSearchInner = styled.div`
     display: flex;
     flex-flow: column nowrap;
     border: 1px solid ${colors.white};
@@ -23,10 +23,6 @@ export const Wrap = styled.div`
       ${media.mobile} {
         width: 500px;
         margin: 50px 0 50px 0;
-      }
-      ${media.tablet} {
-        width: 600px;
-        margin: 60px 0 60px 0;
       }
 
     .next {
