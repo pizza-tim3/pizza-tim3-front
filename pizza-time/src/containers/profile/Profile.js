@@ -1,6 +1,11 @@
 import React, { useReducer } from "react";
+import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 
 import Nav from "../../components/home-header/home-header.js";
+import FriendSearchBox from "../../components/friend-search-box/friend-search-box";
+import ProfileUserInfo from "../../components/profile-user-info/profile-user-info";
+
+import { Wrap, Inner } from "../../styles/userhomeStyles.js";
 
 const Profile = () => {
   const [state, dispatch] = useReducer(
@@ -29,7 +34,32 @@ const Profile = () => {
   return (
     <div>
       <Nav />
-      <h2> Profile Works! </h2>
+      <Wrap>
+        <ProfileUserInfo {...state} />
+        <FriendSearchBox />
+        <a href="#">Invite A Friend!</a>
+        {/* User info */}
+        <Inner>
+          <Tabs defaultIndex={1}>
+            <TabList className="tabBox">
+              <Tab className="filterBtn" selectedClassName="filterBtnActive">
+                Favorites
+              </Tab>
+              <Tab className="filterBtn" selectedClassName="filterBtnActive">
+                Friends
+              </Tab>
+            </TabList>
+            <TabPanel className="tab">
+              <h3>Favorites</h3>
+              {/* Favorites Component */}
+            </TabPanel>
+            <TabPanel className="tab">
+              <h3>Friends</h3>
+              {/* Favorites Component */}
+            </TabPanel>
+          </Tabs>
+        </Inner>
+      </Wrap>
     </div>
   );
 };

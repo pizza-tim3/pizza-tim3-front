@@ -1,5 +1,7 @@
 import React from "react";
 
+//search box to find a new friend
+//used in: profile
 export default function FriendSearchBox() {
   return (
     <>
