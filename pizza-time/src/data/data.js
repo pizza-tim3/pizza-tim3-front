@@ -5,7 +5,8 @@ export const events = [
     inviteOnly: true,
     name: "Joes Bday!",
     location: {
-      name: "Pizza Joint",
+      name: "5 Slices Guys",
+      address: "143 Main st, Rockville, MD 20853",
     },
     event_date: "2019-03-14 13:18:54",
     attending_users: [
@@ -30,6 +31,10 @@ export const events = [
         pending: true,
       },
     ],
+    comments: [
+      { user_id: 3, comment: "This is a greate place" },
+      { user_id: 15, comment: "Boy, oh boy" },
+    ],
   },
   {
     id: 2,
@@ -38,21 +43,29 @@ export const events = [
     name: "Loris nameday!",
     location: {
       name: "Pete`s Pizza",
+      address: "143 Main st, Rockville, MD 20853",
     },
-    event_date: "2019-07-30 18:18:54",
+    event_date: "Wed May 1 2019 22:39:06 GMT-0400",
     attending_users: [
       {
         user_id: 23,
         name: "Lori",
+        pending: false,
       },
       {
         user_id: 77,
         name: "Ana",
+        pending: true,
       },
       {
         user_id: 55,
         name: "Carole",
+        pending: false,
       },
+    ],
+    comments: [
+      { user_id: 6, comment: "This is a not bad" },
+      { user_id: 35, comment: "can not wait" },
     ],
   },
   {
@@ -62,27 +75,39 @@ export const events = [
     name: "Petes Graduation!",
     location: {
       name: "Guiseppe`s Pizza",
+      address: "143 Main st, Rockville, MD 20853",
     },
-    event_date: "2019-12-30 16:18:54",
+    event_date: "Fri May 10 2019 22:39:06 GMT-0400",
     attending_users: [
       {
         user_id: 2,
         name: "Stew",
+        pending: true,
+        logo: "",
       },
       {
         user_id: 7,
         name: "Pete",
+        pending: true,
+        logo: "",
       },
       {
         user_id: 14,
         name: "Teri",
+        pending: true,
+        logo: "",
       },
       {
         user_id: 19,
         name: "Chuck",
+        pending: true,
+        logo: "",
       },
+    ],
+    comments: [
+      { user_id: 3, comment: "This is a greate place" },
+      { user_id: 15, comment: "Boy, oh boy" },
     ],
   },
 ];
-
 export default events;
