@@ -5,6 +5,7 @@ import { Route, Switch, Link } from "react-router-dom";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Private from "./components/private/Private";
 import UserDashboard from "./containers/user-dashboard/user-dashboard";
+//import UserDashboard from "./components/Dashboard/UserDashboard";
 import CreateNewEvent from "./components/events/create-new-event/create-new-event";
 import EventView from "./components/events/SingleEvent/eventView";
 import Favorites from "./containers/favorites/favorites";
