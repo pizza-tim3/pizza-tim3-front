@@ -9,6 +9,10 @@ import NameAndDetails from './name-details/name-details';
 const CreateNewEvent = () => {
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
+    const [placeId, setPlaceId] = useState('');
+    const [eventDetails, setEventDetails] = useState({});
+    const [dateTime, setDateTime] = useState({});
+    const [friends, setFriends] = useState([]);
 
     useEffect(() => {
         setTimeout(() => {
@@ -18,15 +22,30 @@ const CreateNewEvent = () => {
         // setPageThree(true);
     }, [])
 
-    const handleNextPage = () => {
+    const handleNextPage = (stateToChange, newValue) => {
         setPage(page + 1);
+        console.log(stateToChange, newValue);
+
+        switch(stateToChange) {
+            case 'placeID':
+                setPlaceId(newValue);
+                break;
+            case 'event':
+                setEventDetails(newValue);
+                break;
+            case 'dateTime': 
+                setDateTime(newValue);
+                break;
+            case 'addFriends':
+                setFriends(newValue);
+                break;
+        }
     }
 
     if(isLoading) {
         return(
             <div>Loading....</div>
     )} else {
-
         switch(page) {
             case 1:
                 return(
@@ -55,7 +74,12 @@ const CreateNewEvent = () => {
             case 5:
                 return(
                     <div className='events-wrapper'>
-                        <ConfirmationPage />
+                        <ConfirmationPage 
+                            place={placeId} 
+                            event={eventDetails} 
+                            dateTime={dateTime}
+                            friends={friends}
+                        />
                     </div>
                 );
         }

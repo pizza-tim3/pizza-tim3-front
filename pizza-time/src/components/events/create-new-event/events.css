@@ -2,3 +2,23 @@
 .places-search-wrapper {
     margin-top: 2em;
 }
+
+.friends {
+    margin: 0 auto;
+    width: 100%;
+}
+
+.friendWrapper {
+    margin: 0 auto;
+    border: 1px solid black;
+    width: 33%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: center;
+}
+
+.friendWrapper img {
+    width: 30px;
+    height: 30px;
+}

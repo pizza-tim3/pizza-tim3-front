@@ -18,12 +18,21 @@ const useStyles = makeStyles(theme => ({
 
 
 const DatePicker = (props) => {
+
+    const sendData = () => {
+        let dateTime = {
+            date: inputs.date,
+            time: inputs.time
+        }
+        props.handleClick('dateTime', dateTime);
+    }
+
     const classes = useStyles();
-    const {inputs, handleInputChange, handleSubmit} = useForm();
+    const {inputs, handleInputChange, handleSubmit} = useForm(sendData);
     
     return (
         <div>
-            <form onSubmit={handleSubmit} className={classes.container} noValidate>
+            <div className={classes.container} noValidate>
                 <TextField
                     name="date"
                     id="date"
@@ -35,8 +44,8 @@ const DatePicker = (props) => {
                     onChange={handleInputChange}
                     value={inputs.date}
                 />
-            </form>
-            <form className={classes.container} noValidate>
+            </div>
+            <div className={classes.container} noValidate>
                 <TextField
                     name="time"
                     id="time"
@@ -49,8 +58,8 @@ const DatePicker = (props) => {
                     onChange={handleInputChange}
                     value={inputs.time}
                 />
-            </form>
-            <button type='submit' onClick={() => {props.handleClick()}}>Next Step</button>
+            </div>
+            <button type='submit' onClick={() => {handleSubmit()}}>Next Step</button>
         </div>
     );
 }
