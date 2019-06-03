@@ -222,7 +222,7 @@ export const EventRow = styled.div`
     ${media.desktop} {
       width: 45%;
     }
-    img {
+    img, #map {
       height: 300px;
     }
     &.location {
@@ -239,6 +239,14 @@ export const EventRow = styled.div`
     &.map {
       align-items: start;
       img {
+        width: 100%;
+      }
+      .map-search {
+        margin: 0px;
+        width: 100%;
+      }
+      #map {
+        margin: 0px;
         width: 100%;
       }
     }

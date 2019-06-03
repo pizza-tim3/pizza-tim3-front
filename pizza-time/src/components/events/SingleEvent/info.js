@@ -3,6 +3,7 @@ import Calendar from "react-calendar";
 // import PlacesSearch from "../create-new-event/search/places-search";
 import calendar from "./../../../assets/calendar.svg";
 import moment from "moment";
+import GoogleMap from "./../create-new-event/search/map/map";
 
 import {
   EventBox,
@@ -18,6 +19,7 @@ class Info extends React.Component {
     this.state = {
       date: new Date(),
       show: false,
+      google_place_id: "",
     };
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -25,10 +27,15 @@ class Info extends React.Component {
 
   componentDidMount() {
     const eventDate = new Date(this.props.event.event_date);
+    const location_id = this.props.event.location.google_place_id;
+    console.log(location_id);
     this.setState({
       date: eventDate,
+      google_place_id: location_id,
     });
-    // }
+
+    const list = document.getElementsByClassName("card-container");
+    list[0].style.display = "none";
   }
   // Switch handlers for evnts inviteOnly property
   inviteHandler = e => {
@@ -114,8 +121,9 @@ class Info extends React.Component {
                     <address>{this.props.event.location.address}</address>
                   </div>
                 </div>
+
                 <div className="event map">
-                  <img src="https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fgeoinfoindia.files.wordpress.com%2F2015%2F04%2Fgoogle-map.jpg&f=1" />
+                  <GoogleMap getId={this.state.google_place_id} />
                 </div>
               </EventRow>
             </EventColumn>
