@@ -9,16 +9,22 @@ import {
   Action,
 } from '../../styles/cardStyles.js';
 
+class Card extends React.Component {
 
-const Card = () => {
+  constructor(props) {
+    super(props);
+  }
+
+render () {
+  const date = new Date(this.props.event.event_date).toString();
   return (
     <CardBox>
       <Inner>
         <Content>
           <img src={Envelope} />
           <div className="content">
-            <p><span>Location:</span> Pizza Hut</p>
-            <p><span>Date:</span> May 30, 2019</p>
+            <p><span>Name:</span> { this.props.event.event_name} </p>
+            <p><span>Date:</span> { date}</p>
             <p><span>Attending:</span> User1, User2</p>
           </div>
         </Content>
@@ -37,5 +43,6 @@ const Card = () => {
     </CardBox>
   );
 };
+}
 
 export default Card;
