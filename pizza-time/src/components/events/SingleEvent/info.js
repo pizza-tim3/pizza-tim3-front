@@ -1,11 +1,12 @@
 import React from "react";
 import Calendar from "react-calendar";
-import PlacesSearch from "../create-new-event/search/places-search";
+// import PlacesSearch from "../create-new-event/search/places-search";
 import calendar from "./../../../assets/calendar.svg";
+import moment from "moment";
+
 import {
   EventBox,
   EventRow,
-  Inner,
   Toggle,
   EventColumn,
 } from "../../../styles/eventStyles";
@@ -23,9 +24,7 @@ class Info extends React.Component {
   }
 
   componentDidMount() {
-    // if (this.props.event !== "undefined") {
     const eventDate = new Date(this.props.event.event_date);
-    console.log(eventDate);
     this.setState({
       date: eventDate,
     });
@@ -49,13 +48,11 @@ class Info extends React.Component {
   render() {
     return (
       <EventBox>
-        {!this.props.event ? (
-          <div> Loading...</div>
-        ) : (
+        {Object.keys(this.props.event).length ? (
           <EventBox>
             <div className="event-header">
               <h1>
-                <b>Event</b>: {this.props.event.name}
+                <b>Event</b>: {this.props.event.event_name}
               </h1>
               <button className="btn-save">Save</button>
             </div>
@@ -82,7 +79,10 @@ class Info extends React.Component {
               </Modal>
               <div className="calendar">
                 <h2>
-                  <b>Date</b>:<span>{this.state.date.toISOString()}</span>
+                  <b>Date</b>:
+                  <span>
+                    {moment(this.state.date.toISOString()).format("LLLL")}
+                  </span>
                 </h2>
                 <img src={calendar} alt="calendar" onClick={this.handleShow} />
               </div>
@@ -110,7 +110,7 @@ class Info extends React.Component {
                     src="https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.scandichotels.com%2Fimagevault%2Fpublishedmedia%2Fqn6infvg30381stkubky%2Fscandic-sundsvall-city-restaurant-verket-10.jpg&f=1"
                   />
                   <div>
-                    <h4>Place: {this.props.event.location.name}</h4>
+                    <h4>Place: {this.props.event.location.id}</h4>
                     <address>{this.props.event.location.address}</address>
                   </div>
                 </div>
@@ -120,6 +120,8 @@ class Info extends React.Component {
               </EventRow>
             </EventColumn>
           </EventBox>
+        ) : (
+          <div> Loading...</div>
         )}
       </EventBox>
     );

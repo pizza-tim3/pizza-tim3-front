@@ -192,10 +192,16 @@ export const EventRow = styled.div`
     img {
       width: 40px;
       height: 40px;
-      margin: 0px 8px;
+      margin: 0px 0px 0px 8px;
+    }
+    span {
+      font-size: 1.3rem;
+      padding-left: 10px;
+      vertical-align: middle;
     }
     ${media.desktop} {
-      justify-content: start;
+      justify-content: space-between;
+      width: 45%;
       h2 {
         font-size: 2rem;
       }
