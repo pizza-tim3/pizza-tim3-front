@@ -7,7 +7,7 @@ import Info from "./info.js";
 import Participants from "./participants";
 import Discussion from "./discussion";
 import data from "../../../data/data";
-
+import { Inner } from "../../../styles/eventStyles";
 class EventView extends React.Component {
   constructor(props) {
     super(props);
@@ -32,15 +32,16 @@ class EventView extends React.Component {
 
     // Map through events and set the state to the response
     const currentId = this.props.match.params.id;
-    const currentEvent = data.filter(event => {
-      if (Number(event.id) === Number(currentId)) {
-        return true;
-      }
-    });
+    // console.log(currentId);
+    // console.log(data);/
+    const currentEvent = data.filter(
+      event => Number(event.id) === Number(currentId)
+    );
     this.setState({
       event: currentEvent[0],
       id: currentId,
     });
+    // console.log(this.state.event);
   }
   componentDidUpdate(prevProps) {
     // Typical usage (don't forget to compare props):
@@ -57,6 +58,14 @@ class EventView extends React.Component {
       });
     }
   }
+  addUser = user => {
+    const stateEvent = { ...this.state.event };
+    stateEvent.attending_users.push(user);
+
+    this.setState({
+      event: stateEvent,
+    });
+  };
   toggleSwitch = () => {
     this.setState(prevState => {
       const stateCopy = { ...this.state };
@@ -70,12 +79,12 @@ class EventView extends React.Component {
     return (
       <div>
         <Nav />
-        {this.state.event ? (
-          <div>
+        {Object.keys(this.state.event).length ? (
+          <Inner>
             <Info event={this.state.event} toggleSwitch={this.toggleSwitch} />
-            <Participants event={this.state.event} />
+            <Participants addUser={this.addUser} event={this.state.event} />
             <Discussion event={this.state.event} />
-          </div>
+          </Inner>
         ) : (
           <div />
         )}
