@@ -17,6 +17,7 @@
     "react-scripts": "3.0.1",
     "react-tabs": "^3.0.0",
     "styled-components": "^4.2.0"
+
   },
   "scripts": {
     "start": "react-scripts start",
