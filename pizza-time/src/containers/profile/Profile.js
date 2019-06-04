@@ -4,6 +4,8 @@ import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import Nav from "../../components/home-header/home-header.js";
 import FriendSearchBox from "../../components/friend-search-box/friend-search-box";
 import ProfileUserInfo from "../../components/profile-user-info/profile-user-info";
+import Favorites from "../../components/favorites/Favorites";
+import FriendsList from "../../components/friends-list/FriendsList";
 
 import { Wrap, Inner } from "../../styles/userhomeStyles.js";
 
@@ -29,7 +31,14 @@ const Profile = () => {
       }
     },
     //initial state
-    { username: "", slicesPerMonth: 0, topping: "", crust: "" }
+    {
+      username: "",
+      slicesPerMonth: 0,
+      topping: "",
+      crust: "",
+      friends: [],
+      favorites: []
+    }
   );
   return (
     <div>
@@ -50,12 +59,10 @@ const Profile = () => {
               </Tab>
             </TabList>
             <TabPanel className="tab">
-              <h3>Favorites</h3>
-              {/* Favorites Component */}
+              <Favorites {...state} />
             </TabPanel>
             <TabPanel className="tab">
-              <h3>Friends</h3>
-              {/* Favorites Component */}
+              <FriendsList {...state} />
             </TabPanel>
           </Tabs>
         </Inner>
