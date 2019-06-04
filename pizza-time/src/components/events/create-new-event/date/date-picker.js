@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 import useForm from '../../../../customHooks/customFormHooks';
-import { DatePickerWrap } from '../../../../styles/datePickerStyles';
+import { DatePickerWrap, PlacesHeading, Form, Button } from '../../../../styles/datePickerStyles';
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -23,8 +23,11 @@ const DatePicker = (props) => {
     
     return (
         <DatePickerWrap>
-            <form onSubmit={handleSubmit} className={classes.container} noValidate>
-                <TextField
+            <PlacesHeading>
+                <h2>Step 3: Choose a time and date</h2>
+            </PlacesHeading>
+            <Form onSubmit={handleSubmit} className={classes.container} noValidate>
+                <input
                     name="date"
                     id="date"
                     type="date"
@@ -32,9 +35,9 @@ const DatePicker = (props) => {
                     onChange={handleInputChange}
                     value={inputs.date}
                 />
-            </form>
-            <form className={classes.container} noValidate>
-                <TextField
+            </Form>
+            <Form className={classes.container} noValidate>
+                <input
                     name="time"
                     id="time"
                     type="time"
@@ -42,8 +45,8 @@ const DatePicker = (props) => {
                     onChange={handleInputChange}
                     value={inputs.time}
                 />
-            </form>
-            <button type='submit' onClick={() => {props.handleClick()}}>Next Step</button>
+            </Form>
+            <Button type='submit' onClick={() => {props.handleClick()}}>Next Step</Button>
         </DatePickerWrap>
     );
 }
