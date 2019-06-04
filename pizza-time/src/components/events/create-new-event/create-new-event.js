@@ -18,8 +18,6 @@ const CreateNewEvent = () => {
         setTimeout(() => {
             setIsLoading(false);
         }, 1500)
-        // setPageTwo(true);
-        // setPageThree(true);
     }, [])
 
     const handleNextPage = () => setPage(page + 1);

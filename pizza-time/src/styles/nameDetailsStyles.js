@@ -3,8 +3,7 @@ import { colors, fonts, media } from '../styles/variables.js';
 
 export const NameDetailsWrap = styled.div`
   width: 100%;
-  height: 100%;
-  position: absolute;
+  height: 100vh;
   background: linear-gradient(155.4deg, ${colors.secondary} 0%, ${colors.primary} 99.11%);
   display: flex;
   flex-flow: column nowrap;
@@ -70,5 +69,25 @@ export const NameDetailsWrap = styled.div`
         background-color: ${colors.white};
       }
     }
+  }
+`;
+
+export const PlacesHeading = styled.div`
+  width: 100%;
+  border: 1px solid ${colors.white};
+  background-color: ${colors.white};
+  position: absolute;
+  top: 0;
+  padding: 40px 0 40px 0;
+    ${media.mobile} { padding: 50px 0 50px 0; }
+    ${media.tablet} { padding: 60px 0 60px 0; }
+
+  h2 {
+    font-family: ${fonts.primary};
+    font-weight: 600;
+    font-size: 23px;
+    color: ${colors.gray};
+      ${media.mobile} { font-size: 24px; }
+      ${media.tablet} { font-size: 26px; }
   }
 `;

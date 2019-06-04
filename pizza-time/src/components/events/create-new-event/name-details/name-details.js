@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import useForm from '../../../../customHooks/customFormHooks';
-import { NameDetailsWrap } from '../../../../styles/nameDetailsStyles';
+
+import { NameDetailsWrap, PlacesHeading } from '../../../../styles/nameDetailsStyles';
 
 const NameAndDetails = (props) => {
     const submit = () => {
@@ -12,6 +13,9 @@ const NameAndDetails = (props) => {
     console.log('inputs',inputs.eventName, inputs.eventDesc)
     return(
         <NameDetailsWrap>
+            <PlacesHeading>
+                <h2>Step 2: Add a name and description</h2>
+            </PlacesHeading>
             <form onSubmit={handleSubmit}>
                     <input
                         type='text'
