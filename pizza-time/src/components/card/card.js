@@ -25,7 +25,8 @@ render () {
           <div className="content">
             <p><span>Name:</span> { this.props.event.event_name} </p>
             <p><span>Date:</span> { date}</p>
-            <p><span>Attending:</span> User1, User2</p>
+            <p><span>location:</span> { this.props.event.place} </p>
+           <p><span>Attending:</span> User1, User2</p>
           </div>
         </Content>
         <Action>
