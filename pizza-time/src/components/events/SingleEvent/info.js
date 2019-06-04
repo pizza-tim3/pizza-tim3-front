@@ -28,7 +28,6 @@ class Info extends React.Component {
   componentDidMount() {
     const eventDate = new Date(this.props.event.event_date);
     const location_id = this.props.event.location.google_place_id;
-    console.log(location_id);
     this.setState({
       date: eventDate,
       google_place_id: location_id,
