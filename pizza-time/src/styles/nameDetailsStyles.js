@@ -57,15 +57,9 @@ export const NameDetailsWrap = styled.div`
         color: ${colors.white};
         padding: 5px 0 5px 0;
           &:hover { border-bottom: 3px solid ${colors.white}}
-          ${media.mobile} {
-            font-size: 22px;
-          }
-          ${media.tablet} {
-            font-size: 24px;
-          }
-          ${media.desktop} {
-            font-size: 26px;
-          }
+          ${media.mobile} { font-size: 22px; }
+          ${media.tablet} { font-size: 24px; }
+          ${media.desktop} { font-size: 26px; }
       }
 
       .buttonIcon {

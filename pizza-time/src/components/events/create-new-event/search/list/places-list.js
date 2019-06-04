@@ -26,7 +26,7 @@ const PlacesList = (props) => {
                         </div>
                 )})}
             </PlacesContainer>
-            <ShowMore onClick={moreItems}></ShowMore>
+            <ShowMore onClick={moreItems}>More Locations</ShowMore>
         </>
     )
 }

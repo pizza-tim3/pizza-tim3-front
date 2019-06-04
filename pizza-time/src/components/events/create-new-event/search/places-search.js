@@ -4,7 +4,9 @@ import GoogleMap from './map/map';
 
 import {
     PlacesSearchWrap,
+    PlacesHeading,
     PlacesSearchInner,
+    NextStep,
 } from '../../../../styles/placesSearchStyles.js';
 
 const PlacesSearch = (props) => {
@@ -13,13 +15,14 @@ const PlacesSearch = (props) => {
 
     return(
         <PlacesSearchWrap>
+            <PlacesHeading>
+                <h2>Step 1: Choose Your Location</h2>
+            </PlacesHeading>
             <PlacesSearchInner>
                 <SearchBar />
                 <GoogleMap getId={handleGetPlaceId}/>
-                <button 
-                    className="next"
-                    onClick={() => props.handleClick()}>Next Step</button>
             </PlacesSearchInner>
+            <NextStep onClick={() => props.handleClick()}>Next Step</NextStep>
         </PlacesSearchWrap>
     )
 }
