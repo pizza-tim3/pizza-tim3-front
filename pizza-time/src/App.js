@@ -49,6 +49,7 @@ function App() {
 
   return (
     <div className="App">
+
       {/* setting these up seperately initially so we can nav to each path 
     to see what we are working on can combine them as neccessary later */}
       <Switch>
@@ -70,6 +71,7 @@ function App() {
           authenticated={authenticated} //pass global authenticated status here
         />
       </Switch>
+
     </div>
   );
 }
