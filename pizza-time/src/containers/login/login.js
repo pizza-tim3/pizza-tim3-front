@@ -2,6 +2,7 @@ import React, { useReducer } from "react";
 import firebaseApp from "../../firebase/firebaseApp";
 import { Link } from "react-router-dom";
 import { googleProvider } from "../../firebase/authProviders";
+import { registerWithPopup } from "../register/registerUtils";
 
 //need this import for "firebase.auth.Auth.Persistence.LOCAL" constant
 import firebase from "firebase/app";
@@ -36,7 +37,6 @@ export default function Login(props) {
     e.preventDefault();
     try {
       //FIREBASE LOGIC
-
       //set the logged in status to persist on local(client/browser) until explicitly told to logout
       await firebaseApp
         .auth()
@@ -54,22 +54,34 @@ export default function Login(props) {
       const token = await firebaseApp.auth().currentUser.getIdToken();
       props.history.push("/");
     } catch (err) {
-      // Handle Errors here.
-      const errorCode = err.code;
-      const errorMessage = err.message;
       dispatch({ type: "SET_ERROR", payload: err.message });
     }
   };
 
+  //TODO added checks to make sure that the registered users registered on our back and
   const signInWithGoogle = async e => {
     e.preventDefault();
     try {
+      // sign in/register with popup window
       const result = await firebaseApp.auth().signInWithPopup(googleProvider);
-      // const {
-      //   additionalUserInfo
-      // } = result;
-      //this contains user info that can be stored globally
-    } catch (err) {}
+      const {
+        additionalUserInfo: { isNewUser }
+      } = result;
+      //check to see if the users new
+      if (isNewUser) {
+        // register uses information on our backend
+        const user = await registerWithPopup(result);
+        // set state with user
+        //console.log(user);
+      } else if (/**user dne on backend */ false) {
+        //this would be an error on our db's part
+      } else {
+        //get user info from backend by uid
+      }
+      // TODO set global user info
+    } catch (err) {
+      dispatch({ type: "SET_ERROR", payload: err.message });
+    }
   };
 
   return (
@@ -97,9 +109,9 @@ export default function Login(props) {
           }}
         />
         <button type="submit">Sign In</button>
-        {/* <button onClick={signInWithGoogle} type="button">
+        <button onClick={signInWithGoogle} type="button">
           Sign In With Google
-        </button> */}
+        </button>
         <p>
           Dont have an account?
           <br />

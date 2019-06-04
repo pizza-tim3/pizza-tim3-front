@@ -1,11 +1,13 @@
 import React from "react";
 import Calendar from "react-calendar";
-import PlacesSearch from "../create-new-event/search/places-search";
+// import PlacesSearch from "../create-new-event/search/places-search";
 import calendar from "./../../../assets/calendar.svg";
+import moment from "moment";
+import GoogleMap from "./../create-new-event/search/map/map";
+
 import {
   EventBox,
   EventRow,
-  Inner,
   Toggle,
   EventColumn,
 } from "../../../styles/eventStyles";
@@ -17,11 +19,23 @@ class Info extends React.Component {
     this.state = {
       date: new Date(),
       show: false,
+      google_place_id: "",
     };
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
   }
 
+  componentDidMount() {
+    const eventDate = new Date(this.props.event.event_date);
+    const location_id = this.props.event.location.google_place_id;
+    this.setState({
+      date: eventDate,
+      google_place_id: location_id,
+    });
+
+    const list = document.getElementsByClassName("card-container");
+    list[0].style.display = "none";
+  }
   // Switch handlers for evnts inviteOnly property
   inviteHandler = e => {
     this.props.toggleSwitch();
@@ -40,13 +54,11 @@ class Info extends React.Component {
   render() {
     return (
       <EventBox>
-        {!this.props.event.location ? (
-          <div> Loading...</div>
-        ) : (
+        {Object.keys(this.props.event).length ? (
           <EventBox>
             <div className="event-header">
               <h1>
-                <b>Event</b>: {this.props.event.name}
+                <b>Event</b>: {this.props.event.event_name}
               </h1>
               <button className="btn-save">Save</button>
             </div>
@@ -73,7 +85,10 @@ class Info extends React.Component {
               </Modal>
               <div className="calendar">
                 <h2>
-                  <b>Date</b>:<span>{this.props.event.event_date}</span>
+                  <b>Date</b>:
+                  <span>
+                    {moment(this.state.date.toISOString()).format("LLLL")}
+                  </span>
                 </h2>
                 <img src={calendar} alt="calendar" onClick={this.handleShow} />
               </div>
@@ -101,16 +116,19 @@ class Info extends React.Component {
                     src="https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.scandichotels.com%2Fimagevault%2Fpublishedmedia%2Fqn6infvg30381stkubky%2Fscandic-sundsvall-city-restaurant-verket-10.jpg&f=1"
                   />
                   <div>
-                    <h4>Place: {this.props.event.location.name}</h4>
+                    <h4>Place: {this.props.event.location.id}</h4>
                     <address>{this.props.event.location.address}</address>
                   </div>
                 </div>
+
                 <div className="event map">
-                  <img src="https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fgeoinfoindia.files.wordpress.com%2F2015%2F04%2Fgoogle-map.jpg&f=1" />
+                  <GoogleMap getId={this.state.google_place_id} />
                 </div>
               </EventRow>
             </EventColumn>
           </EventBox>
+        ) : (
+          <div> Loading...</div>
         )}
       </EventBox>
     );
