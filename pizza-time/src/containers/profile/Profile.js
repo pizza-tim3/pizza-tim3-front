@@ -1,5 +1,6 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
+import firebaseApp from "../../firebase/firebaseApp";
 
 import Nav from "../../components/home-header/home-header.js";
 import FriendSearchBox from "../../components/friend-search-box/friend-search-box";
@@ -40,6 +41,12 @@ const Profile = () => {
       favorites: []
     }
   );
+
+  useEffect(() => {
+    // const user = firebaseApp.auth().currentUser;
+    // console.log(user);
+    // get user info
+  });
   return (
     <div>
       <Nav />

@@ -56,10 +56,19 @@ function App() {
         <Route path="/home" component={UserDashboard} />
         <Route path="/create-event" component={CreateNewEvent} />
         <Route exact path="/event/:id" component={EventView} />
-        <Route path="/profile/:uid" component={Profile} />
+        <PrivateRoute
+          path="/profile/"
+          authenticated={authenticated}
+          component={Profile}
+        />
         <Route exact path="/" component={Landing} />
         {/* TODO Change landing to exact */}
 
+        <PrivateRoute
+          path="/profile"
+          authenticated={authenticated}
+          component={Profile}
+        />
         <PrivateRoute
           exact
           path="/private"
