@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import useForm from '../../../../customHooks/customFormHooks';
+import { NameDetailsWrap } from '../../../../styles/nameDetailsStyles';
 
 const NameAndDetails = (props) => {
     const submit = () => {
@@ -10,21 +11,30 @@ const NameAndDetails = (props) => {
 
     console.log('inputs',inputs.eventName, inputs.eventDesc)
     return(
-        <div className="places-search-wrapper">
+        <NameDetailsWrap>
             <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Event Name:</label>
-                    <input type='text' name='eventName' onChange={handleInputChange} value={inputs.eventName || ''} required/>
-                </div>
-                <div>
-                    <label>Event Description:</label>
-                    <input type='text' name='eventDesc' onChange={handleInputChange} value={inputs.eventDesc || ''} required/>
-                </div>
-                <div>
-                    <button type='submit' onClick={() => {props.handleClick()}}>Next Step</button>
-                </div>
+                    <input
+                        type='text'
+                        name='eventName'
+                        onChange={handleInputChange}
+                        value={inputs.eventName || ''}
+                        placeholder="Event Name"
+                        required />
+                    <input 
+                        type='text'
+                        name='eventDesc'
+                        onChange={handleInputChange}
+                        value={inputs.eventDesc || ''}
+                        placeholder="Event Description"
+                        required />
+                    <div className='buttonWrap'>
+                        {/* <div className='buttonIcon'></div> */}
+                        <button 
+                            type='submit'
+                            onClick={() => {props.handleClick()}}>Next Step</button>
+                    </div>
             </form>
-        </div>
+        </NameDetailsWrap>
     )
 }
 
