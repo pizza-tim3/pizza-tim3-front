@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import axios from 'axios';
+import { EventConfirmationWrap, Button, PlacesHeading } from '../../../../styles/eventConfirmationStyles';
 
 // props from create-new-event
 // place={placeId} 
@@ -8,7 +9,7 @@ import axios from 'axios';
 // dateTime={dateTime}
 // friends={friends}
 
-const ConfirmationPage = (props) => {
+const ConfirmationPage = () => {
     const url = "http://localhost:5500/api/events"
     const {eventName, eventDesc} = props.event;
     const {date, time} = props.dateTime;
@@ -30,22 +31,13 @@ const ConfirmationPage = (props) => {
                 .catch(e => console.log(e));
     };
     
-    
     return(
-        <div>
-            <h1>Confirmation Page</h1>
-            <p>{eventName}</p>
-            <p>{eventDesc}</p>
-            <p>{props.place}</p>
-            <p>{date}</p>
-            <p>{time}</p>
-            <p>Friends goes here</p>
-            <button>
-                <Link to="/home" className="link">
-                    Finish Up
-                </Link>
-            </button>
-        </div>
+        <EventConfirmationWrap>
+            <PlacesHeading>
+                <h2>Step 5: Confirm your event</h2>
+            </PlacesHeading>
+            <Button to="/home">Finish Up</Button>
+        </EventConfirmationWrap>
     )
 }
 

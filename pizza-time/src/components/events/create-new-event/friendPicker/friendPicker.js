@@ -3,6 +3,8 @@ import axios from 'axios';
 import UserImage from '../../../../assets/user.png';
 import '../events.css';
 
+import { FriendPickerWrap, PlacesHeading, Button } from '../../../../styles/friendPickerStyles';
+
 const FriendPicker = (props) => {
     const [friends, setFriends] = useState([]);
     const [chosenFriends, setChosenFriends] = useState([]);
@@ -25,19 +27,22 @@ const FriendPicker = (props) => {
     console.log(chosenFriends && chosenFriends)
 
     return(
-        <div className="friends">
-
-            {friends && friends.map(friend => {
-                return(
-                <div key='friend.id' className="friendWrapper">
-                    <img src={UserImage} />
-                    <p>{friend.first_name} {friend.last_name}</p>
-                    <button onClick={() => {addToInvited(friend)}}>+</button>
-                </div>
-            )})}
-
-            <button onClick={() => {props.handleClick('addFriends', chosenFriends)}}>Next Step</button>
-        </div>
+        <FriendPickerWrap>
+            <PlacesHeading>
+                <h2>Step 4: Choose your friends</h2>
+            </PlacesHeading>
+            <div>
+                {friends && friends.map(friend => {
+                    return(
+                    <div key='friend.id' className="friendWrapper">
+                        <img src={UserImage} />
+                        <p>{friend.first_name} {friend.last_name}</p>
+                        <button onClick={() => {addToInvited(friend)}}>+</button>
+                    </div>
+                )})}
+            </div>
+            <Button onClick={() => {props.handleClick('addFriends', chosenFriends)}}>Next Step</Button>
+        </FriendPickerWrap>
     );
 }
 

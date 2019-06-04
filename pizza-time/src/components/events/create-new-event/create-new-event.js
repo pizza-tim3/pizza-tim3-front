@@ -1,10 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import './events.css';
+import Loading from '../../loading/loading';
 import DatePicker from './date/date-picker';
 import FriendPicker from './friendPicker/friendPicker';
 import ConfirmationPage from './confirmation/confirmation';
 import PlacesSearch from './search/places-search';
 import NameAndDetails from './name-details/name-details';
+import { CreateNewEventWrap } from '../../../styles/createNewEventStyles';
 
 const CreateNewEvent = () => {
     const [page, setPage] = useState(1);
@@ -17,9 +18,7 @@ const CreateNewEvent = () => {
     useEffect(() => {
         setTimeout(() => {
             setIsLoading(false);
-        }, 1000)
-        // setPageTwo(true);
-        // setPageThree(true);
+        }, 1500)
     }, [])
 
     const handleNextPage = (stateToChange, newValue) => {
@@ -44,33 +43,17 @@ const CreateNewEvent = () => {
 
     if(isLoading) {
         return(
-            <div>Loading....</div>
+            <Loading />
     )} else {
         switch(page) {
             case 1:
-                return(
-                    <div className='events-wrapper'>
-                        <PlacesSearch handleClick={handleNextPage}/>
-                    </div>
-                )
+                return <PlacesSearch handleClick={handleNextPage}/>
             case 2:
-                return(
-                    <div className='events-wrapper'>
-                    <NameAndDetails handleClick={handleNextPage}/>
-                </div>
-                );
+                return <NameAndDetails handleClick={handleNextPage}/>
             case 3: 
-                return(
-                    <div className='events-wrapper'>
-                        <DatePicker handleClick={handleNextPage}/>
-                    </div>
-                );
+                return <DatePicker handleClick={handleNextPage}/>
             case 4:
-                return(
-                    <div className='events-wrapper'>
-                        <FriendPicker handleClick={handleNextPage}/>
-                    </div>
-                );
+                return <FriendPicker handleClick={handleNextPage}/>
             case 5:
                 return(
                     <div className='events-wrapper'>

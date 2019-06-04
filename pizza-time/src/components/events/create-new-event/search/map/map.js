@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './map.css';
 import PlacesList from '../list/places-list';
 import axios from 'axios';
 
@@ -118,7 +117,7 @@ const GoogleMap = (props) => {
 
       return (
         <div className="map-search">
-          <PlacesList data={placesData} handleClick={handleOnClick}/>
+          <PlacesList data={placesData && placesData} handleClick={handleOnClick}/>
           <div id="map">
           </div>
         </div>

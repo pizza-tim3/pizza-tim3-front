@@ -1,12 +1,15 @@
 import React from 'react';
-import './search-bar.css';
+import { SearchContainer } from '../../../../../styles/searchbarStyles';
 
 const SearchBar = () => {
     return(
-        <div className="searchBar"  >
-            <h2>Search:</h2>
-            <input type="search" placeholder="City, State" name="search" id="bar"/>
-        </div>
+        <SearchContainer>
+            <input 
+                type="search" 
+                placeholder="City, State" 
+                name="search" 
+                id="bar" />
+        </SearchContainer>
     )
 }
 
