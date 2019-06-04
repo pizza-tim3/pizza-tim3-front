@@ -9,7 +9,7 @@ import { EventConfirmationWrap, Button, PlacesHeading } from '../../../../styles
 // dateTime={dateTime}
 // friends={friends}
 
-const ConfirmationPage = () => {
+const ConfirmationPage = (props) => {
     const url = "http://localhost:5500/api/events"
     const {eventName, eventDesc} = props.event;
     const {date, time} = props.dateTime;
