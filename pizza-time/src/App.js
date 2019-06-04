@@ -56,7 +56,7 @@ function App() {
         <Route path="/home" component={UserDashboard} />
         <Route path="/create-event" component={CreateNewEvent} />
         <Route exact path="/event/:id" component={EventView} />
-        <Route path="/profile" component={Profile} />
+        <Route path="/profile/:uid" component={Profile} />
         <Route exact path="/" component={Landing} />
         {/* TODO Change landing to exact */}
 

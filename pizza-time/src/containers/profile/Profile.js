@@ -47,7 +47,6 @@ const Profile = () => {
         <ProfileUserInfo {...state} />
         <FriendSearchBox />
         <a href="#">Invite A Friend!</a>
-        {/* User info */}
         <Inner>
           <Tabs defaultIndex={1}>
             <TabList className="tabBox">
