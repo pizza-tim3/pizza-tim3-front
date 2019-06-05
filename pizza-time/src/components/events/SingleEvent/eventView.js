@@ -6,8 +6,8 @@ import Info from "./info.js";
 import axios from "axios";
 import Participants from "./participants";
 import Discussion from "./discussion";
-import data from "../../../data/data";
 import { Inner } from "../../../styles/eventStyles";
+
 class EventView extends React.Component {
   constructor(props) {
     super(props);
@@ -16,47 +16,34 @@ class EventView extends React.Component {
       id: null
     };
   }
-
-  componentDidMount() {
-    // Add axios call for prospective backend api
+  
+  // Reusable axios call to backend api w/ response data set to event state
+  fetchUsers() {
     const currentId = this.props.match.params.id;
-    // axios
-    //   .get(`https://pizza-tim3-be.herokuapp.com/api/events/${currentId}`)
-    //   .then(response => {
-    //     console.log(response);
-    //   })
-    //   .catch(err => {
-    //     this.setState({
-    //       event: data
-    //     });
-    //   });
-
-    // Map through events and set the state to the response
-
-    // console.log(currentId);
-    // console.log(data);/
-    const currentEvent = data.filter(
-      event => Number(event.id) === Number(currentId)
-    );
-    this.setState({
-      event: currentEvent[0],
-      id: currentId
-    });
-    // console.log(this.state.event);
+    axios
+      .get(
+        `https://pizza-tim3-be.herokuapp.com/api/events/${currentId}/details`
+      )
+      .then(response => {
+        this.setState({
+          event: response.data.event,
+        });
+      })
+      .catch(err => {
+        this.setState({
+          event: {},
+        });
+      });
   }
+  
+  componentDidMount() {
+    this.fetchUsers();
+  }
+  
   componentDidUpdate(prevProps) {
-    // Typical usage (don't forget to compare props):
     const newId = this.props.match.params.id;
     if (newId !== prevProps.match.params.id) {
-      const currentEvent = data.filter(event => {
-        if (Number(event.id) === Number(newId)) {
-          return true;
-        }
-      });
-      this.setState({
-        event: currentEvent[0],
-        id: newId
-      });
+      this.fetchUsers();
     }
   }
   addUser = user => {
@@ -74,7 +61,6 @@ class EventView extends React.Component {
       return stateCopy;
     });
   };
-  // onClick put to ('url/events)
 
   render() {
     return (

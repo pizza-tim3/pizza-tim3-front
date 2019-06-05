@@ -2,22 +2,28 @@ import React, {useState, useEffect} from 'react';
 import SearchBar from './search/search-bar';
 import GoogleMap from './map/map';
 
+import {
+    PlacesSearchWrap,
+    PlacesHeading,
+    PlacesSearchInner,
+    NextStep,
+} from '../../../../styles/placesSearchStyles.js';
+
 const PlacesSearch = (props) => {
-
     const [placeId, setPlaceId] = useState('');
+    const handleGetPlaceId = id => setPlaceId(id);
 
-    const handleGetPlaceId = (id) => {
-        setPlaceId(id);
-    }
-
-    console.log(placeId)
     return(
-        <div className="places-search-wrapper">
-            <h1>Pick a place near you or search somewhere else!</h1>
-            <SearchBar />
-            <GoogleMap getId={handleGetPlaceId}/>
-            <button onClick={() => {props.handleClick()}}>Next Step</button>
-        </div>
+        <PlacesSearchWrap>
+            <PlacesHeading>
+                <h2>Step 1: Choose Your Location</h2>
+            </PlacesHeading>
+            <PlacesSearchInner>
+                <SearchBar />
+                <GoogleMap getId={handleGetPlaceId}/>
+            </PlacesSearchInner>
+            <NextStep onClick={() => props.handleClick()}>Next Step</NextStep>
+        </PlacesSearchWrap>
     )
 }
 

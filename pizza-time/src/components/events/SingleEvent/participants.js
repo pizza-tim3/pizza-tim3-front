@@ -25,7 +25,6 @@ class Participants extends React.Component {
 
     if (addUserButton[0]) {
       addUserButton[0].onclick = function() {
-        // console.log("Clicked");
         if (span.style.display === "none") {
           span.style.display = "flex";
           span.className = "more";
@@ -33,9 +32,16 @@ class Participants extends React.Component {
             const close = document.getElementsByClassName("close-more");
 
             close[0].onclick = function() {
-              console.log("Close was clicked;");
               span.style.display = "none";
               span.className = "";
+            };
+
+            document.onkeydown = function(evt) {
+              evt = evt || window.event;
+              if (evt.keyCode == 27) {
+                span.style.display = "none";
+                span.className = "";
+              }
             };
           }
         } else {
@@ -68,13 +74,13 @@ class Participants extends React.Component {
           </div>
         </EventRow>
         <span className="more-user">
-          {this.props.event.attending_users ? (
+          {this.props.event.invitedUsers ? (
             <ul>
-              {this.props.event.attending_users.map((user, index) => {
+              {this.props.event.invitedUsers.map((user, index) => {
                 return (
                   <li key={index} onClick={this.addUserHandler}>
                     <img src={user4} />
-                    <h2>{user.name}</h2>
+                    <h2>{user.username}</h2>
                   </li>
                 );
               })}

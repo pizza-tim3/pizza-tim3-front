@@ -3,22 +3,6 @@ import { EventRow } from "../../../styles/eventStyles";
 import user1 from "../../../assets/users/user-1.png";
 
 class Discussion extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      comments: [],
-    };
-  }
-
-  componentDidMount() {
-    // const id = this.props.params.match.id;
-    // const currentEvent = data.filter(event => event.id === id);
-    // const eventsComments = this.props.event.comments;
-    // if (eventsComments) {
-    //   this.setState({ comments: eventsComments });
-    // }
-    // console.log(this.props);
-  }
   render() {
     return (
       <div>
@@ -28,13 +12,13 @@ class Discussion extends React.Component {
         </EventRow>
         <EventRow className="event-discussion">
           <>
-            {this.props.event.comments ? (
+            {Object.keys(this.props.event).length ? (
               <div className="event-comments">
                 {this.props.event.comments.map((comment, index) => {
                   return (
                     <div className="comment" key={index}>
                       <img src={user1} alt="user" />
-                      <p>{comment.comment}</p>
+                      <p>{comment.message}</p>
                     </div>
                   );
                 })}

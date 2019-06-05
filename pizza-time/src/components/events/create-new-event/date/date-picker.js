@@ -1,57 +1,43 @@
-
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import TextField from '@material-ui/core/TextField';
 import useForm from '../../../../customHooks/customFormHooks';
 
-const useStyles = makeStyles(theme => ({
-    container: {
-      display: 'flex',
-      flexWrap: 'wrap',
-    },
-    textField: {
-      marginLeft: theme.spacing(1),
-      marginRight: theme.spacing(1),
-      width: 200,
-    },
-  }));
-
+import { 
+    DatePickerWrap,
+    PlacesHeading,
+    Form,
+    Button
+} from '../../../../styles/datePickerStyles';
 
 const DatePicker = (props) => {
-    const classes = useStyles();
-    const {inputs, handleInputChange, handleSubmit} = useForm();
+    const { inputs, handleInputChange, handleSubmit } = useForm();
     
     return (
-        <div>
-            <form onSubmit={handleSubmit} className={classes.container} noValidate>
-                <TextField
+        <DatePickerWrap>
+            <PlacesHeading>
+                <h2>Step 3: Choose a time and date</h2>
+            </PlacesHeading>
+            <Form onSubmit={handleSubmit} noValidate>
+                <input
                     name="date"
                     id="date"
-                    label="Pick A Date"
                     type="date"
                     defaultValue="2017-05-24"
-                    className={classes.textField}
-                    InputLabelProps={{shrink: true,}}
                     onChange={handleInputChange}
                     value={inputs.date}
                 />
-            </form>
-            <form className={classes.container} noValidate>
-                <TextField
+            </Form>
+            <Form noValidate>
+                <input
                     name="time"
                     id="time"
-                    label="Pick a Time"
                     type="time"
                     defaultValue="07:30"
-                    className={classes.textField}
-                    InputLabelProps={{shrink: true,}}
-                    inputProps={{step: 300,}}
                     onChange={handleInputChange}
                     value={inputs.time}
                 />
-            </form>
-            <button type='submit' onClick={() => {props.handleClick()}}>Next Step</button>
-        </div>
+            </Form>
+            <Button type='submit' onClick={() => {props.handleClick()}}>Next Step</Button>
+        </DatePickerWrap>
     );
 }
             

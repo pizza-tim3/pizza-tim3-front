@@ -1,11 +1,15 @@
 import React from 'react';
 
+import { FriendPickerWrap, PlacesHeading, Button } from '../../../../styles/friendPickerStyles';
+
 const FriendPicker = (props) => {
     return(
-        <div>
-            FriendsList Works!
-            <button onClick={() => {props.handleClick()}}>Next Step</button>
-        </div>
+        <FriendPickerWrap>
+            <PlacesHeading>
+                <h2>Step 4: Choose your friends</h2>
+            </PlacesHeading>
+            <Button onClick={() => {props.handleClick()}}>Next Step</Button>
+        </FriendPickerWrap>
     );
 }
 
