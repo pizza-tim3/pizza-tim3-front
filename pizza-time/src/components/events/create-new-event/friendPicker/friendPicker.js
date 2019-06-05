@@ -1,7 +1,6 @@
 import React,  {useEffect, useState} from 'react';
 import axios from 'axios';
 import UserImage from '../../../../assets/user.png';
-import '../events.css';
 
 import { FriendPickerWrap, PlacesHeading, Button } from '../../../../styles/friendPickerStyles';
 
