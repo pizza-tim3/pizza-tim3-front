@@ -20,19 +20,7 @@ class UserDashboard extends React.Component {
         selectedTab: "PendingEvents" //"UpcomingEvents", "PastEvents"
       };
     }
-    componentDidMount() {
-      // axios
-      //   .get("http://localhost:5500/api/events/users/1")
-      //   .then(res => {
-      //     console.log("RESPONSE OF PENDING EVENTS", res);
-      //     this.setState({ pendingEvents: res.data.results });
-      //   })
-      //   .catch(error => {
-      //     this.setState({ error });
-      //   });
-    }
-
-
+    
 
 upcomingHandler = event => {
     event.preventDefault();

@@ -27,12 +27,13 @@ render () {
             <p><span>Date:</span> { date}</p>
             <p><span>location:</span> { this.props.event.place} </p>
            <p><span>Attending:</span> User1, User2</p>
+
           </div>
         </Content>
         <Action>
           <div className="comment">
-            <img src={Comment} />
-            <p>2</p>
+            <img src={Comment}  />
+            <p>{this.props.event.message}</p>
           </div>
           <div className="buttons">
             <button>Let's Go!</button>
