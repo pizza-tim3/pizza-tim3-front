@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
+
+import { connect } from "react-redux";
+
 import firebaseApp from "./firebase/firebaseApp";
 import "./App.css";
-import { Route, Switch, Link } from "react-router-dom";
+import { Route, Switch, Link, withRouter } from "react-router-dom";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Private from "./components/private/Private";
 import UserDashboard from "./containers/user-dashboard/user-dashboard";
@@ -76,4 +79,18 @@ function App() {
   );
 }
 
-export default App;
+//Here I've destructured the single reducer
+const mstp = ({ userReducer /**,otherReducer */ }) => {
+  console.log(userReducer);
+  return userReducer;
+};
+
+//react-router-v4-not-working-with-redux
+// https://stackoverflow.com/a/45056258
+//TLDR you need to wrap connect() with withRouter() `withRouter(connect()());`
+export default withRouter(
+  connect(
+    mstp,
+    {}
+  )(App)
+);
