@@ -8,6 +8,7 @@ import { Route, Switch, Link, withRouter } from "react-router-dom";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Private from "./components/private/Private";
 import UserDashboard from "./containers/user-dashboard/user-dashboard";
+//import UserDashboard from "./components/Dashboard/UserDashboard";
 import CreateNewEvent from "./components/events/create-new-event/create-new-event";
 import EventView from "./components/events/SingleEvent/eventView";
 import Favorites from "./containers/favorites/favorites";
@@ -51,6 +52,7 @@ function App() {
 
   return (
     <div className="App">
+
       {/* setting these up seperately initially so we can nav to each path 
     to see what we are working on can combine them as neccessary later */}
       <Switch>
@@ -72,6 +74,7 @@ function App() {
           authenticated={authenticated} //pass global authenticated status here
         />
       </Switch>
+
     </div>
   );
 }
