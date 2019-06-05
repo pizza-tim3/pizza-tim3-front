@@ -7,15 +7,36 @@ import axios from "axios";
 import Participants from "./participants";
 import Discussion from "./discussion";
 import { Inner } from "../../../styles/eventStyles";
+import loading from "../../../assets/loading.gif";
 
 class EventView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       event: {},
+      friends: [],
+      user_id: "jNpViqXD4DXmf9H2FbkQnAy30000",
     };
   }
-  // Reusable axios call to backend api w/ response data set to event state
+
+  // Reusable axios call to backend api to fetch all friends for the current user
+
+  // fetchFriendsByUsersId(firebase_uid) {
+  //   axios
+  //     .get(`https://pizza-tim3-be.herokuapp.com//api/friends/${firebase_uid}/`)
+  //     .then(response => {
+  //       this.setState({
+  //         friends: response.data.friends,
+  //       });
+  //     })
+  //     .catch(err => {
+  //       this.setState({
+  //         friends: {},
+  //       });
+  //     });
+  // }
+
+  // Reusable axios call to backend api w/ response data set to state's event
 
   fetchUsers() {
     const currentId = this.props.match.params.id;
@@ -60,6 +81,37 @@ class EventView extends React.Component {
     });
   };
 
+  addComment = comment => {
+    // Copy the current state event
+    const currentEvent = { ...this.state.event };
+    const event_id = this.props.match.params.id;
+
+    // Add event id, user_id and time to the new comment
+    comment.event_id = event_id;
+    comment.user_id = this.state.user_id;
+    comment.time = new Date();
+
+    axios
+      .post(
+        `https://pizza-tim3-be.herokuapp.com/api/events/${event_id}/comments`,
+        comment
+      )
+      .then(res => {
+        if (res) {
+          // If successfull push new comments to front-end state
+          currentEvent.comments.push(comment);
+          this.setState({
+            event: currentEvent,
+          });
+        }
+      })
+      .catch(err => {
+        this.setState({
+          event: {},
+        });
+      });
+  };
+
   render() {
     return (
       <div>
@@ -68,10 +120,16 @@ class EventView extends React.Component {
           <Inner>
             <Info event={this.state.event} toggleSwitch={this.toggleSwitch} />
             <Participants addUser={this.addUser} event={this.state.event} />
-            <Discussion event={this.state.event} />
+            <Discussion
+              event={this.state.event}
+              user_id={this.state.user_id}
+              addComment={this.addComment}
+            />
           </Inner>
         ) : (
-          <div />
+          <div>
+            <img src={loading} alt="loading" />
+          </div>
         )}
 
         <Footer />

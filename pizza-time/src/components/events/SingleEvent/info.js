@@ -33,8 +33,8 @@ class Info extends React.Component {
       google_place_id: location_id,
     });
 
-    const list = document.getElementsByClassName("card-container");
-    list[0].style.display = "none";
+    // const list = document.getElementsByClassName("card-container");
+    // list[0].style.display = "none";
   }
   // Switch handlers for evnts inviteOnly property
   inviteHandler = e => {

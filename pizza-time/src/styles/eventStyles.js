@@ -281,8 +281,7 @@ export const EventRow = styled.div`
       padding: 7px;
     }
   }
-  .event-invite,
-  .event-comments {
+  .event-invite, .all-comments, .add-comments {
     img {
       max-width: 50px;
       max-height: 50px;
@@ -301,6 +300,16 @@ export const EventRow = styled.div`
         margin-bottom: 0px;
         padding-left: 12px;
       }
+    }
+  }
+  .add-comments {
+    input {
+      border: 1.3px solid orange;
+      padding: 10px 5px;
+      margin-right: 10px;
+    }
+    img {
+      padding: 7px;
     }
   }
 `;
