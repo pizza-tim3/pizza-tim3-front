@@ -4,7 +4,6 @@ import axios from 'axios';
 
 import Nav from '../../components/home-header/home-header.js';
 import Card from '../../components/card/card.js';
-import Footer from '../../components/footer/footer.js';
 import {
     Wrap,
     Inner,
@@ -110,7 +109,6 @@ render () {
                     </Tabs>
                 </Inner>
             </Wrap>
-            {/* <Footer /> */}
         </>
     );
     }   
