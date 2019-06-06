@@ -13,12 +13,19 @@ class Discussion extends React.Component {
       newComment: {
         message: "",
       },
+      comments: [],
     };
   }
 
+  componentDidMount() {
+    let eventsComments = this.props.event.comments;
+    this.setState({
+      comments: eventsComments,
+    });
+  }
   submitCommentHandler = e => {
     e.preventDefault();
-    this.props.addComment(this.state.newComment);
+    // this.props.addComment(this.state.newComment);
     this.setState({
       newComment: {
         message: "",
@@ -26,7 +33,63 @@ class Discussion extends React.Component {
     });
   };
 
-  // commentOnChange = newComment => this.setState({ newComment });
+  addComment = () => {
+    // Copy the current state event
+    let event_id = this.props.event.id;
+    let newComment = this.state.newComment;
+
+    // Add event id, user_id and time to the new comment
+    newComment.event_id = event_id;
+    newComment.user_id = this.props.user_id;
+    newComment.time = new Date();
+
+    axios
+      .post(
+        `https://pizza-tim3-be.herokuapp.com/api/events/${event_id}/comments`,
+        newComment
+      )
+      .then(res => {
+        if (res) {
+          // If successfull push new comments to front-end state
+          newComment.id = res.data[0];
+          this.setState(state => {
+            return {
+              comments: [...state.comments, newComment],
+              newComment: {
+                message: "",
+              },
+            };
+          });
+        }
+      })
+      .catch(err => {
+        this.setState({
+          event: {},
+        });
+      });
+  };
+  deleteComment = comment_id => {
+    let currentComments = this.state.comments;
+    axios
+      .delete(`https://pizza-tim3-be.herokuapp.com/api/comments/${comment_id}`)
+      .then(res => {
+        if (res) {
+          // If successfull push new comments to front-end state
+          let newComments = currentComments.filter(
+            comment => comment.id !== comment_id
+          );
+          this.setState({
+            comments: newComments,
+          });
+        }
+      })
+      .catch(err => {
+        this.setState({
+          event: {},
+        });
+      });
+  };
+
   commentOnChange = e => {
     this.setState({
       newComment: {
@@ -35,6 +98,7 @@ class Discussion extends React.Component {
       },
     });
   };
+
   render() {
     return (
       <div>
@@ -47,7 +111,8 @@ class Discussion extends React.Component {
             {Object.keys(this.props.event).length ? (
               <div className="event-comments">
                 <div className="all-comments">
-                  {this.props.event.comments.map(comment => {
+                  {this.state.comments.map((comment, index) => {
+                    console.log("We are mapping");
                     return (
                       <div className="comment" key={comment.id}>
                         <img src={user1} alt="user" />
@@ -63,7 +128,7 @@ class Discussion extends React.Component {
                               <img
                                 src={remove}
                                 alt="delete"
-                                // onClick={this.submitCommentHandler}
+                                onClick={() => this.deleteComment(comment.id)}
                               />
                             </div>
                           ) : (
@@ -80,11 +145,7 @@ class Discussion extends React.Component {
                     value={this.state.newComment.message}
                     onChange={this.commentOnChange}
                   />
-                  <img
-                    src={plus}
-                    alt="plus"
-                    onClick={this.submitCommentHandler}
-                  />
+                  <img src={plus} alt="plus" onClick={this.addComment} />
                 </div>
               </div>
             ) : (

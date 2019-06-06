@@ -122,7 +122,7 @@ class Info extends React.Component {
                 </div>
 
                 <div className="event map">
-                  <GoogleMap getId={this.state.google_place_id} />
+                  {/* <GoogleMap getId={this.state.google_place_id} /> */}
                 </div>
               </EventRow>
             </EventColumn>

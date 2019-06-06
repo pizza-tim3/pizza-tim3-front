@@ -38,7 +38,7 @@ class EventView extends React.Component {
 
   // Reusable axios call to backend api w/ response data set to state's event
 
-  fetchUsers() {
+  fetchEvent() {
     const currentId = this.props.match.params.id;
 
     axios
@@ -57,12 +57,12 @@ class EventView extends React.Component {
       });
   }
   componentDidMount() {
-    this.fetchUsers();
+    this.fetchEvent();
   }
   componentDidUpdate(prevProps) {
     const newId = this.props.match.params.id;
     if (newId !== prevProps.match.params.id) {
-      this.fetchUsers();
+      this.fetchEvent();
     }
   }
   addUser = user => {
@@ -81,37 +81,6 @@ class EventView extends React.Component {
     });
   };
 
-  addComment = comment => {
-    // Copy the current state event
-    const currentEvent = { ...this.state.event };
-    const event_id = this.props.match.params.id;
-
-    // Add event id, user_id and time to the new comment
-    comment.event_id = event_id;
-    comment.user_id = this.state.user_id;
-    comment.time = new Date();
-
-    axios
-      .post(
-        `https://pizza-tim3-be.herokuapp.com/api/events/${event_id}/comments`,
-        comment
-      )
-      .then(res => {
-        if (res) {
-          // If successfull push new comments to front-end state
-          currentEvent.comments.push(comment);
-          this.setState({
-            event: currentEvent,
-          });
-        }
-      })
-      .catch(err => {
-        this.setState({
-          event: {},
-        });
-      });
-  };
-
   render() {
     return (
       <div>
@@ -120,11 +89,7 @@ class EventView extends React.Component {
           <Inner>
             <Info event={this.state.event} toggleSwitch={this.toggleSwitch} />
             <Participants addUser={this.addUser} event={this.state.event} />
-            <Discussion
-              event={this.state.event}
-              user_id={this.state.user_id}
-              addComment={this.addComment}
-            />
+            <Discussion event={this.state.event} user_id={this.state.user_id} />
           </Inner>
         ) : (
           <div>
