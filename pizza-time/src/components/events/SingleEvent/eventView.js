@@ -1,7 +1,6 @@
 import React from "react";
 
 import Nav from "../../home-header/home-header.js";
-import Footer from "../../footer/footer.js";
 import Info from "./info.js";
 import axios from "axios";
 import Participants from "./participants";
@@ -75,8 +74,6 @@ class EventView extends React.Component {
         ) : (
           <div />
         )}
-
-        <Footer />
       </div>
     );
   }
