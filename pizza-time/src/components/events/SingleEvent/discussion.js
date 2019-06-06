@@ -112,7 +112,6 @@ class Discussion extends React.Component {
               <div className="event-comments">
                 <div className="all-comments">
                   {this.state.comments.map((comment, index) => {
-                    console.log("We are mapping");
                     return (
                       <div className="comment" key={comment.id}>
                         <img src={user1} alt="user" />
