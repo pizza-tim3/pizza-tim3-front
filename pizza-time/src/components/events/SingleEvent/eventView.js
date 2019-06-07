@@ -6,6 +6,7 @@ import axios from "axios";
 import Participants from "./participants";
 import Discussion from "./discussion";
 import { Inner } from "../../../styles/eventStyles";
+import loading from "../../../assets/loading.gif";
 
 class EventView extends React.Component {
   constructor(props) {
@@ -36,13 +37,13 @@ class EventView extends React.Component {
   }
   
   componentDidMount() {
-    this.fetchUsers();
+    this.fetchEvent();
   }
   
   componentDidUpdate(prevProps) {
     const newId = this.props.match.params.id;
     if (newId !== prevProps.match.params.id) {
-      this.fetchUsers();
+      this.fetchEvent();
     }
   }
   addUser = user => {
@@ -69,10 +70,12 @@ class EventView extends React.Component {
           <Inner>
             <Info event={this.state.event} toggleSwitch={this.toggleSwitch} />
             <Participants addUser={this.addUser} event={this.state.event} />
-            <Discussion event={this.state.event} />
+            <Discussion event={this.state.event} user_id={this.state.user_id} />
           </Inner>
         ) : (
-          <div />
+          <div>
+            <img src={loading} alt="loading" />
+          </div>
         )}
       </div>
     );
