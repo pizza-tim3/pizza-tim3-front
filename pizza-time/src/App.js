@@ -8,13 +8,13 @@ import { Route, Switch, Link, withRouter } from "react-router-dom";
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Private from "./components/private/Private";
 import UserDashboard from "./containers/user-dashboard/user-dashboard";
+//import UserDashboard from "./components/Dashboard/UserDashboard";
 import CreateNewEvent from "./components/events/create-new-event/create-new-event";
 import EventView from "./components/events/SingleEvent/eventView";
-import Favorites from "./containers/favorites/favorites";
-import FriendsList from "./containers/friends-lists/friends-list";
 import Landing from "./containers/landing-page/landing";
 import Login from "./containers/login/login";
 import Register from "./containers/register/Register";
+import Profile from "./containers/profile/Profile";
 
 import UsersList from "./../src/admin/UsersList";
 
@@ -51,6 +51,7 @@ function App() {
 
   return (
     <div className="App">
+
       {/* setting these up seperately initially so we can nav to each path 
     to see what we are working on can combine them as neccessary later */}
       <Switch>
@@ -60,11 +61,19 @@ function App() {
         <Route path="/home" component={UserDashboard} />
         <Route path="/create-event" component={CreateNewEvent} />
         <Route exact path="/event/:id" component={EventView} />
-        <Route path="/favorites" component={Favorites} />
-        <Route path="/friendslist" component={FriendsList} />
+        <PrivateRoute
+          path="/profile/"
+          authenticated={authenticated}
+          component={Profile}
+        />
         <Route exact path="/" component={Landing} />
         {/* TODO Change landing to exact */}
 
+        <PrivateRoute
+          path="/profile"
+          authenticated={authenticated}
+          component={Profile}
+        />
         <PrivateRoute
           exact
           path="/private"
@@ -72,6 +81,7 @@ function App() {
           authenticated={authenticated} //pass global authenticated status here
         />
       </Switch>
+
     </div>
   );
 }

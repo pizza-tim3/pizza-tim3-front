@@ -1,7 +1,6 @@
 import React from "react";
 
 import Nav from "../../home-header/home-header.js";
-import Footer from "../../footer/footer.js";
 import Info from "./info.js";
 import axios from "axios";
 import Participants from "./participants";
@@ -14,33 +13,13 @@ class EventView extends React.Component {
     super(props);
     this.state = {
       event: {},
-      friends: [],
-      user_id: "jNpViqXD4DXmf9H2FbkQnAy30000",
+      id: null
     };
   }
-
-  // Reusable axios call to backend api to fetch all friends for the current user
-
-  // fetchFriendsByUsersId(firebase_uid) {
-  //   axios
-  //     .get(`https://pizza-tim3-be.herokuapp.com//api/friends/${firebase_uid}/`)
-  //     .then(response => {
-  //       this.setState({
-  //         friends: response.data.friends,
-  //       });
-  //     })
-  //     .catch(err => {
-  //       this.setState({
-  //         friends: {},
-  //       });
-  //     });
-  // }
-
-  // Reusable axios call to backend api w/ response data set to state's event
-
-  fetchEvent() {
+  
+  // Reusable axios call to backend api w/ response data set to event state
+  fetchUsers() {
     const currentId = this.props.match.params.id;
-
     axios
       .get(
         `https://pizza-tim3-be.herokuapp.com/api/events/${currentId}/details`
@@ -56,9 +35,11 @@ class EventView extends React.Component {
         });
       });
   }
+  
   componentDidMount() {
     this.fetchEvent();
   }
+  
   componentDidUpdate(prevProps) {
     const newId = this.props.match.params.id;
     if (newId !== prevProps.match.params.id) {
@@ -70,7 +51,7 @@ class EventView extends React.Component {
     stateEvent.attending_users.push(user);
 
     this.setState({
-      event: stateEvent,
+      event: stateEvent
     });
   };
   toggleSwitch = () => {
@@ -96,8 +77,6 @@ class EventView extends React.Component {
             <img src={loading} alt="loading" />
           </div>
         )}
-
-        <Footer />
       </div>
     );
   }
