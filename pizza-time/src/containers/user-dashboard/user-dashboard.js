@@ -16,20 +16,15 @@ class UserDashboard extends React.Component {
         pendingEvents: [],
         upcomingEvents: [],
         pastEvents: [],
-        selectedTab: "PendingEvents" //"UpcomingEvents", "PastEvents"
+        selectedTab: "PendingEvents"
+         //"UpcomingEvents", "PastEvents"
+         
+        }
+       
       };
-    }
-    componentDidMount() {
-      // axios
-      //   .get("http://localhost:5500/api/events/users/1")
-      //   .then(res => {
-      //     console.log("RESPONSE OF PENDING EVENTS", res);
-      //     this.setState({ pendingEvents: res.data.results });
-      //   })
-      //   .catch(error => {
-      //     this.setState({ error });
-      //   });
-    }
+    
+    
+
 
 
 
@@ -37,7 +32,7 @@ upcomingHandler = event => {
     event.preventDefault();
 
     axios
-      .get("http://localhost:5500/api/events/upcoming/jNpViqXD4DXmf9H2FbkQnAyoLyu2")
+      .get("http://localhost:5500/api/events/upcoming/jNpViqXD4DXmf9H2FbkQnAy10000")
       .then(res => {
         console.log("Response for UpcomingEvents", res);
         this.setState({
@@ -51,7 +46,7 @@ upcomingHandler = event => {
   };
   pendingHandler = event => {
     axios
-      .get("http://localhost:5500/api/events/pending/jNpViqXD4DXmf9H2FbkQnAyoLyu2")
+      .get("http://localhost:5500/api/events/pending/jNpViqXD4DXmf9H2FbkQnAy10000")
       .then(res => {
         console.log("RESPONSE OF PENDING EVENTS", res);
         this.setState({
@@ -66,7 +61,7 @@ upcomingHandler = event => {
   pastHandler = event => {
     event.preventDefault();
     axios
-      .get("http://localhost:5500/api/events/past/jNpViqXD4DXmf9H2FbkQnAyoLyu2")
+      .get("http://localhost:5500/api/events/past/jNpViqXD4DXmf9H2FbkQnAy10000")
       .then(res => {
         console.log("RESPONSE OF PAST EVENTS", res);
         this.setState({
@@ -93,12 +88,12 @@ render () {
                         </TabList>
                         <TabPanel className="tab">
                             {this.state.upcomingEvents.map(event => {
-                                return <Card key={event.id} event={event} />;
+                                return <Card key={event.id} event={event}  />;
                             })}
                         </TabPanel>
                         <TabPanel>
                             {this.state.pendingEvents.map(event => {
-                                return <Card key={event.id} event={event} />;
+                                return <Card key={event.id} event={event}   />;
                             })}
                         </TabPanel>
                         <TabPanel>
@@ -112,7 +107,7 @@ render () {
             {/* <Footer /> */}
         </>
     );
-    }   
+  }   
 }
 
 export default UserDashboard 

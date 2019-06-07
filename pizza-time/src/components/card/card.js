@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from "axios"
 
 import Envelope from '../../assets/envelope.svg';
 import Comment from '../../assets/comment.svg';
@@ -13,6 +14,31 @@ class Card extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state={
+     
+        
+        comments:[]
+      
+    }
+  }
+
+ componentDidMount(){
+    console.log("REACHED HERE")
+    
+     axios.get("http://localhost:5500/api/comments/event/messages/1")
+     .then( res=>{
+       console.log("COUNT RESPONSE",res)
+       this.setState({comments : res.data.comments})
+       
+     })
+     .catch(error => {
+      this.setState({ error });
+    });
+    
+  }
+  commentHandler=()=>{
+    const isDisplay=!isDisplay
+
   }
 
 render () {
@@ -31,8 +57,16 @@ render () {
         </Content>
         <Action>
           <div className="comment">
-            <img src={Comment} />
-            <p>2</p>
+            <img src={Comment} onClick ={this.commentHandler}
+             />
+            <p>{this.state.comments.length}</p>
+            <div claasName="message"></div>
+            
+            {this.state.comments.map(comment=>{
+                         return[ comment.time,
+                        
+                               comment.message ]})
+                     }
           </div>
           <div className="buttons">
             <button>Let's Go!</button>
