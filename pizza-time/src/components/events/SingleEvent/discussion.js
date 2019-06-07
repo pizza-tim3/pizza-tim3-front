@@ -13,19 +13,99 @@ class Discussion extends React.Component {
       newComment: {
         message: "",
       },
+      editComment: {
+        update: "",
+      },
       comments: [],
     };
   }
 
   componentDidMount() {
+    // Set the component's comments state to the passed props
     let eventsComments = this.props.event.comments;
     this.setState({
       comments: eventsComments,
     });
+    let comments = document.getElementsByClassName("edit-comment");
+    Array.from(comments).map(comment => {
+      comment.style.display = "none";
+    });
   }
+
+  // Select comment to be edited
+  selectComment = comment_id => {
+    let comments = document.getElementsByClassName("edit-comment");
+    let actionButtons = document.getElementsByClassName("action-buttons");
+    let currentActionButton = document.getElementById(
+      `action-button-${comment_id}`
+    );
+    // console.log(comments);
+    Array.from(comments).map(comment => {
+      comment.style.display = "none";
+    });
+    Array.from(actionButtons).map(comment => {
+      comment.style.display = "none";
+    });
+    console.log(comments);
+
+    currentActionButton.style.display = "flex";
+    let selectedMessageHtml = document.getElementById(`comment-${comment_id}`);
+    let selectedMessage = selectedMessageHtml.innerHTML;
+    let selectedComment = document.getElementById(`edit-comment-${comment_id}`);
+    selectedComment.style.display = "flex";
+    this.setState({
+      editComment: {
+        update: selectedMessage,
+      },
+    });
+
+    selectedMessageHtml.style.display = "none";
+  };
+
+  // Update selected comment
+  updateComment = comment_id => {
+    // Create an updated comment object
+    let updatedMessage = this.state.editComment.update;
+    let updatedComment = {
+      id: comment_id,
+      user_id: this.props.user_id,
+      message: updatedMessage,
+    };
+
+    // Put axios call
+    axios
+      .put(
+        `https://pizza-tim3-be.herokuapp.com/api/comments/${comment_id}`,
+        updatedComment
+      )
+      .then(res => {
+        if (res) {
+          let comments = document.getElementsByClassName("edit-comment");
+          let selectedMessageHtml = document.getElementById(
+            `comment-${comment_id}`
+          );
+          // Display the message html
+          selectedMessageHtml.style.display = "flex";
+          // Update the message in the html if the call was successfull
+          selectedMessageHtml.innerHTML = updatedComment.message;
+          // Hide Editing Display
+          Array.from(comments).map(comment => {
+            comment.style.display = "none";
+          });
+          // Show actions (edit, delete) buttons
+          let actionButtons = document.getElementsByClassName("action-buttons");
+          Array.from(actionButtons).map(button => {
+            button.style.display = "flex";
+          });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
   submitCommentHandler = e => {
     e.preventDefault();
-    // this.props.addComment(this.state.newComment);
     this.setState({
       newComment: {
         message: "",
@@ -35,6 +115,7 @@ class Discussion extends React.Component {
 
   addComment = () => {
     // Copy the current state event
+
     let event_id = this.props.event.id;
     let newComment = this.state.newComment;
 
@@ -68,6 +149,7 @@ class Discussion extends React.Component {
         });
       });
   };
+
   deleteComment = comment_id => {
     let currentComments = this.state.comments;
     axios
@@ -98,6 +180,14 @@ class Discussion extends React.Component {
       },
     });
   };
+  updateOnChange = e => {
+    this.setState({
+      editComment: {
+        ...this.state.editComment,
+        [e.target.name]: e.target.value,
+      },
+    });
+  };
 
   render() {
     return (
@@ -113,16 +203,38 @@ class Discussion extends React.Component {
                 <div className="all-comments">
                   {this.state.comments.map((comment, index) => {
                     return (
-                      <div className="comment" key={comment.id}>
-                        <img src={user1} alt="user" />
-                        <p>{comment.message}</p>
+                      <div className="comment" id={comment.id} key={comment.id}>
+                        <img src={user1} alt="user" className="user-avatar" />
+                        <p id={`comment-${comment.id}`}>{comment.message}</p>
+
+                        <div
+                          id={`edit-comment-${comment.id}`}
+                          className="edit-comment"
+                        >
+                          <input
+                            id={`edit-comment-input-${comment.id}`}
+                            className="edit-comment-input"
+                            value={this.state.editComment.update}
+                            name="update"
+                            onChange={this.updateOnChange}
+                          />
+                          <img
+                            src={plus}
+                            alt="update"
+                            onClick={() => this.updateComment(comment.id)}
+                          />
+                        </div>
+
                         <div>
                           {comment.user_id === this.props.user_id ? (
-                            <div>
+                            <div
+                              id={`action-button-${comment.id}`}
+                              className="action-buttons"
+                            >
                               <img
                                 src={edit}
                                 alt="edit"
-                                // onClick={this.submitCommentHandler}
+                                onClick={() => this.selectComment(comment.id)}
                               />
                               <img
                                 src={remove}

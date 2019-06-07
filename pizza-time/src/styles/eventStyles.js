@@ -312,4 +312,7 @@ export const EventRow = styled.div`
       padding: 7px;
     }
   }
+  .edit-comment {
+    display: none;
+  }
 `;
