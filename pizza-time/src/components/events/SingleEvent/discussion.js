@@ -39,14 +39,12 @@ class Discussion extends React.Component {
     let currentActionButton = document.getElementById(
       `action-button-${comment_id}`
     );
-    // console.log(comments);
     Array.from(comments).map(comment => {
       comment.style.display = "none";
     });
     Array.from(actionButtons).map(comment => {
       comment.style.display = "none";
     });
-    console.log(comments);
 
     currentActionButton.style.display = "flex";
     let selectedMessageHtml = document.getElementById(`comment-${comment_id}`);

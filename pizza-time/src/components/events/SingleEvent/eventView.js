@@ -13,12 +13,11 @@ class EventView extends React.Component {
     super(props);
     this.state = {
       event: {},
-      id: null
     };
   }
-  
+
   // Reusable axios call to backend api w/ response data set to event state
-  fetchUsers() {
+  fetchEvent() {
     const currentId = this.props.match.params.id;
     axios
       .get(
@@ -35,11 +34,11 @@ class EventView extends React.Component {
         });
       });
   }
-  
+
   componentDidMount() {
     this.fetchEvent();
   }
-  
+
   componentDidUpdate(prevProps) {
     const newId = this.props.match.params.id;
     if (newId !== prevProps.match.params.id) {
@@ -51,7 +50,7 @@ class EventView extends React.Component {
     stateEvent.attending_users.push(user);
 
     this.setState({
-      event: stateEvent
+      event: stateEvent,
     });
   };
   toggleSwitch = () => {
