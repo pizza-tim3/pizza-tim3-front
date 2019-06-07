@@ -200,52 +200,58 @@ class Discussion extends React.Component {
               <div className="event-comments">
                 <div className="all-comments">
                   {this.state.comments.map((comment, index) => {
-                    return (
-                      <div className="comment" id={comment.id} key={comment.id}>
-                        <img src={user1} alt="user" className="user-avatar" />
-                        <p id={`comment-${comment.id}`}>{comment.message}</p>
-
+                    if (comment.user_id !== null) {
+                      return (
                         <div
-                          id={`edit-comment-${comment.id}`}
-                          className="edit-comment"
+                          className="comment"
+                          id={comment.id}
+                          key={comment.id}
                         >
-                          <input
-                            id={`edit-comment-input-${comment.id}`}
-                            className="edit-comment-input"
-                            value={this.state.editComment.update}
-                            name="update"
-                            onChange={this.updateOnChange}
-                          />
-                          <img
-                            src={plus}
-                            alt="update"
-                            onClick={() => this.updateComment(comment.id)}
-                          />
-                        </div>
+                          <img src={user1} alt="user" className="user-avatar" />
+                          <p id={`comment-${comment.id}`}>{comment.message}</p>
 
-                        <div>
-                          {comment.user_id === this.props.user_id ? (
-                            <div
-                              id={`action-button-${comment.id}`}
-                              className="action-buttons"
-                            >
-                              <img
-                                src={edit}
-                                alt="edit"
-                                onClick={() => this.selectComment(comment.id)}
-                              />
-                              <img
-                                src={remove}
-                                alt="delete"
-                                onClick={() => this.deleteComment(comment.id)}
-                              />
-                            </div>
-                          ) : (
-                            <div />
-                          )}
+                          <div
+                            id={`edit-comment-${comment.id}`}
+                            className="edit-comment"
+                          >
+                            <input
+                              id={`edit-comment-input-${comment.id}`}
+                              className="edit-comment-input"
+                              value={this.state.editComment.update}
+                              name="update"
+                              onChange={this.updateOnChange}
+                            />
+                            <img
+                              src={plus}
+                              alt="update"
+                              onClick={() => this.updateComment(comment.id)}
+                            />
+                          </div>
+
+                          <div>
+                            {comment.user_id === this.props.user_id ? (
+                              <div
+                                id={`action-button-${comment.id}`}
+                                className="action-buttons"
+                              >
+                                <img
+                                  src={edit}
+                                  alt="edit"
+                                  onClick={() => this.selectComment(comment.id)}
+                                />
+                                <img
+                                  src={remove}
+                                  alt="delete"
+                                  onClick={() => this.deleteComment(comment.id)}
+                                />
+                              </div>
+                            ) : (
+                              <div />
+                            )}
+                          </div>
                         </div>
-                      </div>
-                    );
+                      );
+                    }
                   })}
                 </div>
                 <div className="add-comments">

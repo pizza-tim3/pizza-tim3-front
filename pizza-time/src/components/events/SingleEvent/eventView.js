@@ -13,6 +13,7 @@ class EventView extends React.Component {
     super(props);
     this.state = {
       event: {},
+      user_id: "jNpViqXD4DXmf9H2FbkQnAy30000",
     };
   }
 
