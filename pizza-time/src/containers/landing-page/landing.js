@@ -1,29 +1,91 @@
-import React from 'react';
+import React from "react";
+import { Link } from "react-router-dom";
+import { Carousel } from "react-bootstrap";
+import axios from "axios";
+import { Wrap, Inner, Heading, Buttons } from "../../styles/landingStyles.js";
+import HomeHeader from "./../../components//home-header/home-header.js";
+import pizza from "./../../assets/pizza.png";
+class Landing extends React.Component {
+  constructor(props, context) {
+    super(props, context);
 
-import { Link } from 'react-router-dom';
+    this.handleSelect = this.handleSelect.bind(this);
 
-import {
-    Wrap,
-    Inner,
-    Heading,
-    Buttons,
-} from '../../styles/landingStyles.js';
+    this.state = {
+      index: 0,
+      direction: null,
+      carousel: [],
+    };
+  }
 
-const Landing = () => {
-    return(
-        <Wrap>
-            <Inner>
-                <Heading>
-                    <h1>Pizza Time</h1>
-                    <p>Lorem ipsum text here<br /> lorem ipsum text</p>
-                </Heading>
-                <Buttons>
-                    <Link to="/login" className="loginBtn">Sign In</Link>
-                    <Link to="/register" className="registerBtn">Sign Up</Link>
-                </Buttons>
-            </Inner>
-        </Wrap>
+  componentDidMount() {
+    let latestEvents = [];
+    axios
+      .get(`https://pizza-tim3-be.herokuapp.com/api/events`)
+      .then(response => {
+        for (let i = 0; i < response.data.length; i++) {
+          latestEvents.push(response.data[i]);
+        }
+        this.setState({
+          carousel: latestEvents,
+        });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  }
+  handleSelect(selectedIndex, e) {
+    this.setState({
+      index: selectedIndex,
+      direction: e.direction,
+    });
+  }
+  render() {
+    const { index, direction } = this.state;
+    return (
+      <Wrap>
+        <Inner>
+          <Heading>
+            <HomeHeader className="landing-header" />
+          </Heading>
+          <>
+            <div className="small-carousel">
+              {this.state.carousel.length > 0 ? (
+                <>
+                  <Carousel
+                    activeIndex={index}
+                    direction={direction}
+                    onSelect={this.handleSelect}
+                  >
+                    {this.state.carousel.map(event => {
+                      return (
+                        <Carousel.Item key={event.id}>
+                          <img
+                            // className="d-block w-100"
+                            src="https://cdn.pixabay.com/photo/2015/09/14/11/43/restaurant-939435_960_720.jpg"
+                            alt="First slide"
+                          />
+                          <Carousel.Caption>
+                            <Link to={`/event/${event.id}`}>
+                              <h2>Why: {event.event_name}</h2>
+                              <h3>Where: {event.event_description}</h3>
+                              <h4>When: {event.event_date}</h4>
+                            </Link>
+                          </Carousel.Caption>
+                        </Carousel.Item>
+                      );
+                    })}
+                  </Carousel>
+                </>
+              ) : (
+                <div>Loading...</div>
+              )}
+            </div>
+          </>
+        </Inner>
+      </Wrap>
     );
+  }
 }
 
-export default Landing 
+export default Landing;
