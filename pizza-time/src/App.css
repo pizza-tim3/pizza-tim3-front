@@ -87,8 +87,8 @@
   background-color: transparent;
 }
 .carousel-indicators li.active {
-  transform: rotate(360deg);
-  -webkit-transform: rotate(360deg);
-  -ms-transform: rotate(360deg);
-  transition: 333ms linear all;
+  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transition: 200ms linear all;
 }
