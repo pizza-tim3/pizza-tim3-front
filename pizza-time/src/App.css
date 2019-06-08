@@ -45,3 +45,50 @@
   border: 1px solid #ff5c00;
   cursor: pointer;
 }
+
+/* Custom css to override the bootstrap carousel css */
+.carousel {
+  width: 100%;
+}
+.carousel-item img {
+  height: 100%;
+  width: 100%;
+}
+.carousel-item.active {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.carousel a {
+  color: #fff;
+}
+.carousel a:hover {
+  text-decoration: none;
+}
+.carousel-item.active .carousel-caption {
+  align-self: center;
+  align-items: center;
+}
+.carousel-caption {
+  bottom: auto;
+  background-color: rgba(255, 255, 255, 0.033);
+}
+.carousel-caption:hover {
+  background-color: rgba(255, 255, 255, 0.167);
+}
+.carousel-indicators {
+  bottom: 25%;
+}
+.carousel-indicators li {
+  background-image: url("https://images.vexels.com/media/users/3/157292/isolated/preview/1013ce3cf5903ef5afe01f0fd443dc03-colorful-whole-pizza-design-by-vexels.png") !important;
+  width: 43px;
+  height: 43px;
+  background-size: cover;
+  background-color: transparent;
+}
+.carousel-indicators li.active {
+  transform: rotate(180deg);
+  -webkit-transform: rotate(180deg);
+  -ms-transform: rotate(180deg);
+  transition: 200ms linear all;
+}
