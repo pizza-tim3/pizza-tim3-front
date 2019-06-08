@@ -1,24 +1,24 @@
 import React from "react";
 
 import Nav from "../../home-header/home-header.js";
-import Footer from "../../footer/footer.js";
 import Info from "./info.js";
 import axios from "axios";
 import Participants from "./participants";
 import Discussion from "./discussion";
 import { Inner } from "../../../styles/eventStyles";
+import loading from "../../../assets/loading.gif";
 
 class EventView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       event: {},
-      id: null
+      user_id: "jNpViqXD4DXmf9H2FbkQnAy30000",
     };
   }
-  
+
   // Reusable axios call to backend api w/ response data set to event state
-  fetchUsers() {
+  fetchEvent() {
     const currentId = this.props.match.params.id;
     axios
       .get(
@@ -35,15 +35,15 @@ class EventView extends React.Component {
         });
       });
   }
-  
+
   componentDidMount() {
-    this.fetchUsers();
+    this.fetchEvent();
   }
-  
+
   componentDidUpdate(prevProps) {
     const newId = this.props.match.params.id;
     if (newId !== prevProps.match.params.id) {
-      this.fetchUsers();
+      this.fetchEvent();
     }
   }
   addUser = user => {
@@ -51,7 +51,7 @@ class EventView extends React.Component {
     stateEvent.attending_users.push(user);
 
     this.setState({
-      event: stateEvent
+      event: stateEvent,
     });
   };
   toggleSwitch = () => {
@@ -70,13 +70,13 @@ class EventView extends React.Component {
           <Inner>
             <Info event={this.state.event} toggleSwitch={this.toggleSwitch} />
             <Participants addUser={this.addUser} event={this.state.event} />
-            <Discussion event={this.state.event} />
+            <Discussion event={this.state.event} user_id={this.state.user_id} />
           </Inner>
         ) : (
-          <div />
+          <div>
+            <img src={loading} alt="loading" />
+          </div>
         )}
-
-        <Footer />
       </div>
     );
   }

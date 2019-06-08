@@ -13,6 +13,10 @@ const Details = (props) => {
     renderMap();
   })
 
+  const sendToParent = (req) => {
+    props.getDetails(req);
+  }
+
 //   console.log(props)
   const renderMap = () => {
       setIsLoading(true);
@@ -27,7 +31,7 @@ const Details = (props) => {
         //create a request object to pass to the service
         let request = {
           placeId: props.placeId,
-          fields: ['name', 'formatted_address', 'place_id', 'geometry']
+          fields: ['name', 'formatted_address', 'place_id', 'geometry', 'photos', 'formatted_phone_number', 'opening_hours']
         }
         //create a callback to pass into the service
         const callBack = async (place, status) => {
@@ -36,7 +40,7 @@ const Details = (props) => {
 
           switch(status) {
             case serviceStatus.OK:
-                setData([...data, place]);
+                sendToParent(place)
                 break;
             case serviceStatus.ZERO_RESULTS:
                 setError('No Results');
@@ -48,7 +52,7 @@ const Details = (props) => {
                 setError('Server Issue');
           }
         }
-
+        
         //initialize the service
         let service = new window.google.maps.places.PlacesService(map);
 
@@ -57,28 +61,21 @@ const Details = (props) => {
         // possible field options can be found here: 
         // https://developers.google.com/places/web-service/place-data-fields
         service.getDetails(request, callBack);
-
+        
     } catch (e) {
-      console.log(error)
+      setError('Error:', e);
     }
   } 
 
-if(loading) {
-  return(
-    <>
-    <div>Loading....</div>
-    <div id='map'></div>
-    </>
-  )
-} else {
-  return(
-    <div>
-      <h1>{data[0] && data[0].name}</h1>
+  if(loading) {
+    return(
+      <>
+      <div>Loading....</div>
       <div id='map'></div>
-    </div>
-  )
-}
-  
+      </>
+    )
+  }
+  return <div id='map'></div> 
 } 
 
 function loadScript(url) {

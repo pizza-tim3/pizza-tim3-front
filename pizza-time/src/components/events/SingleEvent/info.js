@@ -33,8 +33,8 @@ class Info extends React.Component {
       google_place_id: location_id,
     });
 
-    const list = document.getElementsByClassName("card-container");
-    list[0].style.display = "none";
+    // const list = document.getElementsByClassName("card-container");
+    // list[0].style.display = "none";
   }
   // Switch handlers for evnts inviteOnly property
   inviteHandler = e => {
@@ -122,7 +122,7 @@ class Info extends React.Component {
                 </div>
 
                 <div className="event map">
-                  <GoogleMap getId={this.state.google_place_id} />
+                  {/* <GoogleMap getId={this.state.google_place_id} /> */}
                 </div>
               </EventRow>
             </EventColumn>
