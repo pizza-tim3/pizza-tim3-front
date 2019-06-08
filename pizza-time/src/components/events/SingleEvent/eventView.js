@@ -1,7 +1,6 @@
 import React from "react";
 
 import Nav from "../../home-header/home-header.js";
-import Footer from "../../footer/footer.js";
 import Info from "./info.js";
 import axios from "axios";
 import Participants from "./participants";
@@ -16,7 +15,7 @@ class EventView extends React.Component {
       id: null
     };
   }
-  
+
   // Reusable axios call to backend api w/ response data set to event state
   fetchUsers() {
     const currentId = this.props.match.params.id;
@@ -26,20 +25,20 @@ class EventView extends React.Component {
       )
       .then(response => {
         this.setState({
-          event: response.data.event,
+          event: response.data.event
         });
       })
       .catch(err => {
         this.setState({
-          event: {},
+          event: {}
         });
       });
   }
-  
+
   componentDidMount() {
     this.fetchUsers();
   }
-  
+
   componentDidUpdate(prevProps) {
     const newId = this.props.match.params.id;
     if (newId !== prevProps.match.params.id) {
@@ -75,8 +74,6 @@ class EventView extends React.Component {
         ) : (
           <div />
         )}
-
-        <Footer />
       </div>
     );
   }

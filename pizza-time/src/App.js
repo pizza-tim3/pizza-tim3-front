@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from "react";
-
+import { Route, Switch, Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-
 import firebaseApp from "./firebase/firebaseApp";
 import "./App.css";
-import { Route, Switch, Link, withRouter } from "react-router-dom";
+
+//actions
+import { setUser, clearUser } from "./actions/index";
+
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Private from "./components/private/Private";
-import UserDashboard from "./containers/user-dashboard/user-dashboard";
+//import UserDashboard from "./containers/user-dashboard/user-dashboard";
 //import UserDashboard from "./components/Dashboard/UserDashboard";
 import CreateNewEvent from "./components/events/create-new-event/create-new-event";
 import EventView from "./components/events/SingleEvent/eventView";
@@ -15,10 +17,9 @@ import Landing from "./containers/landing-page/landing";
 import Login from "./containers/login/login";
 import Register from "./containers/register/Register";
 import Profile from "./containers/profile/Profile";
-
 import UsersList from "./../src/admin/UsersList";
 
-function App() {
+function App(props) {
   //placeholder state, realistically this will be in redux or some reducer
   const [authenticated, setAuthenticated] = useState(false);
 
@@ -32,16 +33,20 @@ function App() {
       //firebase
       if (user) {
         //HANDLE USER STATE IN REDUX/COMPONENT STATE
+        console.log(user);
+        // const {uid}
+        props.setUser(user);
 
         //set local storage to store last login state
         localStorage.setItem("lastLoginState", "1");
-        setAuthenticated(true);
+        setAuthenticated(true); //TODO CHANGE THIS TO AN AUTH REDUCER
       } else {
         //NO USER, CLEAR THE USER
 
         //remove local storage login state
         localStorage.removeItem("lastLoginState");
-        setAuthenticated(false);
+        props.clearUser();
+        setAuthenticated(false); //TODO CHANGE THIS TO AN AUTH REDUCER
       }
     });
   }, []); //<-The second argument is a useEffect's `deps` or `dependancies
@@ -51,14 +56,13 @@ function App() {
 
   return (
     <div className="App">
-
       {/* setting these up seperately initially so we can nav to each path 
     to see what we are working on can combine them as neccessary later */}
       <Switch>
         <Route exact path="/admin/users" component={UsersList} />
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
-        <Route path="/home" component={UserDashboard} />
+        {/* <Route path="/home" component={UserDashboard} /> */}
         <Route path="/create-event" component={CreateNewEvent} />
         <Route exact path="/event/:id" component={EventView} />
         <PrivateRoute
@@ -81,7 +85,6 @@ function App() {
           authenticated={authenticated} //pass global authenticated status here
         />
       </Switch>
-
     </div>
   );
 }
@@ -89,7 +92,7 @@ function App() {
 //Here I've destructured the single reducer
 const mstp = ({ userReducer /**,otherReducer */ }) => {
   console.log(userReducer);
-  return userReducer;
+  return { userReducer };
 };
 
 //react-router-v4-not-working-with-redux
@@ -98,6 +101,6 @@ const mstp = ({ userReducer /**,otherReducer */ }) => {
 export default withRouter(
   connect(
     mstp,
-    {}
+    { setUser, clearUser }
   )(App)
 );
