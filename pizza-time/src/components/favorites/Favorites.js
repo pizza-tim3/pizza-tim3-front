@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
+import Details from "../events/details-request/details-request";
+
 const Favorites = ({ firebase_uid }) => {
   console.log(firebase_uid);
   const [favorites, setFavorites] = useState([]);
@@ -18,8 +20,12 @@ const Favorites = ({ firebase_uid }) => {
       } catch (error) {}
     })();
   }, []);
+
+  const getPlacesInfo = res => {};
+
   return (
     <div>
+      {/* <Details getDetails={getPlacesInfo} /> */}
       <h3> Favorites Works! </h3>
       {favorites.map(favorite => (
         <div>

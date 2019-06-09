@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
+import {
+  ProfileListContainer,
+  FriendInfoContainer
+} from "../../styles/profileStyles";
 
 import FriendSearchBox from "../../components/friend-search-box/friend-search-box";
+
+import PLACEHOLDER_IMAGE from "../../assets/users/user-1.png";
 
 const FriendsList = ({ firebase_uid }) => {
   console.log(firebase_uid);
@@ -24,15 +30,19 @@ const FriendsList = ({ firebase_uid }) => {
         <FriendSearchBox />
         <a href="#">Invite A Friend!</a>
       </div>
-      {friends.map(friend => (
-        <div key={friend.id}>
-          <img>{friend.avatar}</img>
-          <h4>
-            {friend.first_name} {friend.last_name}
-          </h4>
-          <p>{friend.location}</p>
-        </div>
-      ))}
+      <ProfileListContainer>
+        {friends.map(friend => (
+          <FriendInfoContainer key={friend.id}>
+            <img class="user" src={PLACEHOLDER_IMAGE}>
+              {friend.avatar}
+            </img>
+            <h4>
+              {friend.first_name} {friend.last_name}
+            </h4>
+            <p>Location</p>
+          </FriendInfoContainer>
+        ))}
+      </ProfileListContainer>
     </div>
   );
 };
