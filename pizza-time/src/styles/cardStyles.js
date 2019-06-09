@@ -119,3 +119,4 @@ export const Inner = styled.div`
           }
       }
   `;
+  
