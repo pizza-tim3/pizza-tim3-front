@@ -43,3 +43,13 @@ export const FriendInfoContainer = styled.div`
     justify-self: start;
   }
 `;
+
+/*Tool bar that contains the `find a new friend` and `invite a friend`
+  on the FriendsList Component and `add new favorite` and `filter` 
+  component on the FavoritesList Component
+*/
+export const ListToolBar = styled.div`
+  display: flex;
+  justify-content: space-between;
+  padding: 0px 25px;
+`;
