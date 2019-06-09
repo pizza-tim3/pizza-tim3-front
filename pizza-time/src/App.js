@@ -29,8 +29,7 @@ function App(props) {
     //anytime a user's logged in status has been changed.
     //this logic should be global.
     firebaseApp.auth().onAuthStateChanged(async user => {
-      console.log("AuthStateChanged");
-      //firebase
+      //if a user is logged in
       if (user) {
         //HANDLE USER STATE IN REDUX/COMPONENT STATE
 
@@ -40,7 +39,7 @@ function App(props) {
           `${process.env.REACT_APP_BACK_END_URL}/api/users/${uid}`
         );
         const userInfo = await response.json();
-        console.log(userInfo);
+        //set user info from our backend on global user object
         props.setUser(userInfo);
 
         //set local storage to store last login state
@@ -51,6 +50,7 @@ function App(props) {
 
         //remove local storage login state
         localStorage.removeItem("lastLoginState");
+        //remove user from global object
         props.clearUser();
         setAuthenticated(false); //TODO CHANGE THIS TO AN AUTH REDUCER
       }
