@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 
+import FriendSearchBox from "../../components/friend-search-box/friend-search-box";
+
 const FriendsList = ({ firebase_uid }) => {
   console.log(firebase_uid);
   const [friends, setFriends] = useState([]);
@@ -18,7 +20,10 @@ const FriendsList = ({ firebase_uid }) => {
   }, []);
   return (
     <div>
-      <h3>FriendsList Works!</h3>
+      <div>
+        <FriendSearchBox />
+        <a href="#">Invite A Friend!</a>
+      </div>
       {friends.map(friend => (
         <div key={friend.id}>
           <img>{friend.avatar}</img>
