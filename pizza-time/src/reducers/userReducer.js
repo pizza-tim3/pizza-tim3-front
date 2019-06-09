@@ -6,12 +6,11 @@ import {
 } from "../actions";
 
 const initialState = {
-  firstname: "",
-  lastname: "",
+  first_name: "",
+  last_name: "",
   username: "",
   email: "",
   location: "",
-  uid: "",
   avatar: "",
   crust: "",
   topping: "",

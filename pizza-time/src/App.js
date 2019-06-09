@@ -28,14 +28,20 @@ function App(props) {
     //`onAuthStateChanged` is an `observer` which watches and runs a callback
     //anytime a user's logged in status has been changed.
     //this logic should be global.
-    firebaseApp.auth().onAuthStateChanged(user => {
+    firebaseApp.auth().onAuthStateChanged(async user => {
       console.log("AuthStateChanged");
       //firebase
       if (user) {
         //HANDLE USER STATE IN REDUX/COMPONENT STATE
-        console.log(user);
-        // const {uid}
-        props.setUser(user);
+
+        //get user info from our server
+        const { uid } = user;
+        const response = await fetch(
+          `${process.env.REACT_APP_BACK_END_URL}/api/users/${uid}`
+        );
+        const userInfo = await response.json();
+        console.log(userInfo);
+        props.setUser(userInfo);
 
         //set local storage to store last login state
         localStorage.setItem("lastLoginState", "1");
