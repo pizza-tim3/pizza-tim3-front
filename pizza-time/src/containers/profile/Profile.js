@@ -27,7 +27,7 @@ const Profile = props => {
               </Tab>
             </TabList>
             <TabPanel className="tab">
-              {/* <Favorites {...state} /> */}
+              <Favorites />
             </TabPanel>
             <TabPanel className="tab">
               <FriendsList />
