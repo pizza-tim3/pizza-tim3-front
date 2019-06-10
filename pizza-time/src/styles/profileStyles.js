@@ -26,10 +26,11 @@ export const FriendInfoContainer = styled.div`
   grid-template-areas:
     "avatar username"
     "avatar location";
-  grid-template-columns: 125px 1fr;
+  grid-template-columns: 150px 1fr;
 
   & > img {
     grid-area: avatar;
+    border-radius: 50%;
   }
   & > h4 {
     grid-area: username;

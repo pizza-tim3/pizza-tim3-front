@@ -2,7 +2,7 @@ import React from "react";
 
 export default function ProfileUserInfo({
   avatar,
-  slicesPerMonth,
+  slices,
   topping,
   username,
   first_name,
@@ -18,7 +18,7 @@ export default function ProfileUserInfo({
         </h2>
       </div>
       <p>
-        Slices Per Month: <span>{slicesPerMonth}</span>
+        Slices Per Month: <span>{slices}</span>
       </p>
       <p>
         Topping: <span>{topping}</span>

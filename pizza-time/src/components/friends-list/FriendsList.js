@@ -36,9 +36,7 @@ const FriendsList = ({ firebase_uid }) => {
       <ProfileListContainer>
         {friends.map(friend => (
           <FriendInfoContainer key={friend.id}>
-            <img class="user" src={PLACEHOLDER_IMAGE}>
-              {friend.avatar}
-            </img>
+            <img className="user" src={friend.avatar} />
             <h4>
               {friend.first_name} {friend.last_name}
             </h4>
