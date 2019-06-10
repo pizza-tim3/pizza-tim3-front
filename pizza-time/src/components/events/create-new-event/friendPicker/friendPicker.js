@@ -9,7 +9,7 @@ const FriendPicker = (props) => {
     const [chosenFriends, setChosenFriends] = useState([]);
     
 
-    const url = 'http://localhost:5500/api/users/jNpViqXD4DXmf9H2FbkQnAy10000/friends'
+    const url = 'http://localhost:5500/api/friends/XVf2XhkNSJWNDGEW4Wh6SHpKYUt2'
 
     useEffect(() => {
         axios
@@ -34,7 +34,7 @@ const FriendPicker = (props) => {
                 {friends && friends.map(friend => {
                     return(
                     <div key='friend.id' className="friendWrapper">
-                        <img src={UserImage} />
+                        <img src={UserImage} alt="user avatar" height="60px" width="60px"/>
                         <p>{friend.first_name} {friend.last_name}</p>
                         <button onClick={() => {addToInvited(friend)}}>+</button>
                     </div>
