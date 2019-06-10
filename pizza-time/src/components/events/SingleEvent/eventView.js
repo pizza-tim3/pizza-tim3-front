@@ -182,6 +182,7 @@ class EventView extends React.Component {
             <Discussion event={this.state.event} user_id={this.state.user_id} />
           </Inner>
         ) : (
+          // If the event hasn't been loaded, show loading gif
           <Inner>
             <div className="loading">
               <img src={loading} alt="loading" />
