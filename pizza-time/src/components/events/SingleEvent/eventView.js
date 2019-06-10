@@ -79,11 +79,11 @@ class EventView extends React.Component {
     await this.fetchFriends();
   }
 
-  componentDidUpdate(prevProps) {
+  async componentDidUpdate(prevProps) {
     const newId = this.props.match.params.id;
     if (newId !== prevProps.match.params.id) {
-      this.fetchEvent();
-      this.fetchFriends();
+      await this.fetchEvent();
+      await this.fetchFriends();
     }
   }
   selectAdditional = user => {
