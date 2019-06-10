@@ -17,7 +17,7 @@ const FriendsList = ({ firebase_uid }) => {
     /*https://developer.mozilla.org/en-US/docs/Glossary/IIFE#targetText=An%20IIFE%20(Immediately%20Invoked%20Function,and%20contains%20two%20major%20parts.*/
     (async function() {
       const response = await fetch(
-        `${process.env.REACT_APP_BACK_END_URL}/api/friends/firebase_uid`
+        `${process.env.REACT_APP_BACK_END_URL}/api/friends/${firebase_uid}`
       );
       const json = await response.json();
       console.log(json);
@@ -26,6 +26,9 @@ const FriendsList = ({ firebase_uid }) => {
   }, []);
   return (
     <div>
+      {console.log(
+        `${process.env.REACT_APP_BACK_END_URL}/api/friends/${firebase_uid}`
+      )}
       <ListToolBar>
         <FriendSearchBox />
         <a href="#">Invite A Friend!</a>
