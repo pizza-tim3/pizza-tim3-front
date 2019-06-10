@@ -86,6 +86,8 @@ class EventView extends React.Component {
       await this.fetchFriends();
     }
   }
+
+  // Select user to be added to an selectedToInvite array that will be post to eventInvited table
   selectAdditional = user => {
     let currentInvited = this.state.event.invitedUsers;
     let selected = [];
@@ -97,7 +99,7 @@ class EventView extends React.Component {
         duplicate = false;
       }
     }
-
+    // Add the user only if the user is not currently invited (i.e. duplicate)
     if (duplicate === false) {
       currentInvited.push(user);
       selected.push(user);
@@ -109,17 +111,23 @@ class EventView extends React.Component {
       });
     }
   };
+
+  // Send the array of the selectedToInvite array to the backend
   inviteFriends = () => {
     const event_id = this.props.match.params.id;
 
     let selectedToSubmit = this.state.selectedToInvite.map(select => {
       select.event_id = event_id;
       select.user_id = select.user_id;
+      select.avatar = select.avatar;
+      select.first_name = select.first_name;
+      select.last_name = select.last_name;
       select.pending = "true";
       select.accepted = "false";
       select.declined = "false";
     });
 
+    // If selected array is not empty, update the event's invitedUsers with new selected users
     if (selectedToSubmit.length > 0) {
       let newInvitedUsers = this.state.event.invitedUsers;
       for (let i = 0; i < selectedToSubmit.length; i++) {
@@ -148,6 +156,8 @@ class EventView extends React.Component {
         });
     }
   };
+
+  // Toggle the event's inviteOnly property
   toggleSwitch = () => {
     this.setState(prevState => {
       const stateCopy = { ...this.state };
