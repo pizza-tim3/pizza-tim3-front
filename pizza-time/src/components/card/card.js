@@ -5,6 +5,7 @@ import Envelope from "../../assets/envelope.svg";
 import Comment from "../../assets/comment.svg";
 import { CardBox, Inner, Content, Action } from "../../styles/cardStyles.js";
 import DashComment from "../../containers/user-dashboard/DashComment";
+import Location from "../../containers/user-dashboard/Location.js";
 
 class Card extends React.Component {
   constructor(props) {
@@ -12,7 +13,7 @@ class Card extends React.Component {
     this.state = {
       comments: [],
       showComments: true,
-      attendees:[]
+      attendees: []
     };
   }
 
@@ -28,11 +29,10 @@ class Card extends React.Component {
       .catch(error => {
         this.setState({ error });
       });
-      axios.get("http://localhost:5500/api/invited/1")
-      .then(res =>{
-        console.log("INVITEES RESPONSE",res)
-        this.setState({attendees:res.data})
-      })
+    axios.get("http://localhost:5500/api/invited/1").then(res => {
+      console.log("INVITEES RESPONSE", res);
+      this.setState({ attendees: res.data });
+    });
   }
   commentHandler = event => {
     event.prevDefault();
@@ -51,6 +51,7 @@ class Card extends React.Component {
 
   render() {
     const date = new Date(this.props.event.event_date).toString();
+    console.log("COME FOR THE EVENT", this.props.event);
     return (
       <CardBox>
         <Inner>
@@ -64,11 +65,13 @@ class Card extends React.Component {
                 <span>Date:</span> {date}
               </p>
               <p>
-                <span>location:</span> {this.props.event.place}{" "}
+                <span>location:</span>{" "}
+                <Location google_place_id={this.props.event.google_place_id} />
               </p>
               <p>
-                <span>Attending:</span>{this.state.attendees.map(attende =>{
-                       return [attende.first_name," ",attende.last_name,","]
+                <span>Attending:</span>
+                {this.state.attendees.map(attende => {
+                  return [attende.first_name, " ", attende.last_name, ","];
                 })}
               </p>
             </div>

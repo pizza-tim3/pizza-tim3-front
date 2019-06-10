@@ -104,7 +104,6 @@ render () {
                     </Tabs>
                 </Inner>
             </Wrap>
-            {/* <Footer /> */}
         </>
     );
   }   
