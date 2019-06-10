@@ -1,14 +1,19 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import useForm from '../../../../customHooks/customFormHooks';
 
 import { NameDetailsWrap, PlacesHeading } from '../../../../styles/nameDetailsStyles';
 
 const NameAndDetails = (props) => {
-    const submit = () => {
-        console.log('added');
+    
+    const sendData = () => {
+        let eventDetails = {
+            eventName: inputs.eventName,
+            eventDesc: inputs.eventDesc
+        }
+        props.handleClick('event', eventDetails);
     }
 
-    const {inputs, handleInputChange, handleSubmit} = useForm(submit);
+    const {inputs, handleInputChange, handleSubmit} = useForm(sendData);
 
     console.log('inputs',inputs.eventName, inputs.eventDesc)
     return(
@@ -35,7 +40,7 @@ const NameAndDetails = (props) => {
                         {/* <div className='buttonIcon'></div> */}
                         <button 
                             type='submit'
-                            onClick={() => {props.handleClick()}}>Next Step</button>
+                            onClick={() => {handleSubmit()}}>Next Step</button>
                     </div>
             </form>
         </NameDetailsWrap>

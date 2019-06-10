@@ -40,7 +40,6 @@ render () {
           </div>
         </Action>
       </Inner>
-
     </CardBox>
   );
 };

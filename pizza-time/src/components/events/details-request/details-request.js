@@ -11,7 +11,7 @@ const Details = (props) => {
 
   useEffect(() => {
     renderMap();
-  }, [])
+  })
 
   const sendToParent = (req) => {
     props.getDetails(req);
