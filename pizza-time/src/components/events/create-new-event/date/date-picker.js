@@ -31,7 +31,6 @@ const DatePicker = (props) => {
                     name="date"
                     id="date"
                     type="date"
-                    defaultValue="2017-05-24"
                     onChange={handleInputChange}
                     value={inputs.date}
                 />
@@ -41,7 +40,6 @@ const DatePicker = (props) => {
                     name="time"
                     id="time"
                     type="time"
-                    defaultValue="07:30"
                     onChange={handleInputChange}
                     value={inputs.time}
                 />
