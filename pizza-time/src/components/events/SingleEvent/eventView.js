@@ -12,47 +12,141 @@ class EventView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      user_id: null,
       event: {},
-      user_id: "jNpViqXD4DXmf9H2FbkQnAy30000",
+      friends: [],
+      selectedToInvite: [],
     };
   }
 
-  // Reusable axios call to backend api w/ response data set to event state
-  fetchEvent() {
+  async fetchEvent() {
     const currentId = this.props.match.params.id;
-    axios
-      .get(
+
+    try {
+      let currentEvent = await axios.get(
         `https://pizza-tim3-be.herokuapp.com/api/events/${currentId}/details`
-      )
-      .then(response => {
+      );
+      if (currentEvent) {
         this.setState({
-          event: response.data.event,
+          event: currentEvent.data.event,
+          user_id: currentEvent.data.event.organizer,
         });
-      })
-      .catch(err => {
+      } else {
         this.setState({
           event: {},
+          user_id: "jNpViqXD4DXmf9H2FbkQnAy30000",
         });
+      }
+    } catch (e) {
+      this.setState({
+        event: {},
+        user_id: "jNpViqXD4DXmf9H2FbkQnAy30000",
       });
+      console.log(e);
+    }
   }
 
-  componentDidMount() {
-    this.fetchEvent();
+  // Reusable axios call to backend api w/ response data set to friends state
+
+  async fetchFriends() {
+    let user_id = this.state.user_id;
+
+    try {
+      let currentFriends = await axios.get(
+        `https://pizza-tim3-be.herokuapp.com/api/friends/${user_id}`
+      );
+      if (currentFriends) {
+        this.setState({
+          friends: currentFriends.data,
+        });
+      } else {
+        this.setState({
+          friends: [],
+        });
+      }
+    } catch (e) {
+      console.log(e);
+      this.setState({
+        friends: [],
+      });
+    }
+  }
+
+  // Reusable axios call to backend api w/ response data set to event state
+
+  async componentDidMount() {
+    await this.fetchEvent();
+    await this.fetchFriends();
   }
 
   componentDidUpdate(prevProps) {
     const newId = this.props.match.params.id;
     if (newId !== prevProps.match.params.id) {
       this.fetchEvent();
+      this.fetchFriends();
     }
   }
-  addUser = user => {
-    const stateEvent = { ...this.state.event };
-    stateEvent.attending_users.push(user);
+  selectAdditional = user => {
+    let currentInvited = this.state.event.invitedUsers;
+    let selected = [];
+    let duplicate = true;
+    for (let i = 0; i < currentInvited.length; i++) {
+      if (currentInvited[i].user_id === user.firebase_uid) {
+        duplicate = true;
+      } else {
+        duplicate = false;
+      }
+    }
 
-    this.setState({
-      event: stateEvent,
+    if (duplicate === false) {
+      currentInvited.push(user);
+      selected.push(user);
+      this.setState({
+        event: {
+          invitedUsers: currentInvited,
+        },
+        selectedToInvite: selected,
+      });
+    }
+  };
+  inviteFriends = () => {
+    const event_id = this.props.match.params.id;
+
+    let selectedToSubmit = this.state.selectedToInvite.map(select => {
+      select.event_id = event_id;
+      select.user_id = select.user_id;
+      select.pending = "true";
+      select.accepted = "false";
+      select.declined = "false";
     });
+
+    if (selectedToSubmit.length > 0) {
+      let newInvitedUsers = this.state.event.invitedUsers;
+      for (let i = 0; i < selectedToSubmit.length; i++) {
+        newInvitedUsers.push(selectedToSubmit[i]);
+      }
+      axios
+        .post(
+          `https://pizza-tim3-be.herokuapp.com/api/invited/${event_id}`,
+          selectedToSubmit
+        )
+        .then(res => {
+          if (res.status === 200) {
+            this.setState({
+              event: {
+                invitedUsers: newInvitedUsers,
+              },
+              selectedToSubmit: [],
+            });
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          this.setState({
+            selectedToSubmit: [],
+          });
+        });
+    }
   };
   toggleSwitch = () => {
     this.setState(prevState => {
@@ -69,13 +163,20 @@ class EventView extends React.Component {
         {Object.keys(this.state.event).length ? (
           <Inner>
             <Info event={this.state.event} toggleSwitch={this.toggleSwitch} />
-            <Participants addUser={this.addUser} event={this.state.event} />
+            <Participants
+              event={this.state.event}
+              friends={this.state.friends}
+              selectAdditional={this.selectAdditional}
+              inviteFriends={this.inviteFriends}
+            />
             <Discussion event={this.state.event} user_id={this.state.user_id} />
           </Inner>
         ) : (
-          <div>
-            <img src={loading} alt="loading" />
-          </div>
+          <Inner>
+            <div className="loading">
+              <img src={loading} alt="loading" />
+            </div>
+          </Inner>
         )}
       </div>
     );
