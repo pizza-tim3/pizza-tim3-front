@@ -366,8 +366,8 @@ export const EventRow = styled.div`
       height: 55px;
       border-radius: 50%;
     }
-    .add-user {
-      padding: 7px;
+    .add-user img {
+      padding: 9px;
     }
   }
   .event-invite, .all-comments, .add-comments {

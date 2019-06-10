@@ -207,11 +207,7 @@ class Discussion extends React.Component {
                           id={comment.id}
                           key={comment.id}
                         >
-                          {/* <img
-                            src={comment.user.avatar}
-                            alt="user"
-                            className="user-avatar"
-                          /> */}
+                          <img src={user1} alt="user" className="user-avatar" />
                           <p id={`comment-${comment.id}`}>{comment.message}</p>
 
                           <div
