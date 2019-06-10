@@ -13,15 +13,22 @@ export const Inner = styled.div`
   flex-direction: column;
   padding: 15px 0 15px 0;
   width: 90%;
+  .loading {
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .more {
     display: flex;
     position: fixed;
+    flex-direction: column;
     width: 100%;
     height: 100%;
     align-self: center;
-    background-color: ${colors.white};
+    background-color: ${colors.primary};
     align-items: end;
-    margin-top: -120px;
+    margin-top: -135px;
     z-index: 9999;
     ul {
       display: flex;
@@ -33,10 +40,89 @@ export const Inner = styled.div`
       justify-content: center;
     }
   }
-  ${media.desktop} {
+  .close {
+    align-self: flex-end;
+    margin: 20px 33px 0px 0px;
+    opacity: 1;
+  }
+
+  ${media.tablet} {
     width: 80%;
     .event-header {
       flex-direction: row;
+    }
+
+    .close {
+      margin: 33px 50px 0px 0px;
+    }
+    .more {
+      margin-top: -121px;
+      justify-content: end;
+      align-items: center;
+    }
+  }
+  .close-more {
+    border: 1px solid ${colors.primary};
+    opacity: 1;
+    img {
+      width: 26px;
+      height: 26px;
+      transform: rotate(45deg);
+      padding: 3px;
+    }
+    :hover {
+      cursor: pointer;
+      background: ${colors.white};
+    }
+  }
+
+  .tobe-invited {
+    width: 80%;
+    height: 300px;
+    background-color: #fff;
+  }
+  .friends {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    height: auto;
+    align-self: center;
+    width: 100%;
+    margin-top: 150px;
+    padding: 15px 0px;
+    border-top: 4px solid ${colors.black};
+    border-bottom: 4.5px solid ${colors.black};
+    background-color: ${colors.white};
+    -webkit-overflow-scrolling: touch;
+    ${media.desktop} {
+      width: 80%;
+      border: 2px solid ${colors.primary};
+      margin-top: 200px;
+      border-radius: 5px;
+      .friend {
+        width: 66px;
+        margin: 8px;
+      }
+    }
+    h2 {
+      margin: 8px 0px;
+    }
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    .friend {
+      flex: 0 0 auto;
+      margin: 12px;
+      width: 100px;
+      height: auto;
+    }
+    img {
+      margin-top: 12px;
+      border: 3.5px solid ${colors.white};
+      border-radius: 50%;
+      &:hover {
+        border: 3.5px solid ${colors.primary};
+      }
     }
   }
   .event-header {
@@ -255,6 +341,9 @@ export const EventRow = styled.div`
   .event-users {
     display: flex;
     width: 100%;
+    div {
+      margin-right: 10px;
+    }
     hr {
       border-top: 3px solid ${colors.primary};
       width: 70%;
@@ -273,12 +362,12 @@ export const EventRow = styled.div`
       }
     }
     img {
-      width: 40px;
-      height: 40px;
-      margin-right: 5px;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
     }
-    .add-user {
-      padding: 7px;
+    .add-user img {
+      padding: 9px;
     }
   }
   .event-invite, .all-comments, .add-comments {
