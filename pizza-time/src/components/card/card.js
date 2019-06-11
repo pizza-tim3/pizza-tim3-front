@@ -19,23 +19,25 @@ class Card extends React.Component {
 
   componentDidMount() {
     console.log("REACHED HERE");
+    const eventId= this.props.event.event_id
 
     axios
-      .get("http://localhost:5500/api/comments/event/messages/user/1")
+      .get("http://localhost:5500/api/comments/event/messages/user/" + this.props.event.event_id)
       .then(res => {
-        console.log("COUNT RESPONSE", res);
+        console.log("COUNT COMMENT RESPONSE", res);
         this.setState({ comments: res.data.comments });
       })
       .catch(error => {
         this.setState({ error });
       });
-    axios.get("http://localhost:5500/api/invited/1").then(res => {
+    axios.get("http://localhost:5500/api/invited/" + this.props.event.event_id).then(res => {
       console.log("INVITEES RESPONSE", res);
       this.setState({ attendees: res.data });
     });
   }
+
   commentHandler = event => {
-    event.prevDefault();
+    event.preventDefault();
     let myElements = event.target;
     /*
      * make a new class noMessage which has display as none.
