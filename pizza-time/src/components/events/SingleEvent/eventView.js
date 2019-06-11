@@ -12,10 +12,11 @@ class EventView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user_id: null,
+      organizer: null,
       event: {},
       friends: [],
       selectedToInvite: [],
+      loading: false,
     };
   }
 
@@ -28,18 +29,21 @@ class EventView extends React.Component {
       if (currentEvent) {
         this.setState({
           event: currentEvent.data.event,
-          user_id: currentEvent.data.event.organizer,
+          organizer: currentEvent.data.event.organizer,
+          loading: false,
         });
       } else {
         this.setState({
           event: {},
-          user_id: "jNpViqXD4DXmf9H2FbkQnAy30000",
+          organizer: "jNpViqXD4DXmf9H2FbkQnAy30000",
+          loading: false,
         });
       }
     } catch (e) {
       this.setState({
         event: {},
-        user_id: "jNpViqXD4DXmf9H2FbkQnAy30000",
+        organizer: "jNpViqXD4DXmf9H2FbkQnAy30000",
+        loading: false,
       });
       console.log(e);
     }
@@ -47,25 +51,28 @@ class EventView extends React.Component {
 
   // Reusable axios call to backend api w/ response data set to friends state
   async fetchFriends() {
-    let user_id = this.state.user_id;
+    let organizer = this.state.organizer;
 
     try {
       let currentFriends = await axios.get(
-        `https://pizza-tim3-be.herokuapp.com/api/friends/${user_id}`
+        `https://pizza-tim3-be.herokuapp.com/api/friends/${organizer}`
       );
       if (currentFriends) {
         this.setState({
           friends: currentFriends.data,
+          loading: false,
         });
       } else {
         this.setState({
           friends: [],
+          loading: false,
         });
       }
     } catch (e) {
       console.log(e);
       this.setState({
         friends: [],
+        loading: false,
       });
     }
   }
@@ -73,6 +80,9 @@ class EventView extends React.Component {
   // Reusable axios call to backend api w/ response data set to event state
 
   async componentDidMount() {
+    this.setState({
+      loading: true,
+    });
     await this.fetchEvent();
     await this.fetchFriends();
   }
@@ -164,27 +174,80 @@ class EventView extends React.Component {
     });
   };
 
+  updateName = name => {
+    let currentEvent = this.state.event;
+    currentEvent.event_name = name;
+    this.setState({
+      event: currentEvent,
+    });
+  };
+
+  updateEvent = event_id => {
+    this.setState({
+      loading: true,
+    });
+    let currentFriends = this.state.friends;
+    let currentEvent = this.state.event;
+    let updatedEvent = {
+      id: currentEvent.id,
+      event_name: currentEvent.event_name,
+      event_description: currentEvent.event_description,
+      event_date: currentEvent.event_date,
+      organizer: currentEvent.organizer,
+    };
+    axios
+      .put(
+        `https://pizza-tim3-be.herokuapp.com/api/events/${event_id}`,
+        updatedEvent
+      )
+      .then(res => {
+        if (res.status === 200) {
+          updatedEvent.invitedUsers = currentEvent.invitedUsers;
+          updatedEvent.comments = currentEvent.comments;
+          this.setState({
+            event: updatedEvent,
+            loading: false,
+            friends: currentFriends,
+          });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({
+          loading: false,
+        });
+      });
+  };
+
   render() {
     return (
       <div>
         <Nav />
-        {Object.keys(this.state.event).length ? (
+
+        {this.state.loading === true ? (
           <Inner>
-            <Info event={this.state.event} toggleSwitch={this.toggleSwitch} />
+            <div className="loading">
+              <img src={loading} alt="loading" />
+            </div>
+          </Inner>
+        ) : (
+          <Inner>
+            <Info
+              event={this.state.event}
+              toggleSwitch={this.toggleSwitch}
+              updateEvent={this.updateEvent}
+              updateName={this.updateName}
+            />
             <Participants
               event={this.state.event}
               friends={this.state.friends}
               selectAdditional={this.selectAdditional}
               inviteFriends={this.inviteFriends}
             />
-            <Discussion event={this.state.event} user_id={this.state.user_id} />
-          </Inner>
-        ) : (
-          // If the event hasn't been loaded, show loading gif
-          <Inner>
-            <div className="loading">
-              <img src={loading} alt="loading" />
-            </div>
+            <Discussion
+              event={this.state.event}
+              organizer={this.state.organizer}
+            />
           </Inner>
         )}
       </div>
