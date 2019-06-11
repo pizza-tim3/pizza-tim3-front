@@ -62,7 +62,6 @@ class Info extends React.Component {
     });
   };
   updateNameHandler = e => {
-    // console.log(this.state)
     e.preventDefault();
     this.props.updateName(this.state.event.event_name);
     this.setState({
@@ -71,6 +70,7 @@ class Info extends React.Component {
   };
   updateDateHandler = e => {
     e.preventDefault();
+    this.props.updateDate(this.state.date);
     this.setState({ show: false });
   };
   updateEventHandler = e => {

@@ -182,6 +182,14 @@ class EventView extends React.Component {
     });
   };
 
+  updateDate = date => {
+    let currentEvent = this.state.event;
+    currentEvent.event_date = new Date(date).getTime();
+    this.setState({
+      event: currentEvent,
+    });
+  };
+
   updateEvent = event_id => {
     this.setState({
       loading: true,
@@ -237,6 +245,7 @@ class EventView extends React.Component {
               toggleSwitch={this.toggleSwitch}
               updateEvent={this.updateEvent}
               updateName={this.updateName}
+              updateDate={this.updateDate}
             />
             <Participants
               event={this.state.event}
