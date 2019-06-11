@@ -3,11 +3,11 @@ import { connect } from "react-redux";
 import {
   ProfileListContainer,
   FriendInfoContainer,
-  ListToolBar
+  ListToolBar,
+  Button
 } from "../../styles/profileStyles";
 
 import FriendSearchBox from "../../components/friend-search-box/friend-search-box";
-import PLACEHOLDER_IMAGE from "../../assets/users/user-1.png";
 
 const FriendsList = ({ firebase_uid }) => {
   console.log(firebase_uid);
@@ -35,12 +35,14 @@ const FriendsList = ({ firebase_uid }) => {
       </ListToolBar>
       <ProfileListContainer>
         {friends.map(friend => (
-          <FriendInfoContainer key={friend.id}>
+          <FriendInfoContainer key={friend.id} status={friend.status}>
             <img className="user" src={friend.avatar} />
             <h4>
               {friend.first_name} {friend.last_name}
             </h4>
             <p>Location</p>
+            {friend.status === "pending" ? <Button>Accept</Button> : null}
+            {friend.status === "pending" ? <Button>Reject</Button> : null}
           </FriendInfoContainer>
         ))}
       </ProfileListContainer>
