@@ -5,12 +5,17 @@ import React, { useState, useEffect } from 'react';
 const Details = (props) => {
   const [data, setData] = useState([]);
   const [loading, setIsLoading] = useState(false);
-  
-  let url = 'https://maps.googleapis.com/maps/api/js?key=AIzaSyA4QgeLdTkXC_ulBAtLDmaY8nEaqZeRtsE&libraries=places&callback=initMap';
+  const [error, setError] = useState('');
+  const API_KEY = process.env.REACT_APP_GOOGLE_PLACES_API_KEY;
+  const url = `https://maps.googleapis.com/maps/api/js?key=${API_KEY}&libraries=places&callback=initMap`;
 
   useEffect(() => {
     renderMap();
-  }, [])
+  })
+
+  const sendToParent = (req) => {
+    props.getDetails(req);
+  }
 
 //   console.log(props)
   const renderMap = () => {
@@ -21,47 +26,56 @@ const Details = (props) => {
 
   const initMap = () => {
       try {
+        //select the element to place the search in
         let map = document.getElementById('map');
-
+        //create a request object to pass to the service
         let request = {
           placeId: props.placeId,
-          fields: ['name', 'formatted_address', 'place_id', 'geometry']
+          fields: ['name', 'formatted_address', 'place_id', 'geometry', 'photos', 'formatted_phone_number', 'opening_hours']
         }
+        //create a callback to pass into the service
+        const callBack = async (place, status) => {
+          const serviceStatus = window.google.maps.places.PlacesServiceStatus;
+          setIsLoading(false);
 
-        const callBack = (place, status) => {
-          if(status === window.google.maps.places.PlacesServiceStatus.OK) {
-            
-            // console.log(place);
-            setData([...data, place]);
-            setIsLoading(false);
+          switch(status) {
+            case serviceStatus.OK:
+                sendToParent(place)
+                break;
+            case serviceStatus.ZERO_RESULTS:
+                setError('No Results');
+                break;
+            case serviceStatus.INVALID_REQUEST:
+                setError('Missing Place Id');
+                break;
+            default:
+                setError('Server Issue');
           }
         }
-
+        
+        //initialize the service
         let service = new window.google.maps.places.PlacesService(map);
 
+        // call the service method and pass it our request object and callback method
+        // this returns an object containing any data in the fields method
+        // possible field options can be found here: 
+        // https://developers.google.com/places/web-service/place-data-fields
         service.getDetails(request, callBack);
-
-    } catch (error) {
-      console.log(error)
+        
+    } catch (e) {
+      setError('Error:', e);
     }
   } 
 
-if(loading) {
-  return(
-    <>
-    <div>Loading....</div>
-    <div id='map'></div>
-    </>
-  )
-} else {
-  return(
-    <div>
-      <h1>{data[0] && data[0].name}</h1>
+  if(loading) {
+    return(
+      <>
+      <div>Loading....</div>
       <div id='map'></div>
-    </div>
-  )
-}
-  
+      </>
+    )
+  }
+  return <div id='map'></div> 
 } 
 
 function loadScript(url) {

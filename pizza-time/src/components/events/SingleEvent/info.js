@@ -26,15 +26,13 @@ class Info extends React.Component {
   }
 
   componentDidMount() {
-    const eventDate = new Date(this.props.event.event_date);
-    const location_id = this.props.event.location.google_place_id;
+    // Convert response event's date epoch string to UTC format
+    const eventDate = new Date(Number(this.props.event.event_date));
+    let location_id = this.props.event.location.google_place_id;
     this.setState({
       date: eventDate,
       google_place_id: location_id,
     });
-
-    const list = document.getElementsByClassName("card-container");
-    list[0].style.display = "none";
   }
   // Switch handlers for evnts inviteOnly property
   inviteHandler = e => {
@@ -116,13 +114,17 @@ class Info extends React.Component {
                     src="https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.scandichotels.com%2Fimagevault%2Fpublishedmedia%2Fqn6infvg30381stkubky%2Fscandic-sundsvall-city-restaurant-verket-10.jpg&f=1"
                   />
                   <div>
-                    <h4>Place: {this.props.event.location.id}</h4>
-                    <address>{this.props.event.location.address}</address>
+                    {this.props.event.location ? (
+                      <h4>Place: {this.props.event.location.id}</h4>
+                    ) : (
+                      <></>
+                    )}
+                    {/* <address>{this.props.event.location.address}</address> */}
                   </div>
                 </div>
 
                 <div className="event map">
-                  <GoogleMap getId={this.state.google_place_id} />
+                  {/* <GoogleMap getId={this.state.google_place_id} /> */}
                 </div>
               </EventRow>
             </EventColumn>

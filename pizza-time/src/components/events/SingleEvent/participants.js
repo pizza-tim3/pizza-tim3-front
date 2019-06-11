@@ -17,7 +17,7 @@ class Participants extends React.Component {
   componentDidMount() {
     const spans = document.getElementsByClassName("more-user");
     const span = spans[0];
-    // const close = document.getElementsByClassName("close-more");
+    let close = document.getElementsByClassName("close-more");
     const addUserButton = document.getElementsByClassName("add-user");
 
     span.style.display = "none";
@@ -29,8 +29,6 @@ class Participants extends React.Component {
           span.style.display = "flex";
           span.className = "more";
           if (span.style.display === "flex") {
-            const close = document.getElementsByClassName("close-more");
-
             close[0].onclick = function() {
               span.style.display = "none";
               span.className = "";
@@ -52,11 +50,9 @@ class Participants extends React.Component {
     }
   }
 
-  addUserHandler = e => {
-    e.preventDefault();
-    this.props.addUser();
-  };
   render() {
+    // console.log("The current invited Users are");
+    // console.log(this.props.event.invitedUsers);
     return (
       <>
         <EventRow>
@@ -66,30 +62,71 @@ class Participants extends React.Component {
         <EventRow>
           {/* Shows list of invited users */}
           <div className="event-users">
-            <img src={user1} alt="user1" />
-            <img src={user2} alt="user2" />
-            <img src={user3} alt="user3" />
-            <img src={user4} alt="user4" />
-            <img src={plus} alt="plus" className="add-user" />
+            {this.props.event.invitedUsers ? (
+              <>
+                {this.props.event.invitedUsers.map((invited, index) => {
+                  return (
+                    <div key={index}>
+                      <img src={invited.avatar} alt={invited.first_name} />
+                      <h5>{invited.first_name}</h5>
+                    </div>
+                  );
+                })}
+                <div className="add-user">
+                  <img src={plus} alt="plus" />
+                </div>
+              </>
+            ) : (
+              <></>
+            )}
           </div>
         </EventRow>
-        <span className="more-user">
-          {this.props.event.invitedUsers ? (
-            <ul>
-              {this.props.event.invitedUsers.map((user, index) => {
-                return (
-                  <li key={index} onClick={this.addUserHandler}>
-                    <img src={user4} />
-                    <h2>{user.username}</h2>
-                  </li>
-                );
-              })}
-              <button className="close-more">X</button>
-            </ul>
+        <div className="more-user">
+          {this.props.event ? (
+            <>
+              <>
+                <div className="close">
+                  <button className="close-more">
+                    <img src={plus} />
+                  </button>
+                </div>
+                {/* Selecte user's friends to an array. User can add the friends to an array that will be sent with post request  to the backend */}
+                <div className="friends">
+                  {this.props.friends.map((user, index) => {
+                    return (
+                      <div
+                        className="friend"
+                        key={user.firebase_uid}
+                        onClick={() => this.props.selectAdditional(user)}
+                      >
+                        <img src={user.avatar} alt={user.first_name} />
+                        <h4>{user.first_name}</h4>
+                      </div>
+                    );
+                  })}
+                </div>
+                <div className="tobe-invited">
+                  <button onClick={this.props.inviteFriends}>Invite</button>
+                  {/* {!this.props.additional_friends ? (
+                    <></>
+                  ) : (
+                    <>
+                      {this.props.additional_friends.map(friend => {
+                        return (
+                          <div key={friend.id}>
+                            <h2>{friend.id}</h2>
+                          </div>
+                        );
+                      })}
+                    </>
+                  )} */}
+                </div>
+              </>
+            </>
           ) : (
             <div />
           )}
-        </span>
+        </div>
       </>
     );
   }
