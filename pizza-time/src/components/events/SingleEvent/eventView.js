@@ -16,13 +16,13 @@ class EventView extends React.Component {
       event: {},
       friends: [],
       selectedToInvite: [],
-      loading: false
+      loading: false,
     };
   }
 
   async fetchEvent() {
     const currentId = this.props.match.params.id;
-    
+
     try {
       let currentEvent = await axios.get(
         `https://pizza-tim3-be.herokuapp.com/api/events/${currentId}/details`
@@ -31,20 +31,20 @@ class EventView extends React.Component {
         this.setState({
           event: currentEvent.data.event,
           organizer: currentEvent.data.event.organizer,
-          loading: false
+          loading: false,
         });
       } else {
         this.setState({
           event: {},
           organizer: "jNpViqXD4DXmf9H2FbkQnAy30000",
-          loading: false
+          loading: false,
         });
       }
     } catch (e) {
       this.setState({
         event: {},
         organizer: "jNpViqXD4DXmf9H2FbkQnAy30000",
-        loading: false
+        loading: false,
       });
       console.log(e);
     }
@@ -62,19 +62,19 @@ class EventView extends React.Component {
       if (currentFriends) {
         this.setState({
           friends: currentFriends.data,
-          loading: false
+          loading: false,
         });
       } else {
         this.setState({
           friends: [],
-          loading: false
+          loading: false,
         });
       }
     } catch (e) {
       console.log(e);
       this.setState({
         friends: [],
-        loading: false
+        loading: false,
       });
     }
   }
@@ -83,8 +83,8 @@ class EventView extends React.Component {
 
   async componentDidMount() {
     this.setState({
-      loading: true
-    })
+      loading: true,
+    });
     await this.fetchEvent();
     await this.fetchFriends();
   }
@@ -180,14 +180,14 @@ class EventView extends React.Component {
     let currentEvent = this.state.event;
     currentEvent.event_name = name;
     this.setState({
-      event: currentEvent
-    })
-  }
+      event: currentEvent,
+    });
+  };
 
   updateEvent = event_id => {
     this.setState({
-      loading: true
-    })
+      loading: true,
+    });
     let currentFriends = this.state.friends;
     let currentEvent = this.state.event;
     let updatedEvent = {
@@ -209,17 +209,16 @@ class EventView extends React.Component {
           this.setState({
             event: updatedEvent,
             loading: false,
-            friends: currentFriends
+            friends: currentFriends,
           });
         }
       })
       .catch(err => {
         console.log(err);
         this.setState({
-            loading: false
-          });
+          loading: false,
+        });
       });
-
   };
 
   render() {
@@ -227,27 +226,32 @@ class EventView extends React.Component {
       <div>
         <Nav />
 
-        {this.state.loading === true ? 
-
-        <Inner>
+        {this.state.loading === true ? (
+          <Inner>
             <div className="loading">
               <img src={loading} alt="loading" />
             </div>
           </Inner>
-        :
-        
-         <Inner>
-            <Info event={this.state.event} toggleSwitch={this.toggleSwitch} updateEvent={this.updateEvent} updateName={this.updateName}/>
+        ) : (
+          <Inner>
+            <Info
+              event={this.state.event}
+              toggleSwitch={this.toggleSwitch}
+              updateEvent={this.updateEvent}
+              updateName={this.updateName}
+            />
             <Participants
               event={this.state.event}
               friends={this.state.friends}
               selectAdditional={this.selectAdditional}
               inviteFriends={this.inviteFriends}
             />
-            <Discussion event={this.state.event} user_id={this.state.user_id} />
+            <Discussion
+              event={this.state.event}
+              organizer={this.state.organizer}
+            />
           </Inner>
-        }
-       
+        )}
       </div>
     );
   }
