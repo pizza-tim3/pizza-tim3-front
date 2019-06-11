@@ -14,7 +14,8 @@ import rootReducer from "./reducers";
 
 const store = createStore(
   rootReducer, // this is the most basic reducer. A function that returns an object.
-  applyMiddleware(thunk, logger)
+  {}, //default state
+  applyMiddleware(thunk, logger) //middleware
 );
 
 ReactDOM.render(
@@ -28,4 +29,3 @@ ReactDOM.render(
 
 // // If you want your app to work offline and load faster, you can change
 // // unregister() to register() below. Note this comes with some pitfalls.
-

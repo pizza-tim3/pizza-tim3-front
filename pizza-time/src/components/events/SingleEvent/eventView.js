@@ -21,7 +21,6 @@ class EventView extends React.Component {
 
   async fetchEvent() {
     const currentId = this.props.match.params.id;
-
     try {
       let currentEvent = await axios.get(
         `https://pizza-tim3-be.herokuapp.com/api/events/${currentId}/details`
@@ -47,7 +46,6 @@ class EventView extends React.Component {
   }
 
   // Reusable axios call to backend api w/ response data set to friends state
-
   async fetchFriends() {
     let user_id = this.state.user_id;
 

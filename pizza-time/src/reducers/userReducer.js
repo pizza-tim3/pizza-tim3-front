@@ -6,11 +6,11 @@ import {
 } from "../actions";
 
 const initialState = {
-  firstname: "",
-  lastname: "",
+  first_name: "",
+  last_name: "",
   username: "",
+  email: "",
   location: "",
-  uid: "",
   avatar: "",
   crust: "",
   topping: "",
@@ -31,6 +31,7 @@ export const userReducer = (state = initialState, action) => {
         firstname: "",
         lastname: "",
         username: "",
+        email: "",
         location: "",
         uid: "",
         avatar: "",
