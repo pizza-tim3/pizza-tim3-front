@@ -17,10 +17,8 @@ const PlacesSearch = (props) => {
     const [searchData, setSearch] = useState('')
     const handleGetPlaceId = id => setPlaceId(id);
     const handleGetSearchData = (searchString) => {
-        console.log(searchString)
         setSearch(searchString)
     }
-console.log(searchData)
     return(
         <PlacesSearchWrap>
             <PlacesHeading>
