@@ -1,5 +1,6 @@
 import React from "react";
-import Details from "../../d
+import Details from "../.././components/events/details-request/details-request.js";
+
 
 class Location extends React.Component {
   constructor(props) {
