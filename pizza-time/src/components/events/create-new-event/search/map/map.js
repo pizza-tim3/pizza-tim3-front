@@ -15,7 +15,7 @@ const GoogleMap = (props) => {
     useEffect(() => {
       // eslint-disable-next-line (react-hooks/exhaustive-deps)
       renderMap();
-    }, []);
+    }, [props.setData]);
 
     //renderMap will call the loadScript function and pass in the URL, this creates the DOM script element that is needed in order to 
     //pull in the google api services
@@ -74,15 +74,24 @@ const GoogleMap = (props) => {
       }
 
       //set our searchLocation to our location that is in state
+      console.log(props.searchData && props.searchData)
       let searchLocation = new window.google.maps.LatLng(lat, lng)
       //craft our request; see google docs to see what parameters can be passed into a request to refine your results
-      let request = {
-        location: searchLocation,
-        radius: '100',
-        query: 'Pizza',
-        type: 'restaurant'
-      };
-
+      let request;
+      if (!props.searchData) {
+        request = {
+          location: searchLocation,
+          radius: '100',
+          query: 'Pizza',
+          type: 'restaurant'
+        };
+      } else {
+        request = {
+          query: `Pizza + ${props.searchData}`,
+          radius: '100',
+          type: 'restaurant'
+        }
+      }
       //creates a new PlacesService which allows up to place requests to the api library;
       //only takes one parameter... the DOM element in which it will reside
       service = new window.google.maps.places.PlacesService(map);

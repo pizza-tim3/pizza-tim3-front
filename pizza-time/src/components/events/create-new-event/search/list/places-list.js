@@ -18,8 +18,7 @@ const PlacesList = (props) => {
                             <div className="content">
                                 <p>{data.name}</p>
                                 <p className="rating">
-                                    Rating: 
-                                    <Span rating={data.rating}>{data.rating}</Span>
+                                    Rating: <Span rating={data.rating}>{data.rating}</Span>
                                 </p>
                             </div>
                             <button id='addPlaceId' onClick={() => props.handleClick(data.place_id)}>+</button>

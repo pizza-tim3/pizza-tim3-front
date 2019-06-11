@@ -14,16 +14,21 @@ import {
 
 const PlacesSearch = (props) => {
     const [placeId, setPlaceId] = useState('');
+    const [searchData, setSearch] = useState('')
     const handleGetPlaceId = id => setPlaceId(id);
-
+    const handleGetSearchData = (searchString) => {
+        console.log(searchString)
+        setSearch(searchString)
+    }
+console.log(searchData)
     return(
         <PlacesSearchWrap>
             <PlacesHeading>
                 <h2>Step 1: Choose Your Location</h2>
             </PlacesHeading>
             <PlacesSearchInner>
-                <SearchBar />
-                <GoogleMap getId={handleGetPlaceId}/>
+                <SearchBar handleGetSearchData={handleGetSearchData}/>
+                <GoogleMap getId={handleGetPlaceId} searchData={searchData}/>
             </PlacesSearchInner>
             <NextStep 
                 onClick={() => {props.handleClick('placeID', placeId)}}>
