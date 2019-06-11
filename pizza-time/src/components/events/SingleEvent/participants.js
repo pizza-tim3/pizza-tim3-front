@@ -105,7 +105,7 @@ class Participants extends React.Component {
                     );
                   })}
                 </div>
-                <div className="tobe-invited">
+                {/* <div className="tobe-invited">
                   <button onClick={this.props.inviteFriends}>Invite</button>
                   {/* {!this.props.additional_friends ? (
                     <></>
@@ -120,7 +120,7 @@ class Participants extends React.Component {
                       })}
                     </>
                   )} */}
-                </div>
+                {/* </div> */} 
               </>
             </>
           ) : (

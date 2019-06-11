@@ -2,6 +2,7 @@ import React from "react";
 import Calendar from "react-calendar";
 // import PlacesSearch from "../create-new-event/search/places-search";
 import calendar from "./../../../assets/calendar.svg";
+import edit from "./../../../assets/edit.png";
 import moment from "moment";
 import GoogleMap from "./../create-new-event/search/map/map";
 
@@ -20,6 +21,9 @@ class Info extends React.Component {
       date: new Date(),
       show: false,
       google_place_id: "",
+      event: {
+        event_name: ""
+      }
     };
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
@@ -28,16 +32,48 @@ class Info extends React.Component {
   componentDidMount() {
     // Convert response event's date epoch string to UTC format
     const eventDate = new Date(Number(this.props.event.event_date));
-    let location_id = this.props.event.location.google_place_id;
+    // let location_id = this.props.event.location.google_place_id;
     this.setState({
       date: eventDate,
-      google_place_id: location_id,
+      // google_place_id: location_id,
+      event: {
+        event_name: this.props.event.event_name
+      },
+      editForm: false
     });
   }
   // Switch handlers for evnts inviteOnly property
   inviteHandler = e => {
     this.props.toggleSwitch();
   };
+
+  inputOnChange = e => {
+    this.setState({
+      event: {
+        [e.target.name]: e.target.value,
+    },
+    })
+  }
+  toggleEdit = () => {
+    this.setState(prevState => {
+      const stateCopy = { ...this.state };
+      stateCopy.editForm = !prevState.editForm;
+      return stateCopy;
+    });
+  };
+  updateNameHandler = e => {
+    // console.log(this.state)
+    e.preventDefault();
+    this.props.updateName(this.state.event.event_name)
+    this.setState({
+      editForm: false
+    })
+    // console.log(this.state)
+  }
+  updateEventHandler = e => {
+    e.preventDefault();
+    this.props.updateEvent(this.props.event.id)
+  }
   // Hides the modal
   handleClose() {
     this.setState({ show: false });
@@ -55,10 +91,24 @@ class Info extends React.Component {
         {Object.keys(this.props.event).length ? (
           <EventBox>
             <div className="event-header">
+              {this.state.editForm === true ? 
+              <>
+                <input 
+                  name="event_name" 
+                  type="text"
+                  value={this.state.event.event_name} 
+                  placeholder={this.state.event.event_name} 
+                  onChange={this.inputOnChange}/>
+                <button onClick={this.toggleEdit}>Cancel</button>
+                <button onClick={this.updateNameHandler}> Update</button>
+              </>
+              :
               <h1>
                 <b>Event</b>: {this.props.event.event_name}
+                <button className="edit-header" onClick={this.toggleEdit}><img src={edit} alt="edit pencil"/></button>
               </h1>
-              <button className="btn-save">Save</button>
+              }
+              <button className="btn-save" type="submit" onClick={this.updateEventHandler}>Save</button>
             </div>
 
             <EventRow className="event-date">

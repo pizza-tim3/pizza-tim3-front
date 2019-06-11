@@ -132,6 +132,14 @@ export const Inner = styled.div`
     margin: 0px 25px 15px 25px;
     padding: 20px 0px;
     align-items: center;
+    .edit-header {
+      background: none;
+      border: none;
+        img {
+        width: 40px;
+        height: 40px;
+      }
+    }
     h1 {
       font-size: 1.1rem;
       margin-bottom: 0px;

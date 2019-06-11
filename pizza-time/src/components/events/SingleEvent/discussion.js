@@ -66,7 +66,7 @@ class Discussion extends React.Component {
     let updatedMessage = this.state.editComment.update;
     let updatedComment = {
       id: comment_id,
-      user_id: this.props.user_id,
+      organizer: this.props.organizer,
       message: updatedMessage,
     };
 
@@ -117,9 +117,9 @@ class Discussion extends React.Component {
     let event_id = this.props.event.id;
     let newComment = this.state.newComment;
 
-    // Add event id, user_id and time to the new comment
+    // Add event id, organizer and time to the new comment
     newComment.event_id = event_id;
-    newComment.user_id = this.props.user_id;
+    newComment.organizer = this.props.organizer;
     newComment.time = new Date();
 
     axios
@@ -128,7 +128,7 @@ class Discussion extends React.Component {
         newComment
       )
       .then(res => {
-        if (res) {
+        if (res.status === 201) {
           // If successfull push new comments to front-end state
           newComment.id = res.data[0];
           this.setState(state => {
@@ -139,7 +139,7 @@ class Discussion extends React.Component {
               },
             };
           });
-        }
+        } 
       })
       .catch(err => {
         this.setState({
@@ -199,8 +199,10 @@ class Discussion extends React.Component {
             {Object.keys(this.props.event).length ? (
               <div className="event-comments">
                 <div className="all-comments">
-                  {this.state.comments.map((comment, index) => {
-                    if (comment.user_id !== null) {
+                  {this.state.comments ? 
+                    <>
+                    {this.state.comments.map((comment, index) => {
+                    if (comment.organizer !== null) {
                       return (
                         <div
                           className="comment"
@@ -229,7 +231,7 @@ class Discussion extends React.Component {
                           </div>
 
                           <div>
-                            {comment.user_id === this.props.user_id ? (
+                            {comment.organizer === this.props.organizer ? (
                               <div
                                 id={`action-button-${comment.id}`}
                                 className="action-buttons"
@@ -253,6 +255,11 @@ class Discussion extends React.Component {
                       );
                     }
                   })}
+                  </>
+                  :
+                  <></>
+                  }
+                  
                 </div>
                 <div className="add-comments">
                   <input
