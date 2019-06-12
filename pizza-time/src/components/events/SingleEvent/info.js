@@ -240,10 +240,10 @@ class Info extends React.Component {
                 <div>
                   <h1>
                     <b>Event</b>: {this.props.event.event_name}
-                    <button className="edit-header" onClick={this.toggleEdit}>
-                      <img src={edit} alt="edit pencil" />
-                    </button>
                   </h1>
+                  <button className="edit-header" onClick={this.toggleEdit}>
+                    <img src={edit} alt="edit pencil" />
+                  </button>
                 </div>
               )}
               <button

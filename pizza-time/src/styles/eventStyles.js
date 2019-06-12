@@ -132,6 +132,14 @@ export const Inner = styled.div`
     margin: 0px 18px 15px 18px;
     padding: 20px 0px;
     align-items: center;
+    div {
+      width: 50%;
+      justify-content: space-between;
+      display: flex;
+      h1 {
+        width: 100%;
+      }
+    }
     .edit-header {
       background: none;
       border: none;
@@ -144,7 +152,6 @@ export const Inner = styled.div`
     h1 {
       font-size: 1.1rem;
       margin-bottom: 0px;
-      // justify-content: space-between;
     }
     ${media.desktop} {
       h1 {
@@ -188,7 +195,7 @@ export const Inner = styled.div`
     margin: 30px 25px 34px;
     flex-direction: column;
     ${media.desktop} {
-      margin: 40px 25px 34px;
+      margin: 40px 20px 34px;
       flex-direction: row;
     }
   }
@@ -309,7 +316,7 @@ export const EventRow = styled.div`
     }
     ${media.desktop} {
       justify-content: space-between;
-      width: 45%;
+      width: 50%;
       h2 {
         font-size: 2rem;
       }
@@ -333,7 +340,7 @@ export const EventRow = styled.div`
     width: 100%;
     display: flex;
     ${media.desktop} {
-      width: 45%;
+      width: 50%;
     }
     img, #map {
       height: 300px;
