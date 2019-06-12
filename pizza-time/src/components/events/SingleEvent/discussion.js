@@ -1,6 +1,5 @@
 import React from "react";
 import { EventRow } from "../../../styles/eventStyles";
-import user1 from "../../../assets/users/user-1.png";
 import axios from "axios";
 import plus from "../../../assets/plus.png";
 import edit from "../../../assets/edit.png";
@@ -105,6 +104,7 @@ class Discussion extends React.Component {
       });
   };
 
+  // Comment edit form handler
   submitCommentHandler = e => {
     e.preventDefault();
     this.setState({
@@ -114,6 +114,7 @@ class Discussion extends React.Component {
     });
   };
 
+  // Add comment using axios call
   addComment = () => {
     // Copy the current state event
     let newComment = this.state.newComment;
@@ -149,7 +150,7 @@ class Discussion extends React.Component {
         });
       });
   };
-
+  // Delete comment using axios
   deleteComment = comment_id => {
     let currentComments = this.state.comments;
     axios
@@ -180,6 +181,7 @@ class Discussion extends React.Component {
       },
     });
   };
+
   updateOnChange = e => {
     this.setState({
       editComment: {
@@ -213,7 +215,7 @@ class Discussion extends React.Component {
                               key={comment.id}
                             >
                               <img
-                                src={user1}
+                                src={comment.avatar}
                                 alt="user"
                                 className="user-avatar"
                               />

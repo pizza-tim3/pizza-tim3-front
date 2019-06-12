@@ -1,9 +1,5 @@
 import React from "react";
 import { EventRow } from "../../../styles/eventStyles";
-import user1 from "../../../assets/users/user-1.png";
-import user2 from "../../../assets/users/user-2.png";
-import user3 from "../../../assets/users/user-3.png";
-import user4 from "../../../assets/users/user-4.png";
 import plus from "../../../assets/plus.png";
 
 class Participants extends React.Component {
@@ -120,7 +116,7 @@ class Participants extends React.Component {
                       })}
                     </>
                   )} */}
-                {/* </div> */} 
+                {/* </div> */}
               </>
             </>
           ) : (
