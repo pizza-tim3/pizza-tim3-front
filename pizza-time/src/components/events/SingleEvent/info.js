@@ -237,12 +237,14 @@ class Info extends React.Component {
                   <button onClick={this.updateNameHandler}> Update</button>
                 </>
               ) : (
-                <h1>
-                  <b>Event</b>: {this.props.event.event_name}
-                  <button className="edit-header" onClick={this.toggleEdit}>
-                    <img src={edit} alt="edit pencil" />
-                  </button>
-                </h1>
+                <div>
+                  <h1>
+                    <b>Event</b>: {this.props.event.event_name}
+                    <button className="edit-header" onClick={this.toggleEdit}>
+                      <img src={edit} alt="edit pencil" />
+                    </button>
+                  </h1>
+                </div>
               )}
               <button
                 className="btn-save"
@@ -302,65 +304,67 @@ class Info extends React.Component {
                 <div className="caloendar-row">
                   <div>
                     <span className="edit-time">
-                      <select
-                        name="hour"
-                        value={this.state.time.hour}
-                        as="select-hour"
-                        onChange={this.timeOnChange}
-                      >
-                        <option value={this.state.time.hour}>
-                          {this.state.time.hour}
-                        </option>
-                        {hours.map((hour, index) => {
-                          if (Number(this.state.time.hour) !== Number(hour)) {
-                            return (
-                              <option key={index} value={hour}>
-                                {hour}
-                              </option>
-                            );
-                          }
-                        })}
-                      </select>
-                      <select
-                        name="minutes"
-                        value={this.state.time.minutes}
-                        as="select-minutes"
-                        onChange={this.timeOnChange}
-                      >
-                        <option value={this.state.time.minutes}>
-                          {this.state.time.minutes}
-                        </option>
-                        {minutes.map((minute, index) => {
-                          if (
-                            Number(this.state.time.minutes) !== Number(minute)
-                          ) {
-                            return (
-                              <option key={index} value={minute}>
-                                {minute}
-                              </option>
-                            );
-                          }
-                        })}
-                      </select>
-                      <select
-                        onChange={this.timeOnChange}
-                        value={this.state.time.am}
-                        name="am"
-                        as="select-am"
-                      >
-                        {this.state.time.am === "AM" ? (
-                          <>
-                            <option value="AM">AM</option>
-                            <option value="PM">PM</option>
-                          </>
-                        ) : (
-                          <>
-                            <option value="PM">PM</option>
-                            <option value="AM">AM</option>
-                          </>
-                        )}
-                        })}
-                      </select>
+                      <div>
+                        <select
+                          name="hour"
+                          value={this.state.time.hour}
+                          as="select-hour"
+                          onChange={this.timeOnChange}
+                        >
+                          <option value={this.state.time.hour}>
+                            {this.state.time.hour}
+                          </option>
+                          {hours.map((hour, index) => {
+                            if (Number(this.state.time.hour) !== Number(hour)) {
+                              return (
+                                <option key={index} value={hour}>
+                                  {hour}
+                                </option>
+                              );
+                            }
+                          })}
+                        </select>
+                        <select
+                          name="minutes"
+                          value={this.state.time.minutes}
+                          as="select-minutes"
+                          onChange={this.timeOnChange}
+                        >
+                          <option value={this.state.time.minutes}>
+                            {this.state.time.minutes}
+                          </option>
+                          {minutes.map((minute, index) => {
+                            if (
+                              Number(this.state.time.minutes) !== Number(minute)
+                            ) {
+                              return (
+                                <option key={index} value={minute}>
+                                  {minute}
+                                </option>
+                              );
+                            }
+                          })}
+                        </select>
+                        <select
+                          onChange={this.timeOnChange}
+                          value={this.state.time.am}
+                          name="am"
+                          as="select-am"
+                        >
+                          {this.state.time.am === "AM" ? (
+                            <>
+                              <option value="AM">AM</option>
+                              <option value="PM">PM</option>
+                            </>
+                          ) : (
+                            <>
+                              <option value="PM">PM</option>
+                              <option value="AM">AM</option>
+                            </>
+                          )}
+                          })}
+                        </select>
+                      </div>
                       <button onClick={this.updateTime}>Update Time</button>
                     </span>
                   </div>

@@ -129,7 +129,7 @@ export const Inner = styled.div`
     border-bottom: 2px solid ${colors.black} !important;
     display: flex;
     justify-content: space-between;
-    margin: 0px 25px 15px 25px;
+    margin: 0px 18px 15px 18px;
     padding: 20px 0px;
     align-items: center;
     .edit-header {
@@ -144,13 +144,12 @@ export const Inner = styled.div`
     h1 {
       font-size: 1.1rem;
       margin-bottom: 0px;
+      // justify-content: space-between;
     }
     ${media.desktop} {
       h1 {
         font-size: 2rem;
-        width: 45%;
         display: flex;
-        justify-content: space-between;
       }
     }
     .btn-save {
@@ -299,7 +298,9 @@ export const EventRow = styled.div`
       vertical-align: middle;
     }
     .edit-time {
-      // display: none;
+      display: flex;
+      justify-content: space-between;
+      padding-left: 0px;
     }
     select {
       border: none;
@@ -317,7 +318,7 @@ export const EventRow = styled.div`
   .calendar-row { 
     justify-content: space-between;
     display: flex;
-    padding-bottom: 15px;
+    padding-bottom: 25px;
   }
   .invite-switch {
     h3 {

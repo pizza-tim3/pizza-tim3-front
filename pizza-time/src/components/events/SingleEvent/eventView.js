@@ -181,6 +181,7 @@ class EventView extends React.Component {
     this.setState({
       event: currentEvent,
     });
+    console.log(this.state.event);
   };
 
   // Update the state's date name
@@ -208,12 +209,10 @@ class EventView extends React.Component {
     let currentEvent = this.state.event;
 
     let updatedEvent = {
-      id: currentEvent.id,
-      comments: currentEvent.comments,
+      id: event_id,
       event_name: currentEvent.event_name,
       event_description: currentEvent.event_description,
       event_date: currentEvent.event_date,
-      invitedUsers: currentEvent.invitedUsers,
       organizer: currentEvent.organizer,
     };
     axios
