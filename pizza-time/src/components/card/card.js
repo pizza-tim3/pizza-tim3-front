@@ -12,7 +12,7 @@ class Card extends React.Component {
     super(props);
     this.state = {
       comments: [],
-      showComments: true,
+      showMessages: true,
       attendees: []
     };
   }
@@ -38,17 +38,21 @@ class Card extends React.Component {
 
   commentHandler = event => {
     event.preventDefault();
-    let myElements = event.target;
+    //let myElements = event.target;
     /*
      * make a new class noMessage which has display as none.
      *
      */
-    if (this.state.showComments) {
-      myElements.classList.remove("noMessage");
-    } else {
-      myElements.classList.add("noMessage");
-    }
+    // if (this.state.showComments) {
+    //   myElements.classList.remove("noMessage");
+    // } else {
+    //   myElements.classList.add("noMessage");
+    // }
     //this.setState({ showComments: !showComments });
+    const show = this.state.showMessages;
+    this.setState({show:!show})
+
+
   };
 
   render() {
@@ -73,7 +77,7 @@ class Card extends React.Component {
               <p>
                 <span>Attending:</span>
                 {this.state.attendees.map(attende => {
-                  return [attende.first_name, " ", attende.last_name, ","];
+                  return [attende.first_name, " ", attende.last_name, ","," "]
                 })}
               </p>
             </div>
@@ -81,6 +85,7 @@ class Card extends React.Component {
           <Action>
             <div className="comment">
               <img src={Comment} onClick={this.commentHandler} />
+              {(this.state.show && <DashComment/> )} 
               <p>{this.state.comments.length}</p>
               <div claasName="message" />
 
