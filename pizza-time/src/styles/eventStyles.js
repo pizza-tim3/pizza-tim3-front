@@ -424,6 +424,9 @@ export const EventRow = styled.div`
         padding-left: 12px;
       }
     }
+    img {
+      border-radius: 50%;
+    }
   }
   .add-comments {
     input {
