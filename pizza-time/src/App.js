@@ -28,13 +28,15 @@ function App() {
     //anytime a user's logged in status has been changed.
     //this logic should be global.
     firebaseApp.auth().onAuthStateChanged(user => {
-      console.log("AuthStateChanged");
+      console.log("AuthStateChanged : ", user.uid);
       //firebase
       if (user) {
         //HANDLE USER STATE IN REDUX/COMPONENT STATE
 
         //set local storage to store last login state
+        console.log("AuthStateChanged : ", user.uid);
         localStorage.setItem("lastLoginState", "1");
+        localStorage.setItem("userFireBaseId", user.uid);
         setAuthenticated(true);
       } else {
         //NO USER, CLEAR THE USER

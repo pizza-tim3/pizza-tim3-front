@@ -12,8 +12,9 @@ class Card extends React.Component {
     super(props);
     this.state = {
       comments: [],
-      showMessages: true,
-      attendees: []
+      showMessages: false,
+      attendees: [],
+      showActions : this.props.showActions
     };
   }
 
@@ -49,8 +50,9 @@ class Card extends React.Component {
     //   myElements.classList.add("noMessage");
     // }
     //this.setState({ showComments: !showComments });
-    const show = this.state.showMessages;
-    this.setState({show:!show})
+    const show = !this.state.showMessages;
+    console.log("Show message now : ", show)
+    this.setState({showMessages:show})
 
 
   };
@@ -85,18 +87,28 @@ class Card extends React.Component {
           <Action>
             <div className="comment">
               <img src={Comment} onClick={this.commentHandler} />
-              {(this.state.show && <DashComment/> )} 
+              {/* {(false && <DashComment/> )}  */}
               <p>{this.state.comments.length}</p>
               <div claasName="message" />
 
               {this.state.comments.map(comment => {
-                return <DashComment key={comment.id} comment={comment} />;
+                if (this.state.showMessages) {
+                  return <DashComment key={comment.id} comment={comment} />;
+                } 
               })}
             </div>
-            <div className="buttons">
-              <button>Let's Go!</button>
-              <button>Not This Time</button>
-            </div>
+            {
+              
+             ['a'].map( x => {
+                  if (this.state.showActions) {
+                    return (  
+                      <div className="buttons">
+                        <button>Let's Go!</button>
+                        <button>Not This Time</button>
+                      </div>);
+                  }
+              })
+            }
           </Action>
         </Inner>
       </CardBox>

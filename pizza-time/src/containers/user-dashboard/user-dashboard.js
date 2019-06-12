@@ -30,9 +30,12 @@ class UserDashboard extends React.Component {
 
 upcomingHandler = event => {
     event.preventDefault();
+    //const id =this.props.match.params.id
 
+    //console.log("ID = ", id);
+    const id = localStorage.getItem("userFireBaseId");
     axios
-      .get("http://localhost:5500/api/events/upcoming/RaJMLmDUTWTP870aXFUQ6mLVb1M2")
+      .get(`http://localhost:5500/api/events/upcoming/${id}`)
       .then(res => {
         console.log("Response for UpcomingEvents", res);
         this.setState({
@@ -45,8 +48,9 @@ upcomingHandler = event => {
       });
   };
   pendingHandler = event => {
+    const id = localStorage.getItem("userFireBaseId");
     axios
-      .get("http://localhost:5500/api/events/pending/RaJMLmDUTWTP870aXFUQ6mLVb1M2")
+      .get(`http://localhost:5500/api/events/pending/${id}`)
       .then(res => {
         console.log("RESPONSE OF PENDING EVENTS", res);
         this.setState({
@@ -59,9 +63,10 @@ upcomingHandler = event => {
       });
   };
   pastHandler = event => {
+    const id = localStorage.getItem("userFireBaseId");
     event.preventDefault();
     axios
-      .get("http://localhost:5500/api/events/past/RaJMLmDUTWTP870aXFUQ6mLVb1M2")
+      .get(`http://localhost:5500/api/events/past/${id}`)
       .then(res => {
         console.log("RESPONSE OF PAST EVENTS", res);
         this.setState({
@@ -93,7 +98,7 @@ render () {
                         </TabPanel>
                         <TabPanel>
                             {this.state.pendingEvents.map(event => {
-                                return <Card key={event.id} event={event}   />;
+                                return <Card key={event.id} event={event} showActions ={true}  />;
                             })}
                         </TabPanel>
                         <TabPanel>

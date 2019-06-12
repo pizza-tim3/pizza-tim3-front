@@ -80,7 +80,7 @@ export const Inner = styled.div`
           }
     
           p {
-            color: ${colors.white};
+            color: ${colors.primary};
             position: absolute;
             margin: -29px 0 0 34px;
             font-weight: 500;
