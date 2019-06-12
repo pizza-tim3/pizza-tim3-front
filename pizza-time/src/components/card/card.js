@@ -4,8 +4,9 @@ import axios from "axios";
 import Envelope from "../../assets/envelope.svg";
 import Comment from "../../assets/comment.svg";
 import { CardBox, Inner, Content, Action } from "../../styles/cardStyles.js";
-import DashComment from "../../containers/user-dashboard/DashComment";
+//import DashComment from "../../containers/user-dashboard/DashComment";
 import Location from "../../containers/user-dashboard/Location.js";
+import { bold } from "ansi-colors";
 
 class Card extends React.Component {
   constructor(props) {
@@ -93,7 +94,16 @@ class Card extends React.Component {
 
               {this.state.comments.map(comment => {
                 if (this.state.showMessages) {
-                  return <DashComment key={comment.id} comment={comment} />;
+                  // return <DashComment key={comment.id} comment={comment} />;
+                  return (
+                    <div>
+                    Time : {comment.time} <br/>
+                         
+                    Name : {comment.first_name}<br/>
+                           
+                    Comment: {comment.message }
+                    </div>          
+                  )
                 } 
               })}
             </div>
