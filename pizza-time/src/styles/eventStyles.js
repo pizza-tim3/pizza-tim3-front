@@ -129,13 +129,22 @@ export const Inner = styled.div`
     border-bottom: 2px solid ${colors.black} !important;
     display: flex;
     justify-content: space-between;
-    margin: 0px 25px 15px 25px;
+    margin: 0px 18px 15px 18px;
     padding: 20px 0px;
     align-items: center;
+    div {
+      width: 50%;
+      justify-content: space-between;
+      display: flex;
+      h1 {
+        width: 100%;
+      }
+    }
     .edit-header {
       background: none;
       border: none;
-        img {
+      padding-right: 0px;
+      img {
         width: 40px;
         height: 40px;
       }
@@ -147,6 +156,7 @@ export const Inner = styled.div`
     ${media.desktop} {
       h1 {
         font-size: 2rem;
+        display: flex;
       }
     }
     .btn-save {
@@ -182,10 +192,10 @@ export const Inner = styled.div`
     }
   }
   .event-date {
-    margin: 0px 25px 34px;
+    margin: 30px 25px 34px;
     flex-direction: column;
     ${media.desktop} {
-      margin: 0px 25px 34px;
+      margin: 40px 20px 34px;
       flex-direction: row;
     }
   }
@@ -197,8 +207,6 @@ export const Inner = styled.div`
 `;
 
 export const Toggle = styled.span`
-  align-self: center;
-
   label {
     margin-bottom: 0px;
   }
@@ -277,9 +285,12 @@ export const EventRow = styled.div`
   }
   .calendar {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
     margin-bottom: 22px;
+    h2, h3 {
+      text-align: left;
+    }
     h2 {
       font-size: 1.2rem;
     }
@@ -293,13 +304,28 @@ export const EventRow = styled.div`
       padding-left: 10px;
       vertical-align: middle;
     }
+    .edit-time {
+      display: flex;
+      justify-content: space-between;
+      padding-left: 0px;
+    }
+    select {
+      border: none;
+      background: ${colors.white};
+      margin-right: 5px;
+    }
     ${media.desktop} {
       justify-content: space-between;
-      width: 45%;
+      width: 50%;
       h2 {
         font-size: 2rem;
       }
     }
+  }
+  .calendar-row { 
+    justify-content: space-between;
+    display: flex;
+    padding-bottom: 25px;
   }
   .invite-switch {
     h3 {
@@ -308,13 +334,13 @@ export const EventRow = styled.div`
     }
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    // align-items: center;
   }
   .event {
     width: 100%;
     display: flex;
     ${media.desktop} {
-      width: 45%;
+      width: 50%;
     }
     img, #map {
       height: 300px;
@@ -397,6 +423,9 @@ export const EventRow = styled.div`
         margin-bottom: 0px;
         padding-left: 12px;
       }
+    }
+    img {
+      border-radius: 50%;
     }
   }
   .add-comments {

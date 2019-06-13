@@ -174,13 +174,32 @@ class EventView extends React.Component {
     });
   };
 
+  // Update the state's event name
   updateName = name => {
     let currentEvent = this.state.event;
     currentEvent.event_name = name;
     this.setState({
       event: currentEvent,
     });
+    console.log(this.state.event);
   };
+
+  // Update the state's date name
+  updateDate = date => {
+    let currentEvent = this.state.event;
+    currentEvent.event_date = new Date(date).getTime().toString();
+    this.setState({
+      id: currentEvent.id,
+      comments: currentEvent.comments,
+      event_name: currentEvent.event_name,
+      event_description: currentEvent.event_description,
+      event_date: currentEvent.event_date,
+      invitedUsers: currentEvent.invitedUsers,
+      organizer: currentEvent.organizer,
+    });
+  };
+
+  // Update the entire event with the event's data using axios call
 
   updateEvent = event_id => {
     this.setState({
@@ -188,8 +207,9 @@ class EventView extends React.Component {
     });
     let currentFriends = this.state.friends;
     let currentEvent = this.state.event;
+
     let updatedEvent = {
-      id: currentEvent.id,
+      id: event_id,
       event_name: currentEvent.event_name,
       event_description: currentEvent.event_description,
       event_date: currentEvent.event_date,
@@ -201,6 +221,7 @@ class EventView extends React.Component {
         updatedEvent
       )
       .then(res => {
+        // If response successfull, update the state with the new info
         if (res.status === 200) {
           updatedEvent.invitedUsers = currentEvent.invitedUsers;
           updatedEvent.comments = currentEvent.comments;
@@ -237,6 +258,7 @@ class EventView extends React.Component {
               toggleSwitch={this.toggleSwitch}
               updateEvent={this.updateEvent}
               updateName={this.updateName}
+              updateDate={this.updateDate}
             />
             <Participants
               event={this.state.event}
