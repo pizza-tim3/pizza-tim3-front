@@ -69,9 +69,6 @@ class EventView extends React.Component {
           // Filter through the invited users array and the friends array. Return array of users that are not invited.
           for (var i = 0; i < currentInvited.length; i++) {
             for (var j = 0; j < allFriends.length; j++) {
-              console.log(currentInvited[i]);
-              console.log(allFriends[j]);
-
               if (
                 currentInvited[i].firebase_uid === allFriends[j].firebase_uid
               ) {
@@ -119,47 +116,21 @@ class EventView extends React.Component {
     // 1.Select user
     // 2. Check if current this.state.invitedUsers has that user
     // 3. if doesn't add it him to invitedUsers & selected array that will be pushed to backend
+    let stateSelected = this.state.selectedToInvite;
+    let isDuplicate = this.state.selectedToInvite.filter(
+      selectedUser => selectedUser.firebase_uid === user.firebase_uid
+    );
 
-    let currentInvited = this.state.event.invitedUsers;
-    let untouched = this.state.event.invitedUsers;
-    let selected = this.state.selectedToInvite;
-    let modified = currentInvited;
-    let afterAction = modified.filter(function(item, pos) {
-      return modified.indexOf(item) === pos;
-    });
-
-    let duplicate;
-    for (let i = 0; i < currentInvited.length; i++) {
-      if (
-        currentInvited[i].firebase_uid.toString() !==
-        user.firebase_uid.toString()
-      ) {
-        console.log("Unique");
-        duplicate = false;
-      } else {
-        console.log("Identical");
-        duplicate = true;
-      }
-    }
-    if (duplicate === false) {
-      console.log("Duplicate");
+    if (isDuplicate.length === 0) {
+      stateSelected.push(user);
+      this.setState({
+        selectedToInvite: stateSelected,
+      });
     } else {
+      this.setState({
+        selectedToInvite: stateSelected,
+      });
     }
-
-    this.setState({
-      event: {
-        invitedUsers: untouched,
-      },
-      selectedToInvite: selected,
-    });
-    selected.push(user);
-    afterAction.push(user);
-    this.setState({
-      event: {
-        invitedUsers: afterAction,
-      },
-      selectedToInvite: selected,
-    });
   };
 
   // Send the array of the selectedToInvite array to the backend
