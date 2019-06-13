@@ -1,44 +1,55 @@
 import React from "react";
 import { connect } from "react-redux";
+import FavoritesList from "../favorites-list/FavoritesList";
 
 class Favorites extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       favorites: [],
-      map: null,
-      service: null,
       placesData: [],
+      filterValue: "All",
+      filterCities: [],
       url: `https://maps.googleapis.com/maps/api/js?key=${
         process.env.REACT_APP_GOOGLE_PLACES_API_KEY
       }&libraries=places&callback=initMap`
     };
   }
 
-  loadMap = () => {
-    loadScript(this.state.url);
-  };
-
+  //callback called after google maps api is initialized
   initMap = async () => {
     let map = new window.google.maps.Map(document.getElementById("map"));
     let service = new window.google.maps.places.PlacesService(map);
-
-    //for each favorite get the details, limited to 10 :()
-    const len = this.state.favorites.length;
 
     //for each favorite make a call and set state with the data. HARD LIMIT 10
     this.state.favorites.forEach((favorite, index) => {
       const req = {
         placeId: favorite.google_place_id,
-        fields: ["name", "photos"]
+        fields: ["name", "photos", "formatted_address"]
       };
+      //get info from places and put onto places state
       service.getDetails(req, async (place, status) => {
         const serviceStatus = window.google.maps.places.PlacesServiceStatus;
         if (serviceStatus.OK) {
+          //get the first photo
+          const url = place.photos[0].getUrl();
+          //get the city from the address
+          const city = place.formatted_address.split(",")[1].trim();
+
+          //concat all cities and places onto respective state containers
           this.setState(prevState => {
             return {
               ...prevState,
-              placesData: [...prevState.placesData, place]
+              placesData: [
+                ...prevState.placesData,
+                {
+                  photoUrl: url,
+                  name: place.name,
+                  address: place.formatted_address,
+                  city: city
+                }
+              ],
+              filterCities: [...prevState.filterCities, city]
             };
           });
         }
@@ -60,30 +71,34 @@ class Favorites extends React.Component {
 
       //initailize the map by placing it on window for the callback
       window.initMap = this.initMap;
-      this.loadMap();
+      loadScript(this.state.url);
     } catch (error) {}
   }
 
+  //handles filter change
+  handleChange = event => {
+    this.setState({ filterValue: event.target.value });
+  };
+
   render() {
-    const { favorites, placesData } = this.state;
+    const { favorites, placesData, filterValue, filterCities } = this.state;
+    const dataLoaded = placesData && placesData.length === favorites.length;
+
     return (
       <div>
-        <h3> Favorites Works! </h3>
-        {favorites.map(fav => (
-          <div>
-            <p>{fav.name}</p>
-          </div>
-        ))}
-        {placesData && placesData.length === favorites.length ? (
-          placesData.map(place => {
-            const url = place.photos[0].getUrl();
-            return (
-              <div>
-                <p>{place.name}</p>
-                <img src={url} height="200px" width="200px" />
-              </div>
-            );
-          })
+        <div>
+          <select onChange={this.handleChange}>
+            <option value="All">All</option>
+            {/* Using a set because multiple favorites can be in one city. Sets can't have dupes */}
+            {dataLoaded
+              ? [...new Set(filterCities)].map(city => (
+                  <option value={city}>{city}</option>
+                ))
+              : null}
+          </select>
+        </div>
+        {dataLoaded ? (
+          <FavoritesList places={placesData} filter={filterValue} />
         ) : (
           <p>LOADING</p>
         )}
