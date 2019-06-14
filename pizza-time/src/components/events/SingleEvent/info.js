@@ -4,7 +4,9 @@ import Calendar from "react-calendar";
 import calendar from "./../../../assets/calendar.svg";
 import edit from "./../../../assets/edit.png";
 import clock from "./../../../assets/clock.png";
+import fakemap from "./../../../assets/fakemap.png";
 import moment from "moment";
+import Details from "./../../events/details-request/details-request";
 // import GoogleMap from "./../create-new-event/search/map/map";
 
 import {
@@ -30,6 +32,11 @@ class Info extends React.Component {
       event: {
         event_name: "",
       },
+      location: {
+        name: "",
+        hours: [],
+        photo: "",
+      },
     };
     // React-Bootstraps Toggle modals
     this.handleShow = this.handleShow.bind(this);
@@ -40,6 +47,13 @@ class Info extends React.Component {
     // Convert response event's date epoch string to UTC format
     const eventDate = new Date(Number(this.props.event.event_date));
 
+    console.log(this.props.event);
+    if (this.props.event.location) {
+      let eventLocationId = this.props.event.location.google_place_id;
+      this.setState({
+        google_place_id: eventLocationId,
+      });
+    }
     // The following javascript code takes the response's string and extracts event date's hours and minutes
     let eventDateString = eventDate.toString();
     let arr = eventDateString.split("");
@@ -85,6 +99,7 @@ class Info extends React.Component {
         event_name: this.props.event.event_name,
       },
       editForm: false,
+      // google_place_id: eventLocationId,
     });
   }
 
@@ -111,10 +126,6 @@ class Info extends React.Component {
 
     let newTime = this.state.time;
 
-    // this.setState({
-    //   time: newTime,
-    // });
-
     let modifiedHour = 0;
     if (newTime.am === "PM") {
       modifiedHour = Number(newTime.hour) + 12;
@@ -136,7 +147,31 @@ class Info extends React.Component {
 
     this.props.updateDate(updateTime);
   };
+  getDetails = req => {
+    let locationHours = req.opening_hours.weekday_text;
+    // Google's get image url function
+    let bigLeague = req.photos[0].getUrl();
 
+    let cutOff = ", ";
+    let streetCutOffIndex = req.formatted_address.indexOf(cutOff);
+    let streetString = req.formatted_address.slice(0, streetCutOffIndex);
+    let addressString = req.formatted_address.slice(streetString.length + 1);
+
+    this.setState({
+      google_place_id: req.place_id,
+      event: {
+        location: {
+          address: {
+            street: streetString,
+            city: addressString,
+          },
+          hours: locationHours,
+          name: req.name,
+          photo: bigLeague,
+        },
+      },
+    });
+  };
   // Switch handlers for evnts inviteOnly property
   inviteOnlySwitchHandler = e => {
     this.props.toggleSwitch();
@@ -203,6 +238,9 @@ class Info extends React.Component {
 
   render() {
     // Array of hours to display in the select's mapped option values
+    if (this.state.event.location) {
+      console.log(this.state.event.location.photo);
+    }
     let hours = [
       "01",
       "02",
@@ -385,30 +423,67 @@ class Info extends React.Component {
               </div>
             </EventRow>
 
-            <EventColumn>
-              <EventRow className="event-location">
-                <h1>Location</h1>
+            <EventColumn className="location-info">
+              <EventRow className="event-location-name">
+                {this.state.event.location ? (
+                  <div>
+                    <h2>Place: {this.state.event.location.name}</h2>
+                  </div>
+                ) : (
+                  <>
+                    <h2>Place: </h2>
+                  </>
+                )}
                 <input placeholder="search" />
                 {/* <PlacesSearch /> */}
               </EventRow>
               <EventRow>
                 <div className="event location">
-                  <img
-                    alt="location"
-                    src="https://proxy.duckduckgo.com/iu/?u=https%3A%2F%2Fwww.scandichotels.com%2Fimagevault%2Fpublishedmedia%2Fqn6infvg30381stkubky%2Fscandic-sundsvall-city-restaurant-verket-10.jpg&f=1"
-                  />
-                  <div>
-                    {this.props.event.location ? (
-                      <h4>Place: {this.props.event.location.id}</h4>
-                    ) : (
-                      <></>
-                    )}
-                    {/* <address>{this.props.event.location.address}</address> */}
-                  </div>
+                  {this.state.event.location ? (
+                    <>
+                      <img
+                        alt="location"
+                        src={this.state.event.location.photo}
+                      />
+                      <div className="location-address">
+                        <h2>Address:</h2>
+                        <address>
+                          <p>{this.state.event.location.address.street}</p>
+                          <p>{this.state.event.location.address.city}</p>
+                        </address>
+                      </div>
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </div>
 
                 <div className="event map">
-                  {/* <GoogleMap getId={this.state.google_place_id} /> */}
+                  {this.state.google_place_id ? (
+                    <>
+                      <Details
+                        getDetails={this.getDetails}
+                        placeId={this.state.google_place_id}
+                      />
+                      <img src={fakemap} alt="fakemap" />
+                      {this.state.event.location ? (
+                        <div className="location-hours">
+                          <h2>Hours: </h2>
+                          <div>
+                            {this.state.event.location.hours.map(
+                              (hour, index) => {
+                                return <div key={index}>{hour}</div>;
+                              }
+                            )}
+                          </div>
+                        </div>
+                      ) : (
+                        <></>
+                      )}
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </div>
               </EventRow>
             </EventColumn>

@@ -205,10 +205,44 @@ export const Inner = styled.div`
       flex-direction: row;
     }
   }
-  .event-location {
+  .event.location {
     ${media.mobile} {
       flex-direction: row;
     }
+  }
+  location-info {
+    margin-bottom: 0px;
+  }
+  .location-address,
+  .location-hours {
+    display: flex;
+    flex-direction: column;
+    padding: 15px 0px;
+    justify-content: end;
+    width: 100%;
+    ${media.desktop} {
+      height: 100%;
+    }
+  }
+  .location-address {
+    address {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      ${media.desktop} {
+        height: 100%;
+      }
+    }
+    p {
+      font-size: 1.3rem;
+      align-self: left;
+      margin-bottom: 0px;
+      paddding-bottom: 0px;
+      font-weight: 500;
+    }
+  }
+  .location-hours h2 {
+    padding: 0px 0px 25px;
   }
 `;
 
@@ -353,17 +387,24 @@ export const EventRow = styled.div`
     }
     &.location {
 
-      div {
-        padding: 15px 0px;
-      }
       display: flex;
       flex-direction: column;
       img {
         margin-left
       }
     }
+    #map {
+      display: none;
+    }
+  
     &.map {
       align-items: start;
+      display: flex;
+      flex-direction: column;
+      ${media.desktop} {
+        // flex-direction: row;
+        width: 45%;
+      }
       img {
         width: 100%;
       }

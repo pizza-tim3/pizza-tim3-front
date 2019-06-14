@@ -59,7 +59,6 @@ class Participants extends React.Component {
             {this.props.event.invitedUsers ? (
               <>
                 {this.props.event.invitedUsers.map((invited, index) => {
-                  console.log(invited);
                   if (index < 4) {
                     return (
                       <div key={invited.firebase_uid}>
