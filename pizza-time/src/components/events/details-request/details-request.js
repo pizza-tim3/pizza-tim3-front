@@ -31,7 +31,7 @@ const Details = (props) => {
         //create a request object to pass to the service
         let request = {
           placeId: props.placeId,
-          fields: ['name', 'formatted_address', 'place_id', 'geometry', 'photos', 'formatted_phone_number', 'opening_hours']
+          fields:['name', 'formatted_address', 'place_id', 'geometry', 'photos', 'formatted_phone_number', 'opening_hours']
         }
         //create a callback to pass into the service
         const callBack = async (place, status) => {
