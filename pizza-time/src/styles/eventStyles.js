@@ -78,8 +78,13 @@ export const Inner = styled.div`
 
   .tobe-invited {
     width: 80%;
-    height: 300px;
+    height: 163px;
     background-color: #fff;
+    margin-top: 40px;
+    background: none;
+    button {
+      padding: 10px 30px;
+    }
   }
   .friends {
     display: flex;
@@ -97,8 +102,9 @@ export const Inner = styled.div`
     ${media.desktop} {
       width: 80%;
       border: 2px solid ${colors.primary};
-      margin-top: 200px;
+      margin-top: 125px;
       border-radius: 5px;
+      // height: 300px;
       .friend {
         width: 66px;
         margin: 8px;
@@ -375,8 +381,21 @@ export const EventRow = styled.div`
   .event-users {
     display: flex;
     width: 100%;
+    // flex-direction: column;
+    align-items: start;
+    ${media.desktop} {
+      flex-direction: row;
+    }
     div {
       margin-right: 10px;
+      padding: 5px;
+      display: flex;
+      align-items: start;
+      h5 {
+        align-self: center;
+        margin-bottom: 0px;
+        padding-left: 15px;
+      }
     }
     hr {
       border-top: 3px solid ${colors.primary};
