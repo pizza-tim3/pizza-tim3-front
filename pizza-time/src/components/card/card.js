@@ -21,7 +21,7 @@ render () {
     <CardBox>
       <Inner>
         <Content>
-          <img src={Envelope} />
+          <img src={Envelope} alt="envelope"/>
           <div className="content">
             <p><span>Name:</span> { this.props.event.event_name} </p>
             <p><span>Date:</span> { date}</p>
@@ -31,7 +31,7 @@ render () {
         </Content>
         <Action>
           <div className="comment">
-            <img src={Comment} />
+            <img src={Comment} alt="comment"/>
             <p>2</p>
           </div>
           <div className="buttons">

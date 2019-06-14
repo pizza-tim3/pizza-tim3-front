@@ -18,7 +18,7 @@ const registerWithPopup = async result => {
   const {
     user: { uid },
     additionalUserInfo: {
-      profile: { email, family_name, given_name, name, picture }
+      profile: { email, family_name, given_name, name }
     }
   } = result;
 

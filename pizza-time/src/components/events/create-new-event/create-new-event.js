@@ -10,7 +10,7 @@ import { CreateNewEventWrap } from '../../../styles/createNewEventStyles';
 const CreateNewEvent = () => {
     const [page, setPage] = useState(1);
     const [isLoading, setIsLoading] = useState(true);
-    const [placeId, setPlaceId] = useState('');
+    const [placeData, setPlaceData] = useState('');
     const [eventDetails, setEventDetails] = useState({});
     const [dateTime, setDateTime] = useState({});
     const [friends, setFriends] = useState([]);
@@ -26,8 +26,8 @@ const CreateNewEvent = () => {
         console.log(stateToChange, newValue);
 
         switch(stateToChange) {
-            case 'placeID':
-                setPlaceId(newValue);
+            case 'placeData':
+                setPlaceData(newValue);
                 break;
             case 'event':
                 setEventDetails(newValue);
@@ -58,7 +58,7 @@ const CreateNewEvent = () => {
                 return(
                     <div className='events-wrapper'>
                         <ConfirmationPage 
-                            place={placeId} 
+                            place={placeData} 
                             event={eventDetails} 
                             dateTime={dateTime}
                             friends={friends}

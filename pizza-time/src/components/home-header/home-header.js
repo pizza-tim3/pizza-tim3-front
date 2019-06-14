@@ -1,7 +1,6 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
-import firebaseApp from "../../firebase/firebaseApp";
+// import firebaseApp from "../../firebase/firebaseApp";
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 import {
@@ -34,7 +33,7 @@ const Nav = () => {
             </Link>
           </button>
 
-          <img className="user" src={image} onClick={ToggleNav}/>
+          <img className="user" src={image} onClick={ToggleNav} alt="user pic"/>
           <ReactCSSTransitionGroup transitionName="navToggle" transitionEnterTimeout={100} transitionLeaveTimeout={100}>
             {userNav ? <div className="userNav"/> : null}
           </ReactCSSTransitionGroup>

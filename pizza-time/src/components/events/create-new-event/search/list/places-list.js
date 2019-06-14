@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { PlacesContainer, Span, ShowMore } from '../../../../../styles/placesListStyles';
 //props from map : data={placesData} handleClick = {handleOnClick}
 
@@ -14,14 +14,14 @@ const PlacesList = (props) => {
             <PlacesContainer>
                 {data && data.map(data => {
                     return(
-                        <div key={data.id} className="card">
+                        <div key={data.reference} className="card">
                             <div className="content">
                                 <p>{data.name}</p>
                                 <p className="rating">
                                     Rating: <Span rating={data.rating}>{data.rating}</Span>
                                 </p>
                             </div>
-                            <button id='addPlaceId' onClick={() => props.handleClick(data.place_id)}>+</button>
+                            <button id='addPlaceId' onClick={() => props.handleClick(data.place_id, data.name)}>+</button>
                         </div>
                 )})}
             </PlacesContainer>

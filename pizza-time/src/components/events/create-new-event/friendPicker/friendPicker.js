@@ -33,7 +33,7 @@ const FriendPicker = (props) => {
             <div>
                 {friends && friends.map(friend => {
                     return(
-                    <div key='friend.id' className="friendWrapper">
+                    <div key='friend.firebase_uid' className="friendWrapper">
                         <img src={UserImage} alt="user avatar" height="60px" width="60px"/>
                         <p>{friend.first_name} {friend.last_name}</p>
                         <button onClick={() => {addToInvited(friend)}}>+</button>
