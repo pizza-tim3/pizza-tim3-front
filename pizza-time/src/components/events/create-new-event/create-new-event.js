@@ -9,10 +9,11 @@ import { CreateNewEventWrap } from '../../../styles/createNewEventStyles';
 
 const CreateNewEvent = () => {
     const [page, setPage] = useState(1);
-    const [readyToConfirm, setReadyToConfirm] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [placeId, setPlaceId] = useState('');
-
+    const [eventDetails, setEventDetails] = useState({});
+    const [dateTime, setDateTime] = useState({});
+    const [friends, setFriends] = useState([]);
 
     useEffect(() => {
         setTimeout(() => {
@@ -20,13 +21,30 @@ const CreateNewEvent = () => {
         }, 1500)
     }, [])
 
-    const handleNextPage = () => setPage(page + 1);
+    const handleNextPage = (stateToChange, newValue) => {
+        setPage(page + 1);
+        console.log(stateToChange, newValue);
+
+        switch(stateToChange) {
+            case 'placeID':
+                setPlaceId(newValue);
+                break;
+            case 'event':
+                setEventDetails(newValue);
+                break;
+            case 'dateTime': 
+                setDateTime(newValue);
+                break;
+            case 'addFriends':
+                setFriends(newValue);
+                break;
+        }
+    }
 
     if(isLoading) {
         return(
             <Loading />
     )} else {
-
         switch(page) {
             case 1:
                 return <PlacesSearch handleClick={handleNextPage}/>
@@ -37,7 +55,16 @@ const CreateNewEvent = () => {
             case 4:
                 return <FriendPicker handleClick={handleNextPage}/>
             case 5:
-                return <ConfirmationPage />
+                return(
+                    <div className='events-wrapper'>
+                        <ConfirmationPage 
+                            place={placeId} 
+                            event={eventDetails} 
+                            dateTime={dateTime}
+                            friends={friends}
+                        />
+                    </div>
+                );
         }
     }
 };

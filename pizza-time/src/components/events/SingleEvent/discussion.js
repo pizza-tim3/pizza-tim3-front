@@ -1,6 +1,5 @@
 import React from "react";
 import { EventRow } from "../../../styles/eventStyles";
-import user1 from "../../../assets/users/user-1.png";
 import axios from "axios";
 import plus from "../../../assets/plus.png";
 import edit from "../../../assets/edit.png";
@@ -63,12 +62,15 @@ class Discussion extends React.Component {
   // Update selected comment
   updateComment = comment_id => {
     // Create an updated comment object
+    let time = new Date().toISOString();
     let updatedMessage = this.state.editComment.update;
     let updatedComment = {
+      time: time,
       id: comment_id,
-      user_id: this.props.user_id,
+      user_id: this.props.organizer,
       message: updatedMessage,
     };
+    console.log(updatedComment);
 
     // Put axios call
     axios
@@ -102,6 +104,7 @@ class Discussion extends React.Component {
       });
   };
 
+  // Comment edit form handler
   submitCommentHandler = e => {
     e.preventDefault();
     this.setState({
@@ -111,15 +114,15 @@ class Discussion extends React.Component {
     });
   };
 
+  // Add comment using axios call
   addComment = () => {
     // Copy the current state event
-
-    let event_id = this.props.event.id;
     let newComment = this.state.newComment;
-
-    // Add event id, user_id and time to the new comment
+    let event_id = this.props.event.id;
+    let user = this.props.organizer;
+    // Add event id, organizer and time to the new comment
     newComment.event_id = event_id;
-    newComment.user_id = this.props.user_id;
+    newComment.user_id = user;
     newComment.time = new Date();
 
     axios
@@ -128,7 +131,7 @@ class Discussion extends React.Component {
         newComment
       )
       .then(res => {
-        if (res) {
+        if (res.status === 201) {
           // If successfull push new comments to front-end state
           newComment.id = res.data[0];
           this.setState(state => {
@@ -147,7 +150,7 @@ class Discussion extends React.Component {
         });
       });
   };
-
+  // Delete comment using axios
   deleteComment = comment_id => {
     let currentComments = this.state.comments;
     axios
@@ -178,6 +181,7 @@ class Discussion extends React.Component {
       },
     });
   };
+
   updateOnChange = e => {
     this.setState({
       editComment: {
@@ -199,60 +203,84 @@ class Discussion extends React.Component {
             {Object.keys(this.props.event).length ? (
               <div className="event-comments">
                 <div className="all-comments">
-                  {this.state.comments.map((comment, index) => {
-                    if (comment.user_id !== null) {
-                      return (
-                        <div
-                          className="comment"
-                          id={comment.id}
-                          key={comment.id}
-                        >
-                          <img src={user1} alt="user" className="user-avatar" />
-                          <p id={`comment-${comment.id}`}>{comment.message}</p>
+                  {this.state.comments ? (
+                    <>
+                      {this.state.comments.map((comment, index) => {
+                        if (comment.user_id !== null) {
+                          return (
+                            <div
+                              className="comment"
+                              id={comment.id}
+                              user_id={comment.user_id}
+                              key={comment.id}
+                            >
+                              <img
+                                src={comment.avatar}
+                                alt="user"
+                                className="user-avatar"
+                              />
+                              <p id={`comment-${comment.id}`}>
+                                {comment.message}
+                              </p>
 
-                          <div
-                            id={`edit-comment-${comment.id}`}
-                            className="edit-comment"
-                          >
-                            <input
-                              id={`edit-comment-input-${comment.id}`}
-                              className="edit-comment-input"
-                              value={this.state.editComment.update}
-                              name="update"
-                              onChange={this.updateOnChange}
-                            />
-                            <img
-                              src={plus}
-                              alt="update"
-                              onClick={() => this.updateComment(comment.id)}
-                            />
-                          </div>
-
-                          <div>
-                            {comment.user_id === this.props.user_id ? (
                               <div
-                                id={`action-button-${comment.id}`}
-                                className="action-buttons"
+                                id={`edit-comment-${comment.id}`}
+                                className="edit-comment"
                               >
-                                <img
-                                  src={edit}
-                                  alt="edit"
-                                  onClick={() => this.selectComment(comment.id)}
+                                <input
+                                  id={`edit-comment-input-${comment.id}`}
+                                  className="edit-comment-input"
+                                  value={this.state.editComment.update}
+                                  name="update"
+                                  onChange={this.updateOnChange}
                                 />
                                 <img
-                                  src={remove}
-                                  alt="delete"
-                                  onClick={() => this.deleteComment(comment.id)}
+                                  src={plus}
+                                  alt="update"
+                                  onClick={() => this.updateComment(comment.id)}
                                 />
                               </div>
-                            ) : (
-                              <div />
-                            )}
-                          </div>
-                        </div>
-                      );
-                    }
-                  })}
+
+                              <div>
+                                {this.props.organizer.length > 0 ? (
+                                  <>
+                                    {comment.user_id ===
+                                    this.props.organizer ? (
+                                      <div
+                                        id={`action-button-${comment.id}`}
+                                        className="action-buttons"
+                                      >
+                                        <img
+                                          src={edit}
+                                          alt="edit"
+                                          onClick={() =>
+                                            this.selectComment(comment.id)
+                                          }
+                                        />
+                                        <img
+                                          src={remove}
+                                          alt="delete"
+                                          onClick={() =>
+                                            this.deleteComment(comment.id)
+                                          }
+                                        />
+                                      </div>
+                                    ) : (
+                                      <div />
+                                    )}
+                                  </>
+                                ) : (
+                                  <></>
+                                )}
+                              </div>
+                            </div>
+                          );
+                        }
+                      })}
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </div>
                 <div className="add-comments">
                   <input

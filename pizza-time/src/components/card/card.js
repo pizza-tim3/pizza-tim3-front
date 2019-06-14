@@ -19,6 +19,7 @@ class Card extends React.Component {
     };
   }
 
+
   componentDidMount() {
     console.log("REACHED HERE");
     const eventId= this.props.event.event_id
@@ -165,6 +166,7 @@ class Card extends React.Component {
       </CardBox>
     );
   }
+
 }
 
 export default Card;

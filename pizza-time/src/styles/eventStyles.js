@@ -13,15 +13,22 @@ export const Inner = styled.div`
   flex-direction: column;
   padding: 15px 0 15px 0;
   width: 90%;
+  .loading {
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   .more {
     display: flex;
     position: fixed;
+    flex-direction: column;
     width: 100%;
     height: 100%;
     align-self: center;
-    background-color: ${colors.white};
+    background-color: ${colors.primary};
     align-items: end;
-    margin-top: -120px;
+    margin-top: -135px;
     z-index: 9999;
     ul {
       display: flex;
@@ -33,19 +40,121 @@ export const Inner = styled.div`
       justify-content: center;
     }
   }
-  ${media.desktop} {
+  .close {
+    align-self: flex-end;
+    margin: 20px 33px 0px 0px;
+    opacity: 1;
+  }
+
+  ${media.tablet} {
     width: 80%;
     .event-header {
       flex-direction: row;
+    }
+
+    .close {
+      margin: 33px 50px 0px 0px;
+    }
+    .more {
+      margin-top: -121px;
+      justify-content: end;
+      align-items: center;
+    }
+  }
+  .close-more {
+    border: 1px solid ${colors.primary};
+    opacity: 1;
+    img {
+      width: 26px;
+      height: 26px;
+      transform: rotate(45deg);
+      padding: 3px;
+    }
+    :hover {
+      cursor: pointer;
+      background: ${colors.white};
+    }
+  }
+
+  .tobe-invited {
+    width: 80%;
+    height: 163px;
+    background-color: #fff;
+    margin-top: 40px;
+    background: none;
+    button {
+      padding: 10px 30px;
+    }
+  }
+  .friends {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    height: auto;
+    align-self: center;
+    width: 100%;
+    margin-top: 150px;
+    padding: 15px 0px;
+    border-top: 4px solid ${colors.black};
+    border-bottom: 4.5px solid ${colors.black};
+    background-color: ${colors.white};
+    -webkit-overflow-scrolling: touch;
+    ${media.desktop} {
+      width: 80%;
+      border: 2px solid ${colors.primary};
+      margin-top: 125px;
+      border-radius: 5px;
+      // height: 300px;
+      .friend {
+        width: 66px;
+        margin: 8px;
+      }
+    }
+    h2 {
+      margin: 8px 0px;
+    }
+    &::-webkit-scrollbar {
+      display: none;
+    }
+    .friend {
+      flex: 0 0 auto;
+      margin: 12px;
+      width: 100px;
+      height: auto;
+    }
+    img {
+      margin-top: 12px;
+      border: 3.5px solid ${colors.white};
+      border-radius: 50%;
+      &:hover {
+        border: 3.5px solid ${colors.primary};
+      }
     }
   }
   .event-header {
     border-bottom: 2px solid ${colors.black} !important;
     display: flex;
     justify-content: space-between;
-    margin: 0px 25px 15px 25px;
+    margin: 0px 18px 15px 18px;
     padding: 20px 0px;
     align-items: center;
+    div {
+      width: 50%;
+      justify-content: space-between;
+      display: flex;
+      h1 {
+        width: 100%;
+      }
+    }
+    .edit-header {
+      background: none;
+      border: none;
+      padding-right: 0px;
+      img {
+        width: 40px;
+        height: 40px;
+      }
+    }
     h1 {
       font-size: 1.1rem;
       margin-bottom: 0px;
@@ -53,6 +162,7 @@ export const Inner = styled.div`
     ${media.desktop} {
       h1 {
         font-size: 2rem;
+        display: flex;
       }
     }
     .btn-save {
@@ -88,10 +198,10 @@ export const Inner = styled.div`
     }
   }
   .event-date {
-    margin: 0px 25px 34px;
+    margin: 30px 25px 34px;
     flex-direction: column;
     ${media.desktop} {
-      margin: 0px 25px 34px;
+      margin: 40px 20px 34px;
       flex-direction: row;
     }
   }
@@ -103,8 +213,6 @@ export const Inner = styled.div`
 `;
 
 export const Toggle = styled.span`
-  align-self: center;
-
   label {
     margin-bottom: 0px;
   }
@@ -183,9 +291,12 @@ export const EventRow = styled.div`
   }
   .calendar {
     display: flex;
+    flex-direction: column;
     justify-content: space-between;
-    align-items: center;
     margin-bottom: 22px;
+    h2, h3 {
+      text-align: left;
+    }
     h2 {
       font-size: 1.2rem;
     }
@@ -199,13 +310,28 @@ export const EventRow = styled.div`
       padding-left: 10px;
       vertical-align: middle;
     }
+    .edit-time {
+      display: flex;
+      justify-content: space-between;
+      padding-left: 0px;
+    }
+    select {
+      border: none;
+      background: ${colors.white};
+      margin-right: 5px;
+    }
     ${media.desktop} {
       justify-content: space-between;
-      width: 45%;
+      width: 50%;
       h2 {
         font-size: 2rem;
       }
     }
+  }
+  .calendar-row { 
+    justify-content: space-between;
+    display: flex;
+    padding-bottom: 25px;
   }
   .invite-switch {
     h3 {
@@ -214,13 +340,13 @@ export const EventRow = styled.div`
     }
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    // align-items: center;
   }
   .event {
     width: 100%;
     display: flex;
     ${media.desktop} {
-      width: 45%;
+      width: 50%;
     }
     img, #map {
       height: 300px;
@@ -255,6 +381,22 @@ export const EventRow = styled.div`
   .event-users {
     display: flex;
     width: 100%;
+    // flex-direction: column;
+    align-items: start;
+    ${media.desktop} {
+      flex-direction: row;
+    }
+    div {
+      margin-right: 10px;
+      padding: 5px;
+      display: flex;
+      align-items: start;
+      h5 {
+        align-self: center;
+        margin-bottom: 0px;
+        padding-left: 15px;
+      }
+    }
     hr {
       border-top: 3px solid ${colors.primary};
       width: 70%;
@@ -273,12 +415,12 @@ export const EventRow = styled.div`
       }
     }
     img {
-      width: 40px;
-      height: 40px;
-      margin-right: 5px;
+      width: 55px;
+      height: 55px;
+      border-radius: 50%;
     }
-    .add-user {
-      padding: 7px;
+    .add-user img {
+      padding: 9px;
     }
   }
   .event-invite, .all-comments, .add-comments {
@@ -300,6 +442,9 @@ export const EventRow = styled.div`
         margin-bottom: 0px;
         padding-left: 12px;
       }
+    }
+    img {
+      border-radius: 50%;
     }
   }
   .add-comments {

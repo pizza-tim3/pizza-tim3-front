@@ -1,20 +1,30 @@
 import React from "react";
 
-export default function ProfileUserInfo(props) {
+export default function ProfileUserInfo({
+  avatar,
+  slices,
+  topping,
+  username,
+  first_name,
+  last_name,
+  crust
+}) {
   return (
     <>
       <div>
-        <img height="100px" width="100px" alt="UserAvatar" />
-        <h2> USERNAME </h2>
+        <img height="100px" width="100px" alt="UserAvatar" src={avatar} />
+        <h2>
+          {first_name} {last_name}
+        </h2>
       </div>
       <p>
-        Slices Per Month: <span>{props.slicesPerMonth}</span>
+        Slices Per Month: <span>{slices}</span>
       </p>
       <p>
-        Topping: <span>{props.topping}</span>
+        Topping: <span>{topping}</span>
       </p>
       <p>
-        Crust: <span>{props.crust}</span>
+        Crust: <span>{crust}</span>
       </p>
     </>
   );
