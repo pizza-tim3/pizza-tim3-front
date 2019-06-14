@@ -12,16 +12,16 @@ class EventView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user_id: null,
+      organizer: null,
       event: {},
       friends: [],
       selectedToInvite: [],
+      loading: false,
     };
   }
 
   async fetchEvent() {
     const currentId = this.props.match.params.id;
-
     try {
       let currentEvent = await axios.get(
         `https://pizza-tim3-be.herokuapp.com/api/events/${currentId}/details`
@@ -29,45 +29,50 @@ class EventView extends React.Component {
       if (currentEvent) {
         this.setState({
           event: currentEvent.data.event,
-          user_id: currentEvent.data.event.organizer,
+          organizer: currentEvent.data.event.organizer,
+          loading: false,
         });
       } else {
         this.setState({
           event: {},
-          user_id: "jNpViqXD4DXmf9H2FbkQnAy30000",
+          organizer: "jNpViqXD4DXmf9H2FbkQnAy30000",
+          loading: false,
         });
       }
     } catch (e) {
       this.setState({
         event: {},
-        user_id: "jNpViqXD4DXmf9H2FbkQnAy30000",
+        organizer: "jNpViqXD4DXmf9H2FbkQnAy30000",
+        loading: false,
       });
       console.log(e);
     }
   }
 
   // Reusable axios call to backend api w/ response data set to friends state
-
   async fetchFriends() {
-    let user_id = this.state.user_id;
+    let organizer = this.state.organizer;
 
     try {
       let currentFriends = await axios.get(
-        `https://pizza-tim3-be.herokuapp.com/api/friends/${user_id}`
+        `https://pizza-tim3-be.herokuapp.com/api/friends/${organizer}`
       );
       if (currentFriends) {
         this.setState({
           friends: currentFriends.data,
+          loading: false,
         });
       } else {
         this.setState({
           friends: [],
+          loading: false,
         });
       }
     } catch (e) {
       console.log(e);
       this.setState({
         friends: [],
+        loading: false,
       });
     }
   }
@@ -75,6 +80,9 @@ class EventView extends React.Component {
   // Reusable axios call to backend api w/ response data set to event state
 
   async componentDidMount() {
+    this.setState({
+      loading: true,
+    });
     await this.fetchEvent();
     await this.fetchFriends();
   }
@@ -166,27 +174,102 @@ class EventView extends React.Component {
     });
   };
 
+  // Update the state's event name
+  updateName = name => {
+    let currentEvent = this.state.event;
+    currentEvent.event_name = name;
+    this.setState({
+      event: currentEvent,
+    });
+    console.log(this.state.event);
+  };
+
+  // Update the state's date name
+  updateDate = date => {
+    let currentEvent = this.state.event;
+    currentEvent.event_date = new Date(date).getTime().toString();
+    this.setState({
+      id: currentEvent.id,
+      comments: currentEvent.comments,
+      event_name: currentEvent.event_name,
+      event_description: currentEvent.event_description,
+      event_date: currentEvent.event_date,
+      invitedUsers: currentEvent.invitedUsers,
+      organizer: currentEvent.organizer,
+    });
+  };
+
+  // Update the entire event with the event's data using axios call
+
+  updateEvent = event_id => {
+    this.setState({
+      loading: true,
+    });
+    let currentFriends = this.state.friends;
+    let currentEvent = this.state.event;
+
+    let updatedEvent = {
+      id: event_id,
+      event_name: currentEvent.event_name,
+      event_description: currentEvent.event_description,
+      event_date: currentEvent.event_date,
+      organizer: currentEvent.organizer,
+    };
+    axios
+      .put(
+        `https://pizza-tim3-be.herokuapp.com/api/events/${event_id}`,
+        updatedEvent
+      )
+      .then(res => {
+        // If response successfull, update the state with the new info
+        if (res.status === 200) {
+          updatedEvent.invitedUsers = currentEvent.invitedUsers;
+          updatedEvent.comments = currentEvent.comments;
+          this.setState({
+            event: updatedEvent,
+            loading: false,
+            friends: currentFriends,
+          });
+        }
+      })
+      .catch(err => {
+        console.log(err);
+        this.setState({
+          loading: false,
+        });
+      });
+  };
+
   render() {
     return (
       <div>
         <Nav />
-        {Object.keys(this.state.event).length ? (
+
+        {this.state.loading === true ? (
           <Inner>
-            <Info event={this.state.event} toggleSwitch={this.toggleSwitch} />
+            <div className="loading">
+              <img src={loading} alt="loading" />
+            </div>
+          </Inner>
+        ) : (
+          <Inner>
+            <Info
+              event={this.state.event}
+              toggleSwitch={this.toggleSwitch}
+              updateEvent={this.updateEvent}
+              updateName={this.updateName}
+              updateDate={this.updateDate}
+            />
             <Participants
               event={this.state.event}
               friends={this.state.friends}
               selectAdditional={this.selectAdditional}
               inviteFriends={this.inviteFriends}
             />
-            <Discussion event={this.state.event} user_id={this.state.user_id} />
-          </Inner>
-        ) : (
-          // If the event hasn't been loaded, show loading gif
-          <Inner>
-            <div className="loading">
-              <img src={loading} alt="loading" />
-            </div>
+            <Discussion
+              event={this.state.event}
+              organizer={this.state.organizer}
+            />
           </Inner>
         )}
       </div>
