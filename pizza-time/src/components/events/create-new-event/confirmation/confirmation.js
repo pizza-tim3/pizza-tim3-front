@@ -40,7 +40,6 @@ const ConfirmationPage = (props) => {
                 <h2>Step 5: Confirm your event</h2>
             </PlacesHeading>
             <div>
-
                 <h2>{eventName && eventName}</h2>
                 <p>{props.place.placeName}</p>
                 <p>{eventDesc && eventDesc}</p>
