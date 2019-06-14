@@ -135,43 +135,53 @@ class EventView extends React.Component {
 
   // Send the array of the selectedToInvite array to the backend
   inviteFriends = () => {
-    const event_id = this.props.match.params.id;
+    let event_id = this.props.match.params.id;
+    if (event_id) {
+      let currentEvent = this.state.event;
 
-    let selectedToSubmit = this.state.selectedToInvite.map(select => {
-      select.event_id = event_id;
-      select.user_id = select.user_id;
-      select.avatar = select.avatar;
-      select.first_name = select.first_name;
-      select.last_name = select.last_name;
-      select.pending = "true";
-      select.accepted = "false";
-      select.declined = "false";
-    });
+      let selectedToInvite = this.state.selectedToInvite;
+      selectedToInvite.map(select => {
+        select.accepted = false;
+        select.declined = false;
+        select.pending = true;
+        select.event_id = Number(event_id);
+        select.user_id = select.firebase_uid;
+      });
 
-    // If selected array is not empty, update the event's invitedUsers with new selected users
-    if (selectedToSubmit.length > 0) {
-      let newInvitedUsers = this.state.event.invitedUsers;
-      for (let i = 0; i < selectedToSubmit.length; i++) {
-        newInvitedUsers.push(selectedToSubmit[i]);
+      let newInvitedUsers = Array.from(currentEvent.invitedUsers);
+
+      if (selectedToInvite.length !== 0) {
+        for (let i = 0; i < selectedToInvite.length; i++) {
+          newInvitedUsers.push(selectedToInvite[i]);
+        }
       }
+
+      let newUpdatedEvent = {
+        id: event_id,
+        event_name: currentEvent.event_name,
+        event_description: currentEvent.event_description,
+        event_date: currentEvent.event_date,
+        organizer: currentEvent.organizer,
+      };
+
       axios
         .post(
           `https://pizza-tim3-be.herokuapp.com/api/invited/${event_id}`,
-          selectedToSubmit
+          selectedToInvite
         )
+
         .then(res => {
-          if (res.status === 200) {
-            this.setState({
-              event: {
-                invitedUsers: newInvitedUsers,
-              },
-              selectedToSubmit: [],
-            });
-          }
-        })
-        .catch(err => {
-          console.log(err);
+          newUpdatedEvent.invitedUsers = newInvitedUsers;
+
           this.setState({
+            event: newUpdatedEvent,
+            selectedToSubmit: [],
+          });
+        })
+        .catch(e => {
+          console.log(e);
+          this.setState({
+            event: currentEvent,
             selectedToSubmit: [],
           });
         });
