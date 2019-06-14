@@ -1,83 +1,95 @@
 import React from "react";
-import Details from "../.././components/events/details-request/details-request.js";
+import { connect } from "react-redux";
 
-
-class Location extends React.Component {
+class Favorites extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      location: "",
+      favorites: [],
+      map: null,
+      service: null,
+      placesData: [],
       url: `https://maps.googleapis.com/maps/api/js?key=${
         process.env.REACT_APP_GOOGLE_PLACES_API_KEY
       }&libraries=places&callback=initMap`
     };
   }
-  
+
   loadMap = () => {
-    console.log("load map .... ", this.state.url);
     loadScript(this.state.url);
   };
 
   initMap = async () => {
-    console.log("INIT MAP .... ")
     let map = new window.google.maps.Map(document.getElementById("map"));
     let service = new window.google.maps.places.PlacesService(map);
 
-    
     //for each favorite get the details, limited to 10 :()
-    
+    const len = this.state.favorites.length;
 
     //for each favorite make a call and set state with the data. HARD LIMIT 10
-    
+    this.state.favorites.forEach((favorite, index) => {
       const req = {
-        placeId: this.props.google_place_id,
+        placeId: favorite.google_place_id,
         fields: ["name", "photos"]
       };
       service.getDetails(req, async (place, status) => {
         const serviceStatus = window.google.maps.places.PlacesServiceStatus;
         if (serviceStatus.OK) {
-          console.log("Place = ",place);
-          this.setState({
-            location : place.name
+          this.setState(prevState => {
+            return {
+              ...prevState,
+              placesData: [...prevState.placesData, place]
+            };
           });
         }
       });
-
+    });
   };
 
+  //on mount get the favorites from the backend
   async componentDidMount() {
-    window.initMap = this.initMap;
-    this.loadMap();
+    try {
+      const response = await fetch(
+        `${process.env.REACT_APP_BACK_END_URL}/api/favorites/${
+          this.props.firebase_uid
+        }`
+      );
+      const json = await response.json();
+      //set the state with the favorites
+      this.setState(prevState => ({ ...prevState, favorites: json }));
+
+      //initailize the map by placing it on window for the callback
+      window.initMap = this.initMap;
+      this.loadMap();
+    } catch (error) {}
   }
 
-  getLocation = req => {
-    console.log("HERE IS TYHE LOCATION REQ", req);
-    console.log("HERE IS TYHE LOCATION Name", req.name);
-    this.setState({ location: req.name });
-  };
-
   render() {
-    // if (this.state.location.length != 0) {
-    //   return <div>{this.state.location}</div>;
-    // } else {
-    //   return (
-    //     <Details
-    //       getDetails={this.getLocation}
-    //       placeId={this.props.google_place_id}
-    //     />
-    //   );
-    // }
-    return ( 
+    const { favorites, placesData } = this.state;
+    return (
       <div>
-        {this.state.location.length == 0 ? (<p> Loading ..</p>) :
-          <p> {this.state.location} </p>
-        }
+        <h3> Favorites Works! </h3>
+        {favorites.map(fav => (
+          <div>
+            <p>{fav.name}</p>
+          </div>
+        ))}
+        {placesData && placesData.length === favorites.length ? (
+          placesData.map(place => {
+            const url = place.photos[0].getUrl();
+            return (
+              <div>
+                <p>{place.name}</p>
+                <img src={url} height="200px" width="200px" />
+              </div>
+            );
+          })
+        ) : (
+          <p>LOADING</p>
+        )}
         <div id="map" />
       </div>
-
     );
-
-    
   }
 }
 
@@ -91,4 +103,9 @@ function loadScript(url) {
   index.parentNode.insertBefore(script, index); //---------------------------inserts our script before the very first script
 }
 
-export default Location;
+const mstp = ({ userReducer }) => userReducer;
+
+export default connect(
+  mstp,
+  {}
+)(Favorites);

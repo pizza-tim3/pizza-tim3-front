@@ -40,26 +40,61 @@ class Card extends React.Component {
 
   commentHandler = event => {
     event.preventDefault();
-    //let myElements = event.target;
-    /*
-     * make a new class noMessage which has display as none.
-     *
-     */
-    // if (this.state.showComments) {
-    //   myElements.classList.remove("noMessage");
-    // } else {
-    //   myElements.classList.add("noMessage");
-    // }
-    //this.setState({ showComments: !showComments });
+    
     const show = !this.state.showMessages;
     console.log("Show message now : ", show)
     this.setState({showMessages:show})
 
 
   };
+  clickHandler = event => {
+    event.preventDefault();
+    const id = localStorage.getItem("userFireBaseId");
+    const event_id = event.target.getAttribute("event_id");
+    const user_id = event.target.getAttribute("user_id");
+    console.log("Event id and user id ", event_id, user_id);
+    const newItem = {
+      event_id: event_id,
+      user_id: user_id,
+      status: "Accepted"
+    };
+    console.log("Event neing posted ", newItem);
+
+    axios
+      .put(`http://localhost:5500/api/events/status/${id}`, newItem)
+      .then(res => {
+        console.log("New Item is updated now", res.data.results);
+        window.location.reload();
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+  };
+  ButtonHandler = event => {
+    event.preventDefault();
+    const id = localStorage.getItem("userFireBaseId");
+    const event_id = event.target.getAttribute("event_id");
+    const user_id = event.target.getAttribute("user_id");
+    console.log("Eventid and UserId are", event_id, user_id);
+    const newItem = {
+      event_id: event_id,
+      user_id: user_id,
+      status: "Declined"
+    };
+    axios
+      .put(`http://localhost:5500/api/events/status/${id}`, newItem)
+      .then(res => {
+        console.log("Response for Decline", res.data.results);
+        window.location.reload();
+      })
+      .catch(error => {
+        this.setState({ error });
+      });
+  };
 
   render() {
     const date = new Date(this.props.event.event_date).toString();
+    
     console.log("COME FOR THE EVENT", this.props.event);
     return (
       <CardBox>
@@ -71,16 +106,16 @@ class Card extends React.Component {
                 <span>Name:</span> {this.props.event.event_name}{" "}
               </p>
               <p>
-                <span>Date:</span> {date}
+                <span>Date:</span>{date}
               </p>
               <p>
-                <span>location:</span>{" "}
-                <Location google_place_id={this.props.event.google_place_id} />
+                <span>location:</span>{" "} {this.props.event.location}
+                {/* <Location google_place_id={this.props.event.google_place_id} /> */}
               </p>
               <p>
                 <span>Attending:</span>
                 {this.state.attendees.map(attende => {
-                  return [attende.first_name, " ", attende.last_name, ","," "]
+                  return [attende.first_name, "  ", attende.last_name, ","," "]
                 })}
               </p>
             </div>
@@ -95,7 +130,9 @@ class Card extends React.Component {
               {this.state.comments.map(comment => {
                 if (this.state.showMessages) {
                   // return <DashComment key={comment.id} comment={comment} />;
+                   console.log("COMMENT TIME")
                   return (
+                   
                     <div>
                     Time : {comment.time} <br/>
                          
@@ -113,8 +150,12 @@ class Card extends React.Component {
                   if (this.state.showActions) {
                     return (  
                       <div className="buttons">
-                        <button>Let's Go!</button>
-                        <button>Not This Time</button>
+                        <button onClick={this.clickHandler}event_id={this.props.event.event_id}
+                         // this event is the object eventhaving all attributes:name,date
+                          user_id={this.props.event.user_id}>Let's Go!</button>
+                        <button  onClick={this.ButtonHandler}
+                                 event_id={this.props.event.event_id}
+                                 user_id={this.props.event.user_id}>Not This Time</button>
                       </div>);
                   }
               })
