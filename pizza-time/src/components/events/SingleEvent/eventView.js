@@ -163,7 +163,7 @@ class EventView extends React.Component {
         event_date: currentEvent.event_date,
         organizer: currentEvent.organizer,
       };
-
+      console.log(selectedToInvite);
       axios
         .post(
           `https://pizza-tim3-be.herokuapp.com/api/invited/${event_id}`,
@@ -204,7 +204,6 @@ class EventView extends React.Component {
     this.setState({
       event: currentEvent,
     });
-    console.log(this.state.event);
   };
 
   // Update the state's date name

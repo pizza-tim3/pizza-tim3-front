@@ -47,10 +47,6 @@ class Participants extends React.Component {
   }
 
   render() {
-    // let inviteFriends = this.props.event.invitedUsers;
-    // let noDuplicates
-    // console.log(this.props.event.invitedUsers);
-
     return (
       <>
         <EventRow>
@@ -63,7 +59,7 @@ class Participants extends React.Component {
             {this.props.event.invitedUsers ? (
               <>
                 {this.props.event.invitedUsers.map((invited, index) => {
-                  // console.log(invited);
+                  console.log(invited);
                   if (index < 4) {
                     return (
                       <div key={invited.firebase_uid}>
