@@ -163,7 +163,6 @@ class EventView extends React.Component {
         event_date: currentEvent.event_date,
         organizer: currentEvent.organizer,
       };
-      console.log(selectedToInvite);
       axios
         .post(
           `https://pizza-tim3-be.herokuapp.com/api/invited/${event_id}`,
@@ -247,6 +246,7 @@ class EventView extends React.Component {
         if (res.status === 200) {
           updatedEvent.invitedUsers = currentEvent.invitedUsers;
           updatedEvent.comments = currentEvent.comments;
+          updatedEvent.location = currentEvent.location;
           this.setState({
             event: updatedEvent,
             loading: false,

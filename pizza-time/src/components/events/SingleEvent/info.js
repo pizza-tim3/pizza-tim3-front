@@ -5,6 +5,7 @@ import calendar from "./../../../assets/calendar.svg";
 import edit from "./../../../assets/edit.png";
 import clock from "./../../../assets/clock.png";
 import fakemap from "./../../../assets/fakemap.png";
+import cancel from "./../../../assets/cancel.svg";
 import moment from "moment";
 import Details from "./../../events/details-request/details-request";
 // import GoogleMap from "./../create-new-event/search/map/map";
@@ -28,11 +29,14 @@ class Info extends React.Component {
         am: "AM",
       },
       show: false,
+      eventForm: false,
       google_place_id: "",
-      event: {
-        event_name: "",
-      },
+      eventName: "",
       location: {
+        address: {
+          street: "",
+          city: "",
+        },
         name: "",
         hours: [],
         photo: "",
@@ -46,14 +50,12 @@ class Info extends React.Component {
   componentDidMount() {
     // Convert response event's date epoch string to UTC format
     const eventDate = new Date(Number(this.props.event.event_date));
-
-    console.log(this.props.event);
     if (this.props.event.location) {
-      let eventLocationId = this.props.event.location.google_place_id;
       this.setState({
-        google_place_id: eventLocationId,
+        google_place_id: this.props.event.location.google_place_id,
       });
     }
+
     // The following javascript code takes the response's string and extracts event date's hours and minutes
     let eventDateString = eventDate.toString();
     let arr = eventDateString.split("");
@@ -78,36 +80,30 @@ class Info extends React.Component {
       eventAM = "PM";
     }
 
-    // Set the states time hour, minutes, am
+    // Hide edit-time select input on load
+    let editTimeHtml = document.getElementsByClassName("edit-time");
+    if (editTimeHtml[0]) {
+      editTimeHtml[0].style.display = "none";
+    }
+
     this.setState({
+      date: eventDate,
+      editForm: false,
       time: {
         hour: eventHour,
         minutes: eventMinutes,
         am: eventAM,
       },
     });
-
-    // Hide edit-time select input on load
-    let editTimeHtml = document.getElementsByClassName("edit-time");
-    if (editTimeHtml[0]) {
-      editTimeHtml[0].style.display = "none";
-    }
     // Set the info state's date, eventName and hides headers edit form
-    this.setState({
-      date: eventDate,
-      event: {
-        event_name: this.props.event.event_name,
-      },
-      editForm: false,
-      // google_place_id: eventLocationId,
-    });
   }
 
   updateTime = e => {
     e.preventDefault();
     // Get the current state date
     const eventDate = new Date(this.state.date);
-
+    let editTime = document.getElementsByClassName("edit-time");
+    editTime[0].style.display = "none";
     // Convert the date to a string
     let currentTime = eventDate.toString();
     // Create an array of characters from the current date string
@@ -159,16 +155,15 @@ class Info extends React.Component {
 
     this.setState({
       google_place_id: req.place_id,
-      event: {
-        location: {
-          address: {
-            street: streetString,
-            city: addressString,
-          },
-          hours: locationHours,
-          name: req.name,
-          photo: bigLeague,
+      eventName: this.props.event.event_name,
+      location: {
+        address: {
+          street: streetString,
+          city: addressString,
         },
+        hours: locationHours,
+        name: req.name,
+        photo: bigLeague,
       },
     });
   };
@@ -188,9 +183,7 @@ class Info extends React.Component {
   // Handles when the event's name select is being
   inputOnChange = e => {
     this.setState({
-      event: {
-        [e.target.name]: e.target.value,
-      },
+      eventName: e.target.value,
     });
   };
   toggleEdit = () => {
@@ -210,10 +203,11 @@ class Info extends React.Component {
   };
   updateNameHandler = e => {
     e.preventDefault();
-    this.props.updateName(this.state.event.event_name);
+    // let newValue = doc;
     this.setState({
       editForm: false,
     });
+    this.props.updateName(this.state.eventName);
   };
   updateDateHandler = e => {
     e.preventDefault();
@@ -260,23 +254,26 @@ class Info extends React.Component {
           <EventBox>
             <div className="event-header">
               {this.state.editForm === true ? (
-                <>
+                <div className="header-edit">
                   <input
-                    name="event_name"
+                    name="name"
                     type="text"
-                    value={this.state.event.event_name}
-                    placeholder={this.state.event.event_name}
+                    value={this.state.eventName}
+                    placeholder={this.state.eventName}
                     onChange={this.inputOnChange}
                   />
-                  <button className="action" onClick={this.toggleEdit}>
-                    Cancel
+                  <button className="action cancel" onClick={this.toggleEdit}>
+                    <img src={cancel} alt="cancel" />
                   </button>
-                  <button onClick={this.updateNameHandler}> Update</button>
-                </>
+                  <button className="btn-save" onClick={this.updateNameHandler}>
+                    {" "}
+                    Update
+                  </button>
+                </div>
               ) : (
-                <div>
+                <div className="event-name">
                   <h1>
-                    <b>Event</b>: {this.props.event.event_name}
+                    <b>Event</b>: <span>{this.state.eventName}</span>
                   </h1>
                   <button className="action" onClick={this.toggleEdit}>
                     <img src={edit} alt="edit pencil" />
@@ -404,7 +401,9 @@ class Info extends React.Component {
                           })}
                         </select>
                       </div>
-                      <button onClick={this.updateTime}>Update Time</button>
+                      <button className="btn-save" onClick={this.updateTime}>
+                        Update
+                      </button>
                     </span>
                   </div>
                 </div>
@@ -426,9 +425,9 @@ class Info extends React.Component {
 
             <EventColumn className="location-info">
               <EventRow className="event-location-name">
-                {this.state.event.location ? (
+                {this.state.location ? (
                   <div>
-                    <h2>Place: {this.state.event.location.name}</h2>
+                    <h2>Place: {this.state.location.name}</h2>
                   </div>
                 ) : (
                   <>
@@ -444,17 +443,14 @@ class Info extends React.Component {
               </EventRow>
               <EventRow>
                 <div className="event location">
-                  {this.state.event.location ? (
+                  {this.state.location ? (
                     <>
-                      <img
-                        alt="location"
-                        src={this.state.event.location.photo}
-                      />
+                      <img alt="location" src={this.state.location.photo} />
                       <div className="location-address">
                         <h2>Address:</h2>
                         <address>
-                          <p>{this.state.event.location.address.street}</p>
-                          <p>{this.state.event.location.address.city}</p>
+                          <p>{this.state.location.address.street}</p>
+                          <p>{this.state.location.address.city}</p>
                         </address>
                       </div>
                     </>
@@ -471,15 +467,13 @@ class Info extends React.Component {
                         placeId={this.state.google_place_id}
                       />
                       <img src={fakemap} alt="fakemap" />
-                      {this.state.event.location ? (
+                      {this.state.location ? (
                         <div className="location-hours">
                           <h2>Hours: </h2>
                           <div>
-                            {this.state.event.location.hours.map(
-                              (hour, index) => {
-                                return <div key={index}>{hour}</div>;
-                              }
-                            )}
+                            {this.state.location.hours.map((hour, index) => {
+                              return <div key={index}>{hour}</div>;
+                            })}
                           </div>
                         </div>
                       ) : (

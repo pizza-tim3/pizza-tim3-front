@@ -138,12 +138,18 @@ export const Inner = styled.div`
     margin: 0px 18px 15px 18px;
     padding: 20px 0px;
     align-items: center;
-    div {
+    .header-edit {
+      display: flex;
+    }
+    .event-name {
       width: 50%;
       justify-content: space-between;
       display: flex;
       h1 {
         width: 100%;
+        span {
+          padding-left: 10px;
+        }
       }
     }
     h1 {
@@ -243,6 +249,16 @@ export const Inner = styled.div`
     img {
       width: 40px;
       height: 40px;
+    }
+    &:focus {
+      outline: none;
+    }
+    &:.cancel,
+    &:.update img {
+      padding: 7px 7px 7px 0px;
+    }
+    &.update img {
+      border-radius: 0%;
     }
   }
 `;
@@ -472,12 +488,14 @@ export const EventRow = styled.div`
     align-items: start;
     .comment {
       display: flex;
+      align-items: center;
       flex-direction: row;
       margin-bottom: 15px;
       p {
         align-self: center;
         margin-bottom: 0px;
         padding-left: 12px;
+        padding-right: 12px;
       }
     }
     img {

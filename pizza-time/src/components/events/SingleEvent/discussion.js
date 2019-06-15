@@ -2,8 +2,9 @@ import React from "react";
 import { EventRow } from "../../../styles/eventStyles";
 import axios from "axios";
 import plus from "../../../assets/plus.png";
+import update from "../../../assets/update.png";
 import edit from "../../../assets/edit.png";
-import remove from "../../../assets/delete.png";
+import cancel from "../../../assets/cancel.svg";
 
 class Discussion extends React.Component {
   constructor(props) {
@@ -254,12 +255,15 @@ class Discussion extends React.Component {
                                   name="update"
                                   onChange={this.updateOnChange}
                                 />
-                                <img
-                                  src={plus}
-                                  className="action-buttons"
-                                  alt="update"
-                                  onClick={() => this.updateComment(comment.id)}
-                                />
+                                <button className="action update">
+                                  <img
+                                    src={update}
+                                    alt="update"
+                                    onClick={() =>
+                                      this.updateComment(comment.id)
+                                    }
+                                  />
+                                </button>
                               </div>
 
                               <div>
@@ -280,9 +284,9 @@ class Discussion extends React.Component {
                                             }
                                           />
                                         </button>
-                                        <button className="action">
+                                        <button className="action cancel">
                                           <img
-                                            src={remove}
+                                            src={cancel}
                                             alt="delete"
                                             onClick={() =>
                                               this.deleteComment(comment.id)
