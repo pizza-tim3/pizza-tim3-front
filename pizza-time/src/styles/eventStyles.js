@@ -141,6 +141,14 @@ export const Inner = styled.div`
     .header-edit {
       display: flex;
       height: 40px;
+      input {
+        border: none;
+        border-bottom: 1.5px solid ${colors.primary};
+        margin-right: 15px;
+        &:focus {
+          outline: none;
+        }
+      }
     }
     .event-name {
       width: 50%;
