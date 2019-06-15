@@ -61,14 +61,16 @@ class Participants extends React.Component {
                 {this.props.event.invitedUsers.map((invited, index) => {
                   if (index < 4) {
                     return (
-                      <div key={invited.firebase_uid}>
+                      <div className="invited" key={invited.firebase_uid}>
                         <img src={invited.avatar} alt={invited.first_name} />
                       </div>
                     );
                   }
                 })}
                 <div className="add-user">
-                  <img src={plus} alt="plus" />
+                  <button className="action">
+                    <img src={plus} alt="plus" />
+                  </button>
                 </div>
               </>
             ) : (

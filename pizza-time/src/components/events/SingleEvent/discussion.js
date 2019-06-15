@@ -12,6 +12,7 @@ class Discussion extends React.Component {
       newComment: {
         message: "",
       },
+      avatar: "",
       editComment: {
         update: "",
       },
@@ -22,9 +23,25 @@ class Discussion extends React.Component {
   componentDidMount() {
     // Set the component's comments state to the passed props
     let eventsComments = this.props.event.comments;
+
     this.setState({
       comments: eventsComments,
     });
+
+    let user_id = this.props.organizer;
+    let matchingId = [];
+
+    if (eventsComments && user_id) {
+      matchingId = eventsComments.filter(
+        comment => comment.user_id === user_id
+      );
+      if (matchingId) {
+        this.setState({
+          avatar: matchingId[0].avatar,
+        });
+      }
+    }
+
     let comments = document.getElementsByClassName("edit-comment");
     Array.from(comments).map(comment => {
       comment.style.display = "none";
@@ -118,13 +135,15 @@ class Discussion extends React.Component {
   addComment = () => {
     // Copy the current state event
     let newComment = this.state.newComment;
+    let commentAvatar = this.state.avatar;
     let event_id = this.props.event.id;
     let user = this.props.organizer;
     // Add event id, organizer and time to the new comment
     newComment.event_id = event_id;
     newComment.user_id = user;
-    newComment.time = new Date();
 
+    newComment.time = new Date();
+    console.log(newComment);
     axios
       .post(
         `https://pizza-tim3-be.herokuapp.com/api/events/${event_id}/comments`,
@@ -134,6 +153,7 @@ class Discussion extends React.Component {
         if (res.status === 201) {
           // If successfull push new comments to front-end state
           newComment.id = res.data[0];
+          newComment.avatar = this.state.avatar;
           this.setState(state => {
             return {
               comments: [...state.comments, newComment],
@@ -236,6 +256,7 @@ class Discussion extends React.Component {
                                 />
                                 <img
                                   src={plus}
+                                  className="action-buttons"
                                   alt="update"
                                   onClick={() => this.updateComment(comment.id)}
                                 />
@@ -250,20 +271,24 @@ class Discussion extends React.Component {
                                         id={`action-button-${comment.id}`}
                                         className="action-buttons"
                                       >
-                                        <img
-                                          src={edit}
-                                          alt="edit"
-                                          onClick={() =>
-                                            this.selectComment(comment.id)
-                                          }
-                                        />
-                                        <img
-                                          src={remove}
-                                          alt="delete"
-                                          onClick={() =>
-                                            this.deleteComment(comment.id)
-                                          }
-                                        />
+                                        <button className="action">
+                                          <img
+                                            src={edit}
+                                            alt="edit"
+                                            onClick={() =>
+                                              this.selectComment(comment.id)
+                                            }
+                                          />
+                                        </button>
+                                        <button className="action">
+                                          <img
+                                            src={remove}
+                                            alt="delete"
+                                            onClick={() =>
+                                              this.deleteComment(comment.id)
+                                            }
+                                          />
+                                        </button>
                                       </div>
                                     ) : (
                                       <div />
@@ -288,7 +313,9 @@ class Discussion extends React.Component {
                     value={this.state.newComment.message}
                     onChange={this.commentOnChange}
                   />
-                  <img src={plus} alt="plus" onClick={this.addComment} />
+                  <button className="action">
+                    <img src={plus} alt="plus" onClick={this.addComment} />
+                  </button>
                 </div>
               </div>
             ) : (

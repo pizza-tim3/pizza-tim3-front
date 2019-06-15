@@ -238,9 +238,6 @@ class Info extends React.Component {
 
   render() {
     // Array of hours to display in the select's mapped option values
-    if (this.state.event.location) {
-      console.log(this.state.event.location.photo);
-    }
     let hours = [
       "01",
       "02",
@@ -271,7 +268,9 @@ class Info extends React.Component {
                     placeholder={this.state.event.event_name}
                     onChange={this.inputOnChange}
                   />
-                  <button onClick={this.toggleEdit}>Cancel</button>
+                  <button className="action" onClick={this.toggleEdit}>
+                    Cancel
+                  </button>
                   <button onClick={this.updateNameHandler}> Update</button>
                 </>
               ) : (
@@ -279,7 +278,7 @@ class Info extends React.Component {
                   <h1>
                     <b>Event</b>: {this.props.event.event_name}
                   </h1>
-                  <button className="edit-header" onClick={this.toggleEdit}>
+                  <button className="action" onClick={this.toggleEdit}>
                     <img src={edit} alt="edit pencil" />
                   </button>
                 </div>
@@ -325,6 +324,7 @@ class Info extends React.Component {
                     src={calendar}
                     alt="calendar"
                     onClick={this.handleShow}
+                    className="action-buttons"
                   />
                 </div>
 
@@ -337,6 +337,7 @@ class Info extends React.Component {
                     src={clock}
                     alt="edit-time"
                     onClick={this.toggleEditTime}
+                    className="action-buttons"
                   />
                 </div>
                 <div className="caloendar-row">
@@ -434,8 +435,12 @@ class Info extends React.Component {
                     <h2>Place: </h2>
                   </>
                 )}
-                <input placeholder="search" />
+                {/* <input placeholder="search" /> */}
+
                 {/* <PlacesSearch /> */}
+                <button className="action">
+                  <img src={edit} alt="edit" />
+                </button>
               </EventRow>
               <EventRow>
                 <div className="event location">
