@@ -25,27 +25,18 @@ const Details = props => {
   };
 
   const initMap = () => {
-    try {
-      //select the element to place the search in
-      let map = document.getElementById("map");
-      //create a request object to pass to the service
-      let request = {
-        placeId: props.placeId,
-        fields: [
-          "name",
-          "formatted_address",
-          "place_id",
-          "geometry",
-          "photos",
-          "formatted_phone_number",
-          "opening_hours",
-        ],
-      };
-      //create a callback to pass into the service
-      const callBack = async (place, status) => {
-        const serviceStatus = window.google.maps.places.PlacesServiceStatus;
-        setIsLoading(false);
-
+      try {
+        //select the element to place the search in
+        let map = document.getElementById('map');
+        //create a request object to pass to the service
+        let request = {
+          placeId: props.placeId,
+          fields:['name', 'formatted_address', 'place_id', 'geometry', 'photos', 'formatted_phone_number', 'opening_hours']
+        }
+        //create a callback to pass into the service
+        const callBack = async (place, status) => {
+          const serviceStatus = window.google.maps.places.PlacesServiceStatus;
+          setIsLoading(false);
         switch (status) {
           case serviceStatus.OK:
             sendToParent(place);

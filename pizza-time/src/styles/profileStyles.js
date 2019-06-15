@@ -24,9 +24,24 @@ export const FriendInfoContainer = styled.div`
   width: 100%;
   display: grid;
   grid-template-areas:
-    "avatar username"
-    "avatar location";
-  grid-template-columns: 150px 1fr;
+    "avatar username acceptBtn"
+    "avatar location rejectBtn";
+  grid-template-columns: 150px 1fr 1fr;
+
+  @media only screen and (max-width: 980px) {
+    grid-template-areas:
+      "avatar username"
+      "avatar location"
+      "acceptBtn rejectBtn";
+    grid-template-columns: 150px 1fr;
+    /* if status is pending and showing buttons add another row for
+    buttons */
+    grid-template-rows: 1fr 1fr ${props =>
+        props.status === "pending" ? "100px" : ""};
+    button:nth-of-type(2) {
+      justify-self: right;
+    }
+  }
 
   & > img {
     grid-area: avatar;
@@ -42,6 +57,11 @@ export const FriendInfoContainer = styled.div`
     margin: 0px;
     padding: 0px;
     justify-self: start;
+    align-self: center;
+  }
+
+  button {
+    align-self: center;
   }
 `;
 
@@ -53,4 +73,26 @@ export const ListToolBar = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0px 25px;
+`;
+
+export const Button = styled.button`
+  width: 130px;
+  height: 38px;
+  background-color: ${colors.white};
+  border: 1px solid ${colors.white};
+  box-shadow: 0 0 7px 0px ${colors.shadow};
+  font-family: ${fonts.primary};
+  font-weight: 600;
+  font-size: 15px;
+  color: ${colors.gray};
+  ${media.desktop} {
+    width: 140px;
+    height: 42px;
+  }
+
+  &:hover {
+    background-color: ${colors.primary};
+    color: ${colors.white};
+    border: 1px solid ${colors.primary};
+  }
 `;
