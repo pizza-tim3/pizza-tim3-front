@@ -3,6 +3,8 @@ import Calendar from "react-calendar";
 // import PlacesSearch from "../create-new-event/search/places-search";
 import calendar from "./../../../assets/calendar.svg";
 import edit from "./../../../assets/edit.png";
+import update from "./../../../assets/update.png";
+import orangeupdate from "./../../../assets/orangeupdate.png";
 import clock from "./../../../assets/clock.png";
 import fakemap from "./../../../assets/fakemap.png";
 import cancel from "./../../../assets/cancel.svg";
@@ -401,8 +403,8 @@ class Info extends React.Component {
                           })}
                         </select>
                       </div>
-                      <button className="btn-save" onClick={this.updateTime}>
-                        Update
+                      <button className="action" onClick={this.updateTime}>
+                        <img src={update} alt="edit" />
                       </button>
                     </span>
                   </div>

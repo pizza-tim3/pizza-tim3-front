@@ -2,7 +2,7 @@ import React from "react";
 import { EventRow } from "../../../styles/eventStyles";
 import axios from "axios";
 import plus from "../../../assets/plus.png";
-import update from "../../../assets/update.png";
+import orangeupdate from "../../../assets/orangeupdate.png";
 import edit from "../../../assets/edit.png";
 import cancel from "../../../assets/cancel.svg";
 
@@ -257,7 +257,7 @@ class Discussion extends React.Component {
                                 />
                                 <button className="action update">
                                   <img
-                                    src={update}
+                                    src={orangeupdate}
                                     alt="update"
                                     onClick={() =>
                                       this.updateComment(comment.id)

@@ -140,6 +140,7 @@ export const Inner = styled.div`
     align-items: center;
     .header-edit {
       display: flex;
+      height: 40px;
     }
     .event-name {
       width: 50%;
@@ -172,10 +173,8 @@ export const Inner = styled.div`
       font-size: 15px;
       color: ${colors.white};
       width: 140px;
-      height: 42px;
       ${media.mobile} {
         width: 130px;
-        height: 38px;
       }
 
       &:hover {
@@ -246,6 +245,7 @@ export const Inner = styled.div`
   .action {
     background: none;
     border: none;
+    padding-right: 0px;
     img {
       width: 40px;
       height: 40px;
@@ -253,9 +253,13 @@ export const Inner = styled.div`
     &:focus {
       outline: none;
     }
-    &:.cancel,
-    &:.update img {
-      padding: 7px 7px 7px 0px;
+    &.cancel {
+      padding-left: 0px;
+      img {
+        padding: 7px;
+        margin-left: 5px;
+        margin-right: 5px;
+      }
     }
     &.update img {
       border-radius: 0%;
