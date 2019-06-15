@@ -1,10 +1,9 @@
 import React from "react";
 import Calendar from "react-calendar";
-// import PlacesSearch from "../create-new-event/search/places-search";
 import calendar from "./../../../assets/calendar.svg";
 import edit from "./../../../assets/edit.png";
 import update from "./../../../assets/update.png";
-import orangeupdate from "./../../../assets/orangeupdate.png";
+// import orangeupdate from "./../../../assets/orangeupdate.png";
 import clock from "./../../../assets/clock.png";
 import fakemap from "./../../../assets/fakemap.png";
 import cancel from "./../../../assets/cancel.svg";
@@ -19,6 +18,7 @@ import {
   EventColumn,
 } from "../../../styles/eventStyles";
 import { Modal } from "react-bootstrap";
+import EditLocation from "./editLocation";
 
 class Info extends React.Component {
   constructor(props) {
@@ -99,7 +99,9 @@ class Info extends React.Component {
     });
     // Set the info state's date, eventName and hides headers edit form
   }
-
+  updateLocation = location => {
+    console.log(location);
+  };
   updateTime = e => {
     e.preventDefault();
     // Get the current state date
@@ -436,12 +438,8 @@ class Info extends React.Component {
                     <h2>Place: </h2>
                   </>
                 )}
-                {/* <input placeholder="search" /> */}
 
-                {/* <PlacesSearch /> */}
-                <button className="action">
-                  <img src={edit} alt="edit" />
-                </button>
+                <EditLocation updateLocation={this.updateLocation} />
               </EventRow>
               <EventRow>
                 <div className="event location">

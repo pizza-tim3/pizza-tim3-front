@@ -36,9 +36,14 @@ class Discussion extends React.Component {
       matchingId = eventsComments.filter(
         comment => comment.user_id === user_id
       );
-      if (matchingId) {
+      if (matchingId[0]) {
         this.setState({
           avatar: matchingId[0].avatar,
+        });
+      } else {
+        this.setState({
+          avatar:
+            "https://s3.amazonaws.com/uifaces/faces/twitter/vaughanmoffitt/128.jpg",
         });
       }
     }
