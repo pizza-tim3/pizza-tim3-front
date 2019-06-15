@@ -138,27 +138,26 @@ export const Inner = styled.div`
     margin: 0px 18px 15px 18px;
     padding: 20px 0px;
     align-items: center;
-    div {
+    .header-edit {
+      display: flex;
+      height: 40px;
+    }
+    .event-name {
       width: 50%;
       justify-content: space-between;
       display: flex;
       h1 {
         width: 100%;
-      }
-    }
-    .edit-header {
-      background: none;
-      border: none;
-      padding-right: 0px;
-      img {
-        width: 40px;
-        height: 40px;
+        span {
+          padding-left: 10px;
+        }
       }
     }
     h1 {
       font-size: 1.1rem;
       margin-bottom: 0px;
     }
+
     ${media.desktop} {
       h1 {
         font-size: 2rem;
@@ -174,10 +173,8 @@ export const Inner = styled.div`
       font-size: 15px;
       color: ${colors.white};
       width: 140px;
-      height: 42px;
       ${media.mobile} {
         width: 130px;
-        height: 38px;
       }
 
       &:hover {
@@ -205,9 +202,67 @@ export const Inner = styled.div`
       flex-direction: row;
     }
   }
-  .event-location {
+  .event.location {
     ${media.mobile} {
       flex-direction: row;
+    }
+  }
+  location-info {
+    margin-bottom: 0px;
+  }
+  .location-address,
+  .location-hours {
+    display: flex;
+    flex-direction: column;
+    padding: 15px 0px;
+    justify-content: end;
+    width: 100%;
+    ${media.desktop} {
+      height: 100%;
+    }
+  }
+  .location-address {
+    address {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      ${media.desktop} {
+        height: 100%;
+      }
+    }
+    p {
+      font-size: 1.3rem;
+      align-self: left;
+      margin-bottom: 0px;
+      paddding-bottom: 0px;
+      font-weight: 500;
+    }
+  }
+  .location-hours h2 {
+    padding: 0px 0px 25px;
+  }
+
+  .action {
+    background: none;
+    border: none;
+    padding-right: 0px;
+    img {
+      width: 40px;
+      height: 40px;
+    }
+    &:focus {
+      outline: none;
+    }
+    &.cancel {
+      padding-left: 0px;
+      img {
+        padding: 7px;
+        margin-left: 5px;
+        margin-right: 5px;
+      }
+    }
+    &.update img {
+      border-radius: 0%;
     }
   }
 `;
@@ -353,17 +408,24 @@ export const EventRow = styled.div`
     }
     &.location {
 
-      div {
-        padding: 15px 0px;
-      }
       display: flex;
       flex-direction: column;
       img {
         margin-left
       }
     }
+    #map {
+      display: none;
+    }
+  
     &.map {
       align-items: start;
+      display: flex;
+      flex-direction: column;
+      ${media.desktop} {
+        // flex-direction: row;
+        width: 45%;
+      }
       img {
         width: 100%;
       }
@@ -381,7 +443,6 @@ export const EventRow = styled.div`
   .event-users {
     display: flex;
     width: 100%;
-    // flex-direction: column;
     align-items: start;
     ${media.desktop} {
       flex-direction: row;
@@ -391,6 +452,7 @@ export const EventRow = styled.div`
       padding: 5px;
       display: flex;
       align-items: start;
+      align-self: center;
       h5 {
         align-self: center;
         margin-bottom: 0px;
@@ -413,17 +475,12 @@ export const EventRow = styled.div`
       li {
         margin-right: 7px;
       }
-    }
-    img {
-      width: 55px;
-      height: 55px;
+    } .invited img {
       border-radius: 50%;
-    }
-    .add-user img {
-      padding: 9px;
+      width: 55px;
     }
   }
-  .event-invite, .all-comments, .add-comments {
+  .event-invite, .all-comments{
     img {
       max-width: 50px;
       max-height: 50px;
@@ -435,12 +492,14 @@ export const EventRow = styled.div`
     align-items: start;
     .comment {
       display: flex;
+      align-items: center;
       flex-direction: row;
       margin-bottom: 15px;
       p {
         align-self: center;
         margin-bottom: 0px;
         padding-left: 12px;
+        padding-right: 12px;
       }
     }
     img {
@@ -452,9 +511,6 @@ export const EventRow = styled.div`
       border: 1.3px solid orange;
       padding: 10px 5px;
       margin-right: 10px;
-    }
-    img {
-      padding: 7px;
     }
   }
   .edit-comment {
