@@ -221,7 +221,32 @@ class EventView extends React.Component {
   };
 
   // Update the entire event with the event's data using axios call
+  location = location => {
+    let currentEvent = this.state.event;
+    console.log(
+      `State id before the click: ${this.state.event.location.google_place_id}`
+    );
 
+    console.log(`Value being passed: ${location}`);
+    this.setState({
+      event: {
+        id: currentEvent.id,
+        comments: currentEvent.comments,
+        event_name: currentEvent.event_name,
+        event_description: currentEvent.event_description,
+        event_date: currentEvent.event_date,
+        invitedUsers: currentEvent.invitedUsers,
+        organizer: currentEvent.organizer,
+        location: {
+          id: currentEvent.location.id,
+          google_place_id: location.toString(),
+        },
+      },
+    });
+    console.log(
+      `State id after click: ${this.state.event.location.google_place_id}`
+    );
+  };
   updateEvent = event_id => {
     this.setState({
       loading: true,
@@ -281,6 +306,7 @@ class EventView extends React.Component {
               updateEvent={this.updateEvent}
               updateName={this.updateName}
               updateDate={this.updateDate}
+              location={this.location}
             />
             <Participants
               event={this.state.event}

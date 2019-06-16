@@ -104,7 +104,6 @@ export const Inner = styled.div`
       border: 2px solid ${colors.primary};
       margin-top: 125px;
       border-radius: 5px;
-      // height: 300px;
       .friend {
         width: 66px;
         margin: 8px;
@@ -132,15 +131,23 @@ export const Inner = styled.div`
     }
   }
   .event-header {
+    width: 96%;
     border-bottom: 2px solid ${colors.black} !important;
     display: flex;
     justify-content: space-between;
-    margin: 0px 18px 15px 18px;
+    margin: 0px auto;
     padding: 20px 0px;
     align-items: center;
+    height: 85px;
+    .action {
+      padding-left: 0px;
+    }
     .header-edit {
       display: flex;
-      height: 40px;
+      height: 48px;
+      ${media.desktop} {
+        height: 40px;
+      }
       input {
         border: none;
         border-bottom: 1.5px solid ${colors.primary};
@@ -151,22 +158,26 @@ export const Inner = styled.div`
       }
     }
     .event-name {
-      width: 50%;
       justify-content: space-between;
       display: flex;
+      width: 78%;
       h1 {
-        width: 100%;
         span {
           padding-left: 10px;
         }
       }
     }
     h1 {
-      font-size: 1.1rem;
+      font-size: 1.3rem;
+      text-align: left;
       margin-bottom: 0px;
+      align-self: center;
     }
 
     ${media.desktop} {
+      .event-name {
+        width: 50%;
+      }
       h1 {
         font-size: 2rem;
         display: flex;
@@ -180,8 +191,9 @@ export const Inner = styled.div`
       font-weight: 600;
       font-size: 15px;
       color: ${colors.white};
-      width: 140px;
-      ${media.mobile} {
+      width: 75px;
+      align-self: center;
+      ${media.desktop} {
         width: 130px;
       }
 
@@ -214,6 +226,10 @@ export const Inner = styled.div`
     ${media.mobile} {
       flex-direction: row;
     }
+  }
+  .event-location-name {
+    display: flex;
+    flex-direction: column;
   }
   location-info {
     margin-bottom: 0px;
