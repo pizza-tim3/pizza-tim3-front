@@ -131,7 +131,7 @@ export const Inner = styled.div`
     }
   }
   .event-header {
-    width: 96%;
+    width: 91%;
     border-bottom: 2px solid ${colors.black} !important;
     display: flex;
     justify-content: space-between;
@@ -152,6 +152,7 @@ export const Inner = styled.div`
         border: none;
         border-bottom: 1.5px solid ${colors.primary};
         margin-right: 15px;
+        text-transform: capitalize;
         &:focus {
           outline: none;
         }
@@ -164,6 +165,7 @@ export const Inner = styled.div`
       h1 {
         span {
           padding-left: 10px;
+          text-transform: capitalize;
         }
       }
     }
@@ -175,6 +177,8 @@ export const Inner = styled.div`
     }
 
     ${media.desktop} {
+      width: 96%;
+
       .event-name {
         width: 50%;
       }

@@ -58,6 +58,7 @@ class Landing extends React.Component {
                     onSelect={this.handleSelect}
                   >
                     {this.state.carousel.map(event => {
+                      let readableDate = new Date(Number(event.event_date));
                       return (
                         <Carousel.Item key={event.id}>
                           <img
@@ -69,7 +70,7 @@ class Landing extends React.Component {
                             <Link to={`/event/${event.id}`}>
                               <h2>Why: {event.event_name}</h2>
                               <h3>Where: {event.event_description}</h3>
-                              <h4>When: {event.event_date}</h4>
+                              <h4>When: {readableDate.toDateString()}</h4>
                             </Link>
                           </Carousel.Caption>
                         </Carousel.Item>
