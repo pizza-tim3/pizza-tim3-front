@@ -12,7 +12,7 @@ class EventView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: null,
+      user: "",
       event: {},
       friends: [],
       unInvitedFriends: [],
@@ -52,12 +52,12 @@ class EventView extends React.Component {
 
   // Reusable axios call to backend api w/ response data set to friends state
   async fetchFriends() {
-    let user = this.state.user;
     // Current Invited Friends
-    if (user) {
+
+    if (this.state.user) {
       try {
         let currentFriends = await axios.get(
-          `https://pizza-tim3-be.herokuapp.com/api/friends/${user}`
+          `https://pizza-tim3-be.herokuapp.com/api/friends/${this.state.user}`
         );
         if (currentFriends) {
           // Set friends's state to current data in the databse
@@ -96,9 +96,14 @@ class EventView extends React.Component {
   // Reusable axios call to backend api w/ response data set to event state
 
   async componentDidMount() {
+    // let currentUser = this.props.user.uid;
+    // if (currentUser) {
     this.setState({
       loading: true,
+      // user: this.props.user.uid,
     });
+    // }
+
     await this.fetchEvent();
     await this.fetchFriends();
   }
@@ -314,6 +319,7 @@ class EventView extends React.Component {
               selectAdditional={this.selectAdditional}
               inviteFriends={this.inviteFriends}
             />
+
             <Discussion event={this.state.event} user={this.state.user} />
           </Inner>
         )}

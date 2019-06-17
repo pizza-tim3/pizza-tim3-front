@@ -20,12 +20,35 @@ class Landing extends React.Component {
 
   componentDidMount() {
     let latestEvents = [];
+    let currentUser = localStorage.getItem("userFireBaseId");
+    console.log(currentUser);
+    // if (currentUser) {
+    //   axios
+    //     .get(
+    //       `https://pizza-tim3-be.herokuapp.com/api/events/upcoming/${currentUser}`
+    //     )
+    //     .then(response => {
+    //       console.log(response);
+    //       for (let i = 0; i < response.data.length; i++) {
+    //         latestEvents.push(response.data[i]);
+    //       }
+    //       // let usersEvents = latestEvents.filter(event => event.organizer === this.state.user.id)
+    //       this.setState({
+    //         carousel: latestEvents,
+    //       });
+    //     })
+    //     .catch(err => {
+    //       console.log(err);
+    //     });
+    // } else {
     axios
       .get(`https://pizza-tim3-be.herokuapp.com/api/events`)
       .then(response => {
+        console.log(response);
         for (let i = 0; i < response.data.length; i++) {
           latestEvents.push(response.data[i]);
         }
+        // let usersEvents = latestEvents.filter(event => event.organizer === this.state.user.id)
         this.setState({
           carousel: latestEvents,
         });
@@ -33,6 +56,7 @@ class Landing extends React.Component {
       .catch(err => {
         console.log(err);
       });
+    // }
   }
   handleSelect(selectedIndex, e) {
     this.setState({

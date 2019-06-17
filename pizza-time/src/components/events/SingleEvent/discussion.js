@@ -52,6 +52,7 @@ class Discussion extends React.Component {
     Array.from(comments).map(comment => {
       comment.style.display = "none";
     });
+    console.log(this.props);
   }
 
   // Select comment to be edited
