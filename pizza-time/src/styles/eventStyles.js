@@ -28,7 +28,7 @@ export const Inner = styled.div`
     align-self: center;
     background-color: ${colors.primary};
     align-items: end;
-    margin-top: -135px;
+    margin-top: -111px;
     z-index: 9999;
     ul {
       display: flex;
@@ -99,6 +99,7 @@ export const Inner = styled.div`
     border-bottom: 4.5px solid ${colors.black};
     background-color: ${colors.white};
     -webkit-overflow-scrolling: touch;
+
     ${media.desktop} {
       width: 80%;
       border: 2px solid ${colors.primary};
@@ -108,6 +109,10 @@ export const Inner = styled.div`
         width: 66px;
         margin: 8px;
       }
+    }
+    h1 {
+      text-align: center;
+      width: 100%;
     }
     h2 {
       margin: 8px 0px;
@@ -120,14 +125,26 @@ export const Inner = styled.div`
       margin: 12px;
       width: 100px;
       height: auto;
+      ${media.desktop} {
+        width: 145px;
+      }
     }
     img {
       margin-top: 12px;
       border: 3.5px solid ${colors.white};
       border-radius: 50%;
+      height: 100px;
       &:hover {
         border: 3.5px solid ${colors.primary};
       }
+      ${media.desktop} {
+        height: auto;
+        margin-bottom: 10px;
+      }
+    }
+    .friend-invited,
+    img:hover {
+      border: 3.5px solid ${colors.primary};
     }
   }
   .event-header {

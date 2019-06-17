@@ -424,6 +424,7 @@ class Info extends React.Component {
                 <Toggle>
                   <label className="switch">
                     <input
+                      className="switch-button"
                       onClick={this.inviteOnlySwitchHandler}
                       type="checkbox"
                     />

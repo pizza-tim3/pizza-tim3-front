@@ -98,6 +98,18 @@ class EventView extends React.Component {
   async componentDidMount() {
     // let currentUser = this.props.user.uid;
     // if (currentUser) {
+    // let switchButton = document.getElementsByClassName("switch-button");
+    // console.log(switchButton[0]);
+    // if (switchButton[0]) {
+    //   console.log(switchButton[0]);
+    //   if (this.state.event.inviteOnly === true) {
+    //     switchButton[0].style.backgroundColor = "red";
+    //   } else {
+    //     let switchButton = document.getElementsByClassName("slider");
+    //     switchButton[0].style.backgroundColor = "white";
+    //   }
+    // }
+
     this.setState({
       loading: true,
       // user: this.props.user.uid,
@@ -118,78 +130,113 @@ class EventView extends React.Component {
 
   // Select user to be added to an selectedToInvite array that will be post to eventInvited table
   selectAdditional = user => {
+    // Add/Remove css on select/unselect
+    let friendAvatars = document.getElementsByClassName("friend-avatar");
+    let invitedFriends = Array.from(friendAvatars).filter(
+      avatar => avatar.id === user.firebase_uid
+    );
+    if (invitedFriends[0]) {
+      if (invitedFriends[0].className !== "friend-avatar friend-invited") {
+        invitedFriends[0].className = "";
+        invitedFriends[0].className = "friend-avatar friend-invited";
+      } else {
+        invitedFriends[0].className = "";
+        invitedFriends[0].className = "friend-avatar";
+      }
+    }
     // 1.Select user
     // 2. Check if current this.state.invitedUsers has that user
     // 3. if doesn't add it him to invitedUsers & selected array that will be pushed to backend
-    let stateSelected = this.state.selectedToInvite;
-    let isDuplicate = this.state.selectedToInvite.filter(
-      selectedUser => selectedUser.firebase_uid === user.firebase_uid
-    );
 
-    if (isDuplicate.length === 0) {
-      stateSelected.push(user);
+    let currentSelected = this.state.selectedToInvite;
+    let newSelected = [];
+    // Return an array if user already selected
+
+    if (currentSelected.length === 0) {
+      newSelected.push(user);
       this.setState({
-        selectedToInvite: stateSelected,
+        selectedToInvite: newSelected,
       });
     } else {
-      this.setState({
-        selectedToInvite: stateSelected,
-      });
+      let duplicateArray = currentSelected.filter(
+        selectedUser => selectedUser.firebase_uid === user.firebase_uid
+      );
+      let clean = currentSelected.filter(
+        selectedUser => selectedUser.firebase_uid !== user.firebase_uid
+      );
+      let newClean = currentSelected.filter(
+        selectedUser => selectedUser.firebase_uid !== user.firebase_uid
+      );
+      if (duplicateArray.length === 0) {
+        newClean.push(user);
+        let dodo = Array.from(newClean);
+        this.setState({
+          selectedToInvite: dodo,
+        });
+      } else {
+        this.setState({
+          selectedToInvite: clean,
+        });
+      }
     }
   };
 
   // Send the array of the selectedToInvite array to the backend
   inviteFriends = () => {
     let event_id = this.props.match.params.id;
-    if (event_id) {
-      let currentEvent = this.state.event;
+    let stateSelected = this.state.selectedToInvite;
+    let currentEvent = this.state.event;
+    let currentInvited = this.state.event.invitedUsers;
 
-      let selectedToInvite = this.state.selectedToInvite;
-      selectedToInvite.map(select => {
+    if (event_id) {
+      stateSelected.map(select => {
         select.accepted = false;
         select.declined = false;
         select.pending = true;
         select.event_id = Number(event_id);
         select.user_id = select.firebase_uid;
       });
-
-      let newInvitedUsers = Array.from(currentEvent.invitedUsers);
-
-      if (selectedToInvite.length !== 0) {
-        for (let i = 0; i < selectedToInvite.length; i++) {
-          newInvitedUsers.push(selectedToInvite[i]);
-        }
-      }
-
-      let newUpdatedEvent = {
-        id: event_id,
-        event_name: currentEvent.event_name,
-        event_description: currentEvent.event_description,
-        event_date: currentEvent.event_date,
-        organizer: currentEvent.organizer,
-      };
-      axios
-        .post(
-          `https://pizza-tim3-be.herokuapp.com/api/invited/${event_id}`,
-          selectedToInvite
-        )
-
-        .then(res => {
-          newUpdatedEvent.invitedUsers = newInvitedUsers;
-
-          this.setState({
-            event: newUpdatedEvent,
-            selectedToSubmit: [],
-          });
-        })
-        .catch(e => {
-          console.log(e);
-          this.setState({
-            event: currentEvent,
-            selectedToSubmit: [],
-          });
-        });
     }
+
+    // console.log(currentInvited.p);
+    if (stateSelected.length !== 0) {
+      for (let i = 0; i < stateSelected.length; i++) {
+        currentInvited.push(stateSelected[i]);
+      }
+      if (currentInvited.length !== stateSelected.length) {
+        let newUpdatedEvent = {
+          id: event_id,
+          event_name: currentEvent.event_name,
+          event_description: currentEvent.event_description,
+          event_date: currentEvent.event_date,
+          organizer: currentEvent.organizer,
+          invitedUsers: currentEvent.invitedUsers,
+        };
+        axios
+          .post(
+            `https://pizza-tim3-be.herokuapp.com/api/invited/${event_id}`,
+            stateSelected
+          )
+
+          .then(res => {
+            newUpdatedEvent.invitedUsers = currentInvited;
+
+            this.setState({
+              event: newUpdatedEvent,
+              selectedToSubmit: [],
+            });
+          })
+          .catch(e => {
+            console.log(e);
+            this.setState({
+              event: currentEvent,
+              selectedToSubmit: [],
+            });
+          });
+      }
+    }
+
+    // }
   };
 
   // Toggle the event's inviteOnly property
@@ -265,7 +312,10 @@ class EventView extends React.Component {
       event_description: currentEvent.event_description,
       event_date: currentEvent.event_date,
       organizer: currentEvent.organizer,
+      location: currentEvent.location,
+      inviteOnly: currentEvent.inviteOnly,
     };
+    console.log(updatedEvent);
     axios
       .put(
         `https://pizza-tim3-be.herokuapp.com/api/events/${event_id}`,
@@ -273,6 +323,7 @@ class EventView extends React.Component {
       )
       .then(res => {
         // If response successfull, update the state with the new info
+        console.log(res);
         if (res.status === 200) {
           updatedEvent.invitedUsers = currentEvent.invitedUsers;
           updatedEvent.comments = currentEvent.comments;

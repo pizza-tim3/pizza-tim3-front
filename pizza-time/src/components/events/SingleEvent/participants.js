@@ -45,7 +45,6 @@ class Participants extends React.Component {
       };
     }
   }
-
   render() {
     return (
       <>
@@ -59,13 +58,13 @@ class Participants extends React.Component {
             {this.props.event.invitedUsers ? (
               <>
                 {this.props.event.invitedUsers.map((invited, index) => {
-                  if (index < 4) {
-                    return (
-                      <div className="invited" key={invited.firebase_uid}>
-                        <img src={invited.avatar} alt={invited.first_name} />
-                      </div>
-                    );
-                  }
+                  // if (index < 4) {
+                  return (
+                    <div className="invited" key={invited.firebase_uid}>
+                      <img src={invited.avatar} alt={invited.first_name} />
+                    </div>
+                  );
+                  // }
                 })}
                 <div className="add-user">
                   <button className="action">
@@ -95,12 +94,18 @@ class Participants extends React.Component {
                         return (
                           <div
                             className="friend"
-                            // key={index}
+                            friend={friend}
+                            id={friend.firebase_uid}
                             key={friend.firebase_uid}
                             onClick={() => this.props.selectAdditional(friend)}
                           >
-                            <img src={friend.avatar} alt={friend.first_name} />
-                            <h4>{friend.username}</h4>
+                            <img
+                              className="friend-avatar"
+                              id={friend.firebase_uid}
+                              src={friend.avatar}
+                              alt={friend.first_name}
+                            />
+                            <h4>{friend.first_name}</h4>
                           </div>
                         );
                       })}
