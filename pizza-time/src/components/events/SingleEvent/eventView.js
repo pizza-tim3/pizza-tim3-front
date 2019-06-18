@@ -343,6 +343,13 @@ class EventView extends React.Component {
       });
   };
 
+  // Delete event
+
+  deleteEvent = event_id => {
+    let idToDelete = event_id;
+    console.log("I will delete this id" + idToDelete);
+  };
+
   render() {
     return (
       <div>
@@ -363,6 +370,7 @@ class EventView extends React.Component {
               updateName={this.updateName}
               updateDate={this.updateDate}
               location={this.location}
+              deleteEvent={this.deleteEvent}
             />
             <Participants
               event={this.state.event}
