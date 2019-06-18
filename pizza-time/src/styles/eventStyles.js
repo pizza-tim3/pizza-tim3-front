@@ -28,7 +28,7 @@ export const Inner = styled.div`
     align-self: center;
     background-color: ${colors.primary};
     align-items: end;
-    margin-top: -135px;
+    margin-top: -111px;
     z-index: 9999;
     ul {
       display: flex;
@@ -78,8 +78,13 @@ export const Inner = styled.div`
 
   .tobe-invited {
     width: 80%;
-    height: 300px;
+    height: 163px;
     background-color: #fff;
+    margin-top: 40px;
+    background: none;
+    button {
+      padding: 10px 30px;
+    }
   }
   .friends {
     display: flex;
@@ -94,15 +99,20 @@ export const Inner = styled.div`
     border-bottom: 4.5px solid ${colors.black};
     background-color: ${colors.white};
     -webkit-overflow-scrolling: touch;
+
     ${media.desktop} {
       width: 80%;
       border: 2px solid ${colors.primary};
-      margin-top: 200px;
+      margin-top: 125px;
       border-radius: 5px;
       .friend {
         width: 66px;
         margin: 8px;
       }
+    }
+    h1 {
+      text-align: center;
+      width: 100%;
     }
     h2 {
       margin: 8px 0px;
@@ -115,45 +125,80 @@ export const Inner = styled.div`
       margin: 12px;
       width: 100px;
       height: auto;
+      ${media.desktop} {
+        width: 145px;
+      }
     }
     img {
       margin-top: 12px;
       border: 3.5px solid ${colors.white};
       border-radius: 50%;
+      height: 100px;
       &:hover {
         border: 3.5px solid ${colors.primary};
       }
+      ${media.desktop} {
+        height: auto;
+        margin-bottom: 10px;
+      }
+    }
+    .friend-invited,
+    img:hover {
+      border: 3.5px solid ${colors.primary};
     }
   }
   .event-header {
+    width: 91%;
     border-bottom: 2px solid ${colors.black} !important;
     display: flex;
     justify-content: space-between;
-    margin: 0px 18px 15px 18px;
+    margin: 0px auto;
     padding: 20px 0px;
     align-items: center;
-    div {
-      width: 50%;
-      justify-content: space-between;
+    height: 85px;
+    .action {
+      padding-left: 0px;
+    }
+    .header-edit {
       display: flex;
-      h1 {
-        width: 100%;
+      height: 48px;
+      ${media.desktop} {
+        height: 40px;
+      }
+      input {
+        border: none;
+        border-bottom: 1.5px solid ${colors.primary};
+        margin-right: 15px;
+        text-transform: capitalize;
+        &:focus {
+          outline: none;
+        }
       }
     }
-    .edit-header {
-      background: none;
-      border: none;
-      padding-right: 0px;
-      img {
-        width: 40px;
-        height: 40px;
+    .event-name {
+      justify-content: space-between;
+      display: flex;
+      width: 78%;
+      h1 {
+        span {
+          padding-left: 10px;
+          text-transform: capitalize;
+        }
       }
     }
     h1 {
-      font-size: 1.1rem;
+      font-size: 1.3rem;
+      text-align: left;
       margin-bottom: 0px;
+      align-self: center;
     }
+
     ${media.desktop} {
+      width: 96%;
+
+      .event-name {
+        width: 50%;
+      }
       h1 {
         font-size: 2rem;
         display: flex;
@@ -167,11 +212,10 @@ export const Inner = styled.div`
       font-weight: 600;
       font-size: 15px;
       color: ${colors.white};
-      width: 140px;
-      height: 42px;
-      ${media.mobile} {
+      width: 75px;
+      align-self: center;
+      ${media.desktop} {
         width: 130px;
-        height: 38px;
       }
 
       &:hover {
@@ -199,9 +243,71 @@ export const Inner = styled.div`
       flex-direction: row;
     }
   }
-  .event-location {
+  .event.location {
     ${media.mobile} {
       flex-direction: row;
+    }
+  }
+  .event-location-name {
+    display: flex;
+    flex-direction: column;
+  }
+  location-info {
+    margin-bottom: 0px;
+  }
+  .location-address,
+  .location-hours {
+    display: flex;
+    flex-direction: column;
+    padding: 15px 0px;
+    justify-content: end;
+    width: 100%;
+    ${media.desktop} {
+      height: 100%;
+    }
+  }
+  .location-address {
+    address {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      ${media.desktop} {
+        height: 100%;
+      }
+    }
+    p {
+      font-size: 1.3rem;
+      align-self: left;
+      margin-bottom: 0px;
+      paddding-bottom: 0px;
+      font-weight: 500;
+    }
+  }
+  .location-hours h2 {
+    padding: 0px 0px 25px;
+  }
+
+  .action {
+    background: none;
+    border: none;
+    padding-right: 0px;
+    img {
+      width: 40px;
+      height: 40px;
+    }
+    &:focus {
+      outline: none;
+    }
+    &.cancel {
+      padding-left: 0px;
+      img {
+        padding: 7px;
+        margin-left: 5px;
+        margin-right: 5px;
+      }
+    }
+    &.update img {
+      border-radius: 0%;
     }
   }
 `;
@@ -347,17 +453,24 @@ export const EventRow = styled.div`
     }
     &.location {
 
-      div {
-        padding: 15px 0px;
-      }
       display: flex;
       flex-direction: column;
       img {
         margin-left
       }
     }
+    #map {
+      display: none;
+    }
+  
     &.map {
       align-items: start;
+      display: flex;
+      flex-direction: column;
+      ${media.desktop} {
+        // flex-direction: row;
+        width: 45%;
+      }
       img {
         width: 100%;
       }
@@ -375,8 +488,21 @@ export const EventRow = styled.div`
   .event-users {
     display: flex;
     width: 100%;
+    align-items: start;
+    ${media.desktop} {
+      flex-direction: row;
+    }
     div {
       margin-right: 10px;
+      padding: 5px;
+      display: flex;
+      align-items: start;
+      align-self: center;
+      h5 {
+        align-self: center;
+        margin-bottom: 0px;
+        padding-left: 15px;
+      }
     }
     hr {
       border-top: 3px solid ${colors.primary};
@@ -394,17 +520,12 @@ export const EventRow = styled.div`
       li {
         margin-right: 7px;
       }
-    }
-    img {
-      width: 55px;
-      height: 55px;
+    } .invited img {
       border-radius: 50%;
-    }
-    .add-user img {
-      padding: 9px;
+      width: 55px;
     }
   }
-  .event-invite, .all-comments, .add-comments {
+  .event-invite, .all-comments{
     img {
       max-width: 50px;
       max-height: 50px;
@@ -416,12 +537,14 @@ export const EventRow = styled.div`
     align-items: start;
     .comment {
       display: flex;
+      align-items: center;
       flex-direction: row;
       margin-bottom: 15px;
       p {
         align-self: center;
         margin-bottom: 0px;
         padding-left: 12px;
+        padding-right: 12px;
       }
     }
     img {
@@ -433,9 +556,6 @@ export const EventRow = styled.div`
       border: 1.3px solid orange;
       padding: 10px 5px;
       margin-right: 10px;
-    }
-    img {
-      padding: 7px;
     }
   }
   .edit-comment {

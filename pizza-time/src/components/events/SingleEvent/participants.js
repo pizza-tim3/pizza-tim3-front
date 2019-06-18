@@ -45,10 +45,7 @@ class Participants extends React.Component {
       };
     }
   }
-
   render() {
-    // console.log("The current invited Users are");
-    // console.log(this.props.event.invitedUsers);
     return (
       <>
         <EventRow>
@@ -61,15 +58,18 @@ class Participants extends React.Component {
             {this.props.event.invitedUsers ? (
               <>
                 {this.props.event.invitedUsers.map((invited, index) => {
+                  // if (index < 4) {
                   return (
-                    <div key={index}>
+                    <div className="invited" key={invited.firebase_uid}>
                       <img src={invited.avatar} alt={invited.first_name} />
-                      <h5>{invited.first_name}</h5>
                     </div>
                   );
+                  // }
                 })}
                 <div className="add-user">
-                  <img src={plus} alt="plus" />
+                  <button className="action">
+                    <img src={plus} alt="plus" />
+                  </button>
                 </div>
               </>
             ) : (
@@ -88,22 +88,35 @@ class Participants extends React.Component {
                 </div>
                 {/* Selecte user's friends to an array. User can add the friends to an array that will be sent with post request  to the backend */}
                 <div className="friends">
-                  {this.props.friends.map((user, index) => {
-                    return (
-                      <div
-                        className="friend"
-                        key={user.firebase_uid}
-                        onClick={() => this.props.selectAdditional(user)}
-                      >
-                        <img src={user.avatar} alt={user.first_name} />
-                        <h4>{user.first_name}</h4>
-                      </div>
-                    );
-                  })}
+                  {this.props.unInvitedFriends.length > 0 ? (
+                    <>
+                      {this.props.unInvitedFriends.map((friend, index) => {
+                        return (
+                          <div
+                            className="friend"
+                            friend={friend}
+                            id={friend.firebase_uid}
+                            key={friend.firebase_uid}
+                            onClick={() => this.props.selectAdditional(friend)}
+                          >
+                            <img
+                              className="friend-avatar"
+                              id={friend.firebase_uid}
+                              src={friend.avatar}
+                              alt={friend.first_name}
+                            />
+                            <h4>{friend.first_name}</h4>
+                          </div>
+                        );
+                      })}
+                    </>
+                  ) : (
+                    <></>
+                  )}
                 </div>
-                {/* <div className="tobe-invited">
+                <div className="tobe-invited">
                   <button onClick={this.props.inviteFriends}>Invite</button>
-                  {/* {!this.props.additional_friends ? (
+                  {!this.props.additional_friends ? (
                     <></>
                   ) : (
                     <>
@@ -115,8 +128,8 @@ class Participants extends React.Component {
                         );
                       })}
                     </>
-                  )} */}
-                {/* </div> */}
+                  )}
+                </div>
               </>
             </>
           ) : (

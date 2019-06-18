@@ -28,8 +28,11 @@ function App(props) {
     //`onAuthStateChanged` is an `observer` which watches and runs a callback
     //anytime a user's logged in status has been changed.
     //this logic should be global.
+
     firebaseApp.auth().onAuthStateChanged(async user => {
-      //if a user is logged in
+      console.log("AuthStateChanged : ", user.uid);
+      //firebase
+
       if (user) {
         //HANDLE USER STATE IN REDUX/COMPONENT STATE
 
@@ -43,8 +46,11 @@ function App(props) {
         props.setUser(userInfo);
 
         //set local storage to store last login state
+        console.log("AuthStateChanged : ", user.uid);
         localStorage.setItem("lastLoginState", "1");
-        setAuthenticated(true); //TODO CHANGE THIS TO AN AUTH REDUCER
+
+        localStorage.setItem("userFireBaseId", user.uid);
+        setAuthenticated(true);
       } else {
         //NO USER, CLEAR THE USER
 
