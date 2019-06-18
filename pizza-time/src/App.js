@@ -30,7 +30,7 @@ function App(props) {
     //this logic should be global.
 
     firebaseApp.auth().onAuthStateChanged(async user => {
-      console.log("AuthStateChanged : ", user.uid);
+      // console.log("AuthStateChanged : ", user.uid);
       //firebase
 
       if (user) {

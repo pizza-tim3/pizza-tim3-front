@@ -34,6 +34,8 @@ class Info extends React.Component {
       eventForm: false,
       google_place_id: "",
       eventName: "",
+      lat: 0,
+      lng: 0,
       location: {
         address: {
           street: "",
@@ -154,6 +156,7 @@ class Info extends React.Component {
     this.props.updateDate(updateTime);
   };
   getDetails = req => {
+    console.log(req)
     let locationHours = req.opening_hours.weekday_text;
     // Google's get image url function
     let bigLeague = req.photos[0].getUrl();
@@ -174,6 +177,8 @@ class Info extends React.Component {
         hours: locationHours,
         name: req.name,
         photo: bigLeague,
+        lat: req.geometry.location.lat,
+        lng: req.geometry.location.lng
       },
     });
   };
@@ -472,8 +477,10 @@ class Info extends React.Component {
                       <Details
                         getDetails={this.getDetails}
                         placeId={this.state.google_place_id}
+                        lat={this.state.lat}
+                        lng={this.state.lng}
                       />
-                      <img src={fakemap} alt="fakemap" />
+                      {/* <img src={fakemap} alt="fakemap" /> */}
                       {this.state.location ? (
                         <div className="location-hours">
                           <h2>Hours: </h2>
