@@ -23,16 +23,15 @@ const PlacesSearch = (props) => {
             placeName: place
         }
         setPlaceData(data);
-        
     };
 
-    console.log(placeData)
+    // console.log(placeData);
 
     const handleGetSearchData = (searchString) => {
         setSearch(searchString)
         setShow(!show)
     }
-    console.log(searchData)
+    // console.log(searchData)
     return(
         <PlacesSearchWrap>
             <PlacesHeading>
