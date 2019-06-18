@@ -28,7 +28,7 @@ export const Inner = styled.div`
     align-self: center;
     background-color: ${colors.primary};
     align-items: end;
-    margin-top: -135px;
+    margin-top: -111px;
     z-index: 9999;
     ul {
       display: flex;
@@ -99,16 +99,20 @@ export const Inner = styled.div`
     border-bottom: 4.5px solid ${colors.black};
     background-color: ${colors.white};
     -webkit-overflow-scrolling: touch;
+
     ${media.desktop} {
       width: 80%;
       border: 2px solid ${colors.primary};
       margin-top: 125px;
       border-radius: 5px;
-      // height: 300px;
       .friend {
         width: 66px;
         margin: 8px;
       }
+    }
+    h1 {
+      text-align: center;
+      width: 100%;
     }
     h2 {
       margin: 8px 0px;
@@ -121,44 +125,80 @@ export const Inner = styled.div`
       margin: 12px;
       width: 100px;
       height: auto;
+      ${media.desktop} {
+        width: 145px;
+      }
     }
     img {
       margin-top: 12px;
       border: 3.5px solid ${colors.white};
       border-radius: 50%;
+      height: 100px;
       &:hover {
         border: 3.5px solid ${colors.primary};
       }
+      ${media.desktop} {
+        height: auto;
+        margin-bottom: 10px;
+      }
+    }
+    .friend-invited,
+    img:hover {
+      border: 3.5px solid ${colors.primary};
     }
   }
   .event-header {
+    width: 91%;
     border-bottom: 2px solid ${colors.black} !important;
     display: flex;
     justify-content: space-between;
-    margin: 0px 18px 15px 18px;
+    margin: 0px auto;
     padding: 20px 0px;
     align-items: center;
+    height: 85px;
+    .action {
+      padding-left: 0px;
+    }
     .header-edit {
       display: flex;
-      height: 40px;
+      height: 48px;
+      ${media.desktop} {
+        height: 40px;
+      }
+      input {
+        border: none;
+        border-bottom: 1.5px solid ${colors.primary};
+        margin-right: 15px;
+        text-transform: capitalize;
+        &:focus {
+          outline: none;
+        }
+      }
     }
     .event-name {
-      width: 50%;
       justify-content: space-between;
       display: flex;
+      width: 78%;
       h1 {
-        width: 100%;
         span {
           padding-left: 10px;
+          text-transform: capitalize;
         }
       }
     }
     h1 {
-      font-size: 1.1rem;
+      font-size: 1.3rem;
+      text-align: left;
       margin-bottom: 0px;
+      align-self: center;
     }
 
     ${media.desktop} {
+      width: 96%;
+
+      .event-name {
+        width: 50%;
+      }
       h1 {
         font-size: 2rem;
         display: flex;
@@ -172,8 +212,9 @@ export const Inner = styled.div`
       font-weight: 600;
       font-size: 15px;
       color: ${colors.white};
-      width: 140px;
-      ${media.mobile} {
+      width: 75px;
+      align-self: center;
+      ${media.desktop} {
         width: 130px;
       }
 
@@ -206,6 +247,10 @@ export const Inner = styled.div`
     ${media.mobile} {
       flex-direction: row;
     }
+  }
+  .event-location-name {
+    display: flex;
+    flex-direction: column;
   }
   location-info {
     margin-bottom: 0px;

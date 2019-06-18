@@ -71,14 +71,28 @@
 }
 .carousel-caption {
   bottom: auto;
+  padding: 33px 11px;
+  right: 0;
+  left: 0;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
   background-color: rgba(255, 255, 255, 0.033);
 }
 .carousel-caption:hover {
   background-color: rgba(255, 255, 255, 0.167);
 }
-.carousel-indicators {
-  bottom: 25%;
+@media (min-width: 992px) {
+  .carousel-indicators {
+    bottom: 25%;
+  }
 }
+@media (max-width: 991px) {
+  .carousel-indicators {
+    bottom: 2%;
+  }
+}
+
 .carousel-indicators li {
   background-image: url("https://images.vexels.com/media/users/3/157292/isolated/preview/1013ce3cf5903ef5afe01f0fd443dc03-colorful-whole-pizza-design-by-vexels.png") !important;
   width: 43px;

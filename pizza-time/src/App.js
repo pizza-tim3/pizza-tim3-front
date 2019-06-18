@@ -29,7 +29,7 @@ function App(props) {
     //anytime a user's logged in status has been changed.
     //this logic should be global.
 
-    firebaseApp.auth().onAuthStateChanged(user => {
+    firebaseApp.auth().onAuthStateChanged(async user => {
       console.log("AuthStateChanged : ", user.uid);
       //firebase
 
@@ -51,7 +51,6 @@ function App(props) {
 
         localStorage.setItem("userFireBaseId", user.uid);
         setAuthenticated(true);
-
       } else {
         //NO USER, CLEAR THE USER
 

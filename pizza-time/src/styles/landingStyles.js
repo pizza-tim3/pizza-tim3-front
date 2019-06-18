@@ -32,10 +32,13 @@ export const Heading = styled.div`
     position: fixed;
     width: 100%;
   }
+  a:hover {
+    text-decoration: none;
+  }
   h1 {
-    font-size: 56px;
+    font-size: 20px;
     color: ${colors.white};
-    font-family: ${fonts.secondary};
+    font-family: ${fonts.primary};
     ${media.tablet} {
       font-size: 60px;
     }
