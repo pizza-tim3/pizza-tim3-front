@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
 import { Link } from "react-router-dom";
 import firebaseApp from "../../firebase/firebaseApp";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";

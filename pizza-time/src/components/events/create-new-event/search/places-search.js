@@ -13,20 +13,36 @@ import {
 // handleUpdateState={handleUpdateState}
 
 const PlacesSearch = (props) => {
-    const [placeId, setPlaceId] = useState('');
-    const handleGetPlaceId = id => setPlaceId(id);
+    const [placeData, setPlaceData] = useState('');
+    const [searchData, setSearch] = useState('')
+    const [show, setShow] = useState(false);
 
+    const handleGetPlaceData = (id, place) => {
+        const data = {
+            placeId: id,
+            placeName: place
+        }
+        setPlaceData(data);
+    };
+
+    // console.log(placeData);
+
+    const handleGetSearchData = (searchString) => {
+        setSearch(searchString)
+        setShow(!show)
+    }
+    // console.log(searchData)
     return(
         <PlacesSearchWrap>
             <PlacesHeading>
                 <h2>Step 1: Choose Your Location</h2>
             </PlacesHeading>
             <PlacesSearchInner>
-                <SearchBar />
-                <GoogleMap getId={handleGetPlaceId}/>
+                <SearchBar handleGetSearchData={handleGetSearchData}/>
+                { show ? <GoogleMap getPlaceData={handleGetPlaceData} searchData={searchData}/> : null }
             </PlacesSearchInner>
             <NextStep 
-                onClick={() => {props.handleClick('placeID', placeId)}}>
+                onClick={() => {props.handleClick('placeData', placeData)}}>
                 Next Step
             </NextStep>
         </PlacesSearchWrap>
