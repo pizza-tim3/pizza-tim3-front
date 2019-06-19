@@ -372,12 +372,6 @@ export const Toggle = styled.span`
       transform: translateX(0px);
     }
   }
-  // input:checked + .slider {
-  //   background-color: #ff5c00;
-  // }
-  // input:focus + .slider {
-  //   box-shadow: 0 0 1px #ff5c00;
-  // }
 `;
 
 export const EventColumn = styled.div`
@@ -452,7 +446,6 @@ export const EventRow = styled.div`
     }
     display: flex;
     justify-content: space-between;
-    // align-items: center;
   }
   .event {
     width: 100%;
@@ -471,16 +464,12 @@ export const EventRow = styled.div`
         margin-left
       }
     }
-    #map {
-      display: none;
-    }
   
     &.map {
       align-items: start;
       display: flex;
       flex-direction: column;
       ${media.desktop} {
-        // flex-direction: row;
         width: 45%;
       }
       img {
