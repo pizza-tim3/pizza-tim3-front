@@ -19,7 +19,6 @@ const Nav = props => {
     setUserNave(!userNav);
   };
   // if (t)
-  console.log(props);
   return (
     <Wrap>
       <Inner>
@@ -35,7 +34,7 @@ const Nav = props => {
           <div>
             {!props.userReducer.avatar ? (
               <>
-                <img src={image} alt="placeholder" />
+                <img src={image} className="user" alt="placeholder" />
               </>
             ) : (
               <>

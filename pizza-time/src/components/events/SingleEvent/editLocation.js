@@ -1,8 +1,8 @@
 import React from "react";
-import PlacesSearch from "../create-new-event/search/places-search";
+// import PlacesSearch from "../create-new-event/search/places-search";
 import { Modal } from "react-bootstrap";
 import edit from "./../../../assets/edit.png";
-import GoogleMap from "../create-new-event/search/map/map";
+// import GoogleMap from "../create-new-event/search/map/map";
 // import orangeupdate from "./../../../assets/orangeupdate.png";
 // import fakemap from "./../../../assets/fakemap.png";
 // import cancel from "./../../../assets/cancel.svg";

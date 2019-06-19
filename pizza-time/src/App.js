@@ -46,7 +46,7 @@ function App(props) {
         props.setUser(userInfo);
 
         //set local storage to store last login state
-        console.log("AuthStateChanged : ", user.uid);
+        // console.log("AuthStateChanged : ", user.uid);
         localStorage.setItem("lastLoginState", "1");
 
         localStorage.setItem("userFireBaseId", user.uid);
@@ -103,7 +103,7 @@ function App(props) {
 
 //Here I've destructured the single reducer
 const mstp = ({ userReducer /**,otherReducer */ }) => {
-  console.log(userReducer);
+  // console.log(userReducer);
   return { userReducer };
 };
 
