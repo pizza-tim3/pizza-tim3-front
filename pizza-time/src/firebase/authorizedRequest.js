@@ -15,9 +15,9 @@ const authorizedRequest = async (url, method) => {
       }
     };
     const responseFromServer = await fetch(url, options);
-    console.log(responseFromServer);
+    // console.log(responseFromServer);
     const json = await responseFromServer.json();
-    console.log(json);
+    // console.log(json);
     return json;
   } catch (e) {
     return e;

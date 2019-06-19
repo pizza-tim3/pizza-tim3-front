@@ -22,8 +22,8 @@ const FriendPicker = (props) => {
     const addToInvited = (friend) => {
         setChosenFriends([...chosenFriends, friend]);
     }
-    console.log(friends && friends)
-    console.log(chosenFriends && chosenFriends)
+    // console.log(friends && friends)
+    // console.log(chosenFriends && chosenFriends)
 
     return(
         <FriendPickerWrap>

@@ -23,7 +23,7 @@ const CreateNewEvent = () => {
 
     const handleNextPage = (stateToChange, newValue) => {
         setPage(page + 1);
-        console.log(stateToChange, newValue);
+        // console.log(stateToChange, newValue);
 
         switch(stateToChange) {
             case 'placeData':

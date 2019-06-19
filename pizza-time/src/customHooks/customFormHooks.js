@@ -7,7 +7,7 @@ const useForm = (callback) => {
         if(e) {
             e.preventDefault();
         };
-        console.log(inputs, ':from')
+        // console.log(inputs, ':from')
         callback();
     };
 

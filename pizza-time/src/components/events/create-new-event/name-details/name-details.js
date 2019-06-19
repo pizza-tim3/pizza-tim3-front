@@ -15,7 +15,7 @@ const NameAndDetails = (props) => {
 
     const {inputs, handleInputChange, handleSubmit} = useForm(sendData);
 
-    console.log('inputs',inputs.eventName, inputs.eventDesc)
+    // console.log('inputs',inputs.eventName, inputs.eventDesc)
     return(
         <NameDetailsWrap>
             <PlacesHeading>

@@ -31,7 +31,7 @@ const registerWithPopup = async result => {
     firebase_uid: uid
   };
   //send information to backend
-  console.log(userObj);
+  // console.log(userObj);
   const response = await registerWithBackend(userObj);
   console.log(response);
   return response;

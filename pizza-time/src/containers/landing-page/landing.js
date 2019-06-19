@@ -21,7 +21,7 @@ class Landing extends React.Component {
   componentDidMount() {
     let latestEvents = [];
     let currentUser = localStorage.getItem("userFireBaseId");
-    console.log(currentUser);
+    // console.log(currentUser);
     // if (currentUser) {
     //   axios
     //     .get(

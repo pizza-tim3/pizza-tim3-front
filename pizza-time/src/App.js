@@ -9,8 +9,8 @@ import { setUser, clearUser } from "./actions/index";
 
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Private from "./components/private/Private";
-//import UserDashboard from "./containers/user-dashboard/user-dashboard";
-//import UserDashboard from "./components/Dashboard/UserDashboard";
+import UserDashboard from "./containers/user-dashboard/user-dashboard";
+// import UserDashboard from "./components/Dashboard/UserDashboard";
 import CreateNewEvent from "./components/events/create-new-event/create-new-event";
 import EventView from "./components/events/SingleEvent/eventView";
 import Landing from "./containers/landing-page/landing";
@@ -46,7 +46,7 @@ function App(props) {
         props.setUser(userInfo);
 
         //set local storage to store last login state
-        console.log("AuthStateChanged : ", user.uid);
+        // console.log("AuthStateChanged : ", user.uid);
         localStorage.setItem("lastLoginState", "1");
 
         localStorage.setItem("userFireBaseId", user.uid);
@@ -74,7 +74,7 @@ function App(props) {
         <Route exact path="/admin/users" component={UsersList} />
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
-        {/* <Route path="/home" component={UserDashboard} /> */}
+        <Route path="/home" component={UserDashboard} />
         <Route path="/create-event" component={CreateNewEvent} />
         <Route exact path="/event/:id" component={EventView} />
         <PrivateRoute
@@ -103,7 +103,7 @@ function App(props) {
 
 //Here I've destructured the single reducer
 const mstp = ({ userReducer /**,otherReducer */ }) => {
-  console.log(userReducer);
+  // console.log(userReducer);
   return { userReducer };
 };
 

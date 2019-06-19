@@ -52,7 +52,7 @@ class Discussion extends React.Component {
     Array.from(comments).map(comment => {
       comment.style.display = "none";
     });
-    console.log(this.props);
+    // console.log(this.props);
   }
 
   // Select comment to be edited
@@ -94,7 +94,7 @@ class Discussion extends React.Component {
       user_id: this.props.user,
       message: updatedMessage,
     };
-    console.log(updatedComment);
+    // console.log(updatedComment);
 
     // Put axios call
     axios
@@ -150,7 +150,7 @@ class Discussion extends React.Component {
     newComment.user_id = user;
 
     newComment.time = new Date();
-    console.log(newComment);
+    // console.log(newComment);
     axios
       .post(
         `https://pizza-tim3-be.herokuapp.com/api/events/${event_id}/comments`,

@@ -68,7 +68,7 @@ export default function Register(props) {
         // register uses information on our backend
         const user = await registerWithPopup(result);
         // set state with user
-        console.log(user);
+        // console.log(user);
         props.history.push("/");
       } else if (/**user dne on backend */ false) {
         //this would be an error on our db's part

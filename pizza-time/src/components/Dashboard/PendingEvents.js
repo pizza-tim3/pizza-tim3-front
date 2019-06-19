@@ -11,13 +11,13 @@ class PendingEvents extends React.Component {
     event.preventDefault();
     const event_id = event.target.getAttribute("event_id");
     const user_id = event.target.getAttribute("user_id");
-    console.log("Event id and user id ", event_id, user_id);
+    // console.log("Event id and user id ", event_id, user_id);
     const newItem = {
       event_id: event_id,
       user_id: user_id,
       status: "Accepted"
     };
-    console.log("Event neing posted ", newItem);
+    // console.log("Event neing posted ", newItem);
 
     axios
       .put("http://localhost:5500/api/events/status/1", newItem)
@@ -34,7 +34,7 @@ class PendingEvents extends React.Component {
     event.preventDefault();
     const event_id = event.target.getAttribute("event_id");
     const user_id = event.target.getAttribute("user_id");
-    console.log("Eventid and UserId are", event_id, user_id);
+    // console.log("Eventid and UserId are", event_id, user_id);
     const newItem = {
       event_id: event_id,
       user_id: user_id,
@@ -43,7 +43,7 @@ class PendingEvents extends React.Component {
     axios
       .put("http://localhost:5500/api/events/status/1", newItem)
       .then(res => {
-        console.log("Response for Decline", res.data.results);
+        // console.log("Response for Decline", res.data.results);
         window.location.reload();
       })
       .catch(error => {
@@ -51,7 +51,7 @@ class PendingEvents extends React.Component {
       });
   };
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     var date = new Date(this.props.event.event_date).toString();
     return (
       <div>
