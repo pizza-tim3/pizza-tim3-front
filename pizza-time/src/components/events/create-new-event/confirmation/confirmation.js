@@ -1,6 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import { EventConfirmationWrap, Button, PlacesHeading } from '../../../../styles/eventConfirmationStyles';
+import { connect } from 'react-redux';
 
 // props from create-new-event
 // place={placeId} 
@@ -9,7 +10,8 @@ import { EventConfirmationWrap, Button, PlacesHeading } from '../../../../styles
 // friends={friends}
 
 const ConfirmationPage = (props) => {
-    const url = "http://localhost:5500/api/events"
+    const url = "http://localhost:5500/api/events";
+    const fUrl = "http://localhost:5500/api/invited/"
     const {eventName, eventDesc} = props.event;
     const {date, time} = props.dateTime;
 
@@ -21,17 +23,33 @@ const ConfirmationPage = (props) => {
     //TODO: connect this method to the button and have a good response 
     //set a show completed page flag and create a new component to show
     //when request was successful to let user know
-    const handleSubmitData = () => {
+    const handleSubmitData = async() => {
+        // console.log(props.user)
         let requestObject = {
             event_name: eventName,
             event_description: eventDesc,
             event_date: dateString,
-            organizer: "XVf2XhkNSJWNDGEW4Wh6SHpKYUt2",
+            organizer: props.user,
             place: props.place.placeId
         }
-        axios.post(url, requestObject)
-                .then(res => console.log(res))
-                .catch(e => console.log(e));
+
+        let res = await axios.post(url, requestObject);
+
+        if(res.request.status === 200) {
+            let { eventId } = res.data;
+            const newUrl = `${fUrl}${eventId}`;
+
+            axios.post(newUrl, props.friends)
+                .then(resp => {
+                    if(resp.status === 200) {
+                        console.log(resp);
+                    } else {
+                        console.log('cannot find the event')
+                    }
+                }).catch(e => console.log(e))
+        } else {
+            console.log('error')
+        }
     };
     
     return(
@@ -51,4 +69,11 @@ const ConfirmationPage = (props) => {
     )
 }
 
-export default ConfirmationPage
+const mstp = state => {
+    // console.log('FROM CONFIRMATION:', state.userReducer.firebase_uid);
+    return {
+        user: state.userReducer.firebase_uid
+    }
+}
+
+export default connect(mstp, {})(ConfirmationPage);
