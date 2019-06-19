@@ -20,6 +20,7 @@ export default function Private() {
       "http://localhost:5500/api/restricted",
       "get"
     );
+    console.log(json);
     setData(json);
   };
 
@@ -63,6 +64,15 @@ export default function Private() {
     setData(json);
   };
 
+  const test = async body => {
+    const json = await authorizedRequest(
+      `http://localhost:5500/api/restricted/${uid}/admin`,
+      "get",
+      body
+    );
+    setData(json);
+  };
+
   return (
     <div>
       <h1>This is a Private component</h1>
@@ -75,8 +85,14 @@ export default function Private() {
       <button onClick={makeAdminRequiredRequest}>
         Make admin protected request
       </button>
+      <button onClick={() => test({})}>test</button>
       <button onClick={() => firebaseApp.auth().signOut()}>Logout</button>
-      {data && data.message ? <p>{data.message}</p> : null}
+      {data &&
+        Object.entries(data).map(entry => (
+          <p key={entry[0]}>
+            {entry[0]} {entry[1]}
+          </p>
+        ))}
       {data && data.error ? <p style={{ color: "red" }}>{data.error}</p> : null}
     </div>
   );

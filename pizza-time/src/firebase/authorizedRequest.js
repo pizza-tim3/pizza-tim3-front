@@ -16,7 +16,7 @@ const authorizedRequest = async (url, method, body = {}) => {
         Authorization: token
       }
     };
-    if (HTML_METHOD !== "GET" || HTML_METHOD !== "HEAD") {
+    if (HTML_METHOD !== "GET" && HTML_METHOD !== "HEAD") {
       options.body = JSON.stringify(body);
     }
 
