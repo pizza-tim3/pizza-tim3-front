@@ -111,7 +111,9 @@ class Participants extends React.Component {
                       })}
                     </>
                   ) : (
-                    <></>
+                    <>
+                      <h1>No friends to invite</h1>
+                    </>
                   )}
                 </div>
                 <div className="tobe-invited">
