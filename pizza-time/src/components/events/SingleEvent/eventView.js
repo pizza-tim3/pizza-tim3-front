@@ -356,6 +356,40 @@ class EventView extends React.Component {
     }
   };
 
+  // Delete event
+
+  deleteEvent = event_id => {
+    // Get current event and set state to loading
+    let currentEvent = this.state.event;
+    this.setState({
+      loading: true,
+    });
+    // Make a delete call to backend
+    axios
+      .delete(`https://pizza-tim3-be.herokuapp.com/api/events/${event_id}`)
+
+      .then(res => {
+        if (res) {
+          this.setState({
+            event: [],
+            loading: false,
+          });
+        } else {
+          this.setState({
+            event: currentEvent,
+            loading: false,
+          });
+        }
+      })
+      .catch(e => {
+        console.log(e);
+        this.setState({
+          event: currentEvent,
+          loading: false,
+        });
+      });
+  };
+
   render() {
     return (
       <div>
@@ -376,6 +410,7 @@ class EventView extends React.Component {
               updateName={this.updateName}
               updateDate={this.updateDate}
               location={this.location}
+              deleteEvent={this.deleteEvent}
             />
             <Participants
               event={this.state.event}

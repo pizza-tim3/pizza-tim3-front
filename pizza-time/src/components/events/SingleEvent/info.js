@@ -280,40 +280,56 @@ class Info extends React.Component {
         {Object.keys(this.props.event).length ? (
           <EventBox>
             <div className="event-header">
-              {this.state.editForm === true ? (
-                <div className="header-edit">
-                  <input
-                    name="name"
-                    type="text"
-                    value={this.state.eventName}
-                    placeholder={this.state.eventName}
-                    onChange={this.inputOnChange}
-                  />
-                  <button className="action cancel" onClick={this.toggleEdit}>
-                    <img src={cancel} alt="cancel" />
+              <div>
+                {this.state.editForm === true ? (
+                  <div className="header-edit">
+                    <input
+                      name="name"
+                      type="text"
+                      value={this.state.eventName}
+                      placeholder={this.state.eventName}
+                      onChange={this.inputOnChange}
+                    />
+                    <button className="action cancel" onClick={this.toggleEdit}>
+                      <img src={cancel} alt="cancel" />
+                    </button>
+                    <button
+                      className="btn-save"
+                      onClick={this.updateNameHandler}
+                    >
+                      {" "}
+                      Update
+                    </button>
+                  </div>
+                ) : (
+                  <div className="event-name">
+                    <h1>
+                      <b>Event</b>: <span>{this.state.eventName}</span>
+                    </h1>
+                    <button className="action" onClick={this.toggleEdit}>
+                      <img src={edit} alt="edit pencil" />
+                    </button>
+                  </div>
+                )}
+              </div>
+              <div>
+                <button
+                  className="btn-save"
+                  type="submit"
+                  onClick={this.submitUpdateEventHandler}
+                >
+                  Save
+                </button>
+                {this.props.event.id ? (
+                  <button
+                    onClick={() => this.props.deleteEvent(this.props.event.id)}
+                  >
+                    X
                   </button>
-                  <button className="btn-save" onClick={this.updateNameHandler}>
-                    {" "}
-                    Update
-                  </button>
-                </div>
-              ) : (
-                <div className="event-name">
-                  <h1>
-                    <b>Event</b>: <span>{this.state.eventName}</span>
-                  </h1>
-                  <button className="action" onClick={this.toggleEdit}>
-                    <img src={edit} alt="edit pencil" />
-                  </button>
-                </div>
-              )}
-              <button
-                className="btn-save"
-                type="submit"
-                onClick={this.submitUpdateEventHandler}
-              >
-                Save
-              </button>
+                ) : (
+                  <></>
+                )}
+              </div>
             </div>
 
             <EventRow className="event-date">
