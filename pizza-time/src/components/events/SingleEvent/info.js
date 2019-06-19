@@ -168,7 +168,7 @@ class Info extends React.Component {
     this.props.updateDate(updateTime);
   };
   getDetails = req => {
-    console.log(req)
+    console.log(req);
     let locationHours = req.opening_hours.weekday_text;
     // Google's get image url function
     let bigLeague = req.photos[0].getUrl();
@@ -190,7 +190,7 @@ class Info extends React.Component {
         name: req.name,
         photo: bigLeague,
         lat: req.geometry.location.lat,
-        lng: req.geometry.location.lng
+        lng: req.geometry.location.lng,
       },
     });
   };
@@ -280,38 +280,33 @@ class Info extends React.Component {
         {Object.keys(this.props.event).length ? (
           <EventBox>
             <div className="event-header">
-              <div>
-                {this.state.editForm === true ? (
-                  <div className="header-edit">
-                    <input
-                      name="name"
-                      type="text"
-                      value={this.state.eventName}
-                      placeholder={this.state.eventName}
-                      onChange={this.inputOnChange}
-                    />
-                    <button className="action cancel" onClick={this.toggleEdit}>
-                      <img src={cancel} alt="cancel" />
-                    </button>
-                    <button
-                      className="btn-save"
-                      onClick={this.updateNameHandler}
-                    >
-                      {" "}
-                      Update
-                    </button>
-                  </div>
-                ) : (
-                  <div className="event-name">
-                    <h1>
-                      <b>Event</b>: <span>{this.state.eventName}</span>
-                    </h1>
-                    <button className="action" onClick={this.toggleEdit}>
-                      <img src={edit} alt="edit pencil" />
-                    </button>
-                  </div>
-                )}
-              </div>
+              {this.state.editForm === true ? (
+                <div className="header-edit">
+                  <input
+                    name="name"
+                    type="text"
+                    value={this.state.eventName}
+                    placeholder={this.state.eventName}
+                    onChange={this.inputOnChange}
+                  />
+                  <button className="action cancel" onClick={this.toggleEdit}>
+                    <img src={cancel} alt="cancel" />
+                  </button>
+                  <button className="btn-save" onClick={this.updateNameHandler}>
+                    {" "}
+                    Update
+                  </button>
+                </div>
+              ) : (
+                <div className="event-name">
+                  <h1>
+                    <b>Event</b>: <span>{this.state.eventName}</span>
+                  </h1>
+                  <button className="action" onClick={this.toggleEdit}>
+                    <img src={edit} alt="edit pencil" />
+                  </button>
+                </div>
+              )}
               <div>
                 <button
                   className="btn-save"
