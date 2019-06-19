@@ -52,7 +52,6 @@ class Discussion extends React.Component {
     Array.from(comments).map(comment => {
       comment.style.display = "none";
     });
-    console.log(this.props);
   }
 
   // Select comment to be edited
@@ -273,7 +272,7 @@ class Discussion extends React.Component {
                               </div>
 
                               <div>
-                                {this.props.user.length > 0 ? (
+                                {this.props.user ? (
                                   <>
                                     {comment.user_id === this.props.user ? (
                                       <div

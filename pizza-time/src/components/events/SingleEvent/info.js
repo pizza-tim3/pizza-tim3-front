@@ -2,10 +2,10 @@ import React from "react";
 import Calendar from "react-calendar";
 import calendar from "./../../../assets/calendar.svg";
 import edit from "./../../../assets/edit.png";
+import trash from "./../../../assets/trash.png";
 import update from "./../../../assets/update.png";
 // import orangeupdate from "./../../../assets/orangeupdate.png";
 import clock from "./../../../assets/clock.png";
-import fakemap from "./../../../assets/fakemap.png";
 import cancel from "./../../../assets/cancel.svg";
 import moment from "moment";
 import Details from "./../../events/details-request/details-request";
@@ -34,6 +34,8 @@ class Info extends React.Component {
       eventForm: false,
       google_place_id: "",
       eventName: "",
+      lat: 0,
+      lng: 0,
       location: {
         address: {
           street: "",
@@ -58,6 +60,18 @@ class Info extends React.Component {
       });
     }
 
+    let inputCheckBox = document.getElementsByClassName("switch-button")[0];
+    let slider = document.getElementsByClassName("slider")[0];
+    let switchButton = document.getElementsByClassName("switch")[0];
+    if (inputCheckBox && slider) {
+      if (this.props.event.inviteOnly === true) {
+        switchButton.className = "";
+        switchButton.className = "switch inviteTrue";
+      } else {
+        switchButton.className = "";
+        switchButton.className = "switch inviteFalse";
+      }
+    }
     // The following javascript code takes the response's string and extracts event date's hours and minutes
     let eventDateString = eventDate.toString();
     let arr = eventDateString.split("");
@@ -154,6 +168,7 @@ class Info extends React.Component {
     this.props.updateDate(updateTime);
   };
   getDetails = req => {
+    console.log(req);
     let locationHours = req.opening_hours.weekday_text;
     // Google's get image url function
     let bigLeague = req.photos[0].getUrl();
@@ -174,6 +189,8 @@ class Info extends React.Component {
         hours: locationHours,
         name: req.name,
         photo: bigLeague,
+        lat: req.geometry.location.lat,
+        lng: req.geometry.location.lng,
       },
     });
   };
@@ -290,13 +307,25 @@ class Info extends React.Component {
                   </button>
                 </div>
               )}
-              <button
-                className="btn-save"
-                type="submit"
-                onClick={this.submitUpdateEventHandler}
-              >
-                Save
-              </button>
+              <div>
+                <button
+                  className="btn-save"
+                  type="submit"
+                  onClick={this.submitUpdateEventHandler}
+                >
+                  Save
+                </button>
+                {this.props.event.id ? (
+                  <button
+                    className="action trash"
+                    onClick={() => this.props.deleteEvent(this.props.event.id)}
+                  >
+                    <img src={trash} alt="trash" />
+                  </button>
+                ) : (
+                  <></>
+                )}
+              </div>
             </div>
 
             <EventRow className="event-date">
@@ -472,8 +501,9 @@ class Info extends React.Component {
                       <Details
                         getDetails={this.getDetails}
                         placeId={this.state.google_place_id}
+                        lat={this.state.lat}
+                        lng={this.state.lng}
                       />
-                      <img src={fakemap} alt="fakemap" />
                       {this.state.location ? (
                         <div className="location-hours">
                           <h2>Hours: </h2>

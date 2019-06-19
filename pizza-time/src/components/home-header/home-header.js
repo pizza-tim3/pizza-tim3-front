@@ -1,14 +1,16 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import firebaseApp from "../../firebase/firebaseApp";
+// import firebaseApp from "../../firebase/firebaseApp";
 import ReactCSSTransitionGroup from "react-addons-css-transition-group";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 import { Wrap, Inner } from "../../styles/navStyles.js";
 
 // TEST IMAGE
 import UserImage from "../../assets/user.png";
 
-const Nav = () => {
+const Nav = props => {
   const [image] = useState(UserImage);
   const [userNav, setUserNave] = useState(false);
 
@@ -16,7 +18,8 @@ const Nav = () => {
     e.preventDefault();
     setUserNave(!userNav);
   };
-
+  // if (t)
+  console.log(props);
   return (
     <Wrap>
       <Inner>
@@ -29,8 +32,21 @@ const Nav = () => {
               Create New Event
             </Link>
           </button>
-
-          <img className="user" src={image} onClick={ToggleNav} />
+          <div>
+            {!props.userReducer.avatar ? (
+              <>
+                <img src={image} alt="placeholder" />
+              </>
+            ) : (
+              <>
+                <img
+                  className="user"
+                  src={props.userReducer.avatar}
+                  onClick={ToggleNav}
+                />
+              </>
+            )}
+          </div>
           <ReactCSSTransitionGroup
             transitionName="navToggle"
             transitionEnterTimeout={100}
@@ -69,4 +85,13 @@ const Nav = () => {
   );
 };
 
-export default Nav;
+// export default Nav;
+const mstp = ({ userReducer /**,otherReducer */ }) => {
+  return { userReducer };
+};
+export default withRouter(
+  connect(
+    mstp,
+    {}
+  )(Nav)
+);
