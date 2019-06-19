@@ -58,6 +58,18 @@ class Info extends React.Component {
       });
     }
 
+    let inputCheckBox = document.getElementsByClassName("switch-button")[0];
+    let slider = document.getElementsByClassName("slider")[0];
+    let switchButton = document.getElementsByClassName("switch")[0];
+    if (inputCheckBox && slider) {
+      if (this.props.event.inviteOnly === true) {
+        switchButton.className = "";
+        switchButton.className = "switch inviteTrue";
+      } else {
+        switchButton.className = "";
+        switchButton.className = "switch inviteFalse";
+      }
+    }
     // The following javascript code takes the response's string and extracts event date's hours and minutes
     let eventDateString = eventDate.toString();
     let arr = eventDateString.split("");

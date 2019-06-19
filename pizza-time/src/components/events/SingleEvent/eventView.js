@@ -96,28 +96,21 @@ class EventView extends React.Component {
   // Reusable axios call to backend api w/ response data set to event state
 
   async componentDidMount() {
-    // let currentUser = this.props.user.uid;
-    // if (currentUser) {
-    // let switchButton = document.getElementsByClassName("switch-button");
-    // console.log(switchButton[0]);
-    // if (switchButton[0]) {
-    //   console.log(switchButton[0]);
-    //   if (this.state.event.inviteOnly === true) {
-    //     switchButton[0].style.backgroundColor = "red";
-    //   } else {
-    //     let switchButton = document.getElementsByClassName("slider");
-    //     switchButton[0].style.backgroundColor = "white";
-    //   }
-    // }
-
     this.setState({
       loading: true,
-      // user: this.props.user.uid,
     });
-    // }
 
     await this.fetchEvent();
     await this.fetchFriends();
+    let switchButton = document.getElementsByClassName("switch")[0];
+
+    if (this.state.event.inviteOnly === false) {
+      switchButton.className = "";
+      switchButton.className = "switch inviteFalse";
+    } else {
+      switchButton.className = "";
+      switchButton.className = "switch inviteTrue";
+    }
   }
 
   async componentDidUpdate(prevProps) {
@@ -198,7 +191,6 @@ class EventView extends React.Component {
       });
     }
 
-    // console.log(currentInvited.p);
     if (stateSelected.length !== 0) {
       for (let i = 0; i < stateSelected.length; i++) {
         currentInvited.push(stateSelected[i]);
@@ -211,6 +203,7 @@ class EventView extends React.Component {
           event_date: currentEvent.event_date,
           organizer: currentEvent.organizer,
           invitedUsers: currentEvent.invitedUsers,
+          inviteOnly: currentEvent.inviteOnly,
         };
         axios
           .post(
@@ -246,6 +239,15 @@ class EventView extends React.Component {
       stateCopy.event.inviteOnly = !prevState.event.inviteOnly;
       return stateCopy;
     });
+
+    let switchButton = document.getElementsByClassName("switch")[0];
+
+    if (this.state.event.inviteOnly === false) {
+      switchButton.className = "switch inviteTrue";
+    } else {
+      switchButton.className = "";
+      switchButton.className = "switch inviteFalse";
+    }
   };
 
   // Update the state's event name
@@ -323,11 +325,14 @@ class EventView extends React.Component {
       )
       .then(res => {
         // If response successfull, update the state with the new info
-        console.log(res);
+        // console.log(res);
+        console.log(res.config.data);
         if (res.status === 200) {
           updatedEvent.invitedUsers = currentEvent.invitedUsers;
           updatedEvent.comments = currentEvent.comments;
           updatedEvent.location = currentEvent.location;
+          updatedEvent.inviteOnly = currentEvent.inviteOnly;
+
           this.setState({
             event: updatedEvent,
             loading: false,
@@ -341,6 +346,14 @@ class EventView extends React.Component {
           loading: false,
         });
       });
+    let switchButton = document.getElementsByClassName("switch")[0];
+
+    if (this.state.event.inviteOnly === false) {
+      switchButton.className = "switch inviteTrue";
+    } else {
+      switchButton.className = "";
+      switchButton.className = "switch inviteFalse";
+    }
   };
 
   render() {

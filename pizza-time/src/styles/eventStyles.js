@@ -352,20 +352,32 @@ export const Toggle = styled.span`
       transition: 0.4s;
     }
   }
-
-  input:checked + .slider {
-    background-color: #ff5c00;
+  .inviteTrue {
+    .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+    .slider {
+      background-color: #ff5c00;
+    }
   }
-
-  input:focus + .slider {
-    box-shadow: 0 0 1px #ff5c00;
+  .inviteFalse {
+    .slider {
+      background-color: #ccc;
+    }
+    .slider:before {
+      -webkit-transform: translateX(0px);
+      -ms-transform: translateX(0px);
+      transform: translateX(0px);
+    }
   }
-
-  input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
-  }
+  // input:checked + .slider {
+  //   background-color: #ff5c00;
+  // }
+  // input:focus + .slider {
+  //   box-shadow: 0 0 1px #ff5c00;
+  // }
 `;
 
 export const EventColumn = styled.div`
