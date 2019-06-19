@@ -2,10 +2,10 @@ import React from "react";
 import Calendar from "react-calendar";
 import calendar from "./../../../assets/calendar.svg";
 import edit from "./../../../assets/edit.png";
+import trash from "./../../../assets/trash.png";
 import update from "./../../../assets/update.png";
 // import orangeupdate from "./../../../assets/orangeupdate.png";
 import clock from "./../../../assets/clock.png";
-import fakemap from "./../../../assets/fakemap.png";
 import cancel from "./../../../assets/cancel.svg";
 import moment from "moment";
 import Details from "./../../events/details-request/details-request";
@@ -317,9 +317,10 @@ class Info extends React.Component {
                 </button>
                 {this.props.event.id ? (
                   <button
+                    className="action trash"
                     onClick={() => this.props.deleteEvent(this.props.event.id)}
                   >
-                    X
+                    <img src={trash} alt="trash" />
                   </button>
                 ) : (
                   <></>
@@ -503,7 +504,6 @@ class Info extends React.Component {
                         lat={this.state.lat}
                         lng={this.state.lng}
                       />
-                      {/* <img src={fakemap} alt="fakemap" /> */}
                       {this.state.location ? (
                         <div className="location-hours">
                           <h2>Hours: </h2>

@@ -1,5 +1,6 @@
 import React from "react";
-
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import Nav from "../../home-header/home-header.js";
 import Info from "./info.js";
 import axios from "axios";
@@ -30,20 +31,20 @@ class EventView extends React.Component {
       if (currentEvent) {
         this.setState({
           event: currentEvent.data.event,
-          user: currentEvent.data.event.organizer,
+          // user: currentEvent.data.event.organizer,
           loading: false,
         });
       } else {
         this.setState({
           event: {},
-          user: "jNpViqXD4DXmf9H2FbkQnAy30000",
+          // user: "jNpViqXD4DXmf9H2FbkQnAy30000",
           loading: false,
         });
       }
     } catch (e) {
       this.setState({
         event: {},
-        user: "jNpViqXD4DXmf9H2FbkQnAy30000",
+        // user: "jNpViqXD4DXmf9H2FbkQnAy30000",
         loading: false,
       });
       console.log(e);
@@ -96,20 +97,26 @@ class EventView extends React.Component {
   // Reusable axios call to backend api w/ response data set to event state
 
   async componentDidMount() {
+    //Set user
+    console.log(this.props);
+    // let currentUser = this.props.userReducer;
     this.setState({
       loading: true,
+      user: this.props.userReducer.firebase_uid,
     });
 
     await this.fetchEvent();
     await this.fetchFriends();
     let switchButton = document.getElementsByClassName("switch")[0];
 
-    if (this.state.event.inviteOnly === false) {
-      switchButton.className = "";
-      switchButton.className = "switch inviteFalse";
-    } else {
-      switchButton.className = "";
-      switchButton.className = "switch inviteTrue";
+    if (switchButton) {
+      if (this.state.event.inviteOnly === false) {
+        switchButton.className = "";
+        switchButton.className = "switch inviteFalse";
+      } else {
+        switchButton.className = "";
+        switchButton.className = "switch inviteTrue";
+      }
     }
   }
 
@@ -427,4 +434,12 @@ class EventView extends React.Component {
   }
 }
 
-export default EventView;
+const mstp = ({ userReducer /**,otherReducer */ }) => {
+  return { userReducer };
+};
+export default withRouter(
+  connect(
+    mstp,
+    {}
+  )(EventView)
+);

@@ -272,7 +272,7 @@ class Discussion extends React.Component {
                               </div>
 
                               <div>
-                                {this.props.user.length > 0 ? (
+                                {this.props.user ? (
                                   <>
                                     {comment.user_id === this.props.user ? (
                                       <div
