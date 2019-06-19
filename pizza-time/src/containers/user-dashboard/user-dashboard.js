@@ -24,7 +24,7 @@ class UserDashboard extends React.Component {
          
          
         }
-       
+        localStorage.setItem("userFireBaseId","RaJMLmDUTWTP870aXFUQ6mLVb1M2");
       };
     
     
@@ -99,6 +99,7 @@ upcomingHandler = event => {
   };
   pendingHandler = event => {
     const id = localStorage.getItem("userFireBaseId");
+    console.log("User id ", id)
     axios
       .get(`http://localhost:5500/api/events/pending/${id}`)
       .then(res => {

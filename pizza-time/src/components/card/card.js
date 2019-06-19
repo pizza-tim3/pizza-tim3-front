@@ -94,7 +94,7 @@ class Card extends React.Component {
   };
 
   render() {
-    const date = new Date(this.props.event.event_date).toString();
+    const date = new Date(this.props.event.event_date).toString().substring(0,15);
     
     console.log("COME FOR THE EVENT", this.props.event);
     return (
@@ -113,12 +113,13 @@ class Card extends React.Component {
                 <span>location:</span>{" "} {this.props.event.location}
                 {/* <Location google_place_id={this.props.event.google_place_id} /> */}
               </p>
-              <p>
+              <p> <b>
                 <span>Attending:</span>
+              
                 {this.state.attendees.map(attende => {
                   return [attende.first_name, "  ", attende.last_name, ","," "]
                 })}
-              </p>
+             </b> </p>
             </div>
           </Content>
           <Action>
@@ -135,11 +136,9 @@ class Card extends React.Component {
                   return (
                    
                     <div>
-                    Time : {comment.time} <br/>
-                         
-                    Name : {comment.first_name}<br/>
-                           
-                    Comment: {comment.message }
+                    <b>{comment.first_name}</b>{comment.time}<br/>
+                     
+                    <b> {comment.message }</b>
                     </div>          
                   )
                 } 
