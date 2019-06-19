@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import {
-  ProfileListContainer,
-  ListToolBar,
-  Button
-} from "../../styles/profileStyles";
+import { ProfileListContainer, ListToolBar } from "../../styles/profileStyles";
 
 import FriendSearchBox from "../../components/friend-search-box/friend-search-box";
 import FriendCard from "../friend-card/FriendCard";

@@ -2,10 +2,10 @@ import React from "react";
 import Calendar from "react-calendar";
 import calendar from "./../../../assets/calendar.svg";
 import edit from "./../../../assets/edit.png";
+import trash from "./../../../assets/trash.png";
 import update from "./../../../assets/update.png";
 // import orangeupdate from "./../../../assets/orangeupdate.png";
 import clock from "./../../../assets/clock.png";
-import fakemap from "./../../../assets/fakemap.png";
 import cancel from "./../../../assets/cancel.svg";
 import moment from "moment";
 import Details from "./../../events/details-request/details-request";
@@ -168,7 +168,7 @@ class Info extends React.Component {
     this.props.updateDate(updateTime);
   };
   getDetails = req => {
-    console.log(req)
+    console.log(req);
     let locationHours = req.opening_hours.weekday_text;
     // Google's get image url function
     let bigLeague = req.photos[0].getUrl();
@@ -190,7 +190,7 @@ class Info extends React.Component {
         name: req.name,
         photo: bigLeague,
         lat: req.geometry.location.lat,
-        lng: req.geometry.location.lng
+        lng: req.geometry.location.lng,
       },
     });
   };
@@ -280,38 +280,33 @@ class Info extends React.Component {
         {Object.keys(this.props.event).length ? (
           <EventBox>
             <div className="event-header">
-              <div>
-                {this.state.editForm === true ? (
-                  <div className="header-edit">
-                    <input
-                      name="name"
-                      type="text"
-                      value={this.state.eventName}
-                      placeholder={this.state.eventName}
-                      onChange={this.inputOnChange}
-                    />
-                    <button className="action cancel" onClick={this.toggleEdit}>
-                      <img src={cancel} alt="cancel" />
-                    </button>
-                    <button
-                      className="btn-save"
-                      onClick={this.updateNameHandler}
-                    >
-                      {" "}
-                      Update
-                    </button>
-                  </div>
-                ) : (
-                  <div className="event-name">
-                    <h1>
-                      <b>Event</b>: <span>{this.state.eventName}</span>
-                    </h1>
-                    <button className="action" onClick={this.toggleEdit}>
-                      <img src={edit} alt="edit pencil" />
-                    </button>
-                  </div>
-                )}
-              </div>
+              {this.state.editForm === true ? (
+                <div className="header-edit">
+                  <input
+                    name="name"
+                    type="text"
+                    value={this.state.eventName}
+                    placeholder={this.state.eventName}
+                    onChange={this.inputOnChange}
+                  />
+                  <button className="action cancel" onClick={this.toggleEdit}>
+                    <img src={cancel} alt="cancel" />
+                  </button>
+                  <button className="btn-save" onClick={this.updateNameHandler}>
+                    {" "}
+                    Update
+                  </button>
+                </div>
+              ) : (
+                <div className="event-name">
+                  <h1>
+                    <b>Event</b>: <span>{this.state.eventName}</span>
+                  </h1>
+                  <button className="action" onClick={this.toggleEdit}>
+                    <img src={edit} alt="edit pencil" />
+                  </button>
+                </div>
+              )}
               <div>
                 <button
                   className="btn-save"
@@ -322,9 +317,10 @@ class Info extends React.Component {
                 </button>
                 {this.props.event.id ? (
                   <button
+                    className="action trash"
                     onClick={() => this.props.deleteEvent(this.props.event.id)}
                   >
-                    X
+                    <img src={trash} alt="trash" />
                   </button>
                 ) : (
                   <></>
@@ -508,7 +504,6 @@ class Info extends React.Component {
                         lat={this.state.lat}
                         lng={this.state.lng}
                       />
-                      {/* <img src={fakemap} alt="fakemap" /> */}
                       {this.state.location ? (
                         <div className="location-hours">
                           <h2>Hours: </h2>
