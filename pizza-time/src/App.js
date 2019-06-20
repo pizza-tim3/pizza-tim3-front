@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch, Link, withRouter } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import firebaseApp from "./firebase/firebaseApp";
 import "./App.css";
@@ -9,8 +9,7 @@ import { setUser, clearUser } from "./actions/index";
 
 import PrivateRoute from "./components/private-route/PrivateRoute";
 import Private from "./components/private/Private";
-//import UserDashboard from "./containers/user-dashboard/user-dashboard";
-//import UserDashboard from "./components/Dashboard/UserDashboard";
+import UserDashboard from "./containers/user-dashboard/user-dashboard";
 import CreateNewEvent from "./components/events/create-new-event/create-new-event";
 import EventView from "./components/events/SingleEvent/eventView";
 import Landing from "./containers/landing-page/landing";
@@ -30,6 +29,7 @@ function App(props) {
     //this logic should be global.
 
     firebaseApp.auth().onAuthStateChanged(async user => {
+      //console.log("AuthStateChanged : ", user.uid);
       //firebase
 
       if (user) {
@@ -73,7 +73,7 @@ function App(props) {
         <Route exact path="/admin/users" component={UsersList} />
         <Route path="/register" component={Register} />
         <Route path="/login" component={Login} />
-        {/* <Route path="/home" component={UserDashboard} /> */}
+        <Route path="/home" component={UserDashboard} />
         <Route path="/create-event" component={CreateNewEvent} />
         <Route exact path="/event/:id" component={EventView} />
         <PrivateRoute

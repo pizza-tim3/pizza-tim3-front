@@ -1,5 +1,6 @@
 import React from "react";
-
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import Nav from "../../home-header/home-header.js";
 import Info from "./info.js";
 import axios from "axios";
@@ -12,7 +13,7 @@ class EventView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      organizer: null,
+      user: "",
       event: {},
       friends: [],
       unInvitedFriends: [],
@@ -30,20 +31,20 @@ class EventView extends React.Component {
       if (currentEvent) {
         this.setState({
           event: currentEvent.data.event,
-          organizer: currentEvent.data.event.organizer,
+          // user: currentEvent.data.event.organizer,
           loading: false,
         });
       } else {
         this.setState({
           event: {},
-          organizer: "jNpViqXD4DXmf9H2FbkQnAy30000",
+          // user: "jNpViqXD4DXmf9H2FbkQnAy30000",
           loading: false,
         });
       }
     } catch (e) {
       this.setState({
         event: {},
-        organizer: "jNpViqXD4DXmf9H2FbkQnAy30000",
+        // user: "jNpViqXD4DXmf9H2FbkQnAy30000",
         loading: false,
       });
       console.log(e);
@@ -52,12 +53,12 @@ class EventView extends React.Component {
 
   // Reusable axios call to backend api w/ response data set to friends state
   async fetchFriends() {
-    let organizer = this.state.organizer;
     // Current Invited Friends
-    if (organizer) {
+
+    if (this.state.user) {
       try {
         let currentFriends = await axios.get(
-          `https://pizza-tim3-be.herokuapp.com/api/friends/${organizer}`
+          `https://pizza-tim3-be.herokuapp.com/api/friends/${this.state.user}`
         );
         if (currentFriends) {
           // Set friends's state to current data in the databse
@@ -96,11 +97,27 @@ class EventView extends React.Component {
   // Reusable axios call to backend api w/ response data set to event state
 
   async componentDidMount() {
+    //Set user
+    console.log(this.props);
+    // let currentUser = this.props.userReducer;
     this.setState({
       loading: true,
+      user: this.props.userReducer.firebase_uid,
     });
+
     await this.fetchEvent();
     await this.fetchFriends();
+    let switchButton = document.getElementsByClassName("switch")[0];
+
+    if (switchButton) {
+      if (this.state.event.inviteOnly === false) {
+        switchButton.className = "";
+        switchButton.className = "switch inviteFalse";
+      } else {
+        switchButton.className = "";
+        switchButton.className = "switch inviteTrue";
+      }
+    }
   }
 
   async componentDidUpdate(prevProps) {
@@ -113,78 +130,113 @@ class EventView extends React.Component {
 
   // Select user to be added to an selectedToInvite array that will be post to eventInvited table
   selectAdditional = user => {
+    // Add/Remove css on select/unselect
+    let friendAvatars = document.getElementsByClassName("friend-avatar");
+    let invitedFriends = Array.from(friendAvatars).filter(
+      avatar => avatar.id === user.firebase_uid
+    );
+    if (invitedFriends[0]) {
+      if (invitedFriends[0].className !== "friend-avatar friend-invited") {
+        invitedFriends[0].className = "";
+        invitedFriends[0].className = "friend-avatar friend-invited";
+      } else {
+        invitedFriends[0].className = "";
+        invitedFriends[0].className = "friend-avatar";
+      }
+    }
     // 1.Select user
     // 2. Check if current this.state.invitedUsers has that user
     // 3. if doesn't add it him to invitedUsers & selected array that will be pushed to backend
-    let stateSelected = this.state.selectedToInvite;
-    let isDuplicate = this.state.selectedToInvite.filter(
-      selectedUser => selectedUser.firebase_uid === user.firebase_uid
-    );
 
-    if (isDuplicate.length === 0) {
-      stateSelected.push(user);
+    let currentSelected = this.state.selectedToInvite;
+    let newSelected = [];
+    // Return an array if user already selected
+
+    if (currentSelected.length === 0) {
+      newSelected.push(user);
       this.setState({
-        selectedToInvite: stateSelected,
+        selectedToInvite: newSelected,
       });
     } else {
-      this.setState({
-        selectedToInvite: stateSelected,
-      });
+      let duplicateArray = currentSelected.filter(
+        selectedUser => selectedUser.firebase_uid === user.firebase_uid
+      );
+      let clean = currentSelected.filter(
+        selectedUser => selectedUser.firebase_uid !== user.firebase_uid
+      );
+      let newClean = currentSelected.filter(
+        selectedUser => selectedUser.firebase_uid !== user.firebase_uid
+      );
+      if (duplicateArray.length === 0) {
+        newClean.push(user);
+        let dodo = Array.from(newClean);
+        this.setState({
+          selectedToInvite: dodo,
+        });
+      } else {
+        this.setState({
+          selectedToInvite: clean,
+        });
+      }
     }
   };
 
   // Send the array of the selectedToInvite array to the backend
   inviteFriends = () => {
     let event_id = this.props.match.params.id;
-    if (event_id) {
-      let currentEvent = this.state.event;
+    let stateSelected = this.state.selectedToInvite;
+    let currentEvent = this.state.event;
+    let currentInvited = this.state.event.invitedUsers;
 
-      let selectedToInvite = this.state.selectedToInvite;
-      selectedToInvite.map(select => {
+    if (event_id) {
+      stateSelected.map(select => {
         select.accepted = false;
         select.declined = false;
         select.pending = true;
         select.event_id = Number(event_id);
         select.user_id = select.firebase_uid;
       });
-
-      let newInvitedUsers = Array.from(currentEvent.invitedUsers);
-
-      if (selectedToInvite.length !== 0) {
-        for (let i = 0; i < selectedToInvite.length; i++) {
-          newInvitedUsers.push(selectedToInvite[i]);
-        }
-      }
-
-      let newUpdatedEvent = {
-        id: event_id,
-        event_name: currentEvent.event_name,
-        event_description: currentEvent.event_description,
-        event_date: currentEvent.event_date,
-        organizer: currentEvent.organizer,
-      };
-      axios
-        .post(
-          `https://pizza-tim3-be.herokuapp.com/api/invited/${event_id}`,
-          selectedToInvite
-        )
-
-        .then(res => {
-          newUpdatedEvent.invitedUsers = newInvitedUsers;
-
-          this.setState({
-            event: newUpdatedEvent,
-            selectedToSubmit: [],
-          });
-        })
-        .catch(e => {
-          console.log(e);
-          this.setState({
-            event: currentEvent,
-            selectedToSubmit: [],
-          });
-        });
     }
+
+    if (stateSelected.length !== 0) {
+      for (let i = 0; i < stateSelected.length; i++) {
+        currentInvited.push(stateSelected[i]);
+      }
+      if (currentInvited.length !== stateSelected.length) {
+        let newUpdatedEvent = {
+          id: event_id,
+          event_name: currentEvent.event_name,
+          event_description: currentEvent.event_description,
+          event_date: currentEvent.event_date,
+          organizer: currentEvent.organizer,
+          invitedUsers: currentEvent.invitedUsers,
+          inviteOnly: currentEvent.inviteOnly,
+        };
+        axios
+          .post(
+            `https://pizza-tim3-be.herokuapp.com/api/invited/${event_id}`,
+            stateSelected
+          )
+
+          .then(res => {
+            newUpdatedEvent.invitedUsers = currentInvited;
+
+            this.setState({
+              event: newUpdatedEvent,
+              selectedToSubmit: [],
+            });
+          })
+          .catch(e => {
+            console.log(e);
+            this.setState({
+              event: currentEvent,
+              selectedToSubmit: [],
+            });
+          });
+      }
+    }
+
+    // }
   };
 
   // Toggle the event's inviteOnly property
@@ -194,6 +246,15 @@ class EventView extends React.Component {
       stateCopy.event.inviteOnly = !prevState.event.inviteOnly;
       return stateCopy;
     });
+
+    let switchButton = document.getElementsByClassName("switch")[0];
+
+    if (this.state.event.inviteOnly === false) {
+      switchButton.className = "switch inviteTrue";
+    } else {
+      switchButton.className = "";
+      switchButton.className = "switch inviteFalse";
+    }
   };
 
   // Update the state's event name
@@ -221,7 +282,32 @@ class EventView extends React.Component {
   };
 
   // Update the entire event with the event's data using axios call
+  location = location => {
+    let currentEvent = this.state.event;
+    console.log(
+      `State id before the click: ${this.state.event.location.google_place_id}`
+    );
 
+    console.log(`Value being passed: ${location}`);
+    this.setState({
+      event: {
+        id: currentEvent.id,
+        comments: currentEvent.comments,
+        event_name: currentEvent.event_name,
+        event_description: currentEvent.event_description,
+        event_date: currentEvent.event_date,
+        invitedUsers: currentEvent.invitedUsers,
+        organizer: currentEvent.organizer,
+        location: {
+          id: currentEvent.location.id,
+          google_place_id: location.toString(),
+        },
+      },
+    });
+    console.log(
+      `State id after click: ${this.state.event.location.google_place_id}`
+    );
+  };
   updateEvent = event_id => {
     this.setState({
       loading: true,
@@ -235,7 +321,10 @@ class EventView extends React.Component {
       event_description: currentEvent.event_description,
       event_date: currentEvent.event_date,
       organizer: currentEvent.organizer,
+      location: currentEvent.location,
+      inviteOnly: currentEvent.inviteOnly,
     };
+    console.log(updatedEvent);
     axios
       .put(
         `https://pizza-tim3-be.herokuapp.com/api/events/${event_id}`,
@@ -243,10 +332,14 @@ class EventView extends React.Component {
       )
       .then(res => {
         // If response successfull, update the state with the new info
+        // console.log(res);
+        console.log(res.config.data);
         if (res.status === 200) {
           updatedEvent.invitedUsers = currentEvent.invitedUsers;
           updatedEvent.comments = currentEvent.comments;
           updatedEvent.location = currentEvent.location;
+          updatedEvent.inviteOnly = currentEvent.inviteOnly;
+
           this.setState({
             event: updatedEvent,
             loading: false,
@@ -257,6 +350,48 @@ class EventView extends React.Component {
       .catch(err => {
         console.log(err);
         this.setState({
+          loading: false,
+        });
+      });
+    let switchButton = document.getElementsByClassName("switch")[0];
+
+    if (this.state.event.inviteOnly === false) {
+      switchButton.className = "switch inviteTrue";
+    } else {
+      switchButton.className = "";
+      switchButton.className = "switch inviteFalse";
+    }
+  };
+
+  // Delete event
+
+  deleteEvent = event_id => {
+    // Get current event and set state to loading
+    let currentEvent = this.state.event;
+    this.setState({
+      loading: true,
+    });
+    // Make a delete call to backend
+    axios
+      .delete(`https://pizza-tim3-be.herokuapp.com/api/events/${event_id}`)
+
+      .then(res => {
+        if (res) {
+          this.setState({
+            event: [],
+            loading: false,
+          });
+        } else {
+          this.setState({
+            event: currentEvent,
+            loading: false,
+          });
+        }
+      })
+      .catch(e => {
+        console.log(e);
+        this.setState({
+          event: currentEvent,
           loading: false,
         });
       });
@@ -281,6 +416,8 @@ class EventView extends React.Component {
               updateEvent={this.updateEvent}
               updateName={this.updateName}
               updateDate={this.updateDate}
+              location={this.location}
+              deleteEvent={this.deleteEvent}
             />
             <Participants
               event={this.state.event}
@@ -288,10 +425,8 @@ class EventView extends React.Component {
               selectAdditional={this.selectAdditional}
               inviteFriends={this.inviteFriends}
             />
-            <Discussion
-              event={this.state.event}
-              organizer={this.state.organizer}
-            />
+
+            <Discussion event={this.state.event} user={this.state.user} />
           </Inner>
         )}
       </div>
@@ -299,4 +434,12 @@ class EventView extends React.Component {
   }
 }
 
-export default EventView;
+const mstp = ({ userReducer /**,otherReducer */ }) => {
+  return { userReducer };
+};
+export default withRouter(
+  connect(
+    mstp,
+    {}
+  )(EventView)
+);

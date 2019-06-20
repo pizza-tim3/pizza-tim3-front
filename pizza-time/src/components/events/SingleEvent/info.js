@@ -1,12 +1,11 @@
 import React from "react";
 import Calendar from "react-calendar";
-// import PlacesSearch from "../create-new-event/search/places-search";
 import calendar from "./../../../assets/calendar.svg";
 import edit from "./../../../assets/edit.png";
+import trash from "./../../../assets/trash.png";
 import update from "./../../../assets/update.png";
-import orangeupdate from "./../../../assets/orangeupdate.png";
+// import orangeupdate from "./../../../assets/orangeupdate.png";
 import clock from "./../../../assets/clock.png";
-import fakemap from "./../../../assets/fakemap.png";
 import cancel from "./../../../assets/cancel.svg";
 import moment from "moment";
 import Details from "./../../events/details-request/details-request";
@@ -19,6 +18,7 @@ import {
   EventColumn,
 } from "../../../styles/eventStyles";
 import { Modal } from "react-bootstrap";
+import EditLocation from "./editLocation";
 
 class Info extends React.Component {
   constructor(props) {
@@ -34,6 +34,8 @@ class Info extends React.Component {
       eventForm: false,
       google_place_id: "",
       eventName: "",
+      lat: 0,
+      lng: 0,
       location: {
         address: {
           street: "",
@@ -51,13 +53,25 @@ class Info extends React.Component {
 
   componentDidMount() {
     // Convert response event's date epoch string to UTC format
-    const eventDate = new Date(Number(this.props.event.event_date));
+    let eventDate = new Date(Number(this.props.event.event_date));
     if (this.props.event.location) {
       this.setState({
         google_place_id: this.props.event.location.google_place_id,
       });
     }
 
+    let inputCheckBox = document.getElementsByClassName("switch-button")[0];
+    let slider = document.getElementsByClassName("slider")[0];
+    let switchButton = document.getElementsByClassName("switch")[0];
+    if (inputCheckBox && slider) {
+      if (this.props.event.inviteOnly === true) {
+        switchButton.className = "";
+        switchButton.className = "switch inviteTrue";
+      } else {
+        switchButton.className = "";
+        switchButton.className = "switch inviteFalse";
+      }
+    }
     // The following javascript code takes the response's string and extracts event date's hours and minutes
     let eventDateString = eventDate.toString();
     let arr = eventDateString.split("");
@@ -99,7 +113,15 @@ class Info extends React.Component {
     });
     // Set the info state's date, eventName and hides headers edit form
   }
+  updateLocation = location => {
+    // this.setState({
+    //   google_place_id: location,
+    // });
+    this.props.location(location);
 
+    // console.log(location);
+    // console.log(this.state.google_place_id);
+  };
   updateTime = e => {
     e.preventDefault();
     // Get the current state date
@@ -146,6 +168,7 @@ class Info extends React.Component {
     this.props.updateDate(updateTime);
   };
   getDetails = req => {
+    console.log(req);
     let locationHours = req.opening_hours.weekday_text;
     // Google's get image url function
     let bigLeague = req.photos[0].getUrl();
@@ -156,7 +179,7 @@ class Info extends React.Component {
     let addressString = req.formatted_address.slice(streetString.length + 1);
 
     this.setState({
-      google_place_id: req.place_id,
+      // google_place_id: req.place_id,
       eventName: this.props.event.event_name,
       location: {
         address: {
@@ -166,6 +189,8 @@ class Info extends React.Component {
         hours: locationHours,
         name: req.name,
         photo: bigLeague,
+        lat: req.geometry.location.lat,
+        lng: req.geometry.location.lng,
       },
     });
   };
@@ -282,13 +307,25 @@ class Info extends React.Component {
                   </button>
                 </div>
               )}
-              <button
-                className="btn-save"
-                type="submit"
-                onClick={this.submitUpdateEventHandler}
-              >
-                Save
-              </button>
+              <div>
+                <button
+                  className="btn-save"
+                  type="submit"
+                  onClick={this.submitUpdateEventHandler}
+                >
+                  Save
+                </button>
+                {this.props.event.id ? (
+                  <button
+                    className="action trash"
+                    onClick={() => this.props.deleteEvent(this.props.event.id)}
+                  >
+                    <img src={trash} alt="trash" />
+                  </button>
+                ) : (
+                  <></>
+                )}
+              </div>
             </div>
 
             <EventRow className="event-date">
@@ -416,6 +453,7 @@ class Info extends React.Component {
                 <Toggle>
                   <label className="switch">
                     <input
+                      className="switch-button"
                       onClick={this.inviteOnlySwitchHandler}
                       type="checkbox"
                     />
@@ -426,9 +464,9 @@ class Info extends React.Component {
             </EventRow>
 
             <EventColumn className="location-info">
-              <EventRow className="event-location-name">
+              <EventRow>
                 {this.state.location ? (
-                  <div>
+                  <div className="event-location-name">
                     <h2>Place: {this.state.location.name}</h2>
                   </div>
                 ) : (
@@ -436,12 +474,8 @@ class Info extends React.Component {
                     <h2>Place: </h2>
                   </>
                 )}
-                {/* <input placeholder="search" /> */}
 
-                {/* <PlacesSearch /> */}
-                <button className="action">
-                  <img src={edit} alt="edit" />
-                </button>
+                <EditLocation updateLocation={this.updateLocation} />
               </EventRow>
               <EventRow>
                 <div className="event location">
@@ -467,8 +501,9 @@ class Info extends React.Component {
                       <Details
                         getDetails={this.getDetails}
                         placeId={this.state.google_place_id}
+                        lat={this.state.lat}
+                        lng={this.state.lng}
                       />
-                      <img src={fakemap} alt="fakemap" />
                       {this.state.location ? (
                         <div className="location-hours">
                           <h2>Hours: </h2>

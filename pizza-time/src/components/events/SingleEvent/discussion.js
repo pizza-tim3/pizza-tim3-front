@@ -29,16 +29,21 @@ class Discussion extends React.Component {
       comments: eventsComments,
     });
 
-    let user_id = this.props.organizer;
+    let user_id = this.props.user;
     let matchingId = [];
 
     if (eventsComments && user_id) {
       matchingId = eventsComments.filter(
         comment => comment.user_id === user_id
       );
-      if (matchingId) {
+      if (matchingId[0]) {
         this.setState({
           avatar: matchingId[0].avatar,
+        });
+      } else {
+        this.setState({
+          avatar:
+            "https://s3.amazonaws.com/uifaces/faces/twitter/vaughanmoffitt/128.jpg",
         });
       }
     }
@@ -85,7 +90,7 @@ class Discussion extends React.Component {
     let updatedComment = {
       time: time,
       id: comment_id,
-      user_id: this.props.organizer,
+      user_id: this.props.user,
       message: updatedMessage,
     };
     console.log(updatedComment);
@@ -138,8 +143,8 @@ class Discussion extends React.Component {
     let newComment = this.state.newComment;
     let commentAvatar = this.state.avatar;
     let event_id = this.props.event.id;
-    let user = this.props.organizer;
-    // Add event id, organizer and time to the new comment
+    let user = this.props.user;
+    // Add event id, user and time to the new comment
     newComment.event_id = event_id;
     newComment.user_id = user;
 
@@ -267,10 +272,9 @@ class Discussion extends React.Component {
                               </div>
 
                               <div>
-                                {this.props.organizer.length > 0 ? (
+                                {this.props.user ? (
                                   <>
-                                    {comment.user_id ===
-                                    this.props.organizer ? (
+                                    {comment.user_id === this.props.user ? (
                                       <div
                                         id={`action-button-${comment.id}`}
                                         className="action-buttons"
