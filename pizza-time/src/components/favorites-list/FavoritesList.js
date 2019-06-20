@@ -10,12 +10,13 @@ export default function FavoritesList({ places, filter }) {
       const favs = places.filter(place => place.city === filter);
       setFavorites(favs);
     }
-  }, [filter, favorites]);
+  }, [filter]);
   return (
     <div>
-      {favorites.map(place => {
+      {console.log("render-list", filter, favorites)}
+      {favorites.map((place, idx) => {
         return (
-          <div>
+          <div key={idx}>
             <p>{place.name}</p>
             <p>{place.address}</p>
             <img

@@ -81,6 +81,7 @@ class Favorites extends React.Component {
   };
 
   render() {
+    console.log("favorites-render");
     const { favorites, placesData, filterValue, filterCities } = this.state;
     const dataLoaded = placesData && placesData.length === favorites.length;
 
@@ -92,7 +93,9 @@ class Favorites extends React.Component {
             {/* Using a set because multiple favorites can be in one city. Sets can't have dupes */}
             {dataLoaded
               ? [...new Set(filterCities)].map(city => (
-                  <option value={city}>{city}</option>
+                  <option value={city} key={city}>
+                    {city}
+                  </option>
                 ))
               : null}
           </select>
