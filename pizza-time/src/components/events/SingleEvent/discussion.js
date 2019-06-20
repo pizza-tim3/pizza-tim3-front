@@ -1,6 +1,8 @@
 import React from "react";
 import { EventRow } from "../../../styles/eventStyles";
 import axios from "axios";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import plus from "../../../assets/plus.png";
 import orangeupdate from "../../../assets/orangeupdate.png";
 import edit from "../../../assets/edit.png";
@@ -93,7 +95,6 @@ class Discussion extends React.Component {
       user_id: this.props.user,
       message: updatedMessage,
     };
-    console.log(updatedComment);
 
     // Put axios call
     axios
@@ -336,4 +337,12 @@ class Discussion extends React.Component {
   }
 }
 
-export default Discussion;
+const mstp = ({ userReducer /**,otherReducer */ }) => {
+  return { userReducer };
+};
+export default withRouter(
+  connect(
+    mstp,
+    {}
+  )(Discussion)
+);

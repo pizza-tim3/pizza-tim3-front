@@ -4,7 +4,7 @@ import { Carousel } from "react-bootstrap";
 import axios from "axios";
 import { Wrap, Inner, Heading, Buttons } from "../../styles/landingStyles.js";
 import HomeHeader from "./../../components//home-header/home-header.js";
-import pizza from "./../../assets/pizza.png";
+// import pizza from "./../../assets/pizza.png";
 class Landing extends React.Component {
   constructor(props, context) {
     super(props, context);

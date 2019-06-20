@@ -43,7 +43,7 @@ class EditLocation extends React.Component {
             </button>
           </Modal.Footer>
         </Modal>
-        <button className="action">
+        <button className="action organizer">
           <img src={edit} alt="edit" onClick={this.handleShow} />
         </button>
       </>

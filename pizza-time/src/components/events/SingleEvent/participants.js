@@ -67,7 +67,7 @@ class Participants extends React.Component {
                   // }
                 })}
                 <div className="add-user">
-                  <button className="action">
+                  <button className="action organizer">
                     <img src={plus} alt="plus" />
                   </button>
                 </div>
