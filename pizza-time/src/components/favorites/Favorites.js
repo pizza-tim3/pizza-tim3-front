@@ -75,6 +75,11 @@ class Favorites extends React.Component {
     } catch (error) {}
   }
 
+  componentWillUnmount() {
+    //cleans up the  google API to stop causing an error
+    window.google = null;
+  }
+
   //handles filter change
   handleChange = event => {
     this.setState({ filterValue: event.target.value });

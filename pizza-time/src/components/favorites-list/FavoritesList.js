@@ -13,7 +13,6 @@ export default function FavoritesList({ places, filter }) {
   }, [filter]);
   return (
     <div>
-      {console.log("render-list", filter, favorites)}
       {favorites.map((place, idx) => {
         return (
           <div key={idx}>
