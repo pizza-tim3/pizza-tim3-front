@@ -260,9 +260,10 @@ class Discussion extends React.Component {
                               </div>
 
                               <div>
-                                {this.props.user ? (
+                                {this.props.userReducer.firebase_uid ? (
                                   <>
-                                    {comment.user_id === this.props.user ? (
+                                    {comment.user_id ===
+                                    this.props.userReducer.firebase_uid ? (
                                       <div
                                         id={`action-button-${comment.id}`}
                                         className="action-buttons"
