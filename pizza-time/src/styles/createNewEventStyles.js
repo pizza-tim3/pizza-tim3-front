@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { colors, fonts, media } from '../styles/variables.js';
+import styled from "styled-components";
+// import { colors, fonts, media } from '../styles/variables.js';
 
 export const CreateNewEventWrap = styled.div`
   width: 100%;

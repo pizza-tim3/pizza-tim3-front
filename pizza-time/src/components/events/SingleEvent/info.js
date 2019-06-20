@@ -4,6 +4,8 @@ import calendar from "./../../../assets/calendar.svg";
 import edit from "./../../../assets/edit.png";
 import trash from "./../../../assets/trash.png";
 import update from "./../../../assets/update.png";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 // import orangeupdate from "./../../../assets/orangeupdate.png";
 import clock from "./../../../assets/clock.png";
 import cancel from "./../../../assets/cancel.svg";
@@ -52,7 +54,6 @@ class Info extends React.Component {
   }
 
   componentDidMount() {
-    // Convert response event's date epoch string to UTC format
     let eventDate = new Date(Number(this.props.event.event_date));
     if (this.props.event.location) {
       this.setState({
@@ -63,6 +64,7 @@ class Info extends React.Component {
     let inputCheckBox = document.getElementsByClassName("switch-button")[0];
     let slider = document.getElementsByClassName("slider")[0];
     let switchButton = document.getElementsByClassName("switch")[0];
+
     if (inputCheckBox && slider) {
       if (this.props.event.inviteOnly === true) {
         switchButton.className = "";
@@ -114,13 +116,7 @@ class Info extends React.Component {
     // Set the info state's date, eventName and hides headers edit form
   }
   updateLocation = location => {
-    // this.setState({
-    //   google_place_id: location,
-    // });
     this.props.location(location);
-
-    // console.log(location);
-    // console.log(this.state.google_place_id);
   };
   updateTime = e => {
     e.preventDefault();
@@ -168,7 +164,6 @@ class Info extends React.Component {
     this.props.updateDate(updateTime);
   };
   getDetails = req => {
-    console.log(req);
     let locationHours = req.opening_hours.weekday_text;
     // Google's get image url function
     let bigLeague = req.photos[0].getUrl();
@@ -196,7 +191,12 @@ class Info extends React.Component {
   };
   // Switch handlers for evnts inviteOnly property
   inviteOnlySwitchHandler = e => {
-    this.props.toggleSwitch();
+    e.preventDefault();
+    if (this.props.event.organizer && this.props.userReducer.firebase_uid) {
+      if (this.props.event.organizer === this.props.userReducer.firebase_uid) {
+        this.props.toggleSwitch();
+      }
+    }
   };
   // Handles when the event's time select is being
   timeOnChange = e => {
@@ -221,16 +221,17 @@ class Info extends React.Component {
     });
   };
   toggleEditTime = () => {
-    let editTimeHtml = document.getElementsByClassName("edit-time");
-    if (editTimeHtml[0].style.display === "none") {
-      editTimeHtml[0].style.display = "flex";
-    } else {
-      editTimeHtml[0].style.display = "none";
+    if (this.props.event.organizer === this.props.userReducer.firebase_uid) {
+      let editTimeHtml = document.getElementsByClassName("edit-time");
+      if (editTimeHtml[0].style.display === "none") {
+        editTimeHtml[0].style.display = "flex";
+      } else {
+        editTimeHtml[0].style.display = "none";
+      }
     }
   };
   updateNameHandler = e => {
     e.preventDefault();
-    // let newValue = doc;
     this.setState({
       editForm: false,
     });
@@ -289,7 +290,11 @@ class Info extends React.Component {
                     placeholder={this.state.eventName}
                     onChange={this.inputOnChange}
                   />
-                  <button className="action cancel" onClick={this.toggleEdit}>
+
+                  <button
+                    className="action organizer cancel"
+                    onClick={this.toggleEdit}
+                  >
                     <img src={cancel} alt="cancel" />
                   </button>
                   <button className="btn-save" onClick={this.updateNameHandler}>
@@ -302,28 +307,43 @@ class Info extends React.Component {
                   <h1>
                     <b>Event</b>: <span>{this.state.eventName}</span>
                   </h1>
-                  <button className="action" onClick={this.toggleEdit}>
-                    <img src={edit} alt="edit pencil" />
-                  </button>
+                  {this.props.userReducer.firebase_uid ===
+                  this.props.event.organizer ? (
+                    <div>
+                      <button
+                        className="action organizer"
+                        onClick={this.toggleEdit}
+                      >
+                        <img src={edit} alt="edit pencil" />
+                      </button>
+                    </div>
+                  ) : (
+                    <div />
+                  )}
                 </div>
               )}
               <div>
-                <button
-                  className="btn-save"
-                  type="submit"
-                  onClick={this.submitUpdateEventHandler}
-                >
-                  Save
-                </button>
-                {this.props.event.id ? (
-                  <button
-                    className="action trash"
-                    onClick={() => this.props.deleteEvent(this.props.event.id)}
-                  >
-                    <img src={trash} alt="trash" />
-                  </button>
+                {this.props.userReducer.firebase_uid ===
+                this.props.event.organizer ? (
+                  <div>
+                    <button
+                      className="btn-save action organizer"
+                      type="submit"
+                      onClick={this.submitUpdateEventHandler}
+                    >
+                      Save
+                    </button>
+                    <button
+                      className="action organizer trash"
+                      onClick={() =>
+                        this.props.deleteEvent(this.props.event.id)
+                      }
+                    >
+                      <img src={trash} alt="trash" />
+                    </button>
+                  </div>
                 ) : (
-                  <></>
+                  <div />
                 )}
               </div>
             </div>
@@ -360,7 +380,7 @@ class Info extends React.Component {
                     src={calendar}
                     alt="calendar"
                     onClick={this.handleShow}
-                    className="action-buttons"
+                    className="action organizer"
                   />
                 </div>
 
@@ -373,7 +393,7 @@ class Info extends React.Component {
                     src={clock}
                     alt="edit-time"
                     onClick={this.toggleEditTime}
-                    className="action-buttons"
+                    className="action organizer"
                   />
                 </div>
                 <div className="caloendar-row">
@@ -440,7 +460,10 @@ class Info extends React.Component {
                           })}
                         </select>
                       </div>
-                      <button className="action" onClick={this.updateTime}>
+                      <button
+                        className="action organizer"
+                        onClick={this.updateTime}
+                      >
                         <img src={update} alt="edit" />
                       </button>
                     </span>
@@ -532,4 +555,12 @@ class Info extends React.Component {
   }
 }
 
-export default Info;
+const mstp = ({ userReducer /**,otherReducer */ }) => {
+  return { userReducer };
+};
+export default withRouter(
+  connect(
+    mstp,
+    {}
+  )(Info)
+);

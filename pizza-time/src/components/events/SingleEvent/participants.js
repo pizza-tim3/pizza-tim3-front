@@ -1,4 +1,5 @@
 import React from "react";
+
 import { EventRow } from "../../../styles/eventStyles";
 import plus from "../../../assets/plus.png";
 
@@ -67,7 +68,7 @@ class Participants extends React.Component {
                   // }
                 })}
                 <div className="add-user">
-                  <button className="action">
+                  <button className="action organizer">
                     <img src={plus} alt="plus" />
                   </button>
                 </div>

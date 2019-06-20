@@ -8,12 +8,12 @@ import Participants from "./participants";
 import Discussion from "./discussion";
 import { Inner } from "../../../styles/eventStyles";
 import loading from "../../../assets/loading.gif";
+import { func } from "prop-types";
 
 class EventView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: "",
       event: {},
       friends: [],
       unInvitedFriends: [],
@@ -31,20 +31,17 @@ class EventView extends React.Component {
       if (currentEvent) {
         this.setState({
           event: currentEvent.data.event,
-          // user: currentEvent.data.event.organizer,
           loading: false,
         });
       } else {
         this.setState({
           event: {},
-          // user: "jNpViqXD4DXmf9H2FbkQnAy30000",
           loading: false,
         });
       }
     } catch (e) {
       this.setState({
         event: {},
-        // user: "jNpViqXD4DXmf9H2FbkQnAy30000",
         loading: false,
       });
       console.log(e);
@@ -55,10 +52,12 @@ class EventView extends React.Component {
   async fetchFriends() {
     // Current Invited Friends
 
-    if (this.state.user) {
+    if (this.props.userReducer.firebase_uid) {
       try {
         let currentFriends = await axios.get(
-          `https://pizza-tim3-be.herokuapp.com/api/friends/${this.state.user}`
+          `https://pizza-tim3-be.herokuapp.com/api/friends/${
+            this.props.userReducer.firebase_uid
+          }`
         );
         if (currentFriends) {
           // Set friends's state to current data in the databse
@@ -97,16 +96,16 @@ class EventView extends React.Component {
   // Reusable axios call to backend api w/ response data set to event state
 
   async componentDidMount() {
-    //Set user
-    console.log(this.props);
-    // let currentUser = this.props.userReducer;
+    //Set loading
     this.setState({
       loading: true,
-      user: this.props.userReducer.firebase_uid,
     });
-
+    // Fetch event
     await this.fetchEvent();
+    // Fetch friends
     await this.fetchFriends();
+
+    // Set the switch button className depending on the event's inviteOnly setting
     let switchButton = document.getElementsByClassName("switch")[0];
 
     if (switchButton) {
@@ -235,8 +234,6 @@ class EventView extends React.Component {
           });
       }
     }
-
-    // }
   };
 
   // Toggle the event's inviteOnly property
@@ -312,6 +309,7 @@ class EventView extends React.Component {
     this.setState({
       loading: true,
     });
+
     let currentFriends = this.state.friends;
     let currentEvent = this.state.event;
 
@@ -426,7 +424,7 @@ class EventView extends React.Component {
               inviteFriends={this.inviteFriends}
             />
 
-            <Discussion event={this.state.event} user={this.state.user} />
+            <Discussion event={this.state.event} />
           </Inner>
         )}
       </div>
