@@ -43,7 +43,6 @@ export default function Register(props) {
       };
       // send information to backend
       const response = await registerWithBackend(userObj);
-      console.log("res", response);
       props.history.push("/");
     } catch (err) {
       // Handle Errors here.
@@ -69,7 +68,6 @@ export default function Register(props) {
         // register uses information on our backend
         const user = await registerWithPopup(result);
         // set state with user
-        console.log(user);
         props.history.push("/");
       } else if (/**user dne on backend */ false) {
         //this would be an error on our db's part

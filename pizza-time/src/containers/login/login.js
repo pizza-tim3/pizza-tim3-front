@@ -11,7 +11,6 @@ import "firebase/auth";
 import { Wrap, Form } from "../../styles/registerLoginStyles.js";
 
 export default function Login(props) {
-  console.log(props);
   //state === state object, dispatch function
   const [state, dispatch] = useReducer(
     //reducer function
