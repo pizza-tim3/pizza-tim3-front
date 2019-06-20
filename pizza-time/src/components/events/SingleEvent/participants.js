@@ -1,4 +1,5 @@
 import React from "react";
+
 import { EventRow } from "../../../styles/eventStyles";
 import plus from "../../../assets/plus.png";
 

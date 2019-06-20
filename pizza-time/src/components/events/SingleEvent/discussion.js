@@ -31,24 +31,13 @@ class Discussion extends React.Component {
       comments: eventsComments,
     });
 
-    let user_id = this.props.user;
+    let currentAvatar = this.props.userReducer.avatar;
+    console.log(this.props);
     let matchingId = [];
-
-    if (eventsComments && user_id) {
-      matchingId = eventsComments.filter(
-        comment => comment.user_id === user_id
-      );
-      if (matchingId[0]) {
-        this.setState({
-          avatar: matchingId[0].avatar,
-        });
-      } else {
-        this.setState({
-          avatar:
-            "https://s3.amazonaws.com/uifaces/faces/twitter/vaughanmoffitt/128.jpg",
-        });
-      }
-    }
+    this.setState({
+      avatar: currentAvatar,
+    });
+    console.log(this.state);
 
     let comments = document.getElementsByClassName("edit-comment");
     Array.from(comments).map(comment => {
@@ -140,27 +129,25 @@ class Discussion extends React.Component {
 
   // Add comment using axios call
   addComment = () => {
-    // Copy the current state event
+    // Create a comment object that will be posted to the route
     let newComment = this.state.newComment;
-    let commentAvatar = this.state.avatar;
-    let event_id = this.props.event.id;
-    let user = this.props.user;
-    // Add event id, user and time to the new comment
-    newComment.event_id = event_id;
-    newComment.user_id = user;
-
+    newComment.event_id = this.props.event.id;
+    newComment.user_id = this.props.userReducer.firebase_uid;
     newComment.time = new Date();
-    console.log(newComment);
+
     axios
       .post(
-        `https://pizza-tim3-be.herokuapp.com/api/events/${event_id}/comments`,
+        `https://pizza-tim3-be.herokuapp.com/api/events/${
+          this.props.event.id
+        }/comments`,
         newComment
       )
       .then(res => {
         if (res.status === 201) {
           // If successfull push new comments to front-end state
           newComment.id = res.data[0];
-          newComment.avatar = this.state.avatar;
+          newComment.avatar = this.props.userReducer.avatar;
+
           this.setState(state => {
             return {
               comments: [...state.comments, newComment],
