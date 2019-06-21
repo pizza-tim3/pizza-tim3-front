@@ -376,12 +376,18 @@ class Info extends React.Component {
                       {moment(this.state.date.toISOString()).format("LL")}
                     </span>
                   </h2>
-                  <img
-                    src={calendar}
-                    alt="calendar"
-                    onClick={this.handleShow}
-                    className="action organizer"
-                  />
+
+                  {this.props.userReducer.firebase_uid ===
+                  this.props.event.organizer ? (
+                    <img
+                      src={calendar}
+                      alt="calendar"
+                      onClick={this.handleShow}
+                      className="action organizer"
+                    />
+                  ) : (
+                    <></>
+                  )}
                 </div>
 
                 <div className="calendar-row">
@@ -389,12 +395,17 @@ class Info extends React.Component {
                     <b>Time</b>: {this.state.time.hour}:
                     {this.state.time.minutes} {this.state.time.am}
                   </h3>
-                  <img
-                    src={clock}
-                    alt="edit-time"
-                    onClick={this.toggleEditTime}
-                    className="action organizer"
-                  />
+                  {this.props.userReducer.firebase_uid ===
+                  this.props.event.organizer ? (
+                    <img
+                      src={clock}
+                      alt="edit-time"
+                      onClick={this.toggleEditTime}
+                      className="action organizer"
+                    />
+                  ) : (
+                    <></>
+                  )}
                 </div>
                 <div className="caloendar-row">
                   <div>
@@ -498,7 +509,10 @@ class Info extends React.Component {
                   </>
                 )}
 
-                <EditLocation updateLocation={this.updateLocation} />
+                <EditLocation
+                  event={this.props.event}
+                  updateLocation={this.updateLocation}
+                />
               </EventRow>
               <EventRow>
                 <div className="event location">

@@ -1,5 +1,6 @@
 import React from "react";
-
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import { EventRow } from "../../../styles/eventStyles";
 import plus from "../../../assets/plus.png";
 
@@ -67,11 +68,16 @@ class Participants extends React.Component {
                   );
                   // }
                 })}
-                <div className="add-user">
-                  <button className="action organizer">
-                    <img src={plus} alt="plus" />
-                  </button>
-                </div>
+                {this.props.userReducer.firebase_uid ===
+                this.props.event.organizer ? (
+                  <div className="add-user">
+                    <button className="action organizer">
+                      <img src={plus} alt="plus" />
+                    </button>
+                  </div>
+                ) : (
+                  <></>
+                )}
               </>
             ) : (
               <></>
@@ -143,4 +149,12 @@ class Participants extends React.Component {
     );
   }
 }
-export default Participants;
+const mstp = ({ userReducer /**,otherReducer */ }) => {
+  return { userReducer };
+};
+export default withRouter(
+  connect(
+    mstp,
+    {}
+  )(Participants)
+);
