@@ -11,7 +11,7 @@ export const Inner = styled.div`
   box-shadow: 0 0 6px 0px ${colors.shadow};
   margin-top: 20px;
   flex-direction: column;
-  padding: 15px 0 15px 0;
+  // padding: 15px 0 15px 0;
   width: 90%;
   .loading {
     height: 500px;
