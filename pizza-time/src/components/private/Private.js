@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import firebaseApp from "../../firebase/firebaseApp";
 import authorizedRequest from "../../firebase/authorizedRequest";
 
-export default function Private() {
+function Private() {
   const [uid, setUid] = useState(null);
   const [data, setData] = useState([]);
 
@@ -20,6 +22,7 @@ export default function Private() {
       "http://localhost:5500/api/restricted",
       "get"
     );
+    console.log(json);
     setData(json);
   };
 
@@ -29,6 +32,7 @@ export default function Private() {
       `http://localhost:5500/api/restricted/${uid}`,
       "get"
     );
+    console.log(json);
     setData(json);
   };
 
@@ -42,6 +46,7 @@ export default function Private() {
     //  for the changes totake effect
     await firebaseApp.auth().currentUser.getIdToken(true);
     setData(json);
+    console.log(json);
   };
 
   const demoteAdminStatus = async () => {
@@ -53,6 +58,7 @@ export default function Private() {
     //  for the changes totake effect
     await firebaseApp.auth().currentUser.getIdToken(true);
     setData(json);
+    console.log(json);
   };
 
   const makeAdminRequiredRequest = async () => {
@@ -61,6 +67,13 @@ export default function Private() {
       "get"
     );
     setData(json);
+    console.log(json);
+  };
+
+  const test = async (url, body) => {
+    const json = await authorizedRequest(url, "get", body);
+    setData(json);
+    console.log(json);
   };
 
   return (
@@ -75,9 +88,37 @@ export default function Private() {
       <button onClick={makeAdminRequiredRequest}>
         Make admin protected request
       </button>
+      <hr />
+
+      <button
+        onClick={() => test(`http://localhost:5500/api/friends/${uid}`, {})}
+      >
+        get friends
+      </button>
+      <button onClick={() => test(`http://localhost:5500/api/users/`, {})}>
+        get users
+      </button>
+      <button onClick={() => test(`http://localhost:5500/api/comments/`, {})}>
+        get comments
+      </button>
+      <button onClick={() => test(`http://localhost:5500/api/events/`, {})}>
+        get events
+      </button>
       <button onClick={() => firebaseApp.auth().signOut()}>Logout</button>
-      {data && data.message ? <p>{data.message}</p> : null}
       {data && data.error ? <p style={{ color: "red" }}>{data.error}</p> : null}
     </div>
   );
 }
+
+//Here I've destructured the single reducer
+const mstp = ({ userReducer /**,otherReducer */ }) => {
+  console.log(userReducer);
+  return { userReducer };
+};
+
+export default withRouter(
+  connect(
+    mstp,
+    {}
+  )(Private)
+);

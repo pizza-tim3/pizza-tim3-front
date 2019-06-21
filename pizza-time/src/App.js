@@ -29,14 +29,12 @@ function App(props) {
     //this logic should be global.
 
     firebaseApp.auth().onAuthStateChanged(async user => {
-
       //console.log("AuthStateChanged : ", user.uid);
-
       //firebase
 
       if (user) {
         //HANDLE USER STATE IN REDUX/COMPONENT STATE
-
+        console.log("AuthStateChanged : ", user.uid);
         //get user info from our server
         const { uid } = user;
         const response = await fetch(
