@@ -2,6 +2,9 @@ import React from "react";
 // import PlacesSearch from "../create-new-event/search/places-search";
 import { Modal } from "react-bootstrap";
 import edit from "./../../../assets/edit.png";
+
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 // import GoogleMap from "../create-new-event/search/map/map";
 // import orangeupdate from "./../../../assets/orangeupdate.png";
 // import fakemap from "./../../../assets/fakemap.png";
@@ -44,11 +47,23 @@ class EditLocation extends React.Component {
           </Modal.Footer>
         </Modal>
         <button className="action organizer">
-          <img src={edit} alt="edit" onClick={this.handleShow} />
+          {this.props.userReducer.firebase_uid ===
+          this.props.event.organizer ? (
+            <img src={edit} alt="edit" onClick={this.handleShow} />
+          ) : (
+            <></>
+          )}
         </button>
       </>
     );
   }
 }
-
-export default EditLocation;
+const mstp = ({ userReducer /**,otherReducer */ }) => {
+  return { userReducer };
+};
+export default withRouter(
+  connect(
+    mstp,
+    {}
+  )(EditLocation)
+);
