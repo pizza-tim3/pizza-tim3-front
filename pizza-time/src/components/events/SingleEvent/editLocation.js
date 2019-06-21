@@ -33,7 +33,7 @@ class EditLocation extends React.Component {
   updateLocationHandler = e => {
     e.preventDefault();
     console.log("editLocation's state: " + this.state.newLocation);
-    this.props.updateLocation(this.state.newLocation);
+    // this.props.updateLocation(this.state.newLocation);
   };
   render() {
     return (

@@ -32,12 +32,9 @@ class Discussion extends React.Component {
     });
 
     let currentAvatar = this.props.userReducer.avatar;
-    console.log(this.props);
-    let matchingId = [];
     this.setState({
       avatar: currentAvatar,
     });
-    console.log(this.state);
 
     let comments = document.getElementsByClassName("edit-comment");
     Array.from(comments).map(comment => {

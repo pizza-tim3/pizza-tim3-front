@@ -9,7 +9,7 @@ import Discussion from "./discussion";
 import { Inner } from "../../../styles/eventStyles";
 import loading from "../../../assets/loading.gif";
 import missing from "../../../assets/404.jpg";
-import { func } from "prop-types";
+// import { func } from "prop-types";
 
 class EventView extends React.Component {
   constructor(props) {
@@ -433,7 +433,7 @@ class EventView extends React.Component {
               <>
                 <h1 className="missing">Event? What event?</h1>
                 <Inner>
-                  <img src={missing} atl="dog eating a pizza" />
+                  <img src={missing} alt="dog eating a pizza" />
                 </Inner>
               </>
             )}
