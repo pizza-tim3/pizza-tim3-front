@@ -43,7 +43,6 @@ export default function Register(props) {
       };
       // send information to backend
       const response = await registerWithBackend(userObj);
-      console.log("res", response);
       props.history.push("/");
     } catch (err) {
       // Handle Errors here.
@@ -63,17 +62,17 @@ export default function Register(props) {
         additionalUserInfo: { isNewUser }
       } = result;
       //check to see if the users new
+      console.log(result);
       if (isNewUser) {
         //get user picture and other stuff to add onto result
         // register uses information on our backend
         const user = await registerWithPopup(result);
         // set state with user
-        console.log(user);
         props.history.push("/");
       } else if (/**user dne on backend */ false) {
         //this would be an error on our db's part
       } else {
-        //get user info from backend by uid
+        props.history.push("/");
       }
       // TODO set global user info
     } catch (err) {
