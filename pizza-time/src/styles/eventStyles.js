@@ -183,8 +183,12 @@ export const Inner = styled.div`
       justify-content: space-between;
       display: flex;
       width: 78%;
+      align-items: center;
       h1 {
+        align-items: center;
+        // align-self: center;
         span {
+          font-size: 1.4rem;
           padding-left: 10px;
           text-transform: capitalize;
         }
