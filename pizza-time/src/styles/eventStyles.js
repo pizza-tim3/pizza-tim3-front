@@ -478,7 +478,6 @@ export const EventRow = styled.div`
     &.location {
       display: flex;
       flex-direction: column;
-      //
     }
 
     &.map {
@@ -565,10 +564,8 @@ export const EventRow = styled.div`
         padding-left: 12px;
         padding-right: 12px;
       }
-
       .action-buttons {
         display: flex;
-        // flex-direction: column;
       }
     }
     img {
