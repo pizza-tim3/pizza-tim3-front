@@ -3,6 +3,11 @@ import { colors, fonts, media } from "../styles/variables.js";
 
 export const EventBox = styled.div`
   width: 100%;
+  .event-save {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
 `;
 
 export const Inner = styled.div`
@@ -11,7 +16,6 @@ export const Inner = styled.div`
   box-shadow: 0 0 6px 0px ${colors.shadow};
   margin-top: 20px;
   flex-direction: column;
-  // padding: 15px 0 15px 0;
   width: 90%;
   .loading {
     height: 500px;
@@ -210,9 +214,10 @@ export const Inner = styled.div`
       box-shadow: 0 0 7px 0px ${colors.shadow};
       font-family: ${fonts.primary};
       font-weight: 600;
-      font-size: 15px;
+      font-size: 13px;
       color: ${colors.white};
-      width: 75px;
+      width: 50px;
+      margin-left: 3px;
       align-self: center;
       ${media.desktop} {
         width: 130px;
@@ -307,8 +312,12 @@ export const Inner = styled.div`
       }
     }
     &.trash img {
-      padding: 4px;
-      margin-left: 8px;
+      padding: 6px 0px 6px 12px;
+      margin: 0px;
+      ${media.desktop} {
+        padding: 4px;
+        margin-left: 8px;
+      }
     }
     &.update img {
       border-radius: 0%;

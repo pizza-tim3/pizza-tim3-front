@@ -325,7 +325,7 @@ class Info extends React.Component {
               <div>
                 {this.props.userReducer.firebase_uid ===
                 this.props.event.organizer ? (
-                  <div>
+                  <div className="event-save">
                     <button
                       className="btn-save action organizer"
                       type="submit"
