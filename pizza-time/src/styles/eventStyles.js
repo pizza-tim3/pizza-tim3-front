@@ -565,6 +565,11 @@ export const EventRow = styled.div`
         padding-left: 12px;
         padding-right: 12px;
       }
+
+      .action-buttons {
+        display: flex;
+        // flex-direction: column;
+      }
     }
     img {
       border-radius: 50%;
