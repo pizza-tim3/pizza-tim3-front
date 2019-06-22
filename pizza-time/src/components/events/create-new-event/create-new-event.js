@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {Component} from 'react';
 import Loading from '../../loading/loading';
 import DatePicker from './date/date-picker';
 import FriendPicker from './friendPicker/friendPicker';
@@ -6,67 +6,56 @@ import ConfirmationPage from './confirmation/confirmation';
 import PlacesSearch from './search/places-search';
 import NameAndDetails from './name-details/name-details';
 import { CreateNewEventWrap } from '../../../styles/createNewEventStyles';
+import { connect } from 'react-redux';
+import { setLoading } from './../../../actions/eventActions';
 
-const CreateNewEvent = () => {
-    const [page, setPage] = useState(1);
-    const [isLoading, setIsLoading] = useState(true);
-    const [placeData, setPlaceData] = useState('');
-    const [eventDetails, setEventDetails] = useState({});
-    const [dateTime, setDateTime] = useState({});
-    const [friends, setFriends] = useState([]);
 
-    useEffect(() => {
-        setTimeout(() => {
-            setIsLoading(false);
-        }, 1500)
-    }, [])
-
-    const handleNextPage = (stateToChange, newValue) => {
-        setPage(page + 1);
-        // console.log(stateToChange, newValue);
-
-        switch(stateToChange) {
-            case 'placeData':
-                setPlaceData(newValue);
-                break;
-            case 'event':
-                setEventDetails(newValue);
-                break;
-            case 'dateTime': 
-                setDateTime(newValue);
-                break;
-            case 'addFriends':
-                setFriends(newValue);
-                break;
+class CreateNewEvent extends Component {
+    constructor() {
+        super();
+        this.state = {
+            page: 1
         }
     }
 
-    if(isLoading) {
-        return(
-            <Loading />
-    )} else {
-        switch(page) {
-            case 1:
-                return <PlacesSearch handleClick={handleNextPage}/>
-            case 2:
-                return <NameAndDetails handleClick={handleNextPage}/>
-            case 3: 
-                return <DatePicker handleClick={handleNextPage}/>
-            case 4:
-                return <FriendPicker handleClick={handleNextPage}/>
-            case 5:
-                return(
-                    <div className='events-wrapper'>
-                        <ConfirmationPage 
-                            place={placeData} 
-                            event={eventDetails} 
-                            dateTime={dateTime}
-                            friends={friends}
-                        />
-                    </div>
-                );
+    componentDidMount() {
+        setLoading(false)
+    }
+
+    handleNextPage = () => {
+        this.setState({ page: this.state.page + 1 });
+        setLoading(true)
+        console.log(this.state.page);
+    }
+
+    render() {
+        if(this.props.loading) {
+            return <Loading />
+        } else {
+            switch(this.state.page) {
+                case 1:
+                    return <PlacesSearch handleClick={this.handleNextPage}/>
+                case 2:
+                    return <NameAndDetails handleClick={this.handleNextPage}/>
+                case 3: 
+                    return <DatePicker handleClick={this.handleNextPage}/>
+                case 4:
+                    return <FriendPicker handleClick={this.handleNextPage}/>
+                case 5:
+                    return(
+                        <div className='events-wrapper'>
+                            <ConfirmationPage />
+                        </div>
+                    );
+            }
         }
     }
-};
+}
 
-export default CreateNewEvent 
+const mstp = state => {
+    return {
+        loading: state.loading
+    }
+}
+
+export default connect (mstp, { setLoading })(CreateNewEvent)

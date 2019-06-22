@@ -2,15 +2,15 @@ import React from 'react';
 import useForm from '../../../../customHooks/customFormHooks';
 
 import { NameDetailsWrap, PlacesHeading } from '../../../../styles/nameDetailsStyles';
+import { connect } from 'react-redux';
+import { setEventName, setEventDesc } from './../../../../actions/eventActions';
 
 const NameAndDetails = (props) => {
     
     const sendData = () => {
-        let eventDetails = {
-            eventName: inputs.eventName,
-            eventDesc: inputs.eventDesc
-        }
-        props.handleClick('event', eventDetails);
+        setEventName(inputs.eventName);
+        setEventDesc(inputs.eventDesc);
+        props.handleClick();
     }
 
     const {inputs, handleInputChange, handleSubmit} = useForm(sendData);
@@ -39,7 +39,7 @@ const NameAndDetails = (props) => {
                     <div className='buttonWrap'>
                         {/* <div className='buttonIcon'></div> */}
                         <button 
-                            type='submit'
+                            type='button'
                             onClick={() => {handleSubmit()}}>Next Step</button>
                     </div>
             </form>
@@ -47,4 +47,11 @@ const NameAndDetails = (props) => {
     )
 }
 
-export default NameAndDetails
+const mstp = state => {
+    return {
+        eventName: state.eventName,
+        eventDesc: state.eventDesc
+    }
+}
+
+export default connect(mstp, {setEventName, setEventDesc})(NameAndDetails)

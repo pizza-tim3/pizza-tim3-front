@@ -1,4 +1,5 @@
 export * from "./userActions";
+export * from "./eventActions";
 /* export * from "./otherActions"; <- 
 setting the file up this way allows you to import from a single file
 EX:

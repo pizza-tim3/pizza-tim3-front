@@ -8,6 +8,7 @@ const useForm = (callback) => {
             e.preventDefault();
         };
         // console.log(inputs, ':from')
+        console.log('from useForm: ', inputs)
         callback();
     };
 

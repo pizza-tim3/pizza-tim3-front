@@ -10,6 +10,7 @@ import { connect } from 'react-redux';
 // friends={friends}
 
 const ConfirmationPage = (props) => {
+    console.log(props)
     const url = "http://localhost:5500/api/events";
     const fUrl = "http://localhost:5500/api/invited/"
     const {eventName, eventDesc} = props.event;

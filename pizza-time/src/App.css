@@ -106,3 +106,18 @@
   -ms-transform: rotate(180deg);
   transition: 200ms linear all;
 }
+
+
+#loading-pizza {
+  animation: loading-spin infinite 2s linear;
+  pointer-events: none;
+}
+
+@keyframes loading-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

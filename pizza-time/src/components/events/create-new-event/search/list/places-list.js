@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { PlacesContainer, Span, ShowMore } from '../../../../../styles/placesListStyles';
 //props from map : data={placesData} handleClick = {handleOnClick}
 
+
 const PlacesList = (props) => {
     const [dataIndex, setDataIndex] = useState(3);
     const [data, setData] = useState([]);
