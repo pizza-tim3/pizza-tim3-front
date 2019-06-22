@@ -16,7 +16,7 @@ const registerWithBackend = async userObj => {
 const registerWithPopup = async result => {
   console.log(result);
   const {
-    user: { uid },
+    user: { uid, photoURL },
     additionalUserInfo: {
       profile: { email, family_name, given_name, name }
     }
@@ -28,7 +28,8 @@ const registerWithPopup = async result => {
     username: name,
     first_name: given_name,
     last_name: family_name,
-    firebase_uid: uid
+    firebase_uid: uid,
+    avatar: photoURL
   };
   //send information to backend
   // console.log(userObj);

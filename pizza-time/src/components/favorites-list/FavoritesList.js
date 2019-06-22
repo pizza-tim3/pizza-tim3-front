@@ -18,7 +18,12 @@ export default function FavoritesList({ places, filter }) {
           <div>
             <p>{place.name}</p>
             <p>{place.address}</p>
-            <img src={place.photoUrl} height="200px" width="200px" />
+            <img
+              src={place.photoUrl}
+              alt="location"
+              height="200px"
+              width="200px"
+            />
           </div>
         );
       })}

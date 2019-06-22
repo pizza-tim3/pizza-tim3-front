@@ -306,6 +306,10 @@ export const Inner = styled.div`
         margin-right: 5px;
       }
     }
+    &.trash img {
+      padding: 4px;
+      margin-left: 8px;
+    }
     &.update img {
       border-radius: 0%;
     }
@@ -352,19 +356,25 @@ export const Toggle = styled.span`
       transition: 0.4s;
     }
   }
-
-  input:checked + .slider {
-    background-color: #ff5c00;
+  .inviteTrue {
+    .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+    .slider {
+      background-color: #ff5c00;
+    }
   }
-
-  input:focus + .slider {
-    box-shadow: 0 0 1px #ff5c00;
-  }
-
-  input:checked + .slider:before {
-    -webkit-transform: translateX(26px);
-    -ms-transform: translateX(26px);
-    transform: translateX(26px);
+  .inviteFalse {
+    .slider {
+      background-color: #ccc;
+    }
+    .slider:before {
+      -webkit-transform: translateX(0px);
+      -ms-transform: translateX(0px);
+      transform: translateX(0px);
+    }
   }
 `;
 
@@ -394,7 +404,8 @@ export const EventRow = styled.div`
     flex-direction: column;
     justify-content: space-between;
     margin-bottom: 22px;
-    h2, h3 {
+    h2,
+    h3 {
       text-align: left;
     }
     h2 {
@@ -428,7 +439,7 @@ export const EventRow = styled.div`
       }
     }
   }
-  .calendar-row { 
+  .calendar-row {
     justify-content: space-between;
     display: flex;
     padding-bottom: 25px;
@@ -440,7 +451,6 @@ export const EventRow = styled.div`
     }
     display: flex;
     justify-content: space-between;
-    // align-items: center;
   }
   .event {
     width: 100%;
@@ -448,27 +458,22 @@ export const EventRow = styled.div`
     ${media.desktop} {
       width: 50%;
     }
-    img, #map {
-      height: 300px;
+    img,
+    #map {
+      min-height: 280px;
+      max-height: 280px;
     }
     &.location {
-
       display: flex;
       flex-direction: column;
-      img {
-        margin-left
-      }
+      //
     }
-    #map {
-      display: none;
-    }
-  
+
     &.map {
       align-items: start;
       display: flex;
       flex-direction: column;
       ${media.desktop} {
-        // flex-direction: row;
         width: 45%;
       }
       img {
@@ -520,12 +525,14 @@ export const EventRow = styled.div`
       li {
         margin-right: 7px;
       }
-    } .invited img {
+    }
+    .invited img {
       border-radius: 50%;
       width: 55px;
     }
   }
-  .event-invite, .all-comments{
+  .event-invite,
+  .all-comments {
     img {
       max-width: 50px;
       max-height: 50px;
