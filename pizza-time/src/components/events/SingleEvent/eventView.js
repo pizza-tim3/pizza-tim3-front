@@ -8,7 +8,8 @@ import Participants from "./participants";
 import Discussion from "./discussion";
 import { Inner } from "../../../styles/eventStyles";
 import loading from "../../../assets/loading.gif";
-import { func } from "prop-types";
+import missing from "../../../assets/404.jpg";
+// import { func } from "prop-types";
 
 class EventView extends React.Component {
   constructor(props) {
@@ -397,7 +398,7 @@ class EventView extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="event-view">
         <Nav />
 
         {this.state.loading === true ? (
@@ -407,25 +408,36 @@ class EventView extends React.Component {
             </div>
           </Inner>
         ) : (
-          <Inner>
-            <Info
-              event={this.state.event}
-              toggleSwitch={this.toggleSwitch}
-              updateEvent={this.updateEvent}
-              updateName={this.updateName}
-              updateDate={this.updateDate}
-              location={this.location}
-              deleteEvent={this.deleteEvent}
-            />
-            <Participants
-              event={this.state.event}
-              unInvitedFriends={this.state.unInvitedFriends}
-              selectAdditional={this.selectAdditional}
-              inviteFriends={this.inviteFriends}
-            />
+          <>
+            {Object.keys(this.state.event).length ? (
+              <Inner>
+                <Info
+                  event={this.state.event}
+                  toggleSwitch={this.toggleSwitch}
+                  updateEvent={this.updateEvent}
+                  updateName={this.updateName}
+                  updateDate={this.updateDate}
+                  location={this.location}
+                  deleteEvent={this.deleteEvent}
+                />
+                <Participants
+                  event={this.state.event}
+                  unInvitedFriends={this.state.unInvitedFriends}
+                  selectAdditional={this.selectAdditional}
+                  inviteFriends={this.inviteFriends}
+                />
 
-            <Discussion event={this.state.event} />
-          </Inner>
+                <Discussion event={this.state.event} />
+              </Inner>
+            ) : (
+              <>
+                <h1 className="missing">Event? What event?</h1>
+                <Inner>
+                  <img src={missing} alt="dog eating a pizza" />
+                </Inner>
+              </>
+            )}
+          </>
         )}
       </div>
     );

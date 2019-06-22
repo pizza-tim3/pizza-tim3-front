@@ -1,7 +1,7 @@
 import React from "react";
 // import PlacesSearch from "../create-new-event/search/places-search";
 import { Modal } from "react-bootstrap";
-import edit from "./../../../assets/edit.png";
+import searchmap from "./../../../assets/searchmap.png";
 
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -33,7 +33,7 @@ class EditLocation extends React.Component {
   updateLocationHandler = e => {
     e.preventDefault();
     console.log("editLocation's state: " + this.state.newLocation);
-    this.props.updateLocation(this.state.newLocation);
+    // this.props.updateLocation(this.state.newLocation);
   };
   render() {
     return (
@@ -49,7 +49,7 @@ class EditLocation extends React.Component {
         <button className="action organizer">
           {this.props.userReducer.firebase_uid ===
           this.props.event.organizer ? (
-            <img src={edit} alt="edit" onClick={this.handleShow} />
+            <img src={searchmap} alt="edit" onClick={this.handleShow} />
           ) : (
             <></>
           )}
