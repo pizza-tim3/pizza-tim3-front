@@ -106,3 +106,6 @@
   -ms-transform: rotate(180deg);
   transition: 200ms linear all;
 }
+.missing {
+  margin: 25px auto 30px;
+}

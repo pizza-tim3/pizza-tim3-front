@@ -34,7 +34,7 @@ function App(props) {
 
       if (user) {
         //HANDLE USER STATE IN REDUX/COMPONENT STATE
-        console.log("AuthStateChanged : ", user.uid);
+        // console.log("AuthStateChanged : ", user.uid);
         //get user info from our server
         const { uid } = user;
         const response = await fetch(
