@@ -6,7 +6,7 @@ import {
     Form,
     Button
 } from '../../../../styles/datePickerStyles';
-import { setDateTime } from './../../../../actions/eventActions';
+import { setDateTime } from './../../../../actions';
 import { connect } from 'react-redux';
 
 
@@ -18,6 +18,7 @@ const DatePicker = (props) => {
             date: inputs.date,
             time: inputs.time
         }
+        console.log(dateTime)
         setDateTime(dateTime);
         props.handleClick();
     }
@@ -53,9 +54,10 @@ const DatePicker = (props) => {
     )};
 
 const mstp = state => {
+    console.log(state)
     return {
-        eventName: state.eventName,
-        eventDesc: state.eventDesc
+        eventName: state.EventReducer.eventName,
+        eventDesc: state.EventReducer.eventDesc
     }
 }
 

@@ -7,7 +7,7 @@ export const SET_FRIENDS = "SET_FRIENDS";
 export const SET_LOADING = "SET_LOADING";
 
 export function setPlaceId(id) {
-    console.log('PlaceID', id)
+    // console.log('PlaceID', id)
     return {
         type: SET_PLACE_ID,
         payload: id
@@ -15,7 +15,7 @@ export function setPlaceId(id) {
 }
 
 export function setPlaceName(name) {
-    console.log('PlaceName', name)
+    // console.log('PlaceName', name)
     return {
         type: SET_PLACE_NAME,
         payload: name
@@ -23,7 +23,7 @@ export function setPlaceName(name) {
 }
 
 export function setEventName(eName) {
-    console.log('EventName', eName)
+    // console.log('EventName', eName)
     return{
         type: SET_EVENT_NAME,
         payload: eName
@@ -31,7 +31,7 @@ export function setEventName(eName) {
 }
 
 export function setEventDesc(desc) {
-    console.log('EventDesc', desc)
+    // console.log('EventDesc', desc)
     return {
         type: SET_EVENT_DESC,
         payload: desc

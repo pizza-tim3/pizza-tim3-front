@@ -1,56 +1,70 @@
-import React from 'react';
+import React, { Component } from 'react';
 import useForm from '../../../../customHooks/customFormHooks';
 
 import { NameDetailsWrap, PlacesHeading } from '../../../../styles/nameDetailsStyles';
 import { connect } from 'react-redux';
-import { setEventName, setEventDesc } from './../../../../actions/eventActions';
+import { setEventName, setEventDesc } from './../../../../actions';
 
-const NameAndDetails = (props) => {
-    
-    const sendData = () => {
-        setEventName(inputs.eventName);
-        setEventDesc(inputs.eventDesc);
-        props.handleClick();
+class NameAndDetails extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            eventName: "",
+            eventDesc: ""
+        }
     }
 
-    const {inputs, handleInputChange, handleSubmit} = useForm(sendData);
+    onChange = (e) => {
+        this.setState({
+            ...this.state,
+            [e.target.name]: e.target.value
+        })
+    }
 
-    // console.log('inputs',inputs.eventName, inputs.eventDesc)
-    return(
+    handleSubmit = () => {
+        setEventName(this.state.eventName);
+        setEventDesc(this.state.eventDesc);
+        this.props.handleClick();
+    }
+
+    render() {
+        return(
         <NameDetailsWrap>
             <PlacesHeading>
                 <h2>Step 2: Add a name and description</h2>
             </PlacesHeading>
-            <form onSubmit={handleSubmit}>
-                    <input
-                        type='text'
-                        name='eventName'
-                        onChange={handleInputChange}
-                        value={inputs.eventName || ''}
-                        placeholder="Event Name"
-                        required />
-                    <input 
-                        type='text'
-                        name='eventDesc'
-                        onChange={handleInputChange}
-                        value={inputs.eventDesc || ''}
-                        placeholder="Event Description"
-                        required />
-                    <div className='buttonWrap'>
-                        {/* <div className='buttonIcon'></div> */}
-                        <button 
-                            type='button'
-                            onClick={() => {handleSubmit()}}>Next Step</button>
-                    </div>
+            <form>
+                 <input
+                    type='text'
+                    name='eventName'
+                    onChange={this.onChange}
+                    value={this.state.eventName}
+                    placeholder="Event Name"
+                    required />
+                <input 
+                    type='text'
+                    name='eventDesc'
+                    onChange={this.onChange}
+                    value={this.state.eventDesc}
+                    placeholder="Event Description"
+                    required />
+                <div className='buttonWrap'>
+                <button 
+                    type='button'
+                    onClick={() => {this.handleSubmit()}}>Next Step</button>
+                </div>
             </form>
         </NameDetailsWrap>
-    )
+        )
+    }
+    
 }
 
 const mstp = state => {
+    console.log(state)
     return {
-        eventName: state.eventName,
-        eventDesc: state.eventDesc
+        eventName: state.EventReducer.eventName,
+        eventDesc: state.EventReducer.eventDesc
     }
 }
 

@@ -25,20 +25,6 @@ class Location extends React.Component {
     //for each favorite get the details, limited to 10 :()
 
     //for each favorite make a call and set state with the data. HARD LIMIT 10
-    
-      const req = {
-        placeId: this.props.google_place_id,
-        fields: ["name", "photos"]
-      };
-      service.getDetails(req, async (place, status) => {
-        const serviceStatus = window.google.maps.places.PlacesServiceStatus;
-        if (serviceStatus.OK) {
-          // console.log("Place = ",place);
-          this.setState({
-            location : place.name
-          });
-        }
-      });
 
     const req = {
       placeId: this.props.google_place_id,

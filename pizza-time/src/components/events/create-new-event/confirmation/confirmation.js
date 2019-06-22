@@ -12,14 +12,12 @@ import { connect } from 'react-redux';
 const ConfirmationPage = (props) => {
     console.log(props)
     const url = "http://localhost:5500/api/events";
-    const fUrl = "http://localhost:5500/api/invited/"
-    const {eventName, eventDesc} = props.event;
-    const {date, time} = props.dateTime;
+    const fUrl = "http://localhost:5500/api/invited/";
 
-    let dateString = new Date(`${date && date} ${time && time}`);
+    let dateString = new Date(props.dateTime);
     dateString = dateString.getTime();
 
-    let newDate = new Date(dateString).toDateString();
+    let newDate = new Date(dateString * 1000).toDateString();
 
     //TODO: connect this method to the button and have a good response 
     //set a show completed page flag and create a new component to show
@@ -27,8 +25,8 @@ const ConfirmationPage = (props) => {
     const handleSubmitData = async() => {
         // console.log(props.user)
         let requestObject = {
-            event_name: eventName,
-            event_description: eventDesc,
+            event_name: props.eventName,
+            event_description: props.eventDesc,
             event_date: dateString,
             organizer: props.user,
             place: props.place.placeId
@@ -59,11 +57,11 @@ const ConfirmationPage = (props) => {
                 <h2>Step 5: Confirm your event</h2>
             </PlacesHeading>
             <div>
-                <h2>{eventName && eventName}</h2>
-                <p>{props.place.placeName}</p>
-                <p>{eventDesc && eventDesc}</p>
+                <h2>{props.eventName}</h2>
+                <p>{props.placeName}</p>
+                <p>{props.eventDesc}</p>
                 <p>{newDate}</p>
-                <p>{time}</p>
+                
             </div>
             <Button to="/home" onClick={() => {handleSubmitData()}}>Finish Up</Button>
         </EventConfirmationWrap>
@@ -71,9 +69,16 @@ const ConfirmationPage = (props) => {
 }
 
 const mstp = state => {
+    console.log(state)
     // console.log('FROM CONFIRMATION:', state.userReducer.firebase_uid);
     return {
-        user: state.userReducer.firebase_uid
+        uid: state.userReducer.firebase_uid,
+        placeName: state.EventReducer.placeName,
+        placeId: state.EventReducer.placeId,
+        eventName: state.EventReducer.eventName,
+        eventDesc: state.EventReducer.eventDesc,
+        dateTime: state.EventReducer.dateTime,
+        friends: state.EventReducer.friends
     }
 }
 

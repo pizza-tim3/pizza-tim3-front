@@ -5,38 +5,31 @@ import UserImage from '../../../../assets/user.png';
 import { FriendPickerWrap, PlacesHeading, Button } from '../../../../styles/friendPickerStyles';
 
 import { connect } from 'react-redux';
-import { setFriends } from '../../../../actions/eventActions';
+import { setFriends, setLoading } from '../../../../actions';
 import Loading from '../../../loading/loading';
-import { setLoading } from '../../../../actions/eventActions';
 
 const FriendPicker = (props) => {
     const [friends, setFriends] = useState([]);
     const [chosenFriends, setChosenFriends] = useState([]);
      
-    console.log(props.firebase_uid)
-    const url = `http://localhost:5500/api/friends/${props.firebase_uid}`
+    console.log(props.uid)
+    const url = `http://localhost:5500/api/friends/${props.uid}`
 
     useEffect(() => {
         console.log(props)
-        setLoading(true);
-        axios
-            .get(url)
-            // .then(res => console.log(res.data))
-                .then(res => {
-                    setFriends(res.data);
-                    setLoading(false);
-                })
-                .catch(err => console.log(err));
+        axios.get(url)
+            .then(res => {
+                setFriends(res.data);
+                setLoading(false);
+            }).catch(err => console.log(err));
     }, [])
 
     const addToInvited = (friend) => {
         setChosenFriends([...chosenFriends, friend]);
         setFriends(friends);
+        console.log(props.friends)
     }
-    // console.log(friends && friends)
-    // console.log(chosenFriends && chosenFriends)
 
-    
     return(
         <FriendPickerWrap>
             <PlacesHeading>
@@ -62,10 +55,11 @@ const FriendPicker = (props) => {
 }
 
 const mstp = state => {
+    console.log(state)
     return {
-        loading: state.loading,
-        uid: state.firebase_uid,
-        friends: state.friends
+        loading: state.EventReducer.loading,
+        uid: state.userReducer.firebase_uid,
+        friends: state.EventReducer.friends
     }
 }
 

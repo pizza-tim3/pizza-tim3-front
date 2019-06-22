@@ -54,7 +54,7 @@ class CreateNewEvent extends Component {
 
 const mstp = state => {
     return {
-        loading: state.loading
+        loading: state.EventReducer.loading
     }
 }
 
