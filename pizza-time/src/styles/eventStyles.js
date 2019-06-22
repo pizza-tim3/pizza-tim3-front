@@ -255,7 +255,10 @@ export const Inner = styled.div`
   }
   .event-location-name {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    ${media.desktop} {
+      width: 100%;
+    }
   }
   location-info {
     margin-bottom: 0px;

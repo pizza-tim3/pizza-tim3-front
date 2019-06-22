@@ -11,7 +11,7 @@ import clock from "./../../../assets/clock.png";
 import cancel from "./../../../assets/cancel.svg";
 import moment from "moment";
 import Details from "./../../events/details-request/details-request";
-// import GoogleMap from "./../create-new-event/search/map/map";
+import GoogleMap from "./../create-new-event/search/map/map";
 
 import {
   EventBox,
@@ -36,8 +36,6 @@ class Info extends React.Component {
       eventForm: false,
       google_place_id: "",
       eventName: "",
-      lat: 0,
-      lng: 0,
       location: {
         address: {
           street: "",
@@ -46,6 +44,8 @@ class Info extends React.Component {
         name: "",
         hours: [],
         photo: "",
+        lat: 0,
+        lng: 0,
       },
     };
     // React-Bootstraps Toggle modals
@@ -184,8 +184,8 @@ class Info extends React.Component {
         hours: locationHours,
         name: req.name,
         photo: bigLeague,
-        lat: req.geometry.location.lat,
-        lng: req.geometry.location.lng,
+        lat: req.geometry.location.lat(),
+        lng: req.geometry.location.lng(),
       },
     });
   };
@@ -502,17 +502,20 @@ class Info extends React.Component {
                 {this.state.location ? (
                   <div className="event-location-name">
                     <h2>Place: {this.state.location.name}</h2>
+                    <EditLocation
+                      event={this.props.event}
+                      updateLocation={this.updateLocation}
+                    />
                   </div>
                 ) : (
                   <>
                     <h2>Place: </h2>
+                    <EditLocation
+                      event={this.props.event}
+                      updateLocation={this.updateLocation}
+                    />
                   </>
                 )}
-
-                <EditLocation
-                  event={this.props.event}
-                  updateLocation={this.updateLocation}
-                />
               </EventRow>
               <EventRow>
                 <div className="event location">
@@ -538,8 +541,8 @@ class Info extends React.Component {
                       <Details
                         getDetails={this.getDetails}
                         placeId={this.state.google_place_id}
-                        lat={this.state.lat}
-                        lng={this.state.lng}
+                        lat={this.state.location.lat}
+                        lng={this.state.location.lng}
                       />
                       {this.state.location ? (
                         <div className="location-hours">
