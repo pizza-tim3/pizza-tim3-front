@@ -11,14 +11,14 @@ import clock from "./../../../assets/clock.png";
 import cancel from "./../../../assets/cancel.svg";
 import moment from "moment";
 import Details from "./../../events/details-request/details-request";
-import GoogleMap from "./../create-new-event/search/map/map";
-
+import GoogleMapReact from "google-map-react";
 import {
   EventBox,
   EventRow,
   Toggle,
   EventColumn,
 } from "../../../styles/eventStyles";
+
 import { Modal } from "react-bootstrap";
 import EditLocation from "./editLocation";
 
