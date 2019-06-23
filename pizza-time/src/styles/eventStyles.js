@@ -474,20 +474,36 @@ export const EventRow = styled.div`
     ${media.desktop} {
       width: 50%;
     }
-    img,
+    .location-image,
     #map {
-      min-height: 280px;
-      max-height: 280px;
+      min-height: 300px;
+      max-height: 300px;
     }
     &.location {
       display: flex;
       flex-direction: column;
     }
-
+    #map {
+      display: none;
+    }
+    #location-map {
+      height: 300px; /* The height is 400 pixels */
+      width: 100%;
+    }
+    .marker {
+      width: 40px;
+      height: 40px;
+      margin-right: auto;
+      margin-left: auto;
+    }
     &.map {
       align-items: start;
       display: flex;
       flex-direction: column;
+      .current-map {
+        min-height: 300px;
+        width: 100%;
+      }
       ${media.desktop} {
         width: 45%;
       }

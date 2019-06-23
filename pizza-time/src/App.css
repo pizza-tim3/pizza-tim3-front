@@ -109,3 +109,11 @@
 .missing {
   margin: 25px auto 30px;
 }
+
+div.gm-style-iw.gm-style-iw-c {
+  display: block;
+  height: 100px;
+  max-width: 288px;
+  position: absolute;
+  z-index: 9999;
+}

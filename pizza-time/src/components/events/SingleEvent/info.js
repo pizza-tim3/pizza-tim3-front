@@ -1,6 +1,7 @@
 import React from "react";
 import Calendar from "react-calendar";
 import calendar from "./../../../assets/calendar.svg";
+import LocationMap from "./locationMap.js";
 import edit from "./../../../assets/edit.png";
 import trash from "./../../../assets/trash.png";
 import update from "./../../../assets/update.png";
@@ -11,7 +12,6 @@ import clock from "./../../../assets/clock.png";
 import cancel from "./../../../assets/cancel.svg";
 import moment from "moment";
 import Details from "./../../events/details-request/details-request";
-import GoogleMapReact from "google-map-react";
 import {
   EventBox,
   EventRow,
@@ -44,8 +44,10 @@ class Info extends React.Component {
         name: "",
         hours: [],
         photo: "",
-        lat: 0,
-        lng: 0,
+        center: {
+          lat: 0,
+          lng: 0,
+        },
       },
     };
     // React-Bootstraps Toggle modals
@@ -115,6 +117,9 @@ class Info extends React.Component {
     });
     // Set the info state's date, eventName and hides headers edit form
   }
+  handleApiLoaded = (map, maps) => {
+    // use map and maps objects
+  };
   updateLocation = location => {
     this.props.location(location);
   };
@@ -172,7 +177,8 @@ class Info extends React.Component {
     let streetCutOffIndex = req.formatted_address.indexOf(cutOff);
     let streetString = req.formatted_address.slice(0, streetCutOffIndex);
     let addressString = req.formatted_address.slice(streetString.length + 1);
-
+    let currentLat = Number(req.geometry.location.lat());
+    let currentLng = Number(req.geometry.location.lng());
     this.setState({
       // google_place_id: req.place_id,
       eventName: this.props.event.event_name,
@@ -184,8 +190,10 @@ class Info extends React.Component {
         hours: locationHours,
         name: req.name,
         photo: bigLeague,
-        lat: req.geometry.location.lat(),
-        lng: req.geometry.location.lng(),
+        center: {
+          lat: currentLat,
+          lng: currentLng,
+        },
       },
     });
   };
@@ -276,6 +284,7 @@ class Info extends React.Component {
     ];
     // Array of minutes to display in the select's mapped option values
     let minutes = ["00", "15", "30", "45"];
+    // console.log(this.state.location.center);
     return (
       <EventBox>
         {Object.keys(this.props.event).length ? (
@@ -508,20 +517,18 @@ class Info extends React.Component {
                     />
                   </div>
                 ) : (
-                  <>
-                    <h2>Place: </h2>
-                    <EditLocation
-                      event={this.props.event}
-                      updateLocation={this.updateLocation}
-                    />
-                  </>
+                  <></>
                 )}
               </EventRow>
               <EventRow>
                 <div className="event location">
                   {this.state.location ? (
                     <>
-                      <img alt="location" src={this.state.location.photo} />
+                      <img
+                        className="location-image"
+                        alt="location"
+                        src={this.state.location.photo}
+                      />
                       <div className="location-address">
                         <h2>Address:</h2>
                         <address>
@@ -536,13 +543,18 @@ class Info extends React.Component {
                 </div>
 
                 <div className="event map">
-                  {this.state.google_place_id ? (
+                  {this.state.location.center.lng !== 0 ? (
+                    <LocationMap center={this.state.location.center} />
+                  ) : (
+                    <></>
+                  )}
+                  {this.state.google_place_id.length > 0 ? (
                     <>
                       <Details
                         getDetails={this.getDetails}
                         placeId={this.state.google_place_id}
-                        lat={this.state.location.lat}
-                        lng={this.state.location.lng}
+                        lat={this.state.location.center.lat}
+                        lng={this.state.location.center.lng}
                       />
                       {this.state.location ? (
                         <div className="location-hours">
