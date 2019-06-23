@@ -1,9 +1,14 @@
 import React, { Component } from 'react';
 import useForm from '../../../../customHooks/customFormHooks';
-
-import { NameDetailsWrap, PlacesHeading } from '../../../../styles/nameDetailsStyles';
 import { connect } from 'react-redux';
 import { setEventName, setEventDesc } from './../../../../actions';
+import { 
+    PlacesSearchWrap,
+    PlacesHeading,
+    PlacesSearchInner,
+    NextStep,
+    Form
+} from '../../../../styles/placesSearchStyles';
 
 class NameAndDetails extends Component {
     constructor(props) {
@@ -22,39 +27,44 @@ class NameAndDetails extends Component {
     }
 
     handleSubmit = () => {
-        setEventName(this.state.eventName);
-        setEventDesc(this.state.eventDesc);
+        console.log(this.state.eventName, this.state.eventDesc)
+        this.props.setEventName(this.state.eventName);
+        this.props.setEventDesc(this.state.eventDesc);
         this.props.handleClick();
     }
 
     render() {
         return(
-        <NameDetailsWrap>
-            <PlacesHeading>
-                <h2>Step 2: Add a name and description</h2>
-            </PlacesHeading>
-            <form>
-                 <input
-                    type='text'
-                    name='eventName'
-                    onChange={this.onChange}
-                    value={this.state.eventName}
-                    placeholder="Event Name"
-                    required />
-                <input 
-                    type='text'
-                    name='eventDesc'
-                    onChange={this.onChange}
-                    value={this.state.eventDesc}
-                    placeholder="Event Description"
-                    required />
-                <div className='buttonWrap'>
-                <button 
-                    type='button'
-                    onClick={() => {this.handleSubmit()}}>Next Step</button>
-                </div>
-            </form>
-        </NameDetailsWrap>
+        <PlacesSearchWrap>
+            <PlacesSearchInner>
+                <PlacesHeading>
+                    <h2>Add your event name and description</h2>
+                </PlacesHeading>
+                <Form>
+                    <input
+                        type='text'
+                        name='eventName'
+                        onChange={this.onChange}
+                        value={this.state.eventName}
+                        placeholder="Event Name"
+                        required />
+                    <input 
+                        type='text'
+                        name='eventDesc'
+                        onChange={this.onChange}
+                        value={this.state.eventDesc}
+                        placeholder="Event Description"
+                        required />
+                    <div className='buttonWrap'>
+                    <NextStep 
+                        type='button'
+                        onClick={() => {this.handleSubmit()}}>
+                            Next Step
+                    </NextStep>
+                    </div>
+                </Form>
+            </PlacesSearchInner>
+        </PlacesSearchWrap>
         )
     }
     

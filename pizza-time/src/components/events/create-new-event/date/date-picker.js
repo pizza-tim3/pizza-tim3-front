@@ -1,11 +1,12 @@
 import React from 'react';
 import useForm from '../../../../customHooks/customFormHooks';
 import { 
-    DatePickerWrap,
+    PlacesSearchWrap,
+    PlacesSearchInner,
     PlacesHeading,
     Form,
-    Button
-} from '../../../../styles/datePickerStyles';
+    NextStep
+} from '../../../../styles/placesSearchStyles';
 import { setDateTime } from './../../../../actions';
 import { connect } from 'react-redux';
 
@@ -19,7 +20,7 @@ const DatePicker = (props) => {
             time: inputs.time
         }
         console.log(dateTime)
-        setDateTime(dateTime);
+        props.setDateTime(dateTime);
         props.handleClick();
     }
 
@@ -27,30 +28,32 @@ const DatePicker = (props) => {
     const {inputs, handleInputChange, handleSubmit} = useForm(sendData);
     
     return (
-        <DatePickerWrap>
-            <PlacesHeading>
-                <h2>Step 3: Choose a time and date</h2>
-            </PlacesHeading>
-            <Form noValidate>
-                <input
-                    name="date"
-                    id="date"
-                    type="date"
-                    onChange={handleInputChange}
-                    value={inputs.date || ''}
-                />
-            </Form>
-            <Form noValidate>
-                <input
-                    name="time"
-                    id="time"
-                    type="time"
-                    onChange={handleInputChange}
-                    value={inputs.time || ''}
-                />
-            </Form>
-            <Button type='submit' onClick={() => {handleSubmit()}}>Next Step</Button>
-        </DatePickerWrap>
+        <PlacesSearchWrap>
+            <PlacesSearchInner>
+                <PlacesHeading>
+                    <h2>Choose a time and date</h2>
+                </PlacesHeading>
+                <Form noValidate>
+                    <input
+                        name="date"
+                        id="date"
+                        type="date"
+                        onChange={handleInputChange}
+                        value={inputs.date || ''}
+                    />
+                </Form>
+                <Form noValidate>
+                    <input
+                        name="time"
+                        id="time"
+                        type="time"
+                        onChange={handleInputChange}
+                        value={inputs.time || ''}
+                    />
+                </Form>
+                <NextStep type='submit' onClick={() => {handleSubmit()}}>Next Step</NextStep>
+            </PlacesSearchInner>
+        </PlacesSearchWrap>
     )};
 
 const mstp = state => {

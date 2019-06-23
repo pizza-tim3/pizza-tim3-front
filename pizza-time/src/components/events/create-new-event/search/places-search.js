@@ -47,12 +47,12 @@ class PlacesSearch extends Component {
         console.log(this.state.show)
             return(
                 <PlacesSearchWrap>
-
-                    <PlacesHeading>
-                        <h2>Step 1: Choose Your Location</h2>
-                    </PlacesHeading>
-
                     <PlacesSearchInner>
+                        <PlacesHeading>
+                            <h2>Choose Your Location:</h2>
+                        </PlacesHeading>
+
+                        
                         <SearchBar handleGetSearchData={this.handleGetSearchData}/>
 
                         {this.state.show ? 
@@ -61,12 +61,10 @@ class PlacesSearch extends Component {
                                 searchData={this.state.searchData}/> : 
                             <div />
                         }
+                        <NextStep onClick={() => {this.props.handleClick('placeData', this.state.placeData)}}>
+                            Next Step
+                        </NextStep>
                     </PlacesSearchInner>
-
-                    <NextStep onClick={() => {this.props.handleClick('placeData', this.state.placeData)}}>
-                        Next Step
-                    </NextStep>
-                    
                 </PlacesSearchWrap>
             )
     }

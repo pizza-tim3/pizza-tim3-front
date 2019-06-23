@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { PlacesContainer, Span, ShowMore } from '../../../../../styles/placesListStyles';
+import next from '../../../../../assets/next-orange.png';
+import prev from '../../../../../assets/prev-orange.png';
 //props from map : data={placesData} handleClick = {handleOnClick}
 
 
@@ -7,8 +9,21 @@ const PlacesList = (props) => {
     const [dataIndex, setDataIndex] = useState(3);
     const [data, setData] = useState([]);
     
-    setTimeout(() => setData(props.data.slice(0, dataIndex)))
-    const moreItems = () => setDataIndex(dataIndex + 3);
+    setTimeout(() => setData(props.data.slice(dataIndex -3, dataIndex)))
+
+    const moreItems = () => {
+        const dataLength = props.data.length;
+        if(dataIndex < dataLength) {
+            setDataIndex(dataIndex + 3);
+        }
+    }
+
+    const lessItems = () => {
+        if(dataIndex > 3) {
+            setDataIndex(dataIndex - 3);    
+        }
+    }
+
 
     return(
         <>
@@ -21,12 +36,20 @@ const PlacesList = (props) => {
                                 <p className="rating">
                                     Rating: <Span rating={data.rating}>{data.rating}</Span>
                                 </p>
+                                <p>
+                                    Location: <span>{data.formatted_address}</span>
+                                </p>
                             </div>
-                            <button id='addPlaceId' onClick={() => props.handleClick(data.place_id, data.name)}>+</button>
+                            <button className='addPlaceId' onClick={() => props.handleClick(data.place_id, data.name)}>+</button>
                         </div>
                 )})}
             </PlacesContainer>
-            <ShowMore onClick={moreItems}>More Locations</ShowMore>
+            <ShowMore onClick={lessItems}>
+                <img src={prev} alt="previous arrow" />
+            </ShowMore>
+            <ShowMore onClick={moreItems}>
+                <img src={next} alt="next arrow" />
+            </ShowMore>
         </>
     )
 }

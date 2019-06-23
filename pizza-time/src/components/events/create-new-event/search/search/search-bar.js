@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { SearchContainer } from '../../../../../styles/searchbarStyles';
-
+import next from '../../../../../assets/nextArrow.png';
 
 class SearchBar extends Component {
     constructor(props) {
@@ -30,7 +30,10 @@ class SearchBar extends Component {
                     onChange={this.handleChange}
                     value={this.state.search}
                 />
-                <button onClick={() => {this.handleSubmit()}}>Search</button>
+                <button 
+                    onClick={() => {this.handleSubmit()}}>
+                        <img src={next} alt="next arrow" />
+                </button>
             </SearchContainer>
         )
     }
