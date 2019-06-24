@@ -126,6 +126,11 @@ class EventView extends React.Component {
       await this.fetchEvent();
       await this.fetchFriends();
     }
+    const currentUser = this.props.userReducer.firebase_uid;
+    if (currentUser !== prevProps.userReducer.firebase_uid) {
+      // await this.fetchEvent();
+      await this.fetchFriends();
+    }
   }
 
   // Select user to be added to an selectedToInvite array that will be post to eventInvited table
@@ -187,6 +192,7 @@ class EventView extends React.Component {
     let stateSelected = this.state.selectedToInvite;
     let currentEvent = this.state.event;
     let currentInvited = this.state.event.invitedUsers;
+    let currentUnInvited = this.state.unInvitedFriends;
 
     if (event_id) {
       stateSelected.map(select => {
@@ -202,6 +208,22 @@ class EventView extends React.Component {
       for (let i = 0; i < stateSelected.length; i++) {
         currentInvited.push(stateSelected[i]);
       }
+
+      for (var i = 0; i < currentInvited.length; i++) {
+        for (var j = 0; j < currentUnInvited.length; j++) {
+          if (
+            currentInvited[i].firebase_uid === currentUnInvited[j].firebase_uid
+          ) {
+            currentUnInvited = currentUnInvited
+              .slice(0, j)
+              .concat(currentUnInvited.slice(j + 1, currentUnInvited.length));
+          }
+        }
+      }
+      this.setState({
+        unInvitedFriends: currentUnInvited,
+      });
+
       if (currentInvited.length !== stateSelected.length) {
         let newUpdatedEvent = {
           id: event_id,
@@ -217,7 +239,6 @@ class EventView extends React.Component {
             `https://pizza-tim3-be.herokuapp.com/api/invited/${event_id}`,
             stateSelected
           )
-
           .then(res => {
             newUpdatedEvent.invitedUsers = currentInvited;
 

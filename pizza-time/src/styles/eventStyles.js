@@ -49,7 +49,15 @@ export const Inner = styled.div`
     margin: 20px 33px 0px 0px;
     opacity: 1;
   }
-
+  .orange-form {
+    border: none;
+    border-bottom: 1.5px solid ${colors.primary};
+    margin-right: 15px;
+    text-transform: capitalize;
+    &:focus {
+      outline: none;
+    }
+  }
   ${media.tablet} {
     width: 80%;
     .event-header {
@@ -80,77 +88,6 @@ export const Inner = styled.div`
     }
   }
 
-  .tobe-invited {
-    width: 80%;
-    height: 163px;
-    background-color: #fff;
-    margin-top: 40px;
-    background: none;
-    button {
-      padding: 10px 30px;
-    }
-  }
-  .friends {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    height: auto;
-    align-self: center;
-    width: 100%;
-    margin-top: 150px;
-    padding: 15px 0px;
-    border-top: 4px solid ${colors.black};
-    border-bottom: 4.5px solid ${colors.black};
-    background-color: ${colors.white};
-    -webkit-overflow-scrolling: touch;
-
-    ${media.desktop} {
-      width: 80%;
-      border: 2px solid ${colors.primary};
-      margin-top: 125px;
-      border-radius: 5px;
-      .friend {
-        width: 66px;
-        margin: 8px;
-      }
-    }
-    h1 {
-      text-align: center;
-      width: 100%;
-    }
-    h2 {
-      margin: 8px 0px;
-    }
-    &::-webkit-scrollbar {
-      display: none;
-    }
-    .friend {
-      flex: 0 0 auto;
-      margin: 12px;
-      width: 100px;
-      height: auto;
-      ${media.desktop} {
-        width: 145px;
-      }
-    }
-    img {
-      margin-top: 12px;
-      border: 3.5px solid ${colors.white};
-      border-radius: 50%;
-      height: 100px;
-      &:hover {
-        border: 3.5px solid ${colors.primary};
-      }
-      ${media.desktop} {
-        height: auto;
-        margin-bottom: 10px;
-      }
-    }
-    .friend-invited,
-    img:hover {
-      border: 3.5px solid ${colors.primary};
-    }
-  }
   .event-header {
     width: 91%;
     border-bottom: 2px solid ${colors.black} !important;
@@ -169,22 +106,17 @@ export const Inner = styled.div`
       ${media.desktop} {
         height: 40px;
       }
-      input {
-        border: none;
-        border-bottom: 1.5px solid ${colors.primary};
-        margin-right: 15px;
-        text-transform: capitalize;
-        &:focus {
-          outline: none;
-        }
-      }
     }
     .event-name {
       justify-content: space-between;
       display: flex;
       width: 78%;
+      align-items: center;
       h1 {
+        align-items: center;
+        // align-self: center;
         span {
+          font-size: 1.4rem;
           padding-left: 10px;
           text-transform: capitalize;
         }
@@ -256,6 +188,9 @@ export const Inner = styled.div`
   .event-location-name {
     display: flex;
     justify-content: space-between;
+    span {
+      font-size: 1.3rem;
+    }
     ${media.desktop} {
       width: 100%;
     }
@@ -299,6 +234,7 @@ export const Inner = styled.div`
     background: none;
     border: none;
     padding-right: 0px;
+    padding: 3px;
     img {
       width: 40px;
       height: 40px;
@@ -324,6 +260,7 @@ export const Inner = styled.div`
     }
     &.update img {
       border-radius: 0%;
+      padding: 3px;
     }
   }
 `;
@@ -470,20 +407,36 @@ export const EventRow = styled.div`
     ${media.desktop} {
       width: 50%;
     }
-    img,
+    .location-image,
     #map {
-      min-height: 280px;
-      max-height: 280px;
+      min-height: 300px;
+      max-height: 300px;
     }
     &.location {
       display: flex;
       flex-direction: column;
     }
-
+    #map {
+      display: none;
+    }
+    #location-map {
+      height: 300px; /* The height is 400 pixels */
+      width: 100%;
+    }
+    .marker {
+      width: 40px;
+      height: 40px;
+      margin-right: auto;
+      margin-left: auto;
+    }
     &.map {
       align-items: start;
       display: flex;
       flex-direction: column;
+      .current-map {
+        min-height: 300px;
+        width: 100%;
+      }
       ${media.desktop} {
         width: 45%;
       }
@@ -560,25 +513,32 @@ export const EventRow = styled.div`
       margin-bottom: 15px;
       p {
         align-self: center;
+        text-align: left;
         margin-bottom: 0px;
-        padding-left: 12px;
+        // padding-left: 12px;
         padding-right: 12px;
-      }
-      .action-buttons {
-        display: flex;
       }
     }
     img {
       border-radius: 50%;
+      margin-right: 12px;
     }
   }
   .add-comments {
-    input {
-      border: 1.3px solid orange;
-      padding: 10px 5px;
-      margin-right: 10px;
+    display: flex;
+
+    .action img {
+      padding: 3px;
     }
   }
+  .add-comments,
+  .edit-comment {
+    .orange-form::placeholder {
+      text-transform: lowercase;
+      color: rgba(0, 0, 0, 0.3);
+    }
+  }
+
   .edit-comment {
     display: none;
   }
