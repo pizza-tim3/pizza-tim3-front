@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { connect } from "react-redux";
 import { ProfileListContainer, ListToolBar } from "../../styles/profileStyles";
 
 import FriendSearchBox from "../../components/friend-search-box/friend-search-box";
 import FriendCard from "../friend-card/FriendCard";
+import { CurrentUser } from "../../contexts/CurrentUser";
 
 //our backend url
 const backend = process.env.REACT_APP_BACK_END_URL;
 
-const FriendsList = ({ firebase_uid }) => {
+const FriendsList = () => {
   const [friends, setFriends] = useState([]);
+  const user = useContext(CurrentUser);
+  const { firebase_uid } = user;
   useEffect(() => {
     //Immediately Invoked Function Expression
     /*https://developer.mozilla.org/en-US/docs/Glossary/IIFE#targetText=An%20IIFE%20(Immediately%20Invoked%20Function,and%20contains%20two%20major%20parts.*/
@@ -35,9 +38,4 @@ const FriendsList = ({ firebase_uid }) => {
   );
 };
 
-const mstp = ({ userReducer }) => userReducer;
-
-export default connect(
-  mstp,
-  {}
-)(FriendsList);
+export default FriendsList;

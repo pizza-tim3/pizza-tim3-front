@@ -16,25 +16,38 @@ import { CurrentUser } from "../../contexts/CurrentUser";
 const Profile = props => {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState(undefined);
 
   const getUser = async () => {
-    const response = await authorizedRequest(
-      `${process.env.REACT_APP_BACK_END_URL}/api/users/${
-        props.match.params.firebase_uid
-      }`
-    );
-    setUser(response);
-    setIsLoading(false);
+    try {
+      //wrap axios call
+      const response = await authorizedRequest(
+        `${process.env.REACT_APP_BACK_END_URL}/api/users/${
+          props.match.params.firebase_uid
+        }`
+      );
+      if (response.error) {
+        throw response.error;
+      }
+      setUser(response);
+      setIsLoading(false);
+    } catch (error) {
+      setError(error);
+      setIsLoading(false);
+    }
   };
   useEffect(() => {
     getUser();
   }, [props.match.params.firebase_uid]);
+
   return (
     <div>
       <Nav />
       <Wrap>
         {isLoading ? (
           <div>Loading</div>
+        ) : error ? (
+          <div>{error}</div>
         ) : (
           <CurrentUser.Provider value={user}>
             <ProfileUserInfo />
@@ -69,13 +82,4 @@ const Profile = props => {
   );
 };
 
-//Here I've destructured the single reducer
-const mstp = ({ userReducer /**,otherReducer */ }) => {
-  console.log(userReducer);
-  return { userReducer };
-};
-
-export default connect(
-  mstp,
-  {}
-)(Profile);
+export default Profile;
