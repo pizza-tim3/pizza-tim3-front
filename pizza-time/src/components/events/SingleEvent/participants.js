@@ -24,83 +24,90 @@ class Participants extends React.Component {
   handleShowMoreUsers() {
     this.setState({ showMoreUsers: true });
   }
-
+  inviteFriendsHandler() {
+    this.props.inviteFriends();
+    this.setState({ showMoreUsers: false });
+  }
   render() {
     return (
       <>
-        <Modal
-          show={this.state.showMoreUsers}
-          onHide={this.handleCloseMoreUsers}
-        >
-          <Modal.Body>
-            <div className="more-user">
-              {this.props.event ? (
-                <>
-                  {/* Selecte user's friends to an array. User can add the friends to an array that will be sent with post request  to the backend */}
-                  <div className="friends">
-                    {this.props.unInvitedFriends.length > 0 ? (
-                      <>
-                        {this.props.unInvitedFriends.map((friend, index) => {
-                          return (
-                            <div
-                              className="friend"
-                              friend={friend}
-                              id={friend.firebase_uid}
-                              key={friend.firebase_uid}
-                              onClick={() =>
-                                this.props.selectAdditional(friend)
-                              }
-                            >
-                              <img
-                                className="friend-avatar"
+        <EventRow>
+          <Modal
+            show={this.state.showMoreUsers}
+            onHide={this.handleCloseMoreUsers}
+          >
+            <Modal.Body>
+              <div className="more-user">
+                {this.props.event ? (
+                  <>
+                    {/* Selecte user's friends to an array. User can add the friends to an array that will be sent with post request  to the backend */}
+                    <div className="friends">
+                      {this.props.unInvitedFriends.length > 0 ? (
+                        <>
+                          {this.props.unInvitedFriends.map((friend, index) => {
+                            return (
+                              <div
+                                className="friend"
+                                friend={friend}
                                 id={friend.firebase_uid}
-                                src={friend.avatar}
-                                alt={friend.first_name}
-                              />
-                              <h4>{friend.first_name}</h4>
-                            </div>
-                          );
-                        })}
-                        <div className="tobe-invited">
-                          <button onClick={this.props.inviteFriends}>
-                            Invite
-                          </button>
-                          {!this.props.additional_friends ? (
-                            <></>
-                          ) : (
-                            <>
-                              {this.props.additional_friends.map(friend => {
-                                return (
-                                  <div key={friend.id}>
-                                    <h2>{friend.id}</h2>
-                                  </div>
-                                );
-                              })}
-                            </>
-                          )}
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <h1>No friends to invite</h1>
-                      </>
-                    )}
-                  </div>
-                </>
-              ) : (
-                <div />
-              )}
-            </div>
-          </Modal.Body>
-          <Modal.Footer>
-            {/* Close Calendar */}
+                                key={friend.firebase_uid}
+                                onClick={() =>
+                                  this.props.selectAdditional(friend)
+                                }
+                              >
+                                <img
+                                  className="friend-avatar"
+                                  id={friend.firebase_uid}
+                                  src={friend.avatar}
+                                  alt={friend.first_name}
+                                />
+                                <h4>{friend.first_name}</h4>
+                              </div>
+                            );
+                          })}
+                        </>
+                      ) : (
+                        <>
+                          <h1>No friends to invite</h1>
+                        </>
+                      )}
+                    </div>
+                    <div className="tobe-invited">
+                      <button
+                        className="action"
+                        onClick={() => this.inviteFriendsHandler()}
+                      >
+                        <img alt="invite plus sign" src={plus} />
+                      </button>
+                      {!this.props.additional_friends ? (
+                        <></>
+                      ) : (
+                        <>
+                          {this.props.additional_friends.map(friend => {
+                            return (
+                              <div key={friend.id}>
+                                <h2>{friend.id}</h2>
+                              </div>
+                            );
+                          })}
+                        </>
+                      )}
+                    </div>
+                  </>
+                ) : (
+                  <div />
+                )}
+              </div>
+            </Modal.Body>
+            <Modal.Footer>
+              {/* Close Calendar */}
 
-            <button className="btn-save" onClick={this.updateDateHandler}>
-              Save
-            </button>
-          </Modal.Footer>
-        </Modal>
-
+              <button className="btn-save" onClick={this.handleCloseMoreUsers}>
+                Close
+              </button>
+            </Modal.Footer>
+          </Modal>
+        </EventRow>
         <EventRow>
           <h3>Invited</h3>
           <hr />

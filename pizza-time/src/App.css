@@ -86,10 +86,58 @@
   .carousel-indicators {
     bottom: 25%;
   }
+  .friends {
+    /* width: 80%; */
+    display: flex;
+    margin-top: 125px;
+    border-radius: 5px;
+  }
+  .friend {
+    width: 145px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+  .friend img {
+    height: auto;
+    margin-bottom: 10px;
+  }
 }
 @media (max-width: 991px) {
   .carousel-indicators {
     bottom: 2%;
+  }
+  .friends {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    height: auto;
+    align-self: center;
+    width: 100%;
+    margin-top: 150px;
+    padding: 15px 0px;
+    border-top: 4px solid black;
+    border-bottom: 4.5px solid black;
+    background-color: white;
+    -webkit-overflow-scrolling: touch;
+  }
+  .friends h1 {
+    text-align: center;
+    width: 100%;
+  }
+  .friends h2 {
+    margin: 8px 0px;
+  }
+  .friends::-webkit-scrollbar {
+    display: none;
+  }
+  .friend {
+    width: 66px;
+
+    flex: 0 0 auto;
+    margin: 12px;
+    width: 100px;
+    height: auto;
   }
 }
 
@@ -116,4 +164,27 @@ div.gm-style-iw.gm-style-iw-c {
   max-width: 288px;
   position: absolute;
   z-index: 9999;
+}
+
+.friend-avatar {
+  margin-top: 12px;
+  border: 3.5px solid white;
+  border-radius: 50%;
+  height: 100px;
+}
+.tobe-invited {
+  text-align: center;
+}
+.tobe-invited .action {
+  background: none;
+  border: none;
+}
+.tobe-invited .action img {
+  height: 40px;
+  width: 40px;
+  padding: 3px;
+}
+.friend img:hover,
+.friend-avatar.friend-invited {
+  border: 3.5px solid orange;
 }

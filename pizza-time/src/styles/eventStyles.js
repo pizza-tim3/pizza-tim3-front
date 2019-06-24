@@ -88,77 +88,6 @@ export const Inner = styled.div`
     }
   }
 
-  .tobe-invited {
-    width: 80%;
-    height: 163px;
-    background-color: #fff;
-    margin-top: 40px;
-    background: none;
-    button {
-      padding: 10px 30px;
-    }
-  }
-  .friends {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    height: auto;
-    align-self: center;
-    width: 100%;
-    margin-top: 150px;
-    padding: 15px 0px;
-    border-top: 4px solid ${colors.black};
-    border-bottom: 4.5px solid ${colors.black};
-    background-color: ${colors.white};
-    -webkit-overflow-scrolling: touch;
-
-    ${media.desktop} {
-      width: 80%;
-      border: 2px solid ${colors.primary};
-      margin-top: 125px;
-      border-radius: 5px;
-      .friend {
-        width: 66px;
-        margin: 8px;
-      }
-    }
-    h1 {
-      text-align: center;
-      width: 100%;
-    }
-    h2 {
-      margin: 8px 0px;
-    }
-    &::-webkit-scrollbar {
-      display: none;
-    }
-    .friend {
-      flex: 0 0 auto;
-      margin: 12px;
-      width: 100px;
-      height: auto;
-      ${media.desktop} {
-        width: 145px;
-      }
-    }
-    img {
-      margin-top: 12px;
-      border: 3.5px solid ${colors.white};
-      border-radius: 50%;
-      height: 100px;
-      &:hover {
-        border: 3.5px solid ${colors.primary};
-      }
-      ${media.desktop} {
-        height: auto;
-        margin-bottom: 10px;
-      }
-    }
-    .friend-invited,
-    img:hover {
-      border: 3.5px solid ${colors.primary};
-    }
-  }
   .event-header {
     width: 91%;
     border-bottom: 2px solid ${colors.black} !important;
@@ -302,6 +231,7 @@ export const Inner = styled.div`
     background: none;
     border: none;
     padding-right: 0px;
+    padding: 3px;
     img {
       width: 40px;
       height: 40px;
@@ -327,6 +257,7 @@ export const Inner = styled.div`
     }
     &.update img {
       border-radius: 0%;
+      padding: 3px;
     }
   }
 `;
@@ -584,9 +515,6 @@ export const EventRow = styled.div`
         // padding-left: 12px;
         padding-right: 12px;
       }
-      .action-buttons {
-        display: flex;
-      }
     }
     img {
       border-radius: 50%;
@@ -595,6 +523,10 @@ export const EventRow = styled.div`
   }
   .add-comments {
     display: flex;
+
+    .action img {
+      padding: 3px;
+    }
   }
   .add-comments,
   .edit-comment {

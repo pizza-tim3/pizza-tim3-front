@@ -127,7 +127,8 @@ class EventView extends React.Component {
       await this.fetchFriends();
     }
     const currentUser = this.props.userReducer.firebase_uid;
-    if (currentUser === this.state.event.organizer) {
+    if (currentUser !== prevProps.userReducer.firebase_uid) {
+      // await this.fetchEvent();
       await this.fetchFriends();
     }
   }
