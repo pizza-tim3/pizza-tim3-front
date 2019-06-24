@@ -579,6 +579,7 @@ export const EventRow = styled.div`
       margin-bottom: 15px;
       p {
         align-self: center;
+        text-align: left;
         margin-bottom: 0px;
         // padding-left: 12px;
         padding-right: 12px;
