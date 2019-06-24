@@ -80,7 +80,7 @@ function App(props) {
         {/* TODO Change landing to exact */}
 
         <PrivateRoute
-          path="/profile"
+          path="/profile/:firebase_uid"
           authenticated={authenticated}
           component={Profile}
         />

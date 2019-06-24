@@ -3,7 +3,7 @@ import firebaseApp from "./firebaseApp";
 /**  this function takes in a url and a method
  and automatically attaches the token
  to the authorization header.*/
-const authorizedRequest = async (url, method, body = {}) => {
+const authorizedRequest = async (url, method = "GET", body = {}) => {
   const HTML_METHOD = method.toUpperCase();
   try {
     //get the token off of the current user
