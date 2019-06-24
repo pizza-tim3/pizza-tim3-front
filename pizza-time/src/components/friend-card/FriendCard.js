@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { connect } from "react-redux";
 import { Button, FriendInfoContainer } from "../../styles/profileStyles";
+import { CurrentUser } from "../../contexts/CurrentUser";
 
 //our backend url
 const backend = process.env.REACT_APP_BACK_END_URL;
@@ -13,11 +14,15 @@ function FriendCard({
     avatar,
     first_name,
     last_name,
-    firebase_uid: friend_uid,
+    firebase_uid: friend_uid
   },
-  userReducer: { firebase_uid },
+  userReducer: { firebase_uid }
 }) {
+  const user = useContext(CurrentUser);
   const [pending, setPending] = useState(status === "pending");
+  const [isLoggedInUser, setIsLoggedInUser] = useState(
+    firebase_uid === user.firebase_uid
+  );
 
   //really need to write a function that lets you make authenticated reqs
   // api/friends/accept/:user_uid/:friend_uid
@@ -35,7 +40,7 @@ function FriendCard({
         {first_name} {last_name}
       </h4>
       <p>Location</p>
-      {pending ? (
+      {pending && isLoggedInUser ? (
         <Button
           onClick={() =>
             request(
@@ -46,7 +51,7 @@ function FriendCard({
           Accept
         </Button>
       ) : null}
-      {pending ? (
+      {pending && isLoggedInUser ? (
         <Button
           onClick={() =>
             request(
