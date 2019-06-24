@@ -126,6 +126,10 @@ class EventView extends React.Component {
       await this.fetchEvent();
       await this.fetchFriends();
     }
+    const currentUser = this.props.userReducer.firebase_uid;
+    if (currentUser === this.state.event.organizer) {
+      await this.fetchFriends();
+    }
   }
 
   // Select user to be added to an selectedToInvite array that will be post to eventInvited table
