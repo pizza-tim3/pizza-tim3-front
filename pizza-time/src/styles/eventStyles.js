@@ -49,7 +49,15 @@ export const Inner = styled.div`
     margin: 20px 33px 0px 0px;
     opacity: 1;
   }
-
+  .orange-form {
+    border: none;
+    border-bottom: 1.5px solid ${colors.primary};
+    margin-right: 15px;
+    text-transform: capitalize;
+    &:focus {
+      outline: none;
+    }
+  }
   ${media.tablet} {
     width: 80%;
     .event-header {
@@ -168,15 +176,6 @@ export const Inner = styled.div`
       height: 48px;
       ${media.desktop} {
         height: 40px;
-      }
-      input {
-        border: none;
-        border-bottom: 1.5px solid ${colors.primary};
-        margin-right: 15px;
-        text-transform: capitalize;
-        &:focus {
-          outline: none;
-        }
       }
     }
     .event-name {
@@ -581,7 +580,7 @@ export const EventRow = styled.div`
       p {
         align-self: center;
         margin-bottom: 0px;
-        padding-left: 12px;
+        // padding-left: 12px;
         padding-right: 12px;
       }
       .action-buttons {
@@ -590,15 +589,20 @@ export const EventRow = styled.div`
     }
     img {
       border-radius: 50%;
+      margin-right: 12px;
     }
   }
   .add-comments {
-    input {
-      border: 1.3px solid orange;
-      padding: 10px 5px;
-      margin-right: 10px;
+    display: flex;
+  }
+  .add-comments,
+  .edit-comment {
+    .orange-form::placeholder {
+      text-transform: lowercase;
+      color: rgba(0, 0, 0, 0.3);
     }
   }
+
   .edit-comment {
     display: none;
   }

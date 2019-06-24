@@ -293,6 +293,7 @@ class Info extends React.Component {
               {this.state.editForm === true ? (
                 <div className="header-edit">
                   <input
+                    className="orange-form"
                     name="name"
                     type="text"
                     value={this.state.eventName}
