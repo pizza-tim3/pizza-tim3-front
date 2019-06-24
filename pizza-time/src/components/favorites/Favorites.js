@@ -1,6 +1,6 @@
 import React from "react";
-import { connect } from "react-redux";
 import FavoritesList from "../favorites-list/FavoritesList";
+import { CurrentUser } from "../../contexts/CurrentUser";
 
 class Favorites extends React.Component {
   constructor(props) {
@@ -62,7 +62,7 @@ class Favorites extends React.Component {
     try {
       const response = await fetch(
         `${process.env.REACT_APP_BACK_END_URL}/api/favorites/${
-          this.props.firebase_uid
+          this.context.firebase_uid
         }`
       );
       const json = await response.json();
@@ -86,7 +86,6 @@ class Favorites extends React.Component {
   };
 
   render() {
-    console.log("favorites-render");
     const { favorites, placesData, filterValue, filterCities } = this.state;
     const dataLoaded = placesData && placesData.length === favorites.length;
 
@@ -126,9 +125,5 @@ function loadScript(url) {
   index.parentNode.insertBefore(script, index); //---------------------------inserts our script before the very first script
 }
 
-const mstp = ({ userReducer }) => userReducer;
-
-export default connect(
-  mstp,
-  {}
-)(Favorites);
+Favorites.contextType = CurrentUser;
+export default Favorites;
