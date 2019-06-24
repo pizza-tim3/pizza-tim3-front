@@ -36,6 +36,12 @@ class Participants extends React.Component {
             show={this.state.showMoreUsers}
             onHide={this.handleCloseMoreUsers}
           >
+            <Modal.Footer>
+              {/* Close Calendar */}
+              <button className="btn-save" onClick={this.handleCloseMoreUsers}>
+                X
+              </button>
+            </Modal.Footer>
             <Modal.Body>
               <div className="more-user">
                 {this.props.event ? (
@@ -99,13 +105,6 @@ class Participants extends React.Component {
                 )}
               </div>
             </Modal.Body>
-            <Modal.Footer>
-              {/* Close Calendar */}
-
-              <button className="btn-save" onClick={this.handleCloseMoreUsers}>
-                Close
-              </button>
-            </Modal.Footer>
           </Modal>
         </EventRow>
         <EventRow>

@@ -82,6 +82,20 @@
 .carousel-caption:hover {
   background-color: rgba(255, 255, 255, 0.167);
 }
+.friends {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  height: auto;
+  align-self: center;
+  width: 100%;
+  margin-top: 33px;
+  padding: 15px 0px;
+  border-top: 4px solid black;
+  border-bottom: 4px solid black;
+  background-color: white;
+  -webkit-overflow-scrolling: touch;
+}
 @media (min-width: 992px) {
   .carousel-indicators {
     bottom: 25%;
@@ -89,8 +103,8 @@
   .friends {
     /* width: 80%; */
     display: flex;
-    margin-top: 125px;
-    border-radius: 5px;
+    margin-top: 44px;
+    /* border-radius: 5px; */
   }
   .friend {
     width: 145px;
@@ -104,22 +118,11 @@
   }
 }
 @media (max-width: 991px) {
+  .modal {
+    margin-top: 75px;
+  }
   .carousel-indicators {
     bottom: 2%;
-  }
-  .friends {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    height: auto;
-    align-self: center;
-    width: 100%;
-    margin-top: 150px;
-    padding: 15px 0px;
-    border-top: 4px solid black;
-    border-bottom: 4.5px solid black;
-    background-color: white;
-    -webkit-overflow-scrolling: touch;
   }
   .friends h1 {
     text-align: center;
@@ -174,6 +177,7 @@ div.gm-style-iw.gm-style-iw-c {
 }
 .tobe-invited {
   text-align: center;
+  margin-top: 25px;
 }
 .tobe-invited .action {
   background: none;

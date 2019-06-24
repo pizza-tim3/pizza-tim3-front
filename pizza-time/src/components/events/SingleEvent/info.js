@@ -511,7 +511,9 @@ class Info extends React.Component {
               <EventRow>
                 {this.state.location ? (
                   <div className="event-location-name">
-                    <h2>Place: {this.state.location.name}</h2>
+                    <h2>
+                      Place: <span>{this.state.location.name}</span>
+                    </h2>
                     <EditLocation
                       event={this.props.event}
                       updateLocation={this.updateLocation}

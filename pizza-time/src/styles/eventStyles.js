@@ -188,6 +188,9 @@ export const Inner = styled.div`
   .event-location-name {
     display: flex;
     justify-content: space-between;
+    span {
+      font-size: 1.3rem;
+    }
     ${media.desktop} {
       width: 100%;
     }
