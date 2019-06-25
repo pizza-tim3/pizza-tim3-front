@@ -43,7 +43,7 @@ export default function Register(props) {
       };
       // send information to backend
       const response = await registerWithBackend(userObj);
-      props.history.push("/");
+      props.history.push("/home");
     } catch (err) {
       // Handle Errors here.
       const errorCode = err.code;
@@ -58,9 +58,7 @@ export default function Register(props) {
     try {
       // sign in/register with popup window
       const result = await firebaseApp.auth().signInWithPopup(googleProvider);
-      const {
-        additionalUserInfo: { isNewUser }
-      } = result;
+      const { additionalUserInfo: { isNewUser }} = result;
       //check to see if the users new
       console.log(result);
       if (isNewUser) {
@@ -68,11 +66,11 @@ export default function Register(props) {
         // register uses information on our backend
         const user = await registerWithPopup(result);
         // set state with user
-        props.history.push("/");
+        props.history.push("/home");
       } else if (/**user dne on backend */ false) {
         //this would be an error on our db's part
       } else {
-        props.history.push("/");
+        props.history.push("/home");
       }
       // TODO set global user info
     } catch (err) {
