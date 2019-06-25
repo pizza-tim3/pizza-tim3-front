@@ -4,7 +4,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import plus from "../../../assets/plus.png";
-import orangeupdate from "../../../assets/orangeupdate.png";
+import update from "../../../assets/update.png";
 import edit from "../../../assets/edit.png";
 import cancel from "../../../assets/cancel.svg";
 
@@ -32,12 +32,9 @@ class Discussion extends React.Component {
     });
 
     let currentAvatar = this.props.userReducer.avatar;
-    console.log(this.props);
-    let matchingId = [];
     this.setState({
       avatar: currentAvatar,
     });
-    console.log(this.state);
 
     let comments = document.getElementsByClassName("edit-comment");
     Array.from(comments).map(comment => {
@@ -243,14 +240,14 @@ class Discussion extends React.Component {
                               >
                                 <input
                                   id={`edit-comment-input-${comment.id}`}
-                                  className="edit-comment-input"
+                                  className="edit-comment-input orange-form"
                                   value={this.state.editComment.update}
                                   name="update"
                                   onChange={this.updateOnChange}
                                 />
                                 <button className="action update">
                                   <img
-                                    src={orangeupdate}
+                                    src={update}
                                     alt="update"
                                     onClick={() =>
                                       this.updateComment(comment.id)
@@ -260,9 +257,10 @@ class Discussion extends React.Component {
                               </div>
 
                               <div>
-                                {this.props.user ? (
+                                {this.props.userReducer.firebase_uid ? (
                                   <>
-                                    {comment.user_id === this.props.user ? (
+                                    {comment.user_id ===
+                                    this.props.userReducer.firebase_uid ? (
                                       <div
                                         id={`action-button-${comment.id}`}
                                         className="action-buttons"
@@ -305,6 +303,8 @@ class Discussion extends React.Component {
                 </div>
                 <div className="add-comments">
                   <input
+                    placeholder="new comment"
+                    className="orange-form"
                     name="message"
                     value={this.state.newComment.message}
                     onChange={this.commentOnChange}

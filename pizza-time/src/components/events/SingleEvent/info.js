@@ -1,6 +1,7 @@
 import React from "react";
 import Calendar from "react-calendar";
 import calendar from "./../../../assets/calendar.svg";
+import LocationMap from "./locationMap.js";
 import edit from "./../../../assets/edit.png";
 import trash from "./../../../assets/trash.png";
 import update from "./../../../assets/update.png";
@@ -11,14 +12,13 @@ import clock from "./../../../assets/clock.png";
 import cancel from "./../../../assets/cancel.svg";
 import moment from "moment";
 import Details from "./../../events/details-request/details-request";
-// import GoogleMap from "./../create-new-event/search/map/map";
-
 import {
   EventBox,
   EventRow,
   Toggle,
   EventColumn,
 } from "../../../styles/eventStyles";
+
 import { Modal } from "react-bootstrap";
 import EditLocation from "./editLocation";
 
@@ -36,8 +36,6 @@ class Info extends React.Component {
       eventForm: false,
       google_place_id: "",
       eventName: "",
-      lat: 0,
-      lng: 0,
       location: {
         address: {
           street: "",
@@ -46,6 +44,10 @@ class Info extends React.Component {
         name: "",
         hours: [],
         photo: "",
+        center: {
+          lat: 0,
+          lng: 0,
+        },
       },
     };
     // React-Bootstraps Toggle modals
@@ -115,6 +117,9 @@ class Info extends React.Component {
     });
     // Set the info state's date, eventName and hides headers edit form
   }
+  handleApiLoaded = (map, maps) => {
+    // use map and maps objects
+  };
   updateLocation = location => {
     this.props.location(location);
   };
@@ -172,7 +177,8 @@ class Info extends React.Component {
     let streetCutOffIndex = req.formatted_address.indexOf(cutOff);
     let streetString = req.formatted_address.slice(0, streetCutOffIndex);
     let addressString = req.formatted_address.slice(streetString.length + 1);
-
+    let currentLat = Number(req.geometry.location.lat());
+    let currentLng = Number(req.geometry.location.lng());
     this.setState({
       // google_place_id: req.place_id,
       eventName: this.props.event.event_name,
@@ -184,8 +190,10 @@ class Info extends React.Component {
         hours: locationHours,
         name: req.name,
         photo: bigLeague,
-        lat: req.geometry.location.lat,
-        lng: req.geometry.location.lng,
+        center: {
+          lat: currentLat,
+          lng: currentLng,
+        },
       },
     });
   };
@@ -276,6 +284,7 @@ class Info extends React.Component {
     ];
     // Array of minutes to display in the select's mapped option values
     let minutes = ["00", "15", "30", "45"];
+    // console.log(this.state.location.center);
     return (
       <EventBox>
         {Object.keys(this.props.event).length ? (
@@ -284,6 +293,7 @@ class Info extends React.Component {
               {this.state.editForm === true ? (
                 <div className="header-edit">
                   <input
+                    className="orange-form"
                     name="name"
                     type="text"
                     value={this.state.eventName}
@@ -325,7 +335,7 @@ class Info extends React.Component {
               <div>
                 {this.props.userReducer.firebase_uid ===
                 this.props.event.organizer ? (
-                  <div>
+                  <div className="event-save">
                     <button
                       className="btn-save action organizer"
                       type="submit"
@@ -376,12 +386,18 @@ class Info extends React.Component {
                       {moment(this.state.date.toISOString()).format("LL")}
                     </span>
                   </h2>
-                  <img
-                    src={calendar}
-                    alt="calendar"
-                    onClick={this.handleShow}
-                    className="action organizer"
-                  />
+
+                  {this.props.userReducer.firebase_uid ===
+                  this.props.event.organizer ? (
+                    <img
+                      src={calendar}
+                      alt="calendar"
+                      onClick={this.handleShow}
+                      className="action organizer"
+                    />
+                  ) : (
+                    <></>
+                  )}
                 </div>
 
                 <div className="calendar-row">
@@ -389,12 +405,17 @@ class Info extends React.Component {
                     <b>Time</b>: {this.state.time.hour}:
                     {this.state.time.minutes} {this.state.time.am}
                   </h3>
-                  <img
-                    src={clock}
-                    alt="edit-time"
-                    onClick={this.toggleEditTime}
-                    className="action organizer"
-                  />
+                  {this.props.userReducer.firebase_uid ===
+                  this.props.event.organizer ? (
+                    <img
+                      src={clock}
+                      alt="edit-time"
+                      onClick={this.toggleEditTime}
+                      className="action organizer"
+                    />
+                  ) : (
+                    <></>
+                  )}
                 </div>
                 <div className="caloendar-row">
                   <div>
@@ -490,21 +511,27 @@ class Info extends React.Component {
               <EventRow>
                 {this.state.location ? (
                   <div className="event-location-name">
-                    <h2>Place: {this.state.location.name}</h2>
+                    <h2>
+                      Place: <span>{this.state.location.name}</span>
+                    </h2>
+                    <EditLocation
+                      event={this.props.event}
+                      updateLocation={this.updateLocation}
+                    />
                   </div>
                 ) : (
-                  <>
-                    <h2>Place: </h2>
-                  </>
+                  <></>
                 )}
-
-                <EditLocation updateLocation={this.updateLocation} />
               </EventRow>
               <EventRow>
                 <div className="event location">
                   {this.state.location ? (
                     <>
-                      <img alt="location" src={this.state.location.photo} />
+                      <img
+                        className="location-image"
+                        alt="location"
+                        src={this.state.location.photo}
+                      />
                       <div className="location-address">
                         <h2>Address:</h2>
                         <address>
@@ -519,13 +546,18 @@ class Info extends React.Component {
                 </div>
 
                 <div className="event map">
-                  {this.state.google_place_id ? (
+                  {this.state.location.center.lng !== 0 ? (
+                    <LocationMap center={this.state.location.center} />
+                  ) : (
+                    <></>
+                  )}
+                  {this.state.google_place_id.length > 0 ? (
                     <>
                       <Details
                         getDetails={this.getDetails}
                         placeId={this.state.google_place_id}
-                        lat={this.state.lat}
-                        lng={this.state.lng}
+                        lat={this.state.location.center.lat}
+                        lng={this.state.location.center.lng}
                       />
                       {this.state.location ? (
                         <div className="location-hours">

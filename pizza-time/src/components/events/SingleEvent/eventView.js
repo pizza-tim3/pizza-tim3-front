@@ -8,7 +8,8 @@ import Participants from "./participants";
 import Discussion from "./discussion";
 import { Inner } from "../../../styles/eventStyles";
 import loading from "../../../assets/loading.gif";
-import { func } from "prop-types";
+import missing from "../../../assets/404.jpg";
+// import { func } from "prop-types";
 
 class EventView extends React.Component {
   constructor(props) {
@@ -125,6 +126,11 @@ class EventView extends React.Component {
       await this.fetchEvent();
       await this.fetchFriends();
     }
+    const currentUser = this.props.userReducer.firebase_uid;
+    if (currentUser !== prevProps.userReducer.firebase_uid) {
+      // await this.fetchEvent();
+      await this.fetchFriends();
+    }
   }
 
   // Select user to be added to an selectedToInvite array that will be post to eventInvited table
@@ -186,6 +192,7 @@ class EventView extends React.Component {
     let stateSelected = this.state.selectedToInvite;
     let currentEvent = this.state.event;
     let currentInvited = this.state.event.invitedUsers;
+    let currentUnInvited = this.state.unInvitedFriends;
 
     if (event_id) {
       stateSelected.map(select => {
@@ -201,6 +208,22 @@ class EventView extends React.Component {
       for (let i = 0; i < stateSelected.length; i++) {
         currentInvited.push(stateSelected[i]);
       }
+
+      for (var i = 0; i < currentInvited.length; i++) {
+        for (var j = 0; j < currentUnInvited.length; j++) {
+          if (
+            currentInvited[i].firebase_uid === currentUnInvited[j].firebase_uid
+          ) {
+            currentUnInvited = currentUnInvited
+              .slice(0, j)
+              .concat(currentUnInvited.slice(j + 1, currentUnInvited.length));
+          }
+        }
+      }
+      this.setState({
+        unInvitedFriends: currentUnInvited,
+      });
+
       if (currentInvited.length !== stateSelected.length) {
         let newUpdatedEvent = {
           id: event_id,
@@ -216,7 +239,6 @@ class EventView extends React.Component {
             `https://pizza-tim3-be.herokuapp.com/api/invited/${event_id}`,
             stateSelected
           )
-
           .then(res => {
             newUpdatedEvent.invitedUsers = currentInvited;
 
@@ -397,7 +419,7 @@ class EventView extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="event-view">
         <Nav />
 
         {this.state.loading === true ? (
@@ -407,25 +429,36 @@ class EventView extends React.Component {
             </div>
           </Inner>
         ) : (
-          <Inner>
-            <Info
-              event={this.state.event}
-              toggleSwitch={this.toggleSwitch}
-              updateEvent={this.updateEvent}
-              updateName={this.updateName}
-              updateDate={this.updateDate}
-              location={this.location}
-              deleteEvent={this.deleteEvent}
-            />
-            <Participants
-              event={this.state.event}
-              unInvitedFriends={this.state.unInvitedFriends}
-              selectAdditional={this.selectAdditional}
-              inviteFriends={this.inviteFriends}
-            />
+          <>
+            {Object.keys(this.state.event).length ? (
+              <Inner>
+                <Info
+                  event={this.state.event}
+                  toggleSwitch={this.toggleSwitch}
+                  updateEvent={this.updateEvent}
+                  updateName={this.updateName}
+                  updateDate={this.updateDate}
+                  location={this.location}
+                  deleteEvent={this.deleteEvent}
+                />
+                <Participants
+                  event={this.state.event}
+                  unInvitedFriends={this.state.unInvitedFriends}
+                  selectAdditional={this.selectAdditional}
+                  inviteFriends={this.inviteFriends}
+                />
 
-            <Discussion event={this.state.event} />
-          </Inner>
+                <Discussion event={this.state.event} />
+              </Inner>
+            ) : (
+              <>
+                <h1 className="missing">Event? What event?</h1>
+                <Inner>
+                  <img src={missing} alt="dog eating a pizza" />
+                </Inner>
+              </>
+            )}
+          </>
         )}
       </div>
     );

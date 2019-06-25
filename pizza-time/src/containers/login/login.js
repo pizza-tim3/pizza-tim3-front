@@ -11,7 +11,6 @@ import "firebase/auth";
 import { Wrap, Form } from "../../styles/registerLoginStyles.js";
 
 export default function Login(props) {
-  console.log(props);
   //state === state object, dispatch function
   const [state, dispatch] = useReducer(
     //reducer function
@@ -72,11 +71,12 @@ export default function Login(props) {
         // register uses information on our backend
         const user = await registerWithPopup(result);
         // set state with user
-        //console.log(user);
+        props.history.push("/");
       } else if (/**user dne on backend */ false) {
         //this would be an error on our db's part
       } else {
         //get user info from backend by uid
+        props.history.push("/");
       }
       // TODO set global user info
     } catch (err) {

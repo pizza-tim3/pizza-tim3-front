@@ -29,14 +29,12 @@ function App(props) {
     //this logic should be global.
 
     firebaseApp.auth().onAuthStateChanged(async user => {
-
       //console.log("AuthStateChanged : ", user.uid);
-
       //firebase
 
       if (user) {
         //HANDLE USER STATE IN REDUX/COMPONENT STATE
-
+        // console.log("AuthStateChanged : ", user.uid);
         //get user info from our server
         const { uid } = user;
         const response = await fetch(
@@ -78,11 +76,6 @@ function App(props) {
         <Route path="/home" component={UserDashboard} />
         <Route path="/create-event" component={CreateNewEvent} />
         <Route exact path="/event/:id" component={EventView} />
-        <PrivateRoute
-          path="/profile/"
-          authenticated={authenticated}
-          component={Profile}
-        />
         <Route exact path="/" component={Landing} />
         {/* TODO Change landing to exact */}
 
