@@ -16,8 +16,6 @@ const Nav = props => {
     <Wrap>
       <Inner>
         <div className="userBox">
-
-
           <div className="avatar">
             {!props.userReducer.avatar ? (
               <img src={image} className="user" alt="placeholder" />
@@ -26,11 +24,7 @@ const Nav = props => {
             )}
             <Link to="/create-event" className="newEventBtn">Create Event</Link>
           </div>
-
-          
-          <div className="logoutBox">
-            <Link to="/" className="logoutBtn">Logout</Link>
-          </div>
+          <Link to="/" className="newEventBtn">Logout</Link>
         </div>
       </Inner>
     </Wrap>

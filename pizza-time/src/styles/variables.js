@@ -8,6 +8,7 @@ export const colors = {
   white: '#ffffff',
   black: '#1F1F1F',
   shadow: '#D2D2D2',
+  lightShadow: '#E5E5E5',
   formPlaceholder: '#929292',
 };
 

@@ -5,11 +5,14 @@ import img from "../assets/user.png";
 
 export const Wrap = styled.div`
   width: 100%;
-  background: linear-gradient(
-    155.4deg,
-    ${colors.secondary} 0%,
-    ${colors.primary} 99.11%
-  );
+  // background: linear-gradient(
+  //   155.4deg,
+  //   ${colors.secondary} 0%,
+  //   ${colors.primary} 99.11%
+  // );
+  background-color: ${colors.lightGray};
+  border-top: 5px solid ${colors.primary};
+  box-shadow: 0 0 8px 0px ${colors.shadow};
 `;
 
 export const Inner = styled.div`
@@ -62,9 +65,8 @@ export const Inner = styled.div`
     }
 
     .newEventBtn {
-      margin-right: 14px;
-      padding: 8px;
-      width: 150px;
+      box-shadow: 0 0 7px 0px ${colors.lightShadow};
+      padding: 8px 20px 8px 20px;
       background-color: ${colors.white};
       border: 1px solid ${colors.white};
       border-radius: 14px;
@@ -74,13 +76,15 @@ export const Inner = styled.div`
       font-weight: 600;
       &:hover {
         color: ${colors.black};
+        box-shadow: 0 0 7px 0px ${colors.shadow};
       }
     }
 
     .logoutBtn {
       font-family: ${fonts.primary};
-      color: ${colors.white};
-      font-weight: 600;
+      color: ${colors.gray};
+      font-weight: 800;
+      font-size: 16px;
     }
   }
 `;
