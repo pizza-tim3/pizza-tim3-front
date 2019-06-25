@@ -38,8 +38,11 @@ class Participants extends React.Component {
           >
             <Modal.Footer>
               {/* Close Calendar */}
-              <button className="btn-save" onClick={this.handleCloseMoreUsers}>
-                X
+              <button
+                className="btn-close action"
+                onClick={this.handleCloseMoreUsers}
+              >
+                <img src={plus} alt="close" />
               </button>
             </Modal.Footer>
             <Modal.Body>
@@ -117,13 +120,13 @@ class Participants extends React.Component {
             {this.props.event.invitedUsers ? (
               <>
                 {this.props.event.invitedUsers.map((invited, index) => {
-                  if (index < 4) {
-                    return (
-                      <div className="invited" key={invited.firebase_uid}>
-                        <img src={invited.avatar} alt={invited.first_name} />
-                      </div>
-                    );
-                  }
+                  // if (index < 4) {
+                  return (
+                    <div className="invited" key={invited.firebase_uid}>
+                      <img src={invited.avatar} alt={invited.first_name} />
+                    </div>
+                  );
+                  // }
                 })}
                 {this.props.userReducer.firebase_uid ===
                 this.props.event.organizer ? (

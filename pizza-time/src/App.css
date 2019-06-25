@@ -192,3 +192,18 @@ div.gm-style-iw.gm-style-iw-c {
 .friend-avatar.friend-invited {
   border: 3.5px solid orange;
 }
+
+.btn-close.action {
+  border: 1px solid orange;
+  opacity: 1;
+  padding: 8px;
+}
+.btn-close.action img {
+  transform: rotate(45deg);
+  width: 30px;
+  height: 30px;
+}
+.btn-close.action img:hover {
+  cursor: pointer;
+  background: white;
+}
