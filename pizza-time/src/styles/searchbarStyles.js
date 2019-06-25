@@ -2,7 +2,6 @@ import styled from 'styled-components';
 import { colors, fonts, media } from '../styles/variables.js';
 
 export const SearchContainer = styled.div`
-
   input {
     width: 90%;
     margin-top: 15px;
@@ -26,5 +25,15 @@ export const SearchContainer = styled.div`
       ${media.desktop} {
         height: 50px;
       }
+  }
+
+  button {
+    margin: 15px 0 15px 0;
+    width: 116px;
+    font-family: ${fonts.primary};
+    border: 1px solid ${colors.primary};
+    background-color: ${colors.primary};
+    color: ${colors.white};
+    padding: 6px 0 6px 0;
   }
 `;
