@@ -37,7 +37,7 @@ class Participants extends React.Component {
             onHide={this.handleCloseMoreUsers}
           >
             <Modal.Footer>
-              {/* Close Calendar */}
+              {/* Close More Users */}
               <button
                 className="btn-close action"
                 onClick={this.handleCloseMoreUsers}
