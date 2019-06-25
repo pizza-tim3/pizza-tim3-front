@@ -95,7 +95,7 @@ export default function Login(props) {
         <input
           name="password"
           id="password"
-          type="text"
+          type="password"
           value={state.password}
           placeholder="Password"
           onChange={e => {
@@ -103,9 +103,7 @@ export default function Login(props) {
           }}
         />
         <button type="submit">Sign In</button>
-        <button onClick={signInWithGoogle} type="button">
-          Google Sign In
-        </button>
+        <button onClick={signInWithGoogle} type="button">Google Sign In</button>
         <p>
           Dont have an account?
           <br />
