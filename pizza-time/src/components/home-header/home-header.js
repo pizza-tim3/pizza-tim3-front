@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 // import firebaseApp from "../../firebase/firebaseApp";
-import ReactCSSTransitionGroup from "react-addons-css-transition-group";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 
@@ -12,73 +11,27 @@ import UserImage from "../../assets/user.png";
 
 const Nav = props => {
   const [image] = useState(UserImage);
-  const [userNav, setUserNave] = useState(false);
 
-  const ToggleNav = e => {
-    e.preventDefault();
-    setUserNave(!userNav);
-  };
-  // if (t)
   return (
     <Wrap>
       <Inner>
-        <Link to="/" className="link">
-          <h1>Let's Get Pizza</h1>
-        </Link>
         <div className="userBox">
-          <button className="newEventBtn">
-            <Link to="/create-event" className="link">
-              Create New Event
-            </Link>
-          </button>
-          <div>
-            {!props.userReducer.avatar ? (
-              <>
-                <img src={image} className="user" alt="placeholder" />
-              </>
-            ) : (
-              <>
-                <img
-                  className="user"
-                  src={props.userReducer.avatar}
-                  onClick={ToggleNav}
-                />
-              </>
-            )}
-          </div>
-          <ReactCSSTransitionGroup
-            transitionName="navToggle"
-            transitionEnterTimeout={100}
-            transitionLeaveTimeout={100}
-          >
-            {userNav ? <div className="userNav" /> : null}
-          </ReactCSSTransitionGroup>
-        </div>
 
-        {/* <div className="navBox">
-            <button className="newEventBtn">New Event</button>
-        </div> */}
-        {/* <nav>
-          <NavLink to="/register">Register</NavLink>
-          &nbsp;|&nbsp;
-          <NavLink to="/login"> Login</NavLink>
-          &nbsp;|&nbsp;
-          <NavLink to="/">Home</NavLink>
-          &nbsp;|&nbsp;
-          <NavLink to="/private">Private</NavLink>
-          &nbsp;|&nbsp;
-          <NavLink to="/user-home">User-Home</NavLink>
-          &nbsp;|&nbsp;
-          <NavLink to="/events">Events</NavLink>
-          &nbsp;|&nbsp;
-          <NavLink to="/events/search">Places Search</NavLink>
-          &nbsp;|&nbsp;
-          <NavLink to="/favorites">Favorites</NavLink>
-          &nbsp;|&nbsp;
-          <NavLink to="/friendslist">Friends List</NavLink>
-          &nbsp;|&nbsp;
-          <button onClick={() => firebaseApp.auth().signOut()}>Logout</button>
-        </nav> */}
+
+          <div className="avatar">
+            {!props.userReducer.avatar ? (
+              <img src={image} className="user" alt="placeholder" />
+            ) : (
+              <img className="user" src={props.userReducer.avatar}/>
+            )}
+            <Link to="/create-event" className="newEventBtn">Create Event</Link>
+          </div>
+
+          
+          <div className="logoutBox">
+            <Link to="/" className="logoutBtn">Logout</Link>
+          </div>
+        </div>
       </Inner>
     </Wrap>
   );

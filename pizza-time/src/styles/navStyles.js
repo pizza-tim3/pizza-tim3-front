@@ -1,31 +1,7 @@
-import styled, { keyframes } from "styled-components";
+import styled from "styled-components";
 import { colors, fonts, media } from "../styles/variables.js";
 import pizza from "../assets/pizza.png";
 import img from "../assets/user.png";
-
-// console.log(props.image);
-
-const slideInTop = keyframes`
-from {
-  opacity: 0;
-  height: 0;
-}
-to {
-  opacity: 1;
-  height: 150;
-}
-`;
-
-const slideOutBottom = keyframes`
-from {
-  opacity: 1;
-  height: 150;
-}
-to {
-  opacity: 0;
-  height: 0;
-}
-`;
 
 export const Wrap = styled.div`
   width: 100%;
@@ -40,59 +16,41 @@ export const Inner = styled.div`
   width: 90%;
   margin-left: auto;
   margin-right: auto;
-  padding: 15px 0;
+  padding: 18px 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
   a:hover {
     text-decoration: none;
   }
-  h1 {
-    font-size: 26px;
-    margin-left: 0px;
-    text-align: left;
-    width: 200px;
-    font-family: ${fonts.primary};
-    color: ${colors.white};
-    font-weight: 600;
 
-    ${media.tablet} {
-      font-size: 30px;
-      margin-left: 26px;
-      text-align: center;
-      width: 100%;
-    }
+  // h1 {
+  //   font-size: 26px;
+  //   margin-left: 0px;
+  //   text-align: left;
+  //   width: 200px;
+  //   font-family: ${fonts.primary};
+  //   color: ${colors.white};
+  //   font-weight: 600;
+
+  //   ${media.tablet} {
+  //     font-size: 30px;
+  //     margin-left: 26px;
+  //     text-align: center;
+  //     width: 100%;
+  //   }
   }
 
   .userBox {
     display: flex;
+    flex-flow: row no-wrap;
     justify-content: space-between;
     align-items: center;
-
-    .newEventBtn {
-      margin-right: 14px;
-      padding: 8px;
-      width: 180px;
-      background-color: ${colors.white};
-      border: 1px solid ${colors.white};
-      border-radius: 14px;
-      color: grey;
-      font-family: ${fonts.primary};
-      font-size: 14px;
-      font-weight: 600;
-      visibility: hidden;
-      &:hover {
-        color: ${colors.black};
-      }
-
-      ${media.tablet} {
-        visibility: visible;
-      }
-    }
+    width: 100%;
 
     .user {
-      width: 46px;
-      height: 46px;
+      width: 50px;
+      height: 50px;
       border-radius: 50%;
       margin-right: 20px;
       z-index: 2;
@@ -103,27 +61,26 @@ export const Inner = styled.div`
       }
     }
 
-    .navToggle-enter {
-      animation: ${slideInTop} 0.2s forwards;
-    }
-    .navToggle-leave {
-      animation: ${slideOutBottom} 0.2s forwards;
+    .newEventBtn {
+      margin-right: 14px;
+      padding: 8px;
+      width: 150px;
+      background-color: ${colors.white};
+      border: 1px solid ${colors.white};
+      border-radius: 14px;
+      color: grey;
+      font-family: ${fonts.primary};
+      font-size: 14px;
+      font-weight: 600;
+      &:hover {
+        color: ${colors.black};
+      }
     }
 
-    .userNav {
-      width: 46px;
-      height: 120px;
-      position: absolute;
-      background-color: ${colors.white};
-      margin-top: -20px;
-      right: 20px;
-      box-shadow: 0 0 7px 0px ${colors.shadow};
-      border-radius: 24px;
-      z-index: 1;
-      @media (min-width: 900px) {
-        width: 56px;
-        height: 150px;
-      }
+    .logoutBtn {
+      font-family: ${fonts.primary};
+      color: ${colors.white};
+      font-weight: 600;
     }
   }
 `;
