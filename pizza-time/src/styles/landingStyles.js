@@ -23,7 +23,7 @@ export const Inner = styled.div`
 
   h1 {
     font-family: ${fonts.secondary};
-    font-size: 46px;
+    font-size: 50px;
     color: ${colors.white};
   }
 
@@ -49,6 +49,7 @@ export const Buttons = styled.div`
     background-color: transparent;
     border: 3px solid ${colors.white};
     padding: 8px 20px;
+    width: 110px;
     color: ${colors.white};
     text-decoration: none;
     margin: 0 6px;

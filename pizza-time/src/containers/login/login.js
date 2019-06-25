@@ -110,7 +110,7 @@ export default function Login(props) {
         />
         <button type="submit">Sign In</button>
         <button onClick={signInWithGoogle} type="button">
-          Sign In With Google
+          Google Sign In
         </button>
         <p>
           Dont have an account?

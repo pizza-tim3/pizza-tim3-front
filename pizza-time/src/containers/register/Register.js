@@ -136,7 +136,7 @@ export default function Register(props) {
         />
         <button type="submit">Sign Up</button>
         <button onClick={signInWithGoogle} type="button">
-          Sign In With Google
+          Google Sign In
         </button>
         <p>
           Already have an account?

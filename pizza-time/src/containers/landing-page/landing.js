@@ -5,7 +5,7 @@ import axios from "axios";
 import HomeHeader from "./../../components//home-header/home-header.js";
 
 import { Wrap, Inner, Buttons } from "../../styles/landingStyles.js";
-import CarouselTest from '../../assets/carouseltest.jpg';
+// import CarouselTest from '../../assets/carouseltest.jpg';
 
 class Landing extends React.Component {
   constructor(props, context) {
@@ -21,11 +21,11 @@ class Landing extends React.Component {
   }
 
   componentDidMount() {
-    let imgs = [CarouselTest];
+    // let imgs = [CarouselTest];
 
-     this.setState({
-       carousel: imgs
-     })
+    //  this.setState({
+    //    carousel: imgs
+    //  })
   }
 
   handleSelect(selectedIndex, e) {
@@ -43,29 +43,23 @@ class Landing extends React.Component {
           <>
             <h1>Pizza Time</h1>
             <div className="small-carousel">
-              {this.state.carousel.length > 0 ? (
-                <>
-                  <Carousel
-                    activeIndex={index}
-                    direction={direction}
-                    onSelect={this.handleSelect}
-                  >
-                    {this.state.carousel.map((image, index) => {
-                      return (
-                        <Carousel.Item key={index}>
-                          <img src={image} alt="carousel" />
-                        </Carousel.Item>
-                      );
-                    })}
-                  </Carousel>
-                </>
-              ) : (
-                <div>Loading...</div>
-              )}
+              {/* <Carousel
+                activeIndex={index}
+                direction={direction}
+                onSelect={this.handleSelect}
+              >
+                {this.state.carousel.map((image, index) => {
+                  return (
+                    <Carousel.Item key={index}>
+                      <img src={image} alt="carousel" />
+                    </Carousel.Item>
+                  );
+                })}
+              </Carousel> */}
             </div>
             <Buttons>
-              <button className="loginBtn">Login</button>
-              <button className="registerBtn">Register</button>
+              <Link className="loginBtn" to="/login">Login</Link>
+              <Link className="registerBtn" to="/register">Sign Up</Link>
             </Buttons>
           </>
         </Inner>

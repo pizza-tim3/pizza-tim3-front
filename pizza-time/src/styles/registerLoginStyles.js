@@ -13,6 +13,7 @@ export const Wrap = styled.div`
 `;
 
   export const Form = styled.form`
+    width: 400px;
     border-radius: 6px;
     display: flex;
     flex-flow: column nowrap;
@@ -21,7 +22,7 @@ export const Wrap = styled.div`
     background-color: ${colors.white};
 
     h1 {
-      font-size: 48px;
+      font-size: 50px;
       color: ${colors.black};
       font-family: ${fonts.secondary};
       padding: 5px 0 40px 0;
@@ -39,20 +40,19 @@ export const Wrap = styled.div`
       font-family: 'Montserrat', sans-serif;
       box-shadow: 0 0 7px 0px ${colors.shadow};
       color: ${colors.formPlaceholder};
+      width: 260px;
       ::placeholder { color: ${colors.formPlaceholder}; }
         ${media.tablet} {
-          width: 230px;
           padding: 10px 0 10px 10px;
         }
         ${media.desktop} {
-          width: 260px;
           padding: 12px 0 12px 12px;
         }
     }
 
     button {
       margin-top: 16px;
-      width: 130px;
+      width: 170px;
       height: 38px;
       background-color: ${colors.white};
       border: 1px solid ${colors.white};
@@ -63,7 +63,6 @@ export const Wrap = styled.div`
       color: ${colors.gray};
         ${media.desktop} {
           margin-top: 22px;
-          width: 140px;
           height: 42px;
         }
 
