@@ -250,7 +250,41 @@ class Info extends React.Component {
   };
   updateDateHandler = e => {
     e.preventDefault();
-    this.props.updateDate(this.state.date);
+    const eventDate = new Date(this.state.date);
+    // Convert the date to a string
+    let currentTime = eventDate.toString();
+    // Create an array of characters from the current date string
+    let currentTimeArray = currentTime.split("");
+    // Create the first part of the string that will be concocted in the final string
+    let firstString = eventDate.toString().slice(0, 16);
+    // Create a second string in order to obtain the time format,
+    let remainingString = currentTimeArray
+      .splice(16)
+      .join("")
+      .split(":")
+      .join("");
+    let secondString = remainingString.slice(6);
+
+    let newTime = this.state.time;
+
+    let modifiedHour = 0;
+    if (newTime.am === "PM") {
+      modifiedHour = Number(newTime.hour) + 12;
+    } else {
+      modifiedHour = newTime.hour;
+    }
+    let updateTime =
+      firstString +
+      modifiedHour.toString() +
+      ":" +
+      newTime.minutes +
+      ":" +
+      "00" +
+      secondString;
+    this.setState({
+      date: new Date(updateTime),
+    });
+    this.props.updateDate(updateTime);
     this.setState({ show: false });
   };
 
