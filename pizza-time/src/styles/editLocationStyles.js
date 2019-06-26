@@ -21,8 +21,13 @@ export const Inner = styled.div`
     margin-bottom: 22px;
   }
   .new-location-search  {
-    
-    button {
+    display: flex:
+    flex-direction: column;
+    .more {
+      display: flex;
+    }
+    .search-btn {
+      align-self: center;
       background-color: white;
       border: none;
       margin-left: 8px;

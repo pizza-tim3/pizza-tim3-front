@@ -23,6 +23,7 @@ const SearchBar = props => {
         value={inputs.search || ""}
       />
       <button
+        className="search-btn"
         onClick={() => {
           handleSubmit();
         }}

@@ -182,8 +182,9 @@ class Info extends React.Component {
     let addressString = req.formatted_address.slice(streetString.length + 1);
     let currentLat = Number(req.geometry.location.lat());
     let currentLng = Number(req.geometry.location.lng());
+    let currentPlaceId = this.state.google_place_id;
     this.setState({
-      google_place_id: this.props.event.location.google_place_id,
+      google_place_id: currentPlaceId,
       eventName: this.props.event.event_name,
       location: {
         address: {
