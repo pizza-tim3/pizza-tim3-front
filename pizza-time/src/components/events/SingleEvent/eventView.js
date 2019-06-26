@@ -301,13 +301,9 @@ class EventView extends React.Component {
   };
 
   // Update the entire event with the event's data using axios call
-  location = location => {
+  updateLocation = place_id => {
     let currentEvent = this.state.event;
-    console.log(
-      `State id before the click: ${this.state.event.location.google_place_id}`
-    );
 
-    console.log(`Value being passed: ${location}`);
     this.setState({
       event: {
         id: currentEvent.id,
@@ -317,15 +313,13 @@ class EventView extends React.Component {
         event_date: currentEvent.event_date,
         invitedUsers: currentEvent.invitedUsers,
         organizer: currentEvent.organizer,
+        inviteOnly: currentEvent.inviteOnly,
         location: {
-          id: currentEvent.location.id,
-          google_place_id: location.toString(),
+          id: currentEvent.location.id, // "3"
+          google_place_id: place_id, // "ds3213fkfd321Fss)dsd"
         },
       },
     });
-    console.log(
-      `State id after click: ${this.state.event.location.google_place_id}`
-    );
   };
   updateEvent = event_id => {
     this.setState({
@@ -344,7 +338,6 @@ class EventView extends React.Component {
       location: currentEvent.location,
       inviteOnly: currentEvent.inviteOnly,
     };
-    console.log(updatedEvent);
     axios
       .put(
         `https://pizza-tim3-be.herokuapp.com/api/events/${event_id}`,
@@ -352,20 +345,19 @@ class EventView extends React.Component {
       )
       .then(res => {
         // If response successfull, update the state with the new info
-        // console.log(res);
-        console.log(res.config.data);
-        if (res.status === 200) {
-          updatedEvent.invitedUsers = currentEvent.invitedUsers;
-          updatedEvent.comments = currentEvent.comments;
-          updatedEvent.location = currentEvent.location;
-          updatedEvent.inviteOnly = currentEvent.inviteOnly;
 
-          this.setState({
-            event: updatedEvent,
-            loading: false,
-            friends: currentFriends,
-          });
-        }
+        // if (res.status === 200) {
+        updatedEvent.invitedUsers = currentEvent.invitedUsers;
+        updatedEvent.comments = currentEvent.comments;
+        updatedEvent.location = currentEvent.location;
+        updatedEvent.inviteOnly = currentEvent.inviteOnly;
+
+        this.setState({
+          event: updatedEvent,
+          loading: false,
+          friends: currentFriends,
+        });
+        // }
       })
       .catch(err => {
         console.log(err);
@@ -438,7 +430,7 @@ class EventView extends React.Component {
                   updateEvent={this.updateEvent}
                   updateName={this.updateName}
                   updateDate={this.updateDate}
-                  location={this.location}
+                  updateLocation={this.updateLocation}
                   deleteEvent={this.deleteEvent}
                 />
                 <Participants

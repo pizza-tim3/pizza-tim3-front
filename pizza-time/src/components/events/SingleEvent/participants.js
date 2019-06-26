@@ -120,13 +120,13 @@ class Participants extends React.Component {
             {this.props.event.invitedUsers ? (
               <>
                 {this.props.event.invitedUsers.map((invited, index) => {
-                  // if (index < 4) {
-                  return (
-                    <div className="invited" key={invited.firebase_uid}>
-                      <img src={invited.avatar} alt={invited.first_name} />
-                    </div>
-                  );
-                  // }
+                  if (index < 4) {
+                    return (
+                      <div className="invited" key={invited.firebase_uid}>
+                        <img src={invited.avatar} alt={invited.first_name} />
+                      </div>
+                    );
+                  }
                 })}
                 {this.props.userReducer.firebase_uid ===
                 this.props.event.organizer ? (

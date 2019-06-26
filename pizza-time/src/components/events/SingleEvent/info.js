@@ -7,7 +7,6 @@ import trash from "./../../../assets/trash.png";
 import update from "./../../../assets/update.png";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-// import orangeupdate from "./../../../assets/orangeupdate.png";
 import clock from "./../../../assets/clock.png";
 import cancel from "./../../../assets/cancel.svg";
 import moment from "moment";
@@ -120,8 +119,12 @@ class Info extends React.Component {
   handleApiLoaded = (map, maps) => {
     // use map and maps objects
   };
-  updateLocation = location => {
-    this.props.location(location);
+  updateLocation = place_id => {
+    this.setState({
+      google_place_id: place_id,
+    });
+    console.log(this.state.google_place_id);
+    this.props.updateLocation(place_id);
   };
   updateTime = e => {
     e.preventDefault();
@@ -180,7 +183,7 @@ class Info extends React.Component {
     let currentLat = Number(req.geometry.location.lat());
     let currentLng = Number(req.geometry.location.lng());
     this.setState({
-      // google_place_id: req.place_id,
+      google_place_id: this.props.event.location.google_place_id,
       eventName: this.props.event.event_name,
       location: {
         address: {
