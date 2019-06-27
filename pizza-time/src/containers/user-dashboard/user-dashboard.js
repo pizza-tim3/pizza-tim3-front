@@ -20,7 +20,9 @@ class UserDashboard extends React.Component {
         url: `https://maps.googleapis.com/maps/api/js?key=${
         process.env.REACT_APP_GOOGLE_PLACES_API_KEY
       }&libraries=places&callback=initMap`,
-      mapLoaded : false
+      mapLoaded : false,
+      host : "localhost:5500"
+      //host = "pizza-tim3-be.herokuapp.com"
          
          
         }
@@ -78,7 +80,7 @@ upcomingHandler = event => {
     
     const id = localStorage.getItem("userFireBaseId");
     axios
-      .get(`http://localhost:5500/api/events/upcoming/${id}`)
+      .get("http://"+ this.state.host + "/api/events/upcoming/" + id)
       
       .then(res => {
         console.log("Response for UpcomingEvents", res);
@@ -101,7 +103,7 @@ upcomingHandler = event => {
     const id = localStorage.getItem("userFireBaseId");
     console.log("User id ", id)
     axios
-      .get(`http://localhost:5500/api/events/pending/${id}`)
+      .get("http://"+ this.state.host + "/api/events/pending/" + id)
       .then(res => {
         console.log("RESPONSE OF PENDING EVENTS", res);
         this.setState({
@@ -121,7 +123,7 @@ upcomingHandler = event => {
     const id = localStorage.getItem("userFireBaseId");
     event.preventDefault();
     axios
-      .get(`http://pizza-tim3-be.herokuapp.com/api/events/past/${id}`)
+      .get("http://"+ this.state.host + "/api/events/past/" + id)
       .then(res => {
         console.log("RESPONSE OF PAST EVENTS", res);
         this.setState({
