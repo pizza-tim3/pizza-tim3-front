@@ -7,6 +7,7 @@ import { CardBox, Inner, Content, Action } from "../../styles/cardStyles.js";
 //import DashComment from "../../containers/user-dashboard/DashComment";
 import Location from "../../containers/user-dashboard/Location.js";
 import { bold } from "ansi-colors";
+import {Link}  from "react-router-dom";
 
 class Card extends React.Component {
   constructor(props) {
@@ -98,11 +99,13 @@ class Card extends React.Component {
   render() {
     const eventDate = parseInt(this.props.event.event_date);
     const date = new Date(eventDate).toString().substring(0,15);
+    const event_id = this.props.event.event_id;
     
     console.log("COME FOR THE EVENT", this.props.event);
     return (
       <CardBox>
         <Inner>
+        <Link id={this.props.event.event_id} to={"/event/" + event_id} >
           <Content>
             <img src={Envelope} />
             <div className="content">
@@ -123,8 +126,12 @@ class Card extends React.Component {
                   return [attende.first_name, "  ", attende.last_name, ","," "]
                 })}
              </b> </p>
-            </div>
+             
+              
+            </div>  
           </Content>
+          </Link>
+
           <Action>
             <div className="comment">
               <img src={Comment} onClick={this.commentHandler} />
