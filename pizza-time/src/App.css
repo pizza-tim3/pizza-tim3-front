@@ -168,7 +168,11 @@ div.gm-style-iw.gm-style-iw-c {
   position: absolute;
   z-index: 9999;
 }
-
+.friends h4,
+.modal h2 {
+  text-align: center;
+  padding: 10px 0px;
+}
 .friend-avatar {
   margin-top: 12px;
   border: 3.5px solid white;
@@ -176,7 +180,6 @@ div.gm-style-iw.gm-style-iw-c {
   height: 100px;
 }
 .tobe-invited {
-  text-align: center;
   margin-top: 25px;
 }
 .tobe-invited .action {

@@ -433,9 +433,11 @@ class EventView extends React.Component {
                 />
                 <Participants
                   event={this.state.event}
+                  friends={this.state.friends}
                   unInvitedFriends={this.state.unInvitedFriends}
                   selectAdditional={this.selectAdditional}
                   inviteFriends={this.inviteFriends}
+                  invitedUsers={this.state.event.invitedUsers}
                 />
 
                 <Discussion event={this.state.event} />

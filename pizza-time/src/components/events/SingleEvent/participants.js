@@ -11,9 +11,20 @@ class Participants extends React.Component {
     this.state = {
       user: {},
       showMoreUsers: false,
+      showAllUsers: false,
     };
     this.handleShowMoreUsers = this.handleShowMoreUsers.bind(this);
     this.handleCloseMoreUsers = this.handleCloseMoreUsers.bind(this);
+    this.handleShowAllUsers = this.handleShowAllUsers.bind(this);
+    this.handleCloseAllUsers = this.handleCloseAllUsers.bind(this);
+  }
+
+  // showAllUsers modal
+  handleShowAllUsers() {
+    this.setState({ showAllUsers: true });
+  }
+  handleCloseAllUsers() {
+    this.setState({ showAllUsers: false });
   }
 
   // hideMoreUsers modal
@@ -26,12 +37,57 @@ class Participants extends React.Component {
   }
   inviteFriendsHandler() {
     this.props.inviteFriends();
-    this.setState({ showMoreUsers: false });
+    this.setState({ showMoreUsers: false, showAllUsers: false });
   }
   render() {
     return (
       <>
         <EventRow>
+          <Modal
+            show={this.state.showAllUsers}
+            onHide={this.handleCloseAllUsers}
+          >
+            <Modal.Footer>
+              {/* Close More Users */}
+              <button
+                className="btn-close action"
+                onClick={this.handleCloseAllUsers}
+              >
+                <img src={plus} alt="close" />
+              </button>
+            </Modal.Footer>
+            <Modal.Body>
+              <h2>All Invited</h2>
+
+              <div className="friends">
+                {!this.props.invitedUsers ? (
+                  <></>
+                ) : (
+                  <>
+                    {this.props.invitedUsers.map(friend => {
+                      return (
+                        <div
+                          className="friend"
+                          friend={friend}
+                          id={friend.firebase_uid}
+                          key={friend.firebase_uid}
+                        >
+                          <img
+                            className="friend-avatar"
+                            id={friend.firebase_uid}
+                            src={friend.avatar}
+                            alt={friend.first_name}
+                          />
+                          <h4>{friend.first_name}</h4>
+                        </div>
+                      );
+                    })}
+                  </>
+                )}
+              </div>
+            </Modal.Body>
+          </Modal>
+
           <Modal
             show={this.state.showMoreUsers}
             onHide={this.handleCloseMoreUsers}
@@ -128,12 +184,13 @@ class Participants extends React.Component {
                     );
                   }
                 })}
-                <div className="total-users">
+                <div className="total-users" onClick={this.handleShowAllUsers}>
                   <span>
                     <p>{this.props.event.invitedUsers.length}</p>
                   </span>
                   going
                 </div>
+
                 {this.props.userReducer.firebase_uid ===
                 this.props.event.organizer ? (
                   <div className="add-user">
