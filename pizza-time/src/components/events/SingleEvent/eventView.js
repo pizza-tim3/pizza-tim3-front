@@ -314,10 +314,8 @@ class EventView extends React.Component {
         invitedUsers: currentEvent.invitedUsers,
         organizer: currentEvent.organizer,
         inviteOnly: currentEvent.inviteOnly,
-        location: {
-          id: currentEvent.location.id, // "3"
-          google_place_id: place_id, // "ds3213fkfd321Fss)dsd"
-        },
+        location: place_id, // "ds3213fkfd321Fss)dsd"
+        place: place_id,
       },
     });
   };

@@ -473,14 +473,38 @@ export const EventRow = styled.div`
         padding-left: 15px;
       }
     }
+    .total-users {
+      align-items: center;
+      margin-right: 5px;
+      span {
+        padding: 7px 14px;
+        background-color: ${colors.primary};
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 8px;
+        p {
+          margin-bottom: 0px;
+          font-weight: bold;
+          color: white;
+        }
+      }
+    }
+}
+
     hr {
-      border-top: 3px solid ${colors.primary};
-      width: 70%;
-      margin-right: 0;
+      border-top: 1px solid ${colors.primary};
+      width: 100%;
+      ${media.tablet} {
+      
+        width: 70%;
+        margin-right: 0;
+      }
     }
     span {
-      display: none;
-      align-self: center;
+      // display: none;
+      // align-self: center;
     }
     span ul {
       display: flex;
@@ -523,6 +547,9 @@ export const EventRow = styled.div`
       border-radius: 50%;
       margin-right: 12px;
     }
+  }
+  .add-user img {
+    padding: 3px;
   }
   .add-comments {
     display: flex;

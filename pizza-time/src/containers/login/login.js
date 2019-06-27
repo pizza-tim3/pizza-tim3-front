@@ -51,7 +51,7 @@ export default function Login(props) {
       //get the token off of the current user
       //token to send to the backend to display data
       const token = await firebaseApp.auth().currentUser.getIdToken();
-      props.history.push("/");
+      props.history.push("/home");
     } catch (err) {
       dispatch({ type: "SET_ERROR", payload: err.message });
     }
@@ -64,7 +64,7 @@ export default function Login(props) {
       // sign in/register with popup window
       const result = await firebaseApp.auth().signInWithPopup(googleProvider);
       const {
-        additionalUserInfo: { isNewUser }
+        additionalUserInfo: { isNewUser },
       } = result;
       //check to see if the users new
       if (isNewUser) {

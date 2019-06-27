@@ -58,7 +58,7 @@ class Info extends React.Component {
     let eventDate = new Date(Number(this.props.event.event_date));
     if (this.props.event.location) {
       this.setState({
-        google_place_id: this.props.event.location.google_place_id,
+        google_place_id: this.props.event.location,
       });
     }
 
@@ -123,8 +123,7 @@ class Info extends React.Component {
     this.setState({
       google_place_id: place_id,
     });
-    console.log(this.state.google_place_id);
-    this.props.updateLocation(place_id);
+    this.props.updateLocation(this.state.google_place_id);
   };
   updateTime = e => {
     e.preventDefault();
@@ -182,7 +181,7 @@ class Info extends React.Component {
     let addressString = req.formatted_address.slice(streetString.length + 1);
     let currentLat = Number(req.geometry.location.lat());
     let currentLng = Number(req.geometry.location.lng());
-    let currentPlaceId = this.state.google_place_id;
+    let currentPlaceId = this.props.event.location;
     this.setState({
       google_place_id: currentPlaceId,
       eventName: this.props.event.event_name,
@@ -584,7 +583,8 @@ class Info extends React.Component {
                 </div>
 
                 <div className="event map">
-                  {this.state.location.center.lng !== 0 ? (
+                  {this.state.location.center &&
+                  this.state.location.center.lng !== 0 ? (
                     <LocationMap center={this.state.location.center} />
                   ) : (
                     <></>

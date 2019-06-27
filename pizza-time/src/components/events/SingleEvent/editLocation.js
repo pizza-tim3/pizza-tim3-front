@@ -20,7 +20,7 @@ class EditLocation extends React.Component {
   }
   componentDidMount() {
     this.setState({
-      place_id: this.props.event.location.google_place_id,
+      place_id: this.props.event.location,
     });
   }
   // Choose location on click and update the state's id
