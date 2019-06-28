@@ -22,7 +22,7 @@ const Nav = props => {
   return (
     <Wrap>
       <Inner>
-        <Link to="/" className="link">
+        <Link to="/home" className="link">
           <h1>Let's Get Pizza</h1>
         </Link>
         <div className="userBox">

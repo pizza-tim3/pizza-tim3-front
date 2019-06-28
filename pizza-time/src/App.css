@@ -172,6 +172,11 @@ div.gm-style-iw.gm-style-iw-c {
 .modal h2 {
   text-align: center;
   padding: 10px 0px;
+  width: 100%;
+}
+.modal h2 {
+  display: flex;
+  justify-content: space-between;
 }
 .friend-avatar {
   margin-top: 12px;
@@ -209,4 +214,15 @@ div.gm-style-iw.gm-style-iw-c {
 .btn-close.action img:hover {
   cursor: pointer;
   background: white;
+}
+.modal .action {
+  background: none;
+  border: none;
+  padding-right: 0px;
+  padding: 3px;
+  align-self: center;
+}
+.modal .action img {
+  width: 40px;
+  height: 40px;
 }

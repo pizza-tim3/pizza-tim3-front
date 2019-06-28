@@ -3,7 +3,9 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { EventRow } from "../../../styles/eventStyles";
 import plus from "../../../assets/plus.png";
+import searchusers from "../../../assets/searchusers.png";
 import { Modal } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 class Participants extends React.Component {
   constructor(props) {
@@ -130,20 +132,24 @@ class Participants extends React.Component {
                               </div>
                             );
                           })}
+                          <button
+                            className="action"
+                            onClick={() => this.inviteFriendsHandler()}
+                          >
+                            <img alt="invite plus sign" src={plus} />
+                          </button>
                         </>
                       ) : (
                         <>
-                          <h1>No friends to invite</h1>
+                          <h2>No friends to invite</h2>
+                          <Link to={"/profile"} className="action organizer">
+                            <img src={searchusers} className="dada" />
+                          </Link>
                         </>
                       )}
                     </div>
+
                     <div className="tobe-invited">
-                      <button
-                        className="action"
-                        onClick={() => this.inviteFriendsHandler()}
-                      >
-                        <img alt="invite plus sign" src={plus} />
-                      </button>
                       {!this.props.additional_friends ? (
                         <></>
                       ) : (
