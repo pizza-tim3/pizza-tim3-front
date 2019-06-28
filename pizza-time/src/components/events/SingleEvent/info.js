@@ -351,9 +351,12 @@ class Info extends React.Component {
                 </div>
               ) : (
                 <div className="event-name">
-                  <h1>
-                    <b>Event</b>: <span>{this.state.eventName}</span>
-                  </h1>
+                  <div className="info-row">
+                    <div className="event-info-label">Event: </div>
+                    <div className="event-info-data">
+                      {this.state.eventName}
+                    </div>
+                  </div>
                   {this.props.userReducer.firebase_uid ===
                   this.props.event.organizer ? (
                     <div>
@@ -417,12 +420,12 @@ class Info extends React.Component {
               </Modal>
               <div className="calendar">
                 <div className="calendar-row">
-                  <h2>
-                    <b>Date</b>:
-                    <span>
+                  <div className="info-row">
+                    <div className="event-info-label">Date: </div>
+                    <div className="event-info-data">
                       {moment(this.state.date.toISOString()).format("LL")}
-                    </span>
-                  </h2>
+                    </div>
+                  </div>
 
                   {this.props.userReducer.firebase_uid ===
                   this.props.event.organizer ? (
@@ -438,10 +441,14 @@ class Info extends React.Component {
                 </div>
 
                 <div className="calendar-row">
-                  <h3>
-                    <b>Time</b>: {this.state.time.hour}:
-                    {this.state.time.minutes} {this.state.time.am}
-                  </h3>
+                  <div className="info-row">
+                    <div className="event-info-label">Time: </div>
+                    <div className="event-info-data">
+                      {this.state.time.hour} : {this.state.time.minutes} :
+                      {this.state.time.am}
+                    </div>
+                  </div>
+
                   {this.props.userReducer.firebase_uid ===
                   this.props.event.organizer ? (
                     <img
@@ -454,7 +461,7 @@ class Info extends React.Component {
                     <></>
                   )}
                 </div>
-                <div className="caloendar-row">
+                <div className="calendar-row">
                   <div>
                     <span className="edit-time">
                       <div>

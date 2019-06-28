@@ -61,6 +61,21 @@ export const Inner = styled.div`
       outline: none;
     }
   }
+  .event-info-label {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-right: 10px;
+  }
+  .event-info-data {
+    font-size: 1.2rem;
+    font-weight: 400;
+    align-self: center;
+  }
+  .info-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+  }
   ${media.tablet} {
     width: 80%;
     .event-header {
@@ -179,7 +194,7 @@ export const Inner = styled.div`
     margin: 30px 25px 34px;
     flex-direction: column;
     ${media.desktop} {
-      margin: 40px 20px 34px;
+      margin: 40px 20px 0px;
       flex-direction: row;
     }
   }
@@ -402,6 +417,7 @@ export const EventRow = styled.div`
     justify-content: space-between;
     display: flex;
     padding-bottom: 25px;
+    // width: 100%;
   }
   .invite-switch {
     h3 {
