@@ -59,7 +59,10 @@ export default function Login(props) {
     try {
       // sign in/register with popup window
       const result = await firebaseApp.auth().signInWithPopup(googleProvider);
-      const { additionalUserInfo: { isNewUser }} = result;
+
+      const {
+        additionalUserInfo: { isNewUser },
+      } = result;
       //check to see if the users new
       if (isNewUser) {
         // register uses information on our backend

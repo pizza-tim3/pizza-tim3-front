@@ -7,7 +7,6 @@ import trash from "./../../../assets/trash.png";
 import update from "./../../../assets/update.png";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-// import orangeupdate from "./../../../assets/orangeupdate.png";
 import clock from "./../../../assets/clock.png";
 import cancel from "./../../../assets/cancel.svg";
 import moment from "moment";
@@ -34,7 +33,7 @@ class Info extends React.Component {
       },
       show: false,
       eventForm: false,
-      google_place_id: "",
+      place: "",
       eventName: "",
       location: {
         address: {
@@ -57,9 +56,9 @@ class Info extends React.Component {
 
   componentDidMount() {
     let eventDate = new Date(Number(this.props.event.event_date));
-    if (this.props.event.location) {
+    if (this.props.event.place) {
       this.setState({
-        google_place_id: this.props.event.location.google_place_id,
+        place: this.props.event.place,
       });
     }
 
@@ -120,8 +119,11 @@ class Info extends React.Component {
   handleApiLoaded = (map, maps) => {
     // use map and maps objects
   };
-  updateLocation = location => {
-    this.props.location(location);
+  updateLocation = place_id => {
+    this.setState({
+      place: place_id,
+    });
+    this.props.updateLocation(place_id);
   };
   updateTime = e => {
     e.preventDefault();
@@ -179,8 +181,9 @@ class Info extends React.Component {
     let addressString = req.formatted_address.slice(streetString.length + 1);
     let currentLat = Number(req.geometry.location.lat());
     let currentLng = Number(req.geometry.location.lng());
+    let currentPlaceId = this.props.event.place;
     this.setState({
-      // google_place_id: req.place_id,
+      place: currentPlaceId,
       eventName: this.props.event.event_name,
       location: {
         address: {
@@ -247,7 +250,41 @@ class Info extends React.Component {
   };
   updateDateHandler = e => {
     e.preventDefault();
-    this.props.updateDate(this.state.date);
+    const eventDate = new Date(this.state.date);
+    // Convert the date to a string
+    let currentTime = eventDate.toString();
+    // Create an array of characters from the current date string
+    let currentTimeArray = currentTime.split("");
+    // Create the first part of the string that will be concocted in the final string
+    let firstString = eventDate.toString().slice(0, 16);
+    // Create a second string in order to obtain the time format,
+    let remainingString = currentTimeArray
+      .splice(16)
+      .join("")
+      .split(":")
+      .join("");
+    let secondString = remainingString.slice(6);
+
+    let newTime = this.state.time;
+
+    let modifiedHour = 0;
+    if (newTime.am === "PM") {
+      modifiedHour = Number(newTime.hour) + 12;
+    } else {
+      modifiedHour = newTime.hour;
+    }
+    let updateTime =
+      firstString +
+      modifiedHour.toString() +
+      ":" +
+      newTime.minutes +
+      ":" +
+      "00" +
+      secondString;
+    this.setState({
+      date: new Date(updateTime),
+    });
+    this.props.updateDate(updateTime);
     this.setState({ show: false });
   };
 
@@ -546,16 +583,17 @@ class Info extends React.Component {
                 </div>
 
                 <div className="event map">
-                  {this.state.location.center.lng !== 0 ? (
+                  {this.state.location.center &&
+                  this.state.location.center.lng !== 0 ? (
                     <LocationMap center={this.state.location.center} />
                   ) : (
                     <></>
                   )}
-                  {this.state.google_place_id.length > 0 ? (
+                  {this.props.event.place.length > 0 ? (
                     <>
                       <Details
                         getDetails={this.getDetails}
-                        placeId={this.state.google_place_id}
+                        placeId={this.props.event.place}
                         lat={this.state.location.center.lat}
                         lng={this.state.location.center.lng}
                       />

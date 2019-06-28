@@ -44,6 +44,9 @@ export const Inner = styled.div`
       justify-content: center;
     }
   }
+  .friends h4 {
+    text-align: center;
+  }
   .close {
     align-self: flex-end;
     margin: 20px 33px 0px 0px;
@@ -245,9 +248,16 @@ export const Inner = styled.div`
     &.cancel {
       padding-left: 0px;
       img {
-        padding: 7px;
-        margin-left: 5px;
-        margin-right: 5px;
+        padding: 4px;
+        margin-left: 3px;
+        margin-right: 0px;
+      }
+      ${media.tablet} {
+        img {
+          padding: 7px;
+          margin-left: 5px;
+          margin-right: 5px;
+        }
       }
     }
     &.trash img {
@@ -473,14 +483,41 @@ export const EventRow = styled.div`
         padding-left: 15px;
       }
     }
+    .total-users {
+      align-items: center;
+      margin-right: 5px;
+      &:hover {
+        cursor: pointer;
+      }
+      span {
+        padding: 7px 14px;
+        background-color: ${colors.primary};
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 8px;
+        p {
+          margin-bottom: 0px;
+          font-weight: bold;
+          color: white;
+        }
+      }
+    }
+}
+
     hr {
-      border-top: 3px solid ${colors.primary};
-      width: 70%;
-      margin-right: 0;
+      border-top: 1px solid ${colors.primary};
+      width: 100%;
+      ${media.tablet} {
+      
+        width: 70%;
+        margin-right: 0;
+      }
     }
     span {
-      display: none;
-      align-self: center;
+      // display: none;
+      // align-self: center;
     }
     span ul {
       display: flex;
@@ -497,9 +534,13 @@ export const EventRow = styled.div`
   }
   .event-invite,
   .all-comments {
+    width: 100%;
+    justify-content: space-between;
+
     img {
       max-width: 50px;
       max-height: 50px;
+      margin-right: 12px;
     }
   }
   .event-comments {
@@ -509,6 +550,7 @@ export const EventRow = styled.div`
     .comment {
       display: flex;
       align-items: center;
+      // justify-content: space-between;
       flex-direction: row;
       margin-bottom: 15px;
       p {
@@ -521,8 +563,13 @@ export const EventRow = styled.div`
     }
     img {
       border-radius: 50%;
-      margin-right: 12px;
+      ${media.tablet} {
+        margin-right: 12px;
+      }
     }
+  }
+  .add-user img {
+    padding: 3px;
   }
   .add-comments {
     display: flex;
@@ -538,7 +585,9 @@ export const EventRow = styled.div`
       color: rgba(0, 0, 0, 0.3);
     }
   }
-
+  .action-buttons {
+    display: flex;
+  }
   .edit-comment {
     display: none;
   }
