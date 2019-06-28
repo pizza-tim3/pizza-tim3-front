@@ -20,7 +20,7 @@ class EditLocation extends React.Component {
   }
   componentDidMount() {
     this.setState({
-      place_id: this.props.event.location,
+      place_id: this.props.event.place,
     });
   }
   // Choose location on click and update the state's id
@@ -28,6 +28,7 @@ class EditLocation extends React.Component {
     this.setState({
       place_id: id,
     });
+    console.log("place_id" + this.state.place_id);
   };
   // Hide the modal
 
@@ -42,13 +43,14 @@ class EditLocation extends React.Component {
   updateLocationHandler = e => {
     e.preventDefault();
     let currentId = this.state.place_id;
-    this.setState({
-      place_id: currentId,
-    });
+    // this.setState({
+    //   place_id: currentId,
+    // });
     this.props.updateLocation(currentId);
     this.setState({
       show: false,
     });
+    console.log("id submitted" + this.state.place_id);
   };
   render() {
     return (

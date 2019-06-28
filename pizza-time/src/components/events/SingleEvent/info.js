@@ -33,7 +33,7 @@ class Info extends React.Component {
       },
       show: false,
       eventForm: false,
-      google_place_id: "",
+      place: "",
       eventName: "",
       location: {
         address: {
@@ -56,9 +56,9 @@ class Info extends React.Component {
 
   componentDidMount() {
     let eventDate = new Date(Number(this.props.event.event_date));
-    if (this.props.event.location) {
+    if (this.props.event.place) {
       this.setState({
-        google_place_id: this.props.event.location,
+        place: this.props.event.place,
       });
     }
 
@@ -121,9 +121,9 @@ class Info extends React.Component {
   };
   updateLocation = place_id => {
     this.setState({
-      google_place_id: place_id,
+      place: place_id,
     });
-    this.props.updateLocation(this.state.google_place_id);
+    this.props.updateLocation(place_id);
   };
   updateTime = e => {
     e.preventDefault();
@@ -181,9 +181,9 @@ class Info extends React.Component {
     let addressString = req.formatted_address.slice(streetString.length + 1);
     let currentLat = Number(req.geometry.location.lat());
     let currentLng = Number(req.geometry.location.lng());
-    let currentPlaceId = this.props.event.location;
+    let currentPlaceId = this.props.event.place;
     this.setState({
-      google_place_id: currentPlaceId,
+      place: currentPlaceId,
       eventName: this.props.event.event_name,
       location: {
         address: {
@@ -589,11 +589,11 @@ class Info extends React.Component {
                   ) : (
                     <></>
                   )}
-                  {this.state.google_place_id.length > 0 ? (
+                  {this.props.event.place.length > 0 ? (
                     <>
                       <Details
                         getDetails={this.getDetails}
-                        placeId={this.state.google_place_id}
+                        placeId={this.props.event.place}
                         lat={this.state.location.center.lat}
                         lng={this.state.location.center.lng}
                       />

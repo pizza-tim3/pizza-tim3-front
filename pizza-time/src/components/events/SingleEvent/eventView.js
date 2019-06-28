@@ -297,6 +297,7 @@ class EventView extends React.Component {
       event_date: currentEvent.event_date,
       invitedUsers: currentEvent.invitedUsers,
       organizer: currentEvent.organizer,
+      place: currentEvent.place,
     });
   };
 
@@ -314,7 +315,6 @@ class EventView extends React.Component {
         invitedUsers: currentEvent.invitedUsers,
         organizer: currentEvent.organizer,
         inviteOnly: currentEvent.inviteOnly,
-        location: place_id, // "ds3213fkfd321Fss)dsd"
         place: place_id,
       },
     });
@@ -333,7 +333,7 @@ class EventView extends React.Component {
       event_description: currentEvent.event_description,
       event_date: currentEvent.event_date,
       organizer: currentEvent.organizer,
-      location: currentEvent.location,
+      place: currentEvent.place,
       inviteOnly: currentEvent.inviteOnly,
     };
     axios
@@ -343,11 +343,10 @@ class EventView extends React.Component {
       )
       .then(res => {
         // If response successfull, update the state with the new info
-
         // if (res.status === 200) {
         updatedEvent.invitedUsers = currentEvent.invitedUsers;
         updatedEvent.comments = currentEvent.comments;
-        updatedEvent.location = currentEvent.location;
+        updatedEvent.place = currentEvent.place;
         updatedEvent.inviteOnly = currentEvent.inviteOnly;
 
         this.setState({
