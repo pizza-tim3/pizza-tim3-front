@@ -3,7 +3,9 @@ import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { EventRow } from "../../../styles/eventStyles";
 import plus from "../../../assets/plus.png";
+import searchusers from "../../../assets/searchusers.png";
 import { Modal } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 class Participants extends React.Component {
   constructor(props) {
@@ -11,9 +13,20 @@ class Participants extends React.Component {
     this.state = {
       user: {},
       showMoreUsers: false,
+      showAllUsers: false,
     };
     this.handleShowMoreUsers = this.handleShowMoreUsers.bind(this);
     this.handleCloseMoreUsers = this.handleCloseMoreUsers.bind(this);
+    this.handleShowAllUsers = this.handleShowAllUsers.bind(this);
+    this.handleCloseAllUsers = this.handleCloseAllUsers.bind(this);
+  }
+
+  // showAllUsers modal
+  handleShowAllUsers() {
+    this.setState({ showAllUsers: true });
+  }
+  handleCloseAllUsers() {
+    this.setState({ showAllUsers: false });
   }
 
   // hideMoreUsers modal
@@ -26,20 +39,68 @@ class Participants extends React.Component {
   }
   inviteFriendsHandler() {
     this.props.inviteFriends();
-    this.setState({ showMoreUsers: false });
+    this.setState({ showMoreUsers: false, showAllUsers: false });
   }
   render() {
     return (
       <>
         <EventRow>
           <Modal
+            show={this.state.showAllUsers}
+            onHide={this.handleCloseAllUsers}
+          >
+            <Modal.Footer>
+              {/* Close More Users */}
+              <button
+                className="btn-close action"
+                onClick={this.handleCloseAllUsers}
+              >
+                <img src={plus} alt="close" />
+              </button>
+            </Modal.Footer>
+            <Modal.Body>
+              <h2>All Invited</h2>
+
+              <div className="friends">
+                {!this.props.invitedUsers ? (
+                  <></>
+                ) : (
+                  <>
+                    {this.props.invitedUsers.map(friend => {
+                      return (
+                        <div
+                          className="friend"
+                          friend={friend}
+                          id={friend.firebase_uid}
+                          key={friend.firebase_uid}
+                        >
+                          <img
+                            className="friend-avatar"
+                            id={friend.firebase_uid}
+                            src={friend.avatar}
+                            alt={friend.first_name}
+                          />
+                          <h4>{friend.first_name}</h4>
+                        </div>
+                      );
+                    })}
+                  </>
+                )}
+              </div>
+            </Modal.Body>
+          </Modal>
+
+          <Modal
             show={this.state.showMoreUsers}
             onHide={this.handleCloseMoreUsers}
           >
             <Modal.Footer>
-              {/* Close Calendar */}
-              <button className="btn-save" onClick={this.handleCloseMoreUsers}>
-                X
+              {/* Close More Users */}
+              <button
+                className="btn-close action"
+                onClick={this.handleCloseMoreUsers}
+              >
+                <img src={plus} alt="close" />
               </button>
             </Modal.Footer>
             <Modal.Body>
@@ -71,20 +132,24 @@ class Participants extends React.Component {
                               </div>
                             );
                           })}
+                          <button
+                            className="action"
+                            onClick={() => this.inviteFriendsHandler()}
+                          >
+                            <img alt="invite plus sign" src={plus} />
+                          </button>
                         </>
                       ) : (
                         <>
-                          <h1>No friends to invite</h1>
+                          <h2>No friends to invite</h2>
+                          <Link to={"/profile"} className="action organizer">
+                            <img src={searchusers} className="dada" />
+                          </Link>
                         </>
                       )}
                     </div>
+
                     <div className="tobe-invited">
-                      <button
-                        className="action"
-                        onClick={() => this.inviteFriendsHandler()}
-                      >
-                        <img alt="invite plus sign" src={plus} />
-                      </button>
                       {!this.props.additional_friends ? (
                         <></>
                       ) : (
@@ -117,7 +182,7 @@ class Participants extends React.Component {
             {this.props.event.invitedUsers ? (
               <>
                 {this.props.event.invitedUsers.map((invited, index) => {
-                  if (index < 4) {
+                  if (index < 3) {
                     return (
                       <div className="invited" key={invited.firebase_uid}>
                         <img src={invited.avatar} alt={invited.first_name} />
@@ -125,6 +190,13 @@ class Participants extends React.Component {
                     );
                   }
                 })}
+                <div className="total-users" onClick={this.handleShowAllUsers}>
+                  <span>
+                    <p>{this.props.event.invitedUsers.length}</p>
+                  </span>
+                  going
+                </div>
+
                 {this.props.userReducer.firebase_uid ===
                 this.props.event.organizer ? (
                   <div className="add-user">

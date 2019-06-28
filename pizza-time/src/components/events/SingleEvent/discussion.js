@@ -256,42 +256,40 @@ class Discussion extends React.Component {
                                 </button>
                               </div>
 
-                              <div>
-                                {this.props.userReducer.firebase_uid ? (
-                                  <>
-                                    {comment.user_id ===
-                                    this.props.userReducer.firebase_uid ? (
-                                      <div
-                                        id={`action-button-${comment.id}`}
-                                        className="action-buttons"
-                                      >
-                                        <button className="action">
-                                          <img
-                                            src={edit}
-                                            alt="edit"
-                                            onClick={() =>
-                                              this.selectComment(comment.id)
-                                            }
-                                          />
-                                        </button>
-                                        <button className="action cancel">
-                                          <img
-                                            src={cancel}
-                                            alt="delete"
-                                            onClick={() =>
-                                              this.deleteComment(comment.id)
-                                            }
-                                          />
-                                        </button>
-                                      </div>
-                                    ) : (
-                                      <div />
-                                    )}
-                                  </>
-                                ) : (
-                                  <></>
-                                )}
-                              </div>
+                              {this.props.userReducer.firebase_uid ? (
+                                <>
+                                  {comment.user_id ===
+                                  this.props.userReducer.firebase_uid ? (
+                                    <div
+                                      id={`action-button-${comment.id}`}
+                                      className="action-buttons"
+                                    >
+                                      <button className="action">
+                                        <img
+                                          src={edit}
+                                          alt="edit"
+                                          onClick={() =>
+                                            this.selectComment(comment.id)
+                                          }
+                                        />
+                                      </button>
+                                      <button className="action cancel">
+                                        <img
+                                          src={cancel}
+                                          alt="delete"
+                                          onClick={() =>
+                                            this.deleteComment(comment.id)
+                                          }
+                                        />
+                                      </button>
+                                    </div>
+                                  ) : (
+                                    <div />
+                                  )}
+                                </>
+                              ) : (
+                                <></>
+                              )}
                             </div>
                           );
                         }
