@@ -73,10 +73,8 @@ class Discussion extends React.Component {
   // Update selected comment
   updateComment = comment_id => {
     // Create an updated comment object
-    let time = new Date().toISOString();
     let updatedMessage = this.state.editComment.update;
     let updatedComment = {
-      time: time,
       id: comment_id,
       user_id: this.props.user,
       message: updatedMessage,

@@ -537,17 +537,21 @@ class Info extends React.Component {
               </div>
 
               <div className="invite-switch">
-                <h3>By Invite Only: </h3>
-                <Toggle>
-                  <label className="switch">
-                    <input
-                      className="switch-button"
-                      onClick={this.inviteOnlySwitchHandler}
-                      type="checkbox"
-                    />
-                    <span className="slider" />
-                  </label>
-                </Toggle>
+                <div className="info-row">
+                  <div className="event-info-label">By Invite Only: </div>
+                  <div className="event-info-data">
+                    <Toggle>
+                      <label className="switch">
+                        <input
+                          className="switch-button"
+                          onClick={this.inviteOnlySwitchHandler}
+                          type="checkbox"
+                        />
+                        <span className="slider" />
+                      </label>
+                    </Toggle>
+                  </div>
+                </div>
               </div>
             </EventRow>
 
@@ -555,9 +559,12 @@ class Info extends React.Component {
               <EventRow>
                 {this.state.location ? (
                   <div className="event-location-name">
-                    <h2>
-                      Place: <span>{this.state.location.name}</span>
-                    </h2>
+                    <div className="info-row">
+                      <div className="event-info-label">Place:</div>
+                      <div className="event-info-data">
+                        {this.state.location.name}
+                      </div>
+                    </div>
                     <EditLocation
                       event={this.props.event}
                       updateLocation={this.updateLocation}
