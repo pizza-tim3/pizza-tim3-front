@@ -53,6 +53,7 @@ export default function Login(props) {
     }
   };
 
+
   //TODO added checks to make sure that the registered users registered on our back and
   const signInWithGoogle = async e => {
     e.preventDefault();
