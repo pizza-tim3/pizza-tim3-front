@@ -4,6 +4,8 @@ import calendar from "./../../../assets/calendar.svg";
 import LocationMap from "./locationMap.js";
 import edit from "./../../../assets/edit.png";
 import trash from "./../../../assets/trash.png";
+import fakemap from "./../../../assets/fakemap.png";
+import pizzaplaceholder from "./../../../assets/pizzaplaceholder.png";
 import update from "./../../../assets/update.png";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -344,9 +346,11 @@ class Info extends React.Component {
                   >
                     <img src={cancel} alt="cancel" />
                   </button>
-                  <button className="btn-save" onClick={this.updateNameHandler}>
-                    {" "}
-                    Update
+                  <button
+                    className="action organizer"
+                    onClick={this.updateNameHandler}
+                  >
+                    <img src={update} alt="update" />
                   </button>
                 </div>
               ) : (
@@ -444,7 +448,7 @@ class Info extends React.Component {
                   <div className="info-row">
                     <div className="event-info-label">Time: </div>
                     <div className="event-info-data">
-                      {this.state.time.hour} : {this.state.time.minutes} :
+                      {this.state.time.hour} : {this.state.time.minutes}{" "}
                       {this.state.time.am}
                     </div>
                   </div>
@@ -462,77 +466,75 @@ class Info extends React.Component {
                   )}
                 </div>
                 <div className="calendar-row">
-                  <div>
-                    <span className="edit-time">
-                      <div>
-                        <select
-                          name="hour"
-                          value={this.state.time.hour}
-                          as="select-hour"
-                          onChange={this.timeOnChange}
-                        >
-                          <option value={this.state.time.hour}>
-                            {this.state.time.hour}
-                          </option>
-                          {hours.map((hour, index) => {
-                            if (Number(this.state.time.hour) !== Number(hour)) {
-                              return (
-                                <option key={index} value={hour}>
-                                  {hour}
-                                </option>
-                              );
-                            }
-                          })}
-                        </select>
-                        <select
-                          name="minutes"
-                          value={this.state.time.minutes}
-                          as="select-minutes"
-                          onChange={this.timeOnChange}
-                        >
-                          <option value={this.state.time.minutes}>
-                            {this.state.time.minutes}
-                          </option>
-                          {minutes.map((minute, index) => {
-                            if (
-                              Number(this.state.time.minutes) !== Number(minute)
-                            ) {
-                              return (
-                                <option key={index} value={minute}>
-                                  {minute}
-                                </option>
-                              );
-                            }
-                          })}
-                        </select>
-                        <select
-                          onChange={this.timeOnChange}
-                          value={this.state.time.am}
-                          name="am"
-                          as="select-am"
-                        >
-                          {this.state.time.am === "AM" ? (
-                            <>
-                              <option value="AM">AM</option>
-                              <option value="PM">PM</option>
-                            </>
-                          ) : (
-                            <>
-                              <option value="PM">PM</option>
-                              <option value="AM">AM</option>
-                            </>
-                          )}
-                          })}
-                        </select>
-                      </div>
-                      <button
-                        className="action organizer"
-                        onClick={this.updateTime}
+                  <span className="edit-time">
+                    <div>
+                      <select
+                        name="hour"
+                        value={this.state.time.hour}
+                        as="select-hour"
+                        onChange={this.timeOnChange}
                       >
-                        <img src={update} alt="edit" />
-                      </button>
-                    </span>
-                  </div>
+                        <option value={this.state.time.hour}>
+                          {this.state.time.hour}
+                        </option>
+                        {hours.map((hour, index) => {
+                          if (Number(this.state.time.hour) !== Number(hour)) {
+                            return (
+                              <option key={index} value={hour}>
+                                {hour}
+                              </option>
+                            );
+                          }
+                        })}
+                      </select>
+                      <select
+                        name="minutes"
+                        value={this.state.time.minutes}
+                        as="select-minutes"
+                        onChange={this.timeOnChange}
+                      >
+                        <option value={this.state.time.minutes}>
+                          {this.state.time.minutes}
+                        </option>
+                        {minutes.map((minute, index) => {
+                          if (
+                            Number(this.state.time.minutes) !== Number(minute)
+                          ) {
+                            return (
+                              <option key={index} value={minute}>
+                                {minute}
+                              </option>
+                            );
+                          }
+                        })}
+                      </select>
+                      <select
+                        onChange={this.timeOnChange}
+                        value={this.state.time.am}
+                        name="am"
+                        as="select-am"
+                      >
+                        {this.state.time.am === "AM" ? (
+                          <>
+                            <option value="AM">AM</option>
+                            <option value="PM">PM</option>
+                          </>
+                        ) : (
+                          <>
+                            <option value="PM">PM</option>
+                            <option value="AM">AM</option>
+                          </>
+                        )}
+                        })}
+                      </select>
+                    </div>
+                    <button
+                      className="action organizer"
+                      onClick={this.updateTime}
+                    >
+                      <img src={update} alt="edit" />
+                    </button>
+                  </span>
                 </div>
               </div>
 
@@ -578,11 +580,20 @@ class Info extends React.Component {
                 <div className="event location">
                   {this.state.location ? (
                     <>
-                      <img
-                        className="location-image"
-                        alt="location"
-                        src={this.state.location.photo}
-                      />
+                      {this.state.location.photo.length === 0 ? (
+                        <img
+                          className="location-image"
+                          alt="location"
+                          src={pizzaplaceholder}
+                        />
+                      ) : (
+                        <img
+                          className="location-image"
+                          alt="location"
+                          src={this.state.location.photo}
+                        />
+                      )}
+
                       <div className="location-address">
                         <h2>Address:</h2>
                         <address>
@@ -601,7 +612,9 @@ class Info extends React.Component {
                   this.state.location.center.lng !== 0 ? (
                     <LocationMap center={this.state.location.center} />
                   ) : (
-                    <></>
+                    <>
+                      <img src={fakemap} alt="fakemap" />
+                    </>
                   )}
                   {this.props.event.place.length > 0 ? (
                     <>
@@ -625,14 +638,16 @@ class Info extends React.Component {
                       )}
                     </>
                   ) : (
-                    <></>
+                    <>
+                      <img src={fakemap} alt="fakemap" />
+                    </>
                   )}
                 </div>
               </EventRow>
             </EventColumn>
           </EventBox>
         ) : (
-          <div> Loading...</div>
+          <div />
         )}
       </EventBox>
     );

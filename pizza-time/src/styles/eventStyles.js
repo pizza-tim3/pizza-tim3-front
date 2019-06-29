@@ -65,8 +65,11 @@ export const Inner = styled.div`
     font-size: 1.3rem;
     font-weight: 600;
     margin-right: 10px;
-    min-width: 80px;
+    min-width: 50px;
     text-align: left;
+    ${media.tablet} {
+      max-width: 65px;
+    }
   }
   .event-info-data {
     font-size: 1.2rem;
@@ -77,6 +80,7 @@ export const Inner = styled.div`
     display: flex;
     flex-direction: row;
     align-items: flex-end;
+    // justify-content: space-between;
   }
   ${media.tablet} {
     width: 80%;
@@ -145,6 +149,9 @@ export const Inner = styled.div`
 
       .event-name {
         width: 50%;
+        .info-row {
+          width: 78%;
+        }
       }
       h1 {
         font-size: 2rem;
@@ -159,8 +166,8 @@ export const Inner = styled.div`
       font-weight: 600;
       font-size: 13px;
       color: ${colors.white};
-      width: 50px;
-      margin-left: 3px;
+      width: 84px;
+      margin: 0px 5px;
       align-self: center;
       ${media.desktop} {
         width: 130px;
@@ -199,6 +206,7 @@ export const Inner = styled.div`
   .event-location-name {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
     span {
       font-size: 1.3rem;
     }
@@ -354,7 +362,7 @@ export const EventRow = styled.div`
   justify-content: space-between;
   padding: 15px auto;
   flex-direction: column;
-  margin: 0px 20px 34px;
+  margin: 0px 20px 25px;
   ${media.desktop} {
     flex-direction: row;
   }
@@ -388,13 +396,12 @@ export const EventRow = styled.div`
       padding-left: 10px;
       vertical-align: middle;
     }
-    .calendar-row:last-child {
-      padding-bottom: 0px;
-    }
     .edit-time {
       display: flex;
       justify-content: space-between;
       padding-left: 0px;
+      align-items: center;
+      margin-top: 19px;
     }
     select {
       border: none;
@@ -412,10 +419,35 @@ export const EventRow = styled.div`
   .calendar-row {
     justify-content: space-between;
     display: flex;
-    padding-bottom: 25px;
+    padding-bottom: 0px;
     // width: 100%;
   }
+
+  .calendar-row:nth-child(2) {
+    padding: 20px 0px 0px;
+  }
   .invite-switch {
+    width: 100%;
+    display: flex;
+    ${media.tablet} {
+      width: 50%;
+      justify-content: space-between;
+
+    }
+    .event-info-label {
+      max-width: 150px;
+    }
+    align-items: flex-end;
+    .info-row {
+      justify-content: space-between;
+      display: flex;
+      width: 100%;
+
+      ${media.tablet} {
+        width: 100%;
+        justify-content: flex-end;
+      }
+    }
     h3 {
       margin-bottom: 0px;
       margin-right: 8px;
@@ -430,8 +462,7 @@ export const EventRow = styled.div`
     ${media.desktop} {
       width: 50%;
     }
-    .location-image,
-    #map {
+    .location-image {
       min-height: 300px;
       max-height: 300px;
     }
@@ -485,7 +516,7 @@ export const EventRow = styled.div`
       flex-direction: row;
     }
     div {
-      margin-right: 10px;
+      margin-right: -26px;
       padding: 5px;
       display: flex;
       align-items: start;
@@ -503,17 +534,19 @@ export const EventRow = styled.div`
         cursor: pointer;
       }
       span {
-        padding: 7px 14px;
+        padding: 9px 18px;
         background-color: ${colors.primary};
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         margin-right: 8px;
+        margin-left: -6px;
         p {
           margin-bottom: 0px;
           font-weight: bold;
           color: white;
+          font-size: 1.4rem;
         }
       }
     }
@@ -543,6 +576,7 @@ export const EventRow = styled.div`
     .invited img {
       border-radius: 50%;
       width: 55px;
+      border: 2px solid white;
     }
   }
   .event-invite,
@@ -563,15 +597,24 @@ export const EventRow = styled.div`
     .comment {
       display: flex;
       align-items: center;
-      // justify-content: space-between;
       flex-direction: row;
       margin-bottom: 15px;
       p {
         align-self: center;
         text-align: left;
+        display: flex;
+        flex-direction: column;
         margin-bottom: 0px;
-        // padding-left: 12px;
         padding-right: 12px;
+      }
+      .comment-wraper {
+        dispay: flex;
+        flex-direction: column;
+      }
+      .comment-date {
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 0.8rem;
+        padding: 3px 12px 5px 0px;
       }
     }
     img {

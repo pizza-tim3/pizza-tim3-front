@@ -194,7 +194,6 @@ class Participants extends React.Component {
                   <span>
                     <p>{this.props.event.invitedUsers.length}</p>
                   </span>
-                  going
                 </div>
 
                 {this.props.userReducer.firebase_uid ===

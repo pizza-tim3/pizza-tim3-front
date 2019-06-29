@@ -4,6 +4,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import plus from "../../../assets/plus.png";
+import moment from "moment";
 import update from "../../../assets/update.png";
 import edit from "../../../assets/edit.png";
 import cancel from "../../../assets/cancel.svg";
@@ -221,16 +222,21 @@ class Discussion extends React.Component {
                               className="comment"
                               id={comment.id}
                               user_id={comment.user_id}
-                              key={comment.id}
+                              key={index}
                             >
                               <img
                                 src={comment.avatar}
                                 alt="user"
                                 className="user-avatar"
                               />
-                              <p id={`comment-${comment.id}`}>
-                                {comment.message}
-                              </p>
+                              <div>
+                                <p id={`comment-${comment.id}`}>
+                                  {comment.message}
+                                </p>
+                                <p className="comment-date">
+                                  {moment(comment.time).fromNow()}
+                                </p>
+                              </div>
 
                               <div
                                 id={`edit-comment-${comment.id}`}

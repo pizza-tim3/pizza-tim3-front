@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import pizzaplaceholder from "./../../../assets/pizzaplaceholder.png";
 
 //props from app placeId={event.place_id}
 
@@ -24,28 +25,35 @@ const Details = props => {
     window.initMap = initMap;
   };
 
-  const initMap = async() => {
-    
-      try {
-        //select the element to place the search in
-        let map = new window.google.maps.Map(document.getElementById('map'), {
-          center: { lat: props.lat, lng: props.lng},
-          zoom: 12
-        });
-        //create a request object to pass to the service
-        let request = {
-          placeId: props.placeId,
-          fields:['name', 'formatted_address', 'place_id', 'geometry', 'photos', 'formatted_phone_number', 'opening_hours']
-        }
-        //create a callback to pass into the service
-        const callBack = async (place, status) => {
-          const serviceStatus = window.google.maps.places.PlacesServiceStatus;
-          setIsLoading(false);
+  const initMap = async () => {
+    try {
+      //select the element to place the search in
+      let map = new window.google.maps.Map(document.getElementById("map"), {
+        center: { lat: props.lat, lng: props.lng },
+        zoom: 12,
+      });
+      //create a request object to pass to the service
+      let request = {
+        placeId: props.placeId,
+        fields: [
+          "name",
+          "formatted_address",
+          "place_id",
+          "geometry",
+          "photos",
+          "formatted_phone_number",
+          "opening_hours",
+        ],
+      };
+      //create a callback to pass into the service
+      const callBack = async (place, status) => {
+        const serviceStatus = window.google.maps.places.PlacesServiceStatus;
+        setIsLoading(false);
         switch (status) {
           case serviceStatus.OK:
             // let marker = new window.google.maps.Marker({
             //   map: map,
-            //   position: place.geometry.location 
+            //   position: place.geometry.location
             // })
             sendToParent(place);
             break;
@@ -63,7 +71,6 @@ const Details = props => {
       //initialize the service
       let service = new window.google.maps.places.PlacesService(map);
       service.getDetails(request, callBack);
-
     } catch (e) {
       setError("Error:", e);
     }
@@ -72,7 +79,14 @@ const Details = props => {
   if (loading) {
     return (
       <>
-        <div>Loading....</div>
+        <div>
+          {" "}
+          <img
+            className="location-image"
+            alt="location placeholder"
+            src={pizzaplaceholder}
+          />
+        </div>
         <div id="map" />
       </>
     );
@@ -80,9 +94,7 @@ const Details = props => {
 
   return (
     <>
-      <div id="map">
-
-      </div>
+      <div id="map" />
     </>
   );
 };
