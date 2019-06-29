@@ -56,7 +56,6 @@ export const Inner = styled.div`
     border: none;
     border-bottom: 1.5px solid ${colors.primary};
     margin-right: 15px;
-    text-transform: capitalize;
     &:focus {
       outline: none;
     }
@@ -128,7 +127,13 @@ export const Inner = styled.div`
       display: flex;
       height: 48px;
       ${media.desktop} {
+        input {
+          width: 300px;
+        }
         height: 40px;
+        width: 50%;
+        display: flex;
+        justify-content: space-between;
       }
     }
     .event-name {
@@ -598,7 +603,7 @@ export const EventRow = styled.div`
       display: flex;
       align-items: center;
       flex-direction: row;
-      margin-bottom: 15px;
+      margin-bottom: 0px;
       p {
         align-self: center;
         text-align: left;
@@ -611,17 +616,19 @@ export const EventRow = styled.div`
         dispay: flex;
         flex-direction: column;
       }
-      .comment-date {
-        color: rgba(0, 0, 0, 0.5);
-        font-size: 0.8rem;
-        padding: 3px 12px 5px 0px;
-      }
     }
     img {
       border-radius: 50%;
       ${media.tablet} {
         margin-right: 12px;
       }
+    }
+
+    .comment-date {
+      color: rgba(0,0,0,0.5);
+      font-size: 0.8rem;
+      padding: 0px 0px 0px 62px;
+      text-align: left;
     }
   }
   .add-user img {

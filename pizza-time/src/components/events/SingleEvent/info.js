@@ -340,18 +340,20 @@ class Info extends React.Component {
                     onChange={this.inputOnChange}
                   />
 
-                  <button
-                    className="action organizer cancel"
-                    onClick={this.toggleEdit}
-                  >
-                    <img src={cancel} alt="cancel" />
-                  </button>
-                  <button
-                    className="action organizer"
-                    onClick={this.updateNameHandler}
-                  >
-                    <img src={update} alt="update" />
-                  </button>
+                  <div>
+                    <button
+                      className="action organizer cancel"
+                      onClick={this.toggleEdit}
+                    >
+                      <img src={cancel} alt="cancel" />
+                    </button>
+                    <button
+                      className="action organizer"
+                      onClick={this.updateNameHandler}
+                    >
+                      <img src={update} alt="update" />
+                    </button>
+                  </div>
                 </div>
               ) : (
                 <div className="event-name">

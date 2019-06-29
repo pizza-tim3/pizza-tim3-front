@@ -218,83 +218,85 @@ class Discussion extends React.Component {
                       {this.state.comments.map((comment, index) => {
                         if (comment.user_id !== null) {
                           return (
-                            <div
-                              className="comment"
-                              id={comment.id}
-                              user_id={comment.user_id}
-                              key={index}
-                            >
-                              <img
-                                src={comment.avatar}
-                                alt="user"
-                                className="user-avatar"
-                              />
-                              <div>
-                                <p id={`comment-${comment.id}`}>
-                                  {comment.message}
-                                </p>
-                                <p className="comment-date">
-                                  {moment(comment.time).fromNow()}
-                                </p>
-                              </div>
-
+                            <>
                               <div
-                                id={`edit-comment-${comment.id}`}
-                                className="edit-comment"
+                                className="comment"
+                                id={comment.id}
+                                user_id={comment.user_id}
+                                key={index}
                               >
-                                <input
-                                  id={`edit-comment-input-${comment.id}`}
-                                  className="edit-comment-input orange-form"
-                                  value={this.state.editComment.update}
-                                  name="update"
-                                  onChange={this.updateOnChange}
+                                <img
+                                  src={comment.avatar}
+                                  alt="user"
+                                  className="user-avatar"
                                 />
-                                <button className="action update">
-                                  <img
-                                    src={update}
-                                    alt="update"
-                                    onClick={() =>
-                                      this.updateComment(comment.id)
-                                    }
-                                  />
-                                </button>
-                              </div>
+                                <div>
+                                  <p id={`comment-${comment.id}`}>
+                                    {comment.message}
+                                  </p>
+                                </div>
 
-                              {this.props.userReducer.firebase_uid ? (
-                                <>
-                                  {comment.user_id ===
-                                  this.props.userReducer.firebase_uid ? (
-                                    <div
-                                      id={`action-button-${comment.id}`}
-                                      className="action-buttons"
-                                    >
-                                      <button className="action">
-                                        <img
-                                          src={edit}
-                                          alt="edit"
-                                          onClick={() =>
-                                            this.selectComment(comment.id)
-                                          }
-                                        />
-                                      </button>
-                                      <button className="action cancel">
-                                        <img
-                                          src={cancel}
-                                          alt="delete"
-                                          onClick={() =>
-                                            this.deleteComment(comment.id)
-                                          }
-                                        />
-                                      </button>
-                                    </div>
-                                  ) : (
-                                    <div />
-                                  )}
-                                </>
-                              ) : (
-                                <></>
-                              )}
-                            </div>
+                                <div
+                                  id={`edit-comment-${comment.id}`}
+                                  className="edit-comment"
+                                >
+                                  <input
+                                    id={`edit-comment-input-${comment.id}`}
+                                    className="edit-comment-input orange-form"
+                                    value={this.state.editComment.update}
+                                    name="update"
+                                    onChange={this.updateOnChange}
+                                  />
+                                  <button className="action update">
+                                    <img
+                                      src={update}
+                                      alt="update"
+                                      onClick={() =>
+                                        this.updateComment(comment.id)
+                                      }
+                                    />
+                                  </button>
+                                </div>
+
+                                {this.props.userReducer.firebase_uid ? (
+                                  <>
+                                    {comment.user_id ===
+                                    this.props.userReducer.firebase_uid ? (
+                                      <div
+                                        id={`action-button-${comment.id}`}
+                                        className="action-buttons"
+                                      >
+                                        <button className="action">
+                                          <img
+                                            src={edit}
+                                            alt="edit"
+                                            onClick={() =>
+                                              this.selectComment(comment.id)
+                                            }
+                                          />
+                                        </button>
+                                        <button className="action cancel">
+                                          <img
+                                            src={cancel}
+                                            alt="delete"
+                                            onClick={() =>
+                                              this.deleteComment(comment.id)
+                                            }
+                                          />
+                                        </button>
+                                      </div>
+                                    ) : (
+                                      <div />
+                                    )}
+                                  </>
+                                ) : (
+                                  <></>
+                                )}
+                              </div>
+                              <p className="comment-date">
+                                {moment(comment.time).fromNow()}
+                              </p>
+                            </>
                           );
                         }
                       })}
