@@ -120,7 +120,7 @@
 }
 @media (max-width: 991px) {
   .modal {
-    margin-top: 75px;
+    /* margin-top: 75px; */
   }
   .carousel-indicators {
     bottom: 2%;

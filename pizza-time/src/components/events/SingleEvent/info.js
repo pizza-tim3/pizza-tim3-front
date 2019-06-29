@@ -34,6 +34,7 @@ class Info extends React.Component {
         am: "AM",
       },
       show: false,
+      deleteShow: false,
       eventForm: false,
       place: "",
       eventName: "",
@@ -54,6 +55,8 @@ class Info extends React.Component {
     // React-Bootstraps Toggle modals
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleDeleteShow = this.handleDeleteShow.bind(this);
+    this.handleDeleteClose = this.handleDeleteClose.bind(this);
   }
 
   componentDidMount() {
@@ -294,6 +297,14 @@ class Info extends React.Component {
     e.preventDefault();
     this.props.updateEvent(this.props.event.id);
   };
+  handleDeleteClose() {
+    this.setState({ deleteShow: false });
+  }
+  // Shows the modal
+  handleDeleteShow() {
+    this.setState({ deleteShow: true });
+  }
+
   // Hides the modal
   handleClose() {
     this.setState({ show: false });
@@ -391,9 +402,7 @@ class Info extends React.Component {
                     </button>
                     <button
                       className="action organizer trash"
-                      onClick={() =>
-                        this.props.deleteEvent(this.props.event.id)
-                      }
+                      onClick={this.handleDeleteShow}
                     >
                       <img src={trash} alt="trash" />
                     </button>
@@ -403,6 +412,26 @@ class Info extends React.Component {
                 )}
               </div>
             </div>
+            {/* Delete Event Modal */}
+            <Modal show={this.state.deleteShow} onHide={this.handleDeleteClose}>
+              <Modal.Body>
+                <h2>Are you sure you want to delete the event?</h2>
+              </Modal.Body>
+              <Modal.Footer>
+                <button
+                  className="action organizer trash"
+                  onClick={() => this.props.deleteEvent(this.props.event.id)}
+                >
+                  <img src={trash} alt="trash" />
+                </button>
+                <button
+                  className="action organizer cancel"
+                  onClick={this.handleDeleteClose}
+                >
+                  <img src={cancel} alt="cancel" />
+                </button>
+              </Modal.Footer>
+            </Modal>
 
             <EventRow className="event-date">
               {/* Modal */}
