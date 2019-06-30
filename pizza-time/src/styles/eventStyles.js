@@ -467,9 +467,11 @@ export const EventRow = styled.div`
     ${media.desktop} {
       width: 50%;
     }
-    .location-image {
+    .location-image, #location-map {
       min-height: 300px;
       max-height: 300px;
+      box-shadow: 0px 0px 22px 1px #D2D2D2;
+      width: 100%;
     }
     &.location {
       display: flex;
@@ -477,10 +479,6 @@ export const EventRow = styled.div`
     }
     #map {
       display: none;
-    }
-    #location-map {
-      height: 300px; /* The height is 400 pixels */
-      width: 100%;
     }
     .marker {
       width: 40px;
