@@ -233,6 +233,16 @@ export const Inner = styled.div`
       height: 100%;
     }
   }
+  .location-hours {
+    width: 90%;
+    margin: 0px auto;
+  }
+  .location-hours .days {
+    display: flex;
+    font-weight: 500;
+    flex-direction: column;
+    align-items: flex-start;
+  }
   .location-address {
     address {
       display: flex;

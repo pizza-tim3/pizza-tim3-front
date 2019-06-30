@@ -44,7 +44,10 @@ class Info extends React.Component {
           city: "",
         },
         name: "",
-        hours: [],
+        opening_hours: {
+          days: [],
+          hours: [],
+        },
         photo: "",
         center: {
           lat: 0,
@@ -177,16 +180,32 @@ class Info extends React.Component {
   };
   getDetails = req => {
     let locationHours = req.opening_hours.weekday_text;
+    console.log(req);
     // Google's get image url function
     let bigLeague = req.photos[0].getUrl();
 
     let cutOff = ", ";
+    let dayCutOff = ": ";
     let streetCutOffIndex = req.formatted_address.indexOf(cutOff);
     let streetString = req.formatted_address.slice(0, streetCutOffIndex);
     let addressString = req.formatted_address.slice(streetString.length + 1);
     let currentLat = Number(req.geometry.location.lat());
     let currentLng = Number(req.geometry.location.lng());
     let currentPlaceId = this.props.event.place;
+    let currentDays = [];
+    let currentHours = [];
+    let hourDays = req.opening_hours.weekday_text.map(hour => {
+      // console.log(hour);
+      let cutOffindex = hour.indexOf(dayCutOff);
+      // console.log(cutOffindex);
+      let day = hour.slice(0, cutOffindex);
+      let hourItem = hour.slice(day.length + 1);
+      currentDays.push(day);
+      currentHours.push(hourItem);
+    });
+    console.log(currentDays);
+    console.log(currentHours);
+
     this.setState({
       place: currentPlaceId,
       eventName: this.props.event.event_name,
@@ -195,7 +214,10 @@ class Info extends React.Component {
           street: streetString,
           city: addressString,
         },
-        hours: locationHours,
+        opening_hours: {
+          days: currentDays,
+          hours: currentHours,
+        },
         name: req.name,
         photo: bigLeague,
         center: {
@@ -204,6 +226,7 @@ class Info extends React.Component {
         },
       },
     });
+    console.log(this.state.location);
   };
   // Switch handlers for evnts inviteOnly property
   inviteOnlySwitchHandler = e => {
@@ -643,9 +666,7 @@ class Info extends React.Component {
                   this.state.location.center.lng !== 0 ? (
                     <LocationMap center={this.state.location.center} />
                   ) : (
-                    <>
-                      <img src={fakemap} alt="fakemap" />
-                    </>
+                    <></>
                   )}
                   {this.props.event.place.length > 0 ? (
                     <>
@@ -655,23 +676,32 @@ class Info extends React.Component {
                         lat={this.state.location.center.lat}
                         lng={this.state.location.center.lng}
                       />
-                      {this.state.location ? (
+                      {this.state.location.opening_hours ? (
                         <div className="location-hours">
                           <h2>Hours: </h2>
-                          <div>
-                            {this.state.location.hours.map((hour, index) => {
-                              return <div key={index}>{hour}</div>;
-                            })}
-                          </div>
+                          <EventRow>
+                            <div className="days">
+                              {this.state.location.opening_hours.days.map(
+                                (day, index) => {
+                                  return <div key={index}>{day}</div>;
+                                }
+                              )}
+                            </div>
+                            <div className="hours">
+                              {this.state.location.opening_hours.hours.map(
+                                (hour, index) => {
+                                  return <div key={index}>{hour}</div>;
+                                }
+                              )}
+                            </div>
+                          </EventRow>
                         </div>
                       ) : (
                         <></>
                       )}
                     </>
                   ) : (
-                    <>
-                      <img src={fakemap} alt="fakemap" />
-                    </>
+                    <></>
                   )}
                 </div>
               </EventRow>

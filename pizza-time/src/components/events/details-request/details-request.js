@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import pizzaplaceholder from "./../../../assets/pizzaplaceholder.png";
+import fakemap from "./../../../assets/fakemap.png";
 
 //props from app placeId={event.place_id}
 
@@ -84,7 +84,7 @@ const Details = props => {
           <img
             className="location-image"
             alt="location placeholder"
-            src={pizzaplaceholder}
+            src={fakemap}
           />
         </div>
         <div id="map" />
