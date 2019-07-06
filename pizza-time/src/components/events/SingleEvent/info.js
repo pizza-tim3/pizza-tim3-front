@@ -38,6 +38,7 @@ class Info extends React.Component {
       eventForm: false,
       place: "",
       eventName: "",
+      eventNameError: false,
       location: {
         address: {
           street: "",
@@ -180,7 +181,6 @@ class Info extends React.Component {
   };
   getDetails = req => {
     let locationHours = req.opening_hours.weekday_text;
-    console.log(req);
     // Google's get image url function
     let bigLeague = req.photos[0].getUrl();
 
@@ -195,16 +195,12 @@ class Info extends React.Component {
     let currentDays = [];
     let currentHours = [];
     let hourDays = req.opening_hours.weekday_text.map(hour => {
-      // console.log(hour);
       let cutOffindex = hour.indexOf(dayCutOff);
-      // console.log(cutOffindex);
       let day = hour.slice(0, cutOffindex);
       let hourItem = hour.slice(day.length + 1);
       currentDays.push(day);
       currentHours.push(hourItem);
     });
-    console.log(currentDays);
-    console.log(currentHours);
 
     this.setState({
       place: currentPlaceId,
@@ -226,7 +222,6 @@ class Info extends React.Component {
         },
       },
     });
-    console.log(this.state.location);
   };
   // Switch handlers for evnts inviteOnly property
   inviteOnlySwitchHandler = e => {
@@ -253,11 +248,29 @@ class Info extends React.Component {
     });
   };
   toggleEdit = () => {
-    this.setState(prevState => {
-      const stateCopy = { ...this.state };
-      stateCopy.editForm = !prevState.editForm;
-      return stateCopy;
-    });
+    let initValue = this.props.event.event_name;
+    let updatedValue = this.state.eventName;
+    if (this.state.editForm === false) {
+      this.setState({
+        editForm: true,
+        eventNameError: false,
+      });
+    } else {
+      if (updatedValue.length === 0) {
+        this.setState({
+          editForm: true,
+          eventNameError: true,
+          eventName: initValue,
+        });
+      } else {
+        this.setState({
+          editForm: false,
+          eventNameError: false,
+          eventName: initValue,
+        });
+        this.props.updateName(this.state.eventName);
+      }
+    }
   };
   toggleEditTime = () => {
     if (this.props.event.organizer === this.props.userReducer.firebase_uid) {
@@ -271,10 +284,20 @@ class Info extends React.Component {
   };
   updateNameHandler = e => {
     e.preventDefault();
-    this.setState({
-      editForm: false,
-    });
-    this.props.updateName(this.state.eventName);
+    let currentValue = this.props.event.name;
+    if (this.state.eventName.length > 2) {
+      this.setState({
+        editForm: false,
+        eventNameError: false,
+      });
+      this.props.updateName(this.state.eventName);
+    } else {
+      this.setState({
+        editForm: true,
+        eventNameError: true,
+        eventName: currentValue,
+      });
+    }
   };
   updateDateHandler = e => {
     e.preventDefault();
@@ -357,36 +380,45 @@ class Info extends React.Component {
     ];
     // Array of minutes to display in the select's mapped option values
     let minutes = ["00", "15", "30", "45"];
-    // console.log(this.state.location.center);
     return (
       <EventBox>
         {Object.keys(this.props.event).length ? (
           <EventBox>
             <div className="event-header">
               {this.state.editForm === true ? (
-                <div className="header-edit">
-                  <input
-                    className="orange-form"
-                    name="name"
-                    type="text"
-                    value={this.state.eventName}
-                    placeholder={this.state.eventName}
-                    onChange={this.inputOnChange}
-                  />
+                <div className="event-wrapper">
+                  <div className="header-edit">
+                    <input
+                      className="orange-form"
+                      name="name"
+                      type="text"
+                      value={this.state.eventName}
+                      placeholder={this.state.eventName}
+                      onChange={this.inputOnChange}
+                    />
 
-                  <div>
-                    <button
-                      className="action organizer cancel"
-                      onClick={this.toggleEdit}
-                    >
-                      <img src={cancel} alt="cancel" />
-                    </button>
-                    <button
-                      className="action organizer"
-                      onClick={this.updateNameHandler}
-                    >
-                      <img src={update} alt="update" />
-                    </button>
+                    <div>
+                      <button
+                        className="action organizer cancel"
+                        onClick={this.toggleEdit}
+                      >
+                        <img src={cancel} alt="cancel" />
+                      </button>
+                      <button
+                        className="action organizer"
+                        onClick={this.updateNameHandler}
+                      >
+                        <img src={update} alt="update" />
+                      </button>
+                    </div>
+                  </div>
+                  <div className="event-wrapper">
+                    {" "}
+                    {this.state.eventNameError && (
+                      <span className="comment-error">
+                        Event name too short.
+                      </span>
+                    )}
                   </div>
                 </div>
               ) : (
@@ -412,7 +444,7 @@ class Info extends React.Component {
                   )}
                 </div>
               )}
-              <div>
+              <div className="event-save-wrapper">
                 {this.props.userReducer.firebase_uid ===
                 this.props.event.organizer ? (
                   <div className="event-save">
@@ -679,7 +711,7 @@ class Info extends React.Component {
                       {this.state.location.opening_hours ? (
                         <div className="location-hours">
                           <h2>Hours: </h2>
-                          <EventRow>
+                          <div className="opening-hours">
                             <div className="days">
                               {this.state.location.opening_hours.days.map(
                                 (day, index) => {
@@ -694,7 +726,7 @@ class Info extends React.Component {
                                 }
                               )}
                             </div>
-                          </EventRow>
+                          </div>
                         </div>
                       ) : (
                         <></>

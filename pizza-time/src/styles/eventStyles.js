@@ -5,8 +5,14 @@ export const EventBox = styled.div`
   width: 100%;
   .event-save {
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     justify-content: space-between;
+    .action.trash img {
+      padding: 6px 12px 6px 0px;
+    }
+    ${media.tablet} {
+      justify-content: flex-start;
+    }
   }
 `;
 
@@ -60,6 +66,14 @@ export const Inner = styled.div`
       outline: none;
     }
   }
+  .event-wrapper {
+    width: 100%;
+    text-align: left;
+    padding: 5px 0px;
+    ${media.tablet} {
+      width: 100%;
+    }
+  }
   .event-info-label {
     font-size: 1.3rem;
     font-weight: 600;
@@ -110,7 +124,10 @@ export const Inner = styled.div`
       background: ${colors.white};
     }
   }
-
+  .event-save-wrapper {
+    width: 100%;
+    justify-content: flex-end;
+  }
   .event-header {
     width: 91%;
     border-bottom: 2px solid ${colors.black} !important;
@@ -119,19 +136,27 @@ export const Inner = styled.div`
     margin: 0px auto;
     padding: 20px 0px;
     align-items: center;
-    height: 85px;
+    flex-direction: column;
+
+    ${media.desktop} {
+      height: 85px;
+      width: 100%;
+      flex-direction: row;
+    }
     .action {
       padding-left: 0px;
     }
     .header-edit {
       display: flex;
       height: 48px;
+      justify-content: space-between;
+
       ${media.desktop} {
         input {
           width: 300px;
         }
         height: 40px;
-        width: 50%;
+        width: 100%;
         display: flex;
         justify-content: space-between;
       }
@@ -139,8 +164,11 @@ export const Inner = styled.div`
     .event-name {
       justify-content: space-between;
       display: flex;
-      width: 78%;
+      width: 100%;
       align-items: flex-end;
+      ${media.tablet} {
+        width: 100%;
+      }
     }
     h1 {
       font-size: 1.3rem;
@@ -153,7 +181,7 @@ export const Inner = styled.div`
       width: 96%;
 
       .event-name {
-        width: 50%;
+        width: 100%;
         .info-row {
           width: 78%;
         }
@@ -234,8 +262,13 @@ export const Inner = styled.div`
     }
   }
   .location-hours {
-    width: 90%;
+    width: 85%;
     margin: 0px auto;
+    .opening-hours {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
   }
   .location-hours .days {
     display: flex;
@@ -607,6 +640,7 @@ export const EventRow = styled.div`
     display: flex;
     flex-direction: column;
     align-items: start;
+    
     .comment {
       display: flex;
       align-items: center;
@@ -631,11 +665,17 @@ export const EventRow = styled.div`
         margin-right: 12px;
       }
     }
-
     .comment-date {
       color: rgba(0,0,0,0.5);
-      font-size: 0.8rem;
       padding: 0px 0px 0px 62px;
+    }
+    .comment-error {
+      color: rgba(255, 105, 100, .8);
+      padding-top: 5px;
+      margin-bottom: 50px;
+    }
+    .comment-date, .comment-error {
+      font-size: 0.8rem;
       text-align: left;
     }
   }
