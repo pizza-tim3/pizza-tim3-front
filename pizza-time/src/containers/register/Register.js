@@ -7,33 +7,21 @@ import { Link } from "react-router-dom";
 import { Wrap, Form } from "../../styles/registerLoginStyles.js";
 
 export default function Register(props) {
-  /*These are the useState hooks.
-    The first element in the array is the `value`, 
-    and the second lets you set the `value`
-    
-    `setEmail("test@gmail.com") -> email === "test@gmail.com"
-    */
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [username, setUsername] = useState("");
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [error, setError] = useState("");
-  //There are other values for registration needed.
 
   const submit = async e => {
     e.preventDefault();
     try {
-      //FIREBASE LOGIC
       //Destructure the nested object that contains the uid
-      const {
-        user: { uid: firebase_uid }
-      } = await firebaseApp
+      const {user: { uid: firebase_uid }} = await firebaseApp
         .auth()
         .createUserWithEmailAndPassword(email, password);
-      //User created; redirect or other logic here
 
-      // make object to send to backend
       const userObj = {
         email,
         username,
@@ -41,11 +29,10 @@ export default function Register(props) {
         last_name: lastname,
         firebase_uid
       };
-      // send information to backend
+
       const response = await registerWithBackend(userObj);
-      props.history.push("/");
+      props.history.push("/home");
     } catch (err) {
-      // Handle Errors here.
       const errorCode = err.code;
       const errorMessage = err.message;
       console.log(errorCode, errorMessage);
@@ -58,9 +45,7 @@ export default function Register(props) {
     try {
       // sign in/register with popup window
       const result = await firebaseApp.auth().signInWithPopup(googleProvider);
-      const {
-        additionalUserInfo: { isNewUser }
-      } = result;
+      const { additionalUserInfo: { isNewUser }} = result;
       //check to see if the users new
       console.log(result);
       if (isNewUser) {
@@ -68,11 +53,11 @@ export default function Register(props) {
         // register uses information on our backend
         const user = await registerWithPopup(result);
         // set state with user
-        props.history.push("/");
+        props.history.push("/home");
       } else if (/**user dne on backend */ false) {
         //this would be an error on our db's part
       } else {
-        props.history.push("/");
+        props.history.push("/home");
       }
       // TODO set global user info
     } catch (err) {
@@ -97,7 +82,7 @@ export default function Register(props) {
         <input
           name="password"
           id="password"
-          type="text"
+          type="password"
           value={password}
           placeholder="Password"
           onChange={e => {
@@ -135,15 +120,11 @@ export default function Register(props) {
           }}
         />
         <button type="submit">Sign Up</button>
-        <button onClick={signInWithGoogle} type="button">
-          Sign In With Google
-        </button>
+        <button onClick={signInWithGoogle} type="button">Google Sign In</button>
         <p>
           Already have an account?
           <br />
-          <Link to="/login" className="link">
-            Sign In Here
-          </Link>
+          <Link to="/login" className="link">Sign In Here</Link>
         </p>
       </Form>
       {error && <p>{error}</p>}

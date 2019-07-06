@@ -2,7 +2,7 @@ import {
   SET_USER,
   CLEAR_USER,
   SET_USER_ERROR,
-  CLEAR_USER_ERROR
+  CLEAR_USER_ERROR,
 } from "../actions";
 
 const initialState = {
@@ -15,7 +15,8 @@ const initialState = {
   crust: "",
   topping: "",
   slicesPerMonth: "",
-  error: null
+  error: null,
+  firebase_uid: "",
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -24,7 +25,7 @@ export const userReducer = (state = initialState, action) => {
       console.log('USER', action.payload)
       return {
         ...state,
-        ...action.payload
+        ...action.payload,
       };
     case CLEAR_USER:
       return {
@@ -38,17 +39,18 @@ export const userReducer = (state = initialState, action) => {
         avatar: "",
         crust: "",
         topping: "",
-        slicesPerMonth: ""
+        slicesPerMonth: "",
+        firebase_uid: "",
       };
     case SET_USER_ERROR:
       return {
         ...state,
-        error: action.payload
+        error: action.payload,
       };
     case CLEAR_USER_ERROR:
       return {
         ...state,
-        error: null
+        error: null,
       };
     default:
       return state;

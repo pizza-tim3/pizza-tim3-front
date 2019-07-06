@@ -1,24 +1,23 @@
 import React from "react";
 import Calendar from "react-calendar";
 import calendar from "./../../../assets/calendar.svg";
+import LocationMap from "./locationMap.js";
 import edit from "./../../../assets/edit.png";
 import trash from "./../../../assets/trash.png";
 import update from "./../../../assets/update.png";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-// import orangeupdate from "./../../../assets/orangeupdate.png";
 import clock from "./../../../assets/clock.png";
 import cancel from "./../../../assets/cancel.svg";
 import moment from "moment";
 import Details from "./../../events/details-request/details-request";
-import GoogleMap from "./../create-new-event/search/map/map";
-
 import {
   EventBox,
   EventRow,
   Toggle,
   EventColumn,
 } from "../../../styles/eventStyles";
+
 import { Modal } from "react-bootstrap";
 import EditLocation from "./editLocation";
 
@@ -34,7 +33,7 @@ class Info extends React.Component {
       },
       show: false,
       eventForm: false,
-      google_place_id: "",
+      place: "",
       eventName: "",
       location: {
         address: {
@@ -44,8 +43,10 @@ class Info extends React.Component {
         name: "",
         hours: [],
         photo: "",
-        lat: 0,
-        lng: 0,
+        center: {
+          lat: 0,
+          lng: 0,
+        },
       },
     };
     // React-Bootstraps Toggle modals
@@ -55,9 +56,9 @@ class Info extends React.Component {
 
   componentDidMount() {
     let eventDate = new Date(Number(this.props.event.event_date));
-    if (this.props.event.location) {
+    if (this.props.event.place) {
       this.setState({
-        google_place_id: this.props.event.location.google_place_id,
+        place: this.props.event.place,
       });
     }
 
@@ -115,8 +116,14 @@ class Info extends React.Component {
     });
     // Set the info state's date, eventName and hides headers edit form
   }
-  updateLocation = location => {
-    this.props.location(location);
+  handleApiLoaded = (map, maps) => {
+    // use map and maps objects
+  };
+  updateLocation = place_id => {
+    this.setState({
+      place: place_id,
+    });
+    this.props.updateLocation(place_id);
   };
   updateTime = e => {
     e.preventDefault();
@@ -172,9 +179,11 @@ class Info extends React.Component {
     let streetCutOffIndex = req.formatted_address.indexOf(cutOff);
     let streetString = req.formatted_address.slice(0, streetCutOffIndex);
     let addressString = req.formatted_address.slice(streetString.length + 1);
-
+    let currentLat = Number(req.geometry.location.lat());
+    let currentLng = Number(req.geometry.location.lng());
+    let currentPlaceId = this.props.event.place;
     this.setState({
-      // google_place_id: req.place_id,
+      place: currentPlaceId,
       eventName: this.props.event.event_name,
       location: {
         address: {
@@ -184,8 +193,10 @@ class Info extends React.Component {
         hours: locationHours,
         name: req.name,
         photo: bigLeague,
-        lat: req.geometry.location.lat(),
-        lng: req.geometry.location.lng(),
+        center: {
+          lat: currentLat,
+          lng: currentLng,
+        },
       },
     });
   };
@@ -239,7 +250,41 @@ class Info extends React.Component {
   };
   updateDateHandler = e => {
     e.preventDefault();
-    this.props.updateDate(this.state.date);
+    const eventDate = new Date(this.state.date);
+    // Convert the date to a string
+    let currentTime = eventDate.toString();
+    // Create an array of characters from the current date string
+    let currentTimeArray = currentTime.split("");
+    // Create the first part of the string that will be concocted in the final string
+    let firstString = eventDate.toString().slice(0, 16);
+    // Create a second string in order to obtain the time format,
+    let remainingString = currentTimeArray
+      .splice(16)
+      .join("")
+      .split(":")
+      .join("");
+    let secondString = remainingString.slice(6);
+
+    let newTime = this.state.time;
+
+    let modifiedHour = 0;
+    if (newTime.am === "PM") {
+      modifiedHour = Number(newTime.hour) + 12;
+    } else {
+      modifiedHour = newTime.hour;
+    }
+    let updateTime =
+      firstString +
+      modifiedHour.toString() +
+      ":" +
+      newTime.minutes +
+      ":" +
+      "00" +
+      secondString;
+    this.setState({
+      date: new Date(updateTime),
+    });
+    this.props.updateDate(updateTime);
     this.setState({ show: false });
   };
 
@@ -276,6 +321,7 @@ class Info extends React.Component {
     ];
     // Array of minutes to display in the select's mapped option values
     let minutes = ["00", "15", "30", "45"];
+    // console.log(this.state.location.center);
     return (
       <EventBox>
         {Object.keys(this.props.event).length ? (
@@ -284,6 +330,7 @@ class Info extends React.Component {
               {this.state.editForm === true ? (
                 <div className="header-edit">
                   <input
+                    className="orange-form"
                     name="name"
                     type="text"
                     value={this.state.eventName}
@@ -501,27 +548,27 @@ class Info extends React.Component {
               <EventRow>
                 {this.state.location ? (
                   <div className="event-location-name">
-                    <h2>Place: {this.state.location.name}</h2>
+                    <h2>
+                      Place: <span>{this.state.location.name}</span>
+                    </h2>
                     <EditLocation
                       event={this.props.event}
                       updateLocation={this.updateLocation}
                     />
                   </div>
                 ) : (
-                  <>
-                    <h2>Place: </h2>
-                    <EditLocation
-                      event={this.props.event}
-                      updateLocation={this.updateLocation}
-                    />
-                  </>
+                  <></>
                 )}
               </EventRow>
               <EventRow>
                 <div className="event location">
                   {this.state.location ? (
                     <>
-                      <img alt="location" src={this.state.location.photo} />
+                      <img
+                        className="location-image"
+                        alt="location"
+                        src={this.state.location.photo}
+                      />
                       <div className="location-address">
                         <h2>Address:</h2>
                         <address>
@@ -536,13 +583,19 @@ class Info extends React.Component {
                 </div>
 
                 <div className="event map">
-                  {this.state.google_place_id ? (
+                  {this.state.location.center &&
+                  this.state.location.center.lng !== 0 ? (
+                    <LocationMap center={this.state.location.center} />
+                  ) : (
+                    <></>
+                  )}
+                  {this.props.event.place.length > 0 ? (
                     <>
                       <Details
                         getDetails={this.getDetails}
-                        placeId={this.state.google_place_id}
-                        lat={this.state.location.lat}
-                        lng={this.state.location.lng}
+                        placeId={this.props.event.place}
+                        lat={this.state.location.center.lat}
+                        lng={this.state.location.center.lng}
                       />
                       {this.state.location ? (
                         <div className="location-hours">

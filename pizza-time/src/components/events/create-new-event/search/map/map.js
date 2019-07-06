@@ -17,21 +17,21 @@ class GoogleMap extends Component {
         req: {},
         url: `https://maps.googleapis.com/maps/api/js?key=${
         process.env.REACT_APP_GOOGLE_PLACES_API_KEY
-      }&libraries=places&callback=initMap`
-      }; 
-    }
-    loadMap = () => {
-      loadScript(this.state.url);
+      }&libraries=places&callback=initMap`,
     };
+  }
+  loadMap = () => {
+    loadScript(this.state.url);
+  };
 
     initMap = () => {
       let map = new window.google.maps.Map(document.getElementById("map"));
       let service = new window.google.maps.places.PlacesService(map);
 
-      // let searchLocation = new window.google.maps.LatLng(this.state.lat, this.state.lng)
-      let request = {
-        query: `Pizza ${this.state.searchString}`
-      }
+    // let searchLocation = new window.google.maps.LatLng(this.state.lat, this.state.lng)
+    let request = {
+      query: `Pizza ${this.state.searchString}`,
+    };
 
       const callback = (results, status) => {
         if (status == window.google.maps.places.PlacesServiceStatus.OK) {
@@ -86,10 +86,10 @@ function loadScript(url) {
   var index = window.document.getElementsByTagName("script")[0]; //---------grab the first script tag
   let script = window.document.createElement("script"); //------------------create new script tag
   script.src = url; //----------------
-  script.async = true;//             |--------------------------------------creates the full url including 
-  script.defer = true;//--------------                                      adding the async/defer at the end
-  index.parentNode.insertBefore(script, index) //---------------------------inserts our script before the very first script
-};
+  script.async = true; //             |--------------------------------------creates the full url including
+  script.defer = true; //--------------                                      adding the async/defer at the end
+  index.parentNode.insertBefore(script, index); //---------------------------inserts our script before the very first script
+}
 
 const mstp = state => {
   return {

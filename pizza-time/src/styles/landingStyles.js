@@ -20,47 +20,16 @@ export const Wrap = styled.div`
 export const Inner = styled.div`
   display: flex;
   flex-flow: column nowrap;
-  width: 100%;
-  height: 100%;
-`;
 
-export const Heading = styled.div`
-  display: flex;
-  z-index: 4;
-  flex-flow: column nowrap;
-  ${media.desktop} {
-    position: fixed;
-    width: 100%;
-  }
-  a:hover {
-    text-decoration: none;
-  }
   h1 {
-    font-size: 20px;
+    font-family: ${fonts.secondary};
+    font-size: 50px;
     color: ${colors.white};
-    font-family: ${fonts.primary};
-    ${media.tablet} {
-      font-size: 60px;
-    }
-    ${media.desktop} {
-      font-size: 38px;
-    }
   }
 
-  p {
-    margin-top: 10px;
-    font-size: 15px;
-    color: ${colors.white};
-    font-family: ${fonts.primary};
-    line-height: 18px;
-    ${media.tablet} {
-      font-size: 16px;
-      line-height: 22px;
-    }
-    ${media.desktop} {
-      font-size: 18px;
-      line-height: 26px;
-    }
+  img {
+    width: 100%;
+    height: auto;
   }
 `;
 
@@ -77,14 +46,20 @@ export const Buttons = styled.div`
 
   .loginBtn,
   .registerBtn {
+    background-color: transparent;
     border: 3px solid ${colors.white};
-    padding: 10px 20px;
+    padding: 8px 20px;
+    width: 110px;
     color: ${colors.white};
     text-decoration: none;
     margin: 0 6px;
     font-family: ${fonts.primary};
     font-weight: 600;
     font-size: 15px;
+      &:hover {
+        background-color: ${colors.white};
+        color: ${colors.black};
+      }
     ${media.tablet} {
       &:hover {
         background-color: ${colors.white};

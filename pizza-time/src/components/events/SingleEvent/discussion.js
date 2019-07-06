@@ -4,7 +4,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import plus from "../../../assets/plus.png";
-import orangeupdate from "../../../assets/orangeupdate.png";
+import update from "../../../assets/update.png";
 import edit from "../../../assets/edit.png";
 import cancel from "../../../assets/cancel.svg";
 
@@ -239,14 +239,14 @@ class Discussion extends React.Component {
                               >
                                 <input
                                   id={`edit-comment-input-${comment.id}`}
-                                  className="edit-comment-input"
+                                  className="edit-comment-input orange-form"
                                   value={this.state.editComment.update}
                                   name="update"
                                   onChange={this.updateOnChange}
                                 />
                                 <button className="action update">
                                   <img
-                                    src={orangeupdate}
+                                    src={update}
                                     alt="update"
                                     onClick={() =>
                                       this.updateComment(comment.id)
@@ -255,42 +255,40 @@ class Discussion extends React.Component {
                                 </button>
                               </div>
 
-                              <div>
-                                {this.props.userReducer.firebase_uid ? (
-                                  <>
-                                    {comment.user_id ===
-                                    this.props.userReducer.firebase_uid ? (
-                                      <div
-                                        id={`action-button-${comment.id}`}
-                                        className="action-buttons"
-                                      >
-                                        <button className="action">
-                                          <img
-                                            src={edit}
-                                            alt="edit"
-                                            onClick={() =>
-                                              this.selectComment(comment.id)
-                                            }
-                                          />
-                                        </button>
-                                        <button className="action cancel">
-                                          <img
-                                            src={cancel}
-                                            alt="delete"
-                                            onClick={() =>
-                                              this.deleteComment(comment.id)
-                                            }
-                                          />
-                                        </button>
-                                      </div>
-                                    ) : (
-                                      <div />
-                                    )}
-                                  </>
-                                ) : (
-                                  <></>
-                                )}
-                              </div>
+                              {this.props.userReducer.firebase_uid ? (
+                                <>
+                                  {comment.user_id ===
+                                  this.props.userReducer.firebase_uid ? (
+                                    <div
+                                      id={`action-button-${comment.id}`}
+                                      className="action-buttons"
+                                    >
+                                      <button className="action">
+                                        <img
+                                          src={edit}
+                                          alt="edit"
+                                          onClick={() =>
+                                            this.selectComment(comment.id)
+                                          }
+                                        />
+                                      </button>
+                                      <button className="action cancel">
+                                        <img
+                                          src={cancel}
+                                          alt="delete"
+                                          onClick={() =>
+                                            this.deleteComment(comment.id)
+                                          }
+                                        />
+                                      </button>
+                                    </div>
+                                  ) : (
+                                    <div />
+                                  )}
+                                </>
+                              ) : (
+                                <></>
+                              )}
                             </div>
                           );
                         }
@@ -302,6 +300,8 @@ class Discussion extends React.Component {
                 </div>
                 <div className="add-comments">
                   <input
+                    placeholder="new comment"
+                    className="orange-form"
                     name="message"
                     value={this.state.newComment.message}
                     onChange={this.commentOnChange}
