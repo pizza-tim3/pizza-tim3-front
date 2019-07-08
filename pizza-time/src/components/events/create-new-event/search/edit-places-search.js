@@ -18,7 +18,7 @@ const UpdatePlacesSearch = props => {
       placeId: id,
       placeName: place,
     };
-    props.chooseLocation(id);
+    props.chooseLocation(id, place);
     setPlaceData(data);
   };
 

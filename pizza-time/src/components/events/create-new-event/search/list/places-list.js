@@ -19,7 +19,7 @@ const PlacesList = props => {
         {data &&
           data.map(data => {
             return (
-              <div key={data.reference} className="card">
+              <div key={data.reference} id={data.place_id} className="card">
                 <div className="content">
                   <p>{data.name}</p>
                   <p className="rating">

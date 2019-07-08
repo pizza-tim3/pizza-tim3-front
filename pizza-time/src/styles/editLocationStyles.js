@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { colors, fonts, media } from "../styles/variables.js";
+import { colors } from "../styles/variables.js";
 
 export const Inner = styled.div`
   display: flex;
