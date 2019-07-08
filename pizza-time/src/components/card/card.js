@@ -4,7 +4,6 @@ import axios from "axios";
 import Envelope from "../../assets/envelope.svg";
 import Comment from "../../assets/comment.svg";
 import { CardBox, Inner, Content, Action } from "../../styles/cardStyles.js";
-//import DashComment from "../../containers/user-dashboard/DashComment";
 import Location from "../../containers/user-dashboard/Location.js";
 import { bold } from "ansi-colors";
 import {Link}  from "react-router-dom";

@@ -20,11 +20,7 @@ class FriendSearchBox extends React.Component{
           this.state={
             
             searchName : "",
-            matchedUsers:[{
-               name:"",
-               email:""
-            
-            } 
+            matchedUsers:[
             ]
           }
         }

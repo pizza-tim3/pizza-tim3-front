@@ -28,7 +28,7 @@ class NewFriend extends React.Component{
             <div>
               <b>{this.props.user.first_name}</b>{" "}
              <b> {this.props.user.last_name}</b><br/>
-                 {this.props.user.email} 
+                 {this.props.user.email} {" "}
               <button onClick={this.inviteHandler} > invite </button>
             </div>
 
