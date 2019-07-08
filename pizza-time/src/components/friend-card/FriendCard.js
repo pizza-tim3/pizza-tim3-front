@@ -1,4 +1,5 @@
-  import React, { useState, useEffect } from "react";
+
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Button, FriendInfoContainer } from "../../styles/profileStyles";
 
@@ -13,9 +14,9 @@ function FriendCard({
     avatar,
     first_name,
     last_name,
-    firebase_uid: friend_uid
+    firebase_uid: friend_uid,
   },
-  userReducer: { firebase_uid }
+  userReducer: { firebase_uid },
 }) {
   const [pending, setPending] = useState(status === "pending");
 
@@ -30,7 +31,7 @@ function FriendCard({
 
   return (
     <FriendInfoContainer key={id} status={status}>
-      <img className="user" src={avatar} />
+      <img className="user" src={avatar} alt="user's avatar" />
       <h4>
         {first_name} {last_name}
       </h4>

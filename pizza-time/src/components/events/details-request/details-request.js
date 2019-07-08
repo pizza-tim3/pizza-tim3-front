@@ -24,10 +24,14 @@ const Details = props => {
     window.initMap = initMap;
   };
 
-  const initMap = () => {
+  const initMap = async() => {
+    
       try {
         //select the element to place the search in
-        let map = document.getElementById('map');
+        let map = new window.google.maps.Map(document.getElementById('map'), {
+          center: { lat: props.lat, lng: props.lng},
+          zoom: 12
+        });
         //create a request object to pass to the service
         let request = {
           placeId: props.placeId,
@@ -39,6 +43,10 @@ const Details = props => {
           setIsLoading(false);
         switch (status) {
           case serviceStatus.OK:
+            // let marker = new window.google.maps.Marker({
+            //   map: map,
+            //   position: place.geometry.location 
+            // })
             sendToParent(place);
             break;
           case serviceStatus.ZERO_RESULTS:
@@ -54,12 +62,8 @@ const Details = props => {
 
       //initialize the service
       let service = new window.google.maps.places.PlacesService(map);
-
-      // call the service method and pass it our request object and callback method
-      // this returns an object containing any data in the fields method
-      // possible field options can be found here:
-      // https://developers.google.com/places/web-service/place-data-fields
       service.getDetails(request, callBack);
+
     } catch (e) {
       setError("Error:", e);
     }
@@ -73,7 +77,14 @@ const Details = props => {
       </>
     );
   }
-  return <div id="map" />;
+
+  return (
+    <>
+      <div id="map">
+
+      </div>
+    </>
+  );
 };
 
 function loadScript(url) {

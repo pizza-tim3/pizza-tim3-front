@@ -1,8 +1,10 @@
 import React from "react";
 import { EventRow } from "../../../styles/eventStyles";
 import axios from "axios";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 import plus from "../../../assets/plus.png";
-import orangeupdate from "../../../assets/orangeupdate.png";
+import update from "../../../assets/update.png";
 import edit from "../../../assets/edit.png";
 import cancel from "../../../assets/cancel.svg";
 
@@ -29,30 +31,15 @@ class Discussion extends React.Component {
       comments: eventsComments,
     });
 
-    let user_id = this.props.user;
-    let matchingId = [];
-
-    if (eventsComments && user_id) {
-      matchingId = eventsComments.filter(
-        comment => comment.user_id === user_id
-      );
-      if (matchingId[0]) {
-        this.setState({
-          avatar: matchingId[0].avatar,
-        });
-      } else {
-        this.setState({
-          avatar:
-            "https://s3.amazonaws.com/uifaces/faces/twitter/vaughanmoffitt/128.jpg",
-        });
-      }
-    }
+    let currentAvatar = this.props.userReducer.avatar;
+    this.setState({
+      avatar: currentAvatar,
+    });
 
     let comments = document.getElementsByClassName("edit-comment");
     Array.from(comments).map(comment => {
       comment.style.display = "none";
     });
-    console.log(this.props);
   }
 
   // Select comment to be edited
@@ -94,7 +81,6 @@ class Discussion extends React.Component {
       user_id: this.props.user,
       message: updatedMessage,
     };
-    console.log(updatedComment);
 
     // Put axios call
     axios
@@ -140,27 +126,25 @@ class Discussion extends React.Component {
 
   // Add comment using axios call
   addComment = () => {
-    // Copy the current state event
+    // Create a comment object that will be posted to the route
     let newComment = this.state.newComment;
-    let commentAvatar = this.state.avatar;
-    let event_id = this.props.event.id;
-    let user = this.props.user;
-    // Add event id, user and time to the new comment
-    newComment.event_id = event_id;
-    newComment.user_id = user;
-
+    newComment.event_id = this.props.event.id;
+    newComment.user_id = this.props.userReducer.firebase_uid;
     newComment.time = new Date();
-    console.log(newComment);
+
     axios
       .post(
-        `https://pizza-tim3-be.herokuapp.com/api/events/${event_id}/comments`,
+        `https://pizza-tim3-be.herokuapp.com/api/events/${
+          this.props.event.id
+        }/comments`,
         newComment
       )
       .then(res => {
         if (res.status === 201) {
           // If successfull push new comments to front-end state
           newComment.id = res.data[0];
-          newComment.avatar = this.state.avatar;
+          newComment.avatar = this.props.userReducer.avatar;
+
           this.setState(state => {
             return {
               comments: [...state.comments, newComment],
@@ -256,14 +240,14 @@ class Discussion extends React.Component {
                               >
                                 <input
                                   id={`edit-comment-input-${comment.id}`}
-                                  className="edit-comment-input"
+                                  className="edit-comment-input orange-form"
                                   value={this.state.editComment.update}
                                   name="update"
                                   onChange={this.updateOnChange}
                                 />
                                 <button className="action update">
                                   <img
-                                    src={orangeupdate}
+                                    src={update}
                                     alt="update"
                                     onClick={() =>
                                       this.updateComment(comment.id)
@@ -272,41 +256,40 @@ class Discussion extends React.Component {
                                 </button>
                               </div>
 
-                              <div>
-                                {this.props.user.length > 0 ? (
-                                  <>
-                                    {comment.user_id === this.props.user ? (
-                                      <div
-                                        id={`action-button-${comment.id}`}
-                                        className="action-buttons"
-                                      >
-                                        <button className="action">
-                                          <img
-                                            src={edit}
-                                            alt="edit"
-                                            onClick={() =>
-                                              this.selectComment(comment.id)
-                                            }
-                                          />
-                                        </button>
-                                        <button className="action cancel">
-                                          <img
-                                            src={cancel}
-                                            alt="delete"
-                                            onClick={() =>
-                                              this.deleteComment(comment.id)
-                                            }
-                                          />
-                                        </button>
-                                      </div>
-                                    ) : (
-                                      <div />
-                                    )}
-                                  </>
-                                ) : (
-                                  <></>
-                                )}
-                              </div>
+                              {this.props.userReducer.firebase_uid ? (
+                                <>
+                                  {comment.user_id ===
+                                  this.props.userReducer.firebase_uid ? (
+                                    <div
+                                      id={`action-button-${comment.id}`}
+                                      className="action-buttons"
+                                    >
+                                      <button className="action">
+                                        <img
+                                          src={edit}
+                                          alt="edit"
+                                          onClick={() =>
+                                            this.selectComment(comment.id)
+                                          }
+                                        />
+                                      </button>
+                                      <button className="action cancel">
+                                        <img
+                                          src={cancel}
+                                          alt="delete"
+                                          onClick={() =>
+                                            this.deleteComment(comment.id)
+                                          }
+                                        />
+                                      </button>
+                                    </div>
+                                  ) : (
+                                    <div />
+                                  )}
+                                </>
+                              ) : (
+                                <></>
+                              )}
                             </div>
                           );
                         }
@@ -318,6 +301,8 @@ class Discussion extends React.Component {
                 </div>
                 <div className="add-comments">
                   <input
+                    placeholder="new comment"
+                    className="orange-form"
                     name="message"
                     value={this.state.newComment.message}
                     onChange={this.commentOnChange}
@@ -337,4 +322,12 @@ class Discussion extends React.Component {
   }
 }
 
-export default Discussion;
+const mstp = ({ userReducer /**,otherReducer */ }) => {
+  return { userReducer };
+};
+export default withRouter(
+  connect(
+    mstp,
+    {}
+  )(Discussion)
+);

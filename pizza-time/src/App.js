@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Switch, Link, withRouter } from "react-router-dom";
+import { Route, Switch, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import firebaseApp from "./firebase/firebaseApp";
 import "./App.css";
@@ -34,7 +34,7 @@ function App(props) {
 
       if (user) {
         //HANDLE USER STATE IN REDUX/COMPONENT STATE
-
+        // console.log("AuthStateChanged : ", user.uid);
         //get user info from our server
         const { uid } = user;
         const response = await fetch(
@@ -45,7 +45,7 @@ function App(props) {
         props.setUser(userInfo);
 
         //set local storage to store last login state
-        console.log("AuthStateChanged : ", user.uid);
+        // console.log("AuthStateChanged : ", user.uid);
         localStorage.setItem("lastLoginState", "1");
 
         localStorage.setItem("userFireBaseId", user.uid);
@@ -76,11 +76,6 @@ function App(props) {
         <Route path="/home" component={UserDashboard} />
         <Route path="/create-event" component={CreateNewEvent} />
         <Route exact path="/event/:id" component={EventView} />
-        <PrivateRoute
-          path="/profile/"
-          authenticated={authenticated}
-          component={Profile}
-        />
         <Route exact path="/" component={Landing} />
         {/* TODO Change landing to exact */}
 
@@ -102,7 +97,7 @@ function App(props) {
 
 //Here I've destructured the single reducer
 const mstp = ({ userReducer /**,otherReducer */ }) => {
-  console.log(userReducer);
+  // console.log(userReducer);
   return { userReducer };
 };
 

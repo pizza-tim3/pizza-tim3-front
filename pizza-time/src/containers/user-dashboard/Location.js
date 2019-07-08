@@ -1,6 +1,5 @@
 import React from "react";
-import Details from "../.././components/events/details-request/details-request.js";
-
+// import Details from "../.././components/events/details-request/details-request.js";
 
 class Location extends React.Component {
   constructor(props) {
@@ -9,40 +8,37 @@ class Location extends React.Component {
       location: "",
       url: `https://maps.googleapis.com/maps/api/js?key=${
         process.env.REACT_APP_GOOGLE_PLACES_API_KEY
-      }&libraries=places&callback=initMap`
+      }&libraries=places&callback=initMap`,
     };
   }
-  
+
   loadMap = () => {
-    console.log("load map .... ", this.state.url);
+    // console.log("load map .... ", this.state.url);
     loadScript(this.state.url);
   };
 
   initMap = async () => {
-    console.log("INIT MAP .... ")
+    // console.log("INIT MAP .... ");
     let map = new window.google.maps.Map(document.getElementById("map"));
     let service = new window.google.maps.places.PlacesService(map);
 
-    
     //for each favorite get the details, limited to 10 :()
-    
 
     //for each favorite make a call and set state with the data. HARD LIMIT 10
-    
-      const req = {
-        placeId: this.props.google_place_id,
-        fields: ["name", "photos"]
-      };
-      service.getDetails(req, async (place, status) => {
-        const serviceStatus = window.google.maps.places.PlacesServiceStatus;
-        if (serviceStatus.OK) {
-          console.log("Place = ",place);
-          this.setState({
-            location : place.name
-          });
-        }
-      });
 
+    const req = {
+      placeId: this.props.google_place_id,
+      fields: ["name", "photos"],
+    };
+    service.getDetails(req, async (place, status) => {
+      const serviceStatus = window.google.maps.places.PlacesServiceStatus;
+      if (serviceStatus.OK) {
+        // console.log("Place = ", place);
+        this.setState({
+          location: place.name,
+        });
+      }
+    });
   };
 
   async componentDidMount() {
@@ -51,8 +47,8 @@ class Location extends React.Component {
   }
 
   getLocation = req => {
-    console.log("HERE IS TYHE LOCATION REQ", req);
-    console.log("HERE IS TYHE LOCATION Name", req.name);
+    // console.log("HERE IS TYHE LOCATION REQ", req);
+    // console.log("HERE IS TYHE LOCATION Name", req.name);
     this.setState({ location: req.name });
   };
 
@@ -67,17 +63,16 @@ class Location extends React.Component {
     //     />
     //   );
     // }
-    return ( 
+    return (
       <div>
-        {this.state.location.length == 0 ? (<p> Loading ..</p>) :
+        {this.state.location.length === 0 ? (
+          <p> Loading ..</p>
+        ) : (
           <p> {this.state.location} </p>
-        }
+        )}
         <div id="map" />
       </div>
-
     );
-
-    
   }
 }
 

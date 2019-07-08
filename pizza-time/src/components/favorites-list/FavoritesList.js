@@ -10,15 +10,20 @@ export default function FavoritesList({ places, filter }) {
       const favs = places.filter(place => place.city === filter);
       setFavorites(favs);
     }
-  }, [filter, favorites]);
+  }, [filter]);
   return (
     <div>
-      {favorites.map(place => {
+      {favorites.map((place, idx) => {
         return (
-          <div>
+          <div key={idx}>
             <p>{place.name}</p>
             <p>{place.address}</p>
-            <img src={place.photoUrl} height="200px" width="200px" />
+            <img
+              src={place.photoUrl}
+              alt="location"
+              height="200px"
+              width="200px"
+            />
           </div>
         );
       })}

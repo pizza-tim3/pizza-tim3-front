@@ -4,17 +4,13 @@ import { Link } from "react-router-dom";
 import { googleProvider } from "../../firebase/authProviders";
 import { registerWithPopup } from "../register/registerUtils";
 
-//need this import for "firebase.auth.Auth.Persistence.LOCAL" constant
 import firebase from "firebase/app";
 import "firebase/auth";
 
 import { Wrap, Form } from "../../styles/registerLoginStyles.js";
 
 export default function Login(props) {
-  console.log(props);
-  //state === state object, dispatch function
   const [state, dispatch] = useReducer(
-    //reducer function
     (previousState, action) => {
       switch (action.type) {
         case "SET_EMAIL":
@@ -29,15 +25,14 @@ export default function Login(props) {
           throw new Error("unexpected action type");
       }
     },
-    //initial state
+
     { email: "", password: "", error: "" }
   );
 
   const submit = async e => {
     e.preventDefault();
+
     try {
-      //FIREBASE LOGIC
-      //set the logged in status to persist on local(client/browser) until explicitly told to logout
       await firebaseApp
         .auth()
         .setPersistence(
@@ -52,11 +47,12 @@ export default function Login(props) {
       //get the token off of the current user
       //token to send to the backend to display data
       const token = await firebaseApp.auth().currentUser.getIdToken();
-      props.history.push("/");
+      props.history.push("/home");
     } catch (err) {
       dispatch({ type: "SET_ERROR", payload: err.message });
     }
   };
+
 
   //TODO added checks to make sure that the registered users registered on our back and
   const signInWithGoogle = async e => {
@@ -64,19 +60,21 @@ export default function Login(props) {
     try {
       // sign in/register with popup window
       const result = await firebaseApp.auth().signInWithPopup(googleProvider);
+
       const {
-        additionalUserInfo: { isNewUser }
+        additionalUserInfo: { isNewUser },
       } = result;
       //check to see if the users new
       if (isNewUser) {
         // register uses information on our backend
         const user = await registerWithPopup(result);
         // set state with user
-        //console.log(user);
+        props.history.push("/home");
       } else if (/**user dne on backend */ false) {
         //this would be an error on our db's part
       } else {
         //get user info from backend by uid
+        props.history.push("/home");
       }
       // TODO set global user info
     } catch (err) {
@@ -101,7 +99,7 @@ export default function Login(props) {
         <input
           name="password"
           id="password"
-          type="text"
+          type="password"
           value={state.password}
           placeholder="Password"
           onChange={e => {
@@ -109,9 +107,7 @@ export default function Login(props) {
           }}
         />
         <button type="submit">Sign In</button>
-        <button onClick={signInWithGoogle} type="button">
-          Sign In With Google
-        </button>
+        <button onClick={signInWithGoogle} type="button">Google Sign In</button>
         <p>
           Dont have an account?
           <br />
