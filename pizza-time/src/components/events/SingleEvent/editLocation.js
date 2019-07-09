@@ -71,7 +71,7 @@ class EditLocation extends React.Component {
             </button>
           </Modal.Footer>
         </Modal>
-        <button className="action organizer">
+        <button id="search-map-icon" className="action organizer">
           {this.props.userReducer.firebase_uid ===
           this.props.event.organizer ? (
             <img src={searchmap} alt="edit" onClick={this.handleShow} />
