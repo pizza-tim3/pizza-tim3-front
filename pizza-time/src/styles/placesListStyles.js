@@ -60,6 +60,10 @@ export const PlacesContainer = styled.div`
           border: 1px solid ${colors.secondaryDark};
           background-color: ${colors.secondaryDark};
         }
+        &:focus {
+          visibility: inherit;
+          outline: none;
+        }
 
         ${media.mobile} { margin-right: 12px; }
         ${media.tablet} {
@@ -83,17 +87,11 @@ export const Span = styled.span`
 `;
 
 export const ShowMore = styled.button`
-  margin: 26px auto 24px auto;
-  padding: 8px 15px 8px 15px;
-  border: 1px solid ${colors.primary};
-  background-color: ${colors.primary};
-  color: ${colors.white};
-  font-family: ${fonts.primary};
-  font-size: 16px;
-  font-weight: 600;
-  width: 170px;
-    &:hover {
-      border: 1px solid ${colors.primaryDark};
-      background-color: ${colors.primaryDark};
-    }
+  background: transparent;
+  border: none;
+
+  img {
+    width: 50px;
+    height: 50px;
+  }
 `;

@@ -1,50 +1,115 @@
-import React from 'react';
-import useForm from '../../../../customHooks/customFormHooks';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { setEventName, setEventDesc, setInviteOnly } from './../../../../actions';
+import { 
+    PlacesSearchWrap,
+    PlacesHeading,
+    PlacesSearchInner,
+    NextStep,
+    Form,
+    InviteOnlyWrap
+} from '../../../../styles/placesSearchStyles';
 
-import { NameDetailsWrap, PlacesHeading } from '../../../../styles/nameDetailsStyles';
-
-const NameAndDetails = (props) => {
-    
-    const sendData = () => {
-        let eventDetails = {
-            eventName: inputs.eventName,
-            eventDesc: inputs.eventDesc
+class NameAndDetails extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            eventName: "",
+            eventDesc: "",
+            inviteOnly: false
         }
-        props.handleClick('event', eventDetails);
     }
 
-    const {inputs, handleInputChange, handleSubmit} = useForm(sendData);
+    onChange = (e) => {
+        this.setState({
+            ...this.state,
+            [e.target.name]: e.target.value
+        })
+    }
 
-    console.log('inputs',inputs.eventName, inputs.eventDesc)
-    return(
-        <NameDetailsWrap>
-            <PlacesHeading>
-                <h2>Step 2: Add a name and description</h2>
-            </PlacesHeading>
-            <form onSubmit={handleSubmit}>
+    handleBool = (val) => {
+        console.log("Button clicked:", val)
+        let newVal;
+        switch(val) {
+            case "Yes":
+                newVal = true;
+                break;
+            case "No":
+                newVal = false;
+                break;
+        }
+
+        this.setState({
+            ...this.state,
+            inviteOnly: newVal
+        });
+
+        console.log(this.state.inviteOnly)
+    };
+
+    handleSubmit = () => {
+        console.log(this.state.eventName, this.state.eventDesc)
+        this.props.setEventName(this.state.eventName);
+        this.props.setEventDesc(this.state.eventDesc);
+        this.props.setInviteOnly(this.state.inviteOnly);
+        this.props.handleClick();
+    }
+
+    render() {
+        return(
+        <PlacesSearchWrap>
+            <PlacesSearchInner>
+                <PlacesHeading>
+                    <h2>Add your event name and description</h2>
+                </PlacesHeading>
+                <Form>
                     <input
                         type='text'
                         name='eventName'
-                        onChange={handleInputChange}
-                        value={inputs.eventName || ''}
+                        onChange={this.onChange}
+                        value={this.state.eventName}
                         placeholder="Event Name"
                         required />
                     <input 
                         type='text'
                         name='eventDesc'
-                        onChange={handleInputChange}
-                        value={inputs.eventDesc || ''}
+                        onChange={this.onChange}
+                        value={this.state.eventDesc}
                         placeholder="Event Description"
                         required />
+
+                    <InviteOnlyWrap className="inviteOnly">
+                        <span>Invite-Only?:</span>
+                        <button type='button' name="yes" onClick={() => this.handleBool("Yes")}>
+                            Yes
+                        </button>
+                        <button type='button' name="no" onClick={() => this.handleBool("No")}>
+                            No
+                        </button>
+                    </InviteOnlyWrap>
+
                     <div className='buttonWrap'>
-                        {/* <div className='buttonIcon'></div> */}
-                        <button 
-                            type='submit'
-                            onClick={() => {handleSubmit()}}>Next Step</button>
+                    <NextStep 
+                        type='button'
+                        onClick={() => {this.handleSubmit()}}>
+                            Next Step
+                    </NextStep>
                     </div>
-            </form>
-        </NameDetailsWrap>
-    )
+                </Form>
+            </PlacesSearchInner>
+        </PlacesSearchWrap>
+        )
+    }
+    
 }
 
-export default NameAndDetails
+const mstp = state => {
+    console.log(state)
+    return {
+        eventName: state.EventReducer.eventName,
+        eventDesc: state.EventReducer.eventDesc,
+        inviteOnly: state.EventReducer.inviteOnly
+    }
+}
+
+export default connect(mstp, {setEventName, setEventDesc, setInviteOnly})(NameAndDetails)

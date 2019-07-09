@@ -19,8 +19,32 @@
   color: white;
 }
 
+button:focus {
+  outline: none;
+}
+
+button:active {
+  outline: none;
+}
+
 .App-link {
   color: #61dafb;
+}
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: none;
+  -webkit-text-fill-color: #000;
+  -webkit-box-shadow: 0 0 0px 1000px #FFF inset;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .react-calendar {
@@ -157,6 +181,21 @@
   -webkit-transform: rotate(180deg);
   -ms-transform: rotate(180deg);
   transition: 200ms linear all;
+}
+
+
+#loading-pizza {
+  animation: loading-spin infinite 2s linear;
+  pointer-events: none;
+}
+
+@keyframes loading-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 .missing {
   margin: 25px auto 30px;

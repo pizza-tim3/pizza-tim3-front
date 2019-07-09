@@ -21,4 +21,5 @@ export const media = {
   desktop: '@media(min-width: 1100px)',
   tablet: '@media(min-width: 900px)',
   mobile: '@media(min-width: 600px)',
+  xs: '@media(min-width: 300px)'
 };
