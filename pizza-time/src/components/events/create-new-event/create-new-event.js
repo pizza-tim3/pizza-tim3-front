@@ -8,6 +8,7 @@ import NameAndDetails from './name-details/name-details';
 import { CreateNewEventWrap } from '../../../styles/createNewEventStyles';
 import { connect } from 'react-redux';
 import { setLoading } from './../../../actions/eventActions';
+import NotifyFriends from './InvFriends/invFriends';
 
 
 class CreateNewEvent extends Component {
@@ -44,9 +45,11 @@ class CreateNewEvent extends Component {
                 case 5:
                     return(
                         <div className='events-wrapper'>
-                            <ConfirmationPage />
+                            <ConfirmationPage handleClick={this.handleNextPage}/>
                         </div>
                     );
+                case 6:
+                    return <NotifyFriends />
             }
         }
     }

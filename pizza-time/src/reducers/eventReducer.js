@@ -5,16 +5,20 @@ import {
     SET_EVENT_DESC,
     SET_DATE_TIME,
     SET_FRIENDS,
-    SET_LOADING
+    SET_LOADING,
+    SET_INVITE_ONLY,
+    SET_EID
 } from "../actions";
 
 const initialState = {
     loading: false,
     error: '',
+    inviteOnly: '',
     placeId: '',
     placeName: '',
     eventName: '',
     eventDesc: '',
+    eid: '',
     dateTime: {},
     friends: []
 }
@@ -62,6 +66,18 @@ export const EventReducer = (state = initialState, action) => {
             return {
                 ...state,
                 loading: action.payload
+            }
+        case SET_INVITE_ONLY:
+            console.log('Invite only:', action.payload);
+            return{
+                ...state,
+                inviteOnly: action.payload
+            }
+        case SET_EID: 
+            console.log('EID:', action.payload)
+            return{
+                ...state,
+                eid: action.payload
             }
         default:
             return state;

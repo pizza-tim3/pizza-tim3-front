@@ -144,7 +144,7 @@ select:-webkit-autofill:focus {
 }
 @media (max-width: 991px) {
   .modal {
-    margin-top: 75px;
+    /* margin-top: 75px; */
   }
   .carousel-indicators {
     bottom: 2%;
@@ -265,4 +265,9 @@ div.gm-style-iw.gm-style-iw-c {
 .modal .action img {
   width: 40px;
   height: 40px;
+}
+
+.active-location {
+  border: 1px solid orange !important;
+  border-radius: 3px;
 }

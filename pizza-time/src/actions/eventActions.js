@@ -5,6 +5,8 @@ export const SET_EVENT_DESC = "SET_EVENT_DESC";
 export const SET_DATE_TIME = "SET_DATE_TIME";
 export const SET_FRIENDS = "SET_FRIENDS";
 export const SET_LOADING = "SET_LOADING";
+export const SET_INVITE_ONLY = "SET_INVITE_ONLY";
+export const SET_EID = "SET_EID";
 
 export function setPlaceId(id) {
     // console.log('PlaceID', id)
@@ -60,4 +62,20 @@ export function setLoading(status) {
         type: SET_LOADING,
         payload: status
     };
+}
+
+export function setInviteOnly(invite) {
+    console.log('InviteOnly:', invite);
+    return {
+        type: SET_INVITE_ONLY,
+        payload: invite
+    }
+}
+
+export function setEID(eid) {
+    console.log('EID:', eid);
+    return {
+        type: SET_EID,
+        payload: eid
+    }
 }

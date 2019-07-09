@@ -4,6 +4,7 @@ import axios from "axios";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import plus from "../../../assets/plus.png";
+import moment from "moment";
 import update from "../../../assets/update.png";
 import edit from "../../../assets/edit.png";
 import cancel from "../../../assets/cancel.svg";
@@ -20,6 +21,7 @@ class Discussion extends React.Component {
         update: "",
       },
       comments: [],
+      commentError: false,
     };
   }
 
@@ -73,10 +75,8 @@ class Discussion extends React.Component {
   // Update selected comment
   updateComment = comment_id => {
     // Create an updated comment object
-    let time = new Date().toISOString();
     let updatedMessage = this.state.editComment.update;
     let updatedComment = {
-      time: time,
       id: comment_id,
       user_id: this.props.user,
       message: updatedMessage,
@@ -131,34 +131,41 @@ class Discussion extends React.Component {
     newComment.event_id = this.props.event.id;
     newComment.user_id = this.props.userReducer.firebase_uid;
     newComment.time = new Date();
-    axios
-      .post(
-        `https://pizza-tim3-be.herokuapp.com/api/events/${
-          this.props.event.id
-        }/comments`,
-        newComment
-      )
-      .then(res => {
-        if (res.status === 201) {
-          // If successfull push new comments to front-end state
-          newComment.id = res.data[0];
-          newComment.avatar = this.props.userReducer.avatar;
+    if (this.state.newComment.message.length > 2) {
+      axios
+        .post(
+          `https://pizza-tim3-be.herokuapp.com/api/events/${
+            this.props.event.id
+          }/comments`,
+          newComment
+        )
+        .then(res => {
+          if (res.status === 201) {
+            // If successfull push new comments to front-end state
+            newComment.id = res.data[0];
+            newComment.avatar = this.props.userReducer.avatar;
 
-          this.setState(state => {
-            return {
-              comments: [...state.comments, newComment],
-              newComment: {
-                message: "",
-              },
-            };
+            this.setState(state => {
+              return {
+                comments: [...state.comments, newComment],
+                newComment: {
+                  message: "",
+                },
+                commentError: false,
+              };
+            });
+          }
+        })
+        .catch(err => {
+          this.setState({
+            event: {},
           });
-        }
-      })
-      .catch(err => {
-        this.setState({
-          event: {},
         });
+    } else {
+      this.setState({
+        commentError: true,
       });
+    }
   };
   // Delete comment using axios
   deleteComment = comment_id => {
@@ -190,6 +197,11 @@ class Discussion extends React.Component {
         [e.target.name]: e.target.value,
       },
     });
+    if (this.state.newComment.message.length > 2) {
+      this.setState({
+        commentError: false,
+      });
+    }
   };
 
   updateOnChange = e => {
@@ -216,22 +228,24 @@ class Discussion extends React.Component {
                   {this.state.comments ? (
                     <>
                       {this.state.comments.map((comment, index) => {
-                        if (comment.user_id !== null) {
-                          return (
+                        // if (comment.user_id !== null) {
+                        return (
+                          <div key={index}>
                             <div
                               className="comment"
                               id={comment.id}
                               user_id={comment.user_id}
-                              key={comment.id}
                             >
                               <img
                                 src={comment.avatar}
                                 alt="user"
                                 className="user-avatar"
                               />
-                              <p id={`comment-${comment.id}`}>
-                                {comment.message}
-                              </p>
+                              <div>
+                                <p id={`comment-${comment.id}`}>
+                                  {comment.message}
+                                </p>
+                              </div>
 
                               <div
                                 id={`edit-comment-${comment.id}`}
@@ -290,8 +304,12 @@ class Discussion extends React.Component {
                                 <></>
                               )}
                             </div>
-                          );
-                        }
+                            <p className="comment-date">
+                              {moment(new Date(comment.time)).fromNow()}
+                            </p>
+                          </div>
+                        );
+                        // }
                       })}
                     </>
                   ) : (
@@ -310,6 +328,9 @@ class Discussion extends React.Component {
                     <img src={plus} alt="plus" onClick={this.addComment} />
                   </button>
                 </div>
+                {this.state.commentError && (
+                  <span className="comment-error">Message too short.</span>
+                )}
               </div>
             ) : (
               <>Loading</>

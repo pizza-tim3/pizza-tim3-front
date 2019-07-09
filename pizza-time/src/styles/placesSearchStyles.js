@@ -12,6 +12,16 @@ export const PlacesSearchWrap = styled.div`
   align-items: center;
 `;
 
+export const XButton = styled.span`
+  width: 10px;
+  position: fixed;
+  top: 2%;
+  right: 5%;
+
+  ${media.xs} { right: 20%; }
+  ${media.tablet} { right: 8%; }
+`
+
   export const PlacesHeading = styled.div`
     width: 100%;
     text-decoration: underline;
@@ -25,7 +35,7 @@ export const PlacesSearchWrap = styled.div`
       font-size: 23px;
       color: ${colors.gray};
         ${media.mobile} { font-size: 24px; }
-        ${media.tablet} { font-size: 26px; }
+        
     }
   `;
 
@@ -79,6 +89,7 @@ export const Form = styled.div`
     border-radius: 20px;
     box-shadow: 4px 5px 6px #CDCDCD;
   }
+  }
 `
 
 export const FriendsWrap = styled.div`
@@ -110,6 +121,7 @@ export const FriendCard = styled.div`
 
   img {
     margin-top: 10px;
+    border-radius: 50%;
   }
 
   .active {
@@ -136,5 +148,31 @@ export const ConfirmWrap = styled.div`
   .invited {
     margin: 0;
     padding: 0;
+  }
+`
+
+export const InviteOnlyWrap = styled.div`
+  width: 40%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+
+  span {
+    align-self: center;
+  }
+
+  button {
+    background: linear-gradient(155.4deg, ${colors.secondary} 0%, ${colors.primary} 99.11%);
+    border: none;
+    color: white;
+    border-radius: 15px;
+    padding: 5px 10px;
+  }
+
+  .active {
+    background: #FFC900;
+    font-size: 20px;
   }
 `

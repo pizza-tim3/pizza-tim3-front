@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
-import useForm from '../../../../customHooks/customFormHooks';
 import { connect } from 'react-redux';
-import { setEventName, setEventDesc } from './../../../../actions';
+import { setEventName, setEventDesc, setInviteOnly } from './../../../../actions';
 import { 
     PlacesSearchWrap,
     PlacesHeading,
     PlacesSearchInner,
     NextStep,
-    Form
+    Form,
+    InviteOnlyWrap
 } from '../../../../styles/placesSearchStyles';
 
 class NameAndDetails extends Component {
@@ -15,7 +15,8 @@ class NameAndDetails extends Component {
         super(props);
         this.state = {
             eventName: "",
-            eventDesc: ""
+            eventDesc: "",
+            inviteOnly: false
         }
     }
 
@@ -26,10 +27,31 @@ class NameAndDetails extends Component {
         })
     }
 
+    handleBool = (val) => {
+        console.log("Button clicked:", val)
+        let newVal;
+        switch(val) {
+            case "Yes":
+                newVal = true;
+                break;
+            case "No":
+                newVal = false;
+                break;
+        }
+
+        this.setState({
+            ...this.state,
+            inviteOnly: newVal
+        });
+
+        console.log(this.state.inviteOnly)
+    };
+
     handleSubmit = () => {
         console.log(this.state.eventName, this.state.eventDesc)
         this.props.setEventName(this.state.eventName);
         this.props.setEventDesc(this.state.eventDesc);
+        this.props.setInviteOnly(this.state.inviteOnly);
         this.props.handleClick();
     }
 
@@ -55,6 +77,17 @@ class NameAndDetails extends Component {
                         value={this.state.eventDesc}
                         placeholder="Event Description"
                         required />
+
+                    <InviteOnlyWrap className="inviteOnly">
+                        <span>Invite-Only?:</span>
+                        <button type='button' name="yes" onClick={() => this.handleBool("Yes")}>
+                            Yes
+                        </button>
+                        <button type='button' name="no" onClick={() => this.handleBool("No")}>
+                            No
+                        </button>
+                    </InviteOnlyWrap>
+
                     <div className='buttonWrap'>
                     <NextStep 
                         type='button'
@@ -74,8 +107,9 @@ const mstp = state => {
     console.log(state)
     return {
         eventName: state.EventReducer.eventName,
-        eventDesc: state.EventReducer.eventDesc
+        eventDesc: state.EventReducer.eventDesc,
+        inviteOnly: state.EventReducer.inviteOnly
     }
 }
 
-export default connect(mstp, {setEventName, setEventDesc})(NameAndDetails)
+export default connect(mstp, {setEventName, setEventDesc, setInviteOnly})(NameAndDetails)

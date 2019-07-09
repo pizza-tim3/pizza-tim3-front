@@ -6,9 +6,12 @@ import {
     PlacesHeading,
     PlacesSearchInner,
     NextStep,
+    XButton
 } from '../../../../styles/placesSearchStyles.js';
 import { connect } from 'react-redux';
 import { setLoading } from '../../../../actions/eventActions';
+import close from '../../../../assets/close.png';
+import { Link } from 'react-router-dom';
 // props from create-new-event
 // handleClick={handleNextPage} 
 // handleUpdateState={handleUpdateState}
@@ -47,6 +50,11 @@ class PlacesSearch extends Component {
         console.log(this.state.show)
             return(
                 <PlacesSearchWrap>
+                    <XButton>
+                        <Link to="/home">
+                            <img src={close} alt='close' />
+                        </Link>
+                    </XButton>
                     <PlacesSearchInner>
                         <PlacesHeading>
                             <h2>Choose Your Location:</h2>

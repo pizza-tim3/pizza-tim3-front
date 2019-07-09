@@ -16,7 +16,6 @@ import { connect } from 'react-redux';
 import { setFriends, setLoading } from '../../../../actions';
 import Loading from '../../../loading/loading';
 import { ShowMore } from './../../../../styles/placesListStyles';
-import { styles } from 'ansi-colors';
 
 class FriendPicker extends Component {
     constructor(props) {
@@ -27,7 +26,7 @@ class FriendPicker extends Component {
             friends: [],
             chosenFriends: [],
             toggle: false,
-            url: 'http://localhost:5500/api/friends/'
+            url: 'https://pizza-tim3-be.herokuapp.com/api/friends/'
         }
         console.log(this.props)
     }
@@ -111,7 +110,7 @@ class FriendPicker extends Component {
                             {this.state.data.map(data => {
                                 return(
                                 <FriendCard key={data.firebase_uid} className="friendWrapper">
-                                    <img src={UserImage} alt="user avatar" height="60px" width="60px"/>
+                                    <img src={data.avatar} alt="user avatar" height="60px" width="60px"/>
                                     <p>{data.first_name} {data.last_name}</p>
                                     <button 
                                         className={

@@ -4,6 +4,8 @@ import calendar from "./../../../assets/calendar.svg";
 import LocationMap from "./locationMap.js";
 import edit from "./../../../assets/edit.png";
 import trash from "./../../../assets/trash.png";
+import fakemap from "./../../../assets/fakemap.png";
+import pizzaplaceholder from "./../../../assets/pizzaplaceholder.png";
 import update from "./../../../assets/update.png";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -32,16 +34,21 @@ class Info extends React.Component {
         am: "AM",
       },
       show: false,
+      deleteShow: false,
       eventForm: false,
       place: "",
       eventName: "",
+      eventNameError: false,
       location: {
         address: {
           street: "",
           city: "",
         },
         name: "",
-        hours: [],
+        opening_hours: {
+          days: [],
+          hours: [],
+        },
         photo: "",
         center: {
           lat: 0,
@@ -52,6 +59,8 @@ class Info extends React.Component {
     // React-Bootstraps Toggle modals
     this.handleShow = this.handleShow.bind(this);
     this.handleClose = this.handleClose.bind(this);
+    this.handleDeleteShow = this.handleDeleteShow.bind(this);
+    this.handleDeleteClose = this.handleDeleteClose.bind(this);
   }
 
   componentDidMount() {
@@ -176,12 +185,23 @@ class Info extends React.Component {
     let bigLeague = req.photos[0].getUrl();
 
     let cutOff = ", ";
+    let dayCutOff = ": ";
     let streetCutOffIndex = req.formatted_address.indexOf(cutOff);
     let streetString = req.formatted_address.slice(0, streetCutOffIndex);
     let addressString = req.formatted_address.slice(streetString.length + 1);
     let currentLat = Number(req.geometry.location.lat());
     let currentLng = Number(req.geometry.location.lng());
     let currentPlaceId = this.props.event.place;
+    let currentDays = [];
+    let currentHours = [];
+    let hourDays = req.opening_hours.weekday_text.map(hour => {
+      let cutOffindex = hour.indexOf(dayCutOff);
+      let day = hour.slice(0, cutOffindex);
+      let hourItem = hour.slice(day.length + 1);
+      currentDays.push(day);
+      currentHours.push(hourItem);
+    });
+
     this.setState({
       place: currentPlaceId,
       eventName: this.props.event.event_name,
@@ -190,7 +210,10 @@ class Info extends React.Component {
           street: streetString,
           city: addressString,
         },
-        hours: locationHours,
+        opening_hours: {
+          days: currentDays,
+          hours: currentHours,
+        },
         name: req.name,
         photo: bigLeague,
         center: {
@@ -225,11 +248,29 @@ class Info extends React.Component {
     });
   };
   toggleEdit = () => {
-    this.setState(prevState => {
-      const stateCopy = { ...this.state };
-      stateCopy.editForm = !prevState.editForm;
-      return stateCopy;
-    });
+    let initValue = this.props.event.event_name;
+    let updatedValue = this.state.eventName;
+    if (this.state.editForm === false) {
+      this.setState({
+        editForm: true,
+        eventNameError: false,
+      });
+    } else {
+      if (updatedValue.length === 0) {
+        this.setState({
+          editForm: true,
+          eventNameError: true,
+          eventName: initValue,
+        });
+      } else {
+        this.setState({
+          editForm: false,
+          eventNameError: false,
+          eventName: initValue,
+        });
+        this.props.updateName(this.state.eventName);
+      }
+    }
   };
   toggleEditTime = () => {
     if (this.props.event.organizer === this.props.userReducer.firebase_uid) {
@@ -243,10 +284,20 @@ class Info extends React.Component {
   };
   updateNameHandler = e => {
     e.preventDefault();
-    this.setState({
-      editForm: false,
-    });
-    this.props.updateName(this.state.eventName);
+    let currentValue = this.props.event.name;
+    if (this.state.eventName.length > 2) {
+      this.setState({
+        editForm: false,
+        eventNameError: false,
+      });
+      this.props.updateName(this.state.eventName);
+    } else {
+      this.setState({
+        editForm: true,
+        eventNameError: true,
+        eventName: currentValue,
+      });
+    }
   };
   updateDateHandler = e => {
     e.preventDefault();
@@ -292,6 +343,14 @@ class Info extends React.Component {
     e.preventDefault();
     this.props.updateEvent(this.props.event.id);
   };
+  handleDeleteClose() {
+    this.setState({ deleteShow: false });
+  }
+  // Shows the modal
+  handleDeleteShow() {
+    this.setState({ deleteShow: true });
+  }
+
   // Hides the modal
   handleClose() {
     this.setState({ show: false });
@@ -321,39 +380,55 @@ class Info extends React.Component {
     ];
     // Array of minutes to display in the select's mapped option values
     let minutes = ["00", "15", "30", "45"];
-    // console.log(this.state.location.center);
     return (
       <EventBox>
         {Object.keys(this.props.event).length ? (
           <EventBox>
             <div className="event-header">
               {this.state.editForm === true ? (
-                <div className="header-edit">
-                  <input
-                    className="orange-form"
-                    name="name"
-                    type="text"
-                    value={this.state.eventName}
-                    placeholder={this.state.eventName}
-                    onChange={this.inputOnChange}
-                  />
+                <div className="event-wrapper">
+                  <div className="header-edit">
+                    <input
+                      className="orange-form"
+                      name="name"
+                      type="text"
+                      value={this.state.eventName}
+                      placeholder={this.state.eventName}
+                      onChange={this.inputOnChange}
+                    />
 
-                  <button
-                    className="action organizer cancel"
-                    onClick={this.toggleEdit}
-                  >
-                    <img src={cancel} alt="cancel" />
-                  </button>
-                  <button className="btn-save" onClick={this.updateNameHandler}>
+                    <div>
+                      <button
+                        className="action organizer cancel"
+                        onClick={this.toggleEdit}
+                      >
+                        <img src={cancel} alt="cancel" />
+                      </button>
+                      <button
+                        className="action organizer"
+                        onClick={this.updateNameHandler}
+                      >
+                        <img src={update} alt="update" />
+                      </button>
+                    </div>
+                  </div>
+                  <div className="event-wrapper">
                     {" "}
-                    Update
-                  </button>
+                    {this.state.eventNameError && (
+                      <span className="comment-error">
+                        Event name too short.
+                      </span>
+                    )}
+                  </div>
                 </div>
               ) : (
                 <div className="event-name">
-                  <h1>
-                    <b>Event</b>: <span>{this.state.eventName}</span>
-                  </h1>
+                  <div className="info-row">
+                    <div className="event-info-label">Event: </div>
+                    <div className="event-info-data">
+                      {this.state.eventName}
+                    </div>
+                  </div>
                   {this.props.userReducer.firebase_uid ===
                   this.props.event.organizer ? (
                     <div>
@@ -369,7 +444,7 @@ class Info extends React.Component {
                   )}
                 </div>
               )}
-              <div>
+              <div className="event-save-wrapper">
                 {this.props.userReducer.firebase_uid ===
                 this.props.event.organizer ? (
                   <div className="event-save">
@@ -382,9 +457,7 @@ class Info extends React.Component {
                     </button>
                     <button
                       className="action organizer trash"
-                      onClick={() =>
-                        this.props.deleteEvent(this.props.event.id)
-                      }
+                      onClick={this.handleDeleteShow}
                     >
                       <img src={trash} alt="trash" />
                     </button>
@@ -394,6 +467,26 @@ class Info extends React.Component {
                 )}
               </div>
             </div>
+            {/* Delete Event Modal */}
+            <Modal show={this.state.deleteShow} onHide={this.handleDeleteClose}>
+              <Modal.Body>
+                <h2>Are you sure you want to delete the event?</h2>
+              </Modal.Body>
+              <Modal.Footer>
+                <button
+                  className="action organizer trash"
+                  onClick={() => this.props.deleteEvent(this.props.event.id)}
+                >
+                  <img src={trash} alt="trash" />
+                </button>
+                <button
+                  className="action organizer cancel"
+                  onClick={this.handleDeleteClose}
+                >
+                  <img src={cancel} alt="cancel" />
+                </button>
+              </Modal.Footer>
+            </Modal>
 
             <EventRow className="event-date">
               {/* Modal */}
@@ -417,12 +510,12 @@ class Info extends React.Component {
               </Modal>
               <div className="calendar">
                 <div className="calendar-row">
-                  <h2>
-                    <b>Date</b>:
-                    <span>
+                  <div className="info-row">
+                    <div className="event-info-label">Date: </div>
+                    <div className="event-info-data">
                       {moment(this.state.date.toISOString()).format("LL")}
-                    </span>
-                  </h2>
+                    </div>
+                  </div>
 
                   {this.props.userReducer.firebase_uid ===
                   this.props.event.organizer ? (
@@ -438,10 +531,14 @@ class Info extends React.Component {
                 </div>
 
                 <div className="calendar-row">
-                  <h3>
-                    <b>Time</b>: {this.state.time.hour}:
-                    {this.state.time.minutes} {this.state.time.am}
-                  </h3>
+                  <div className="info-row">
+                    <div className="event-info-label">Time: </div>
+                    <div className="event-info-data">
+                      {this.state.time.hour} : {this.state.time.minutes}{" "}
+                      {this.state.time.am}
+                    </div>
+                  </div>
+
                   {this.props.userReducer.firebase_uid ===
                   this.props.event.organizer ? (
                     <img
@@ -454,93 +551,95 @@ class Info extends React.Component {
                     <></>
                   )}
                 </div>
-                <div className="caloendar-row">
-                  <div>
-                    <span className="edit-time">
-                      <div>
-                        <select
-                          name="hour"
-                          value={this.state.time.hour}
-                          as="select-hour"
-                          onChange={this.timeOnChange}
-                        >
-                          <option value={this.state.time.hour}>
-                            {this.state.time.hour}
-                          </option>
-                          {hours.map((hour, index) => {
-                            if (Number(this.state.time.hour) !== Number(hour)) {
-                              return (
-                                <option key={index} value={hour}>
-                                  {hour}
-                                </option>
-                              );
-                            }
-                          })}
-                        </select>
-                        <select
-                          name="minutes"
-                          value={this.state.time.minutes}
-                          as="select-minutes"
-                          onChange={this.timeOnChange}
-                        >
-                          <option value={this.state.time.minutes}>
-                            {this.state.time.minutes}
-                          </option>
-                          {minutes.map((minute, index) => {
-                            if (
-                              Number(this.state.time.minutes) !== Number(minute)
-                            ) {
-                              return (
-                                <option key={index} value={minute}>
-                                  {minute}
-                                </option>
-                              );
-                            }
-                          })}
-                        </select>
-                        <select
-                          onChange={this.timeOnChange}
-                          value={this.state.time.am}
-                          name="am"
-                          as="select-am"
-                        >
-                          {this.state.time.am === "AM" ? (
-                            <>
-                              <option value="AM">AM</option>
-                              <option value="PM">PM</option>
-                            </>
-                          ) : (
-                            <>
-                              <option value="PM">PM</option>
-                              <option value="AM">AM</option>
-                            </>
-                          )}
-                          })}
-                        </select>
-                      </div>
-                      <button
-                        className="action organizer"
-                        onClick={this.updateTime}
+                <div className="calendar-row">
+                  <span className="edit-time">
+                    <div>
+                      <select
+                        name="hour"
+                        value={this.state.time.hour}
+                        as="select-hour"
+                        onChange={this.timeOnChange}
                       >
-                        <img src={update} alt="edit" />
-                      </button>
-                    </span>
-                  </div>
+                        <option value={this.state.time.hour}>
+                          {this.state.time.hour}
+                        </option>
+                        {hours.map((hour, index) => {
+                          if (Number(this.state.time.hour) !== Number(hour)) {
+                            return (
+                              <option key={index} value={hour}>
+                                {hour}
+                              </option>
+                            );
+                          }
+                        })}
+                      </select>
+                      <select
+                        name="minutes"
+                        value={this.state.time.minutes}
+                        as="select-minutes"
+                        onChange={this.timeOnChange}
+                      >
+                        <option value={this.state.time.minutes}>
+                          {this.state.time.minutes}
+                        </option>
+                        {minutes.map((minute, index) => {
+                          if (
+                            Number(this.state.time.minutes) !== Number(minute)
+                          ) {
+                            return (
+                              <option key={index} value={minute}>
+                                {minute}
+                              </option>
+                            );
+                          }
+                        })}
+                      </select>
+                      <select
+                        onChange={this.timeOnChange}
+                        value={this.state.time.am}
+                        name="am"
+                        as="select-am"
+                      >
+                        {this.state.time.am === "AM" ? (
+                          <>
+                            <option value="AM">AM</option>
+                            <option value="PM">PM</option>
+                          </>
+                        ) : (
+                          <>
+                            <option value="PM">PM</option>
+                            <option value="AM">AM</option>
+                          </>
+                        )}
+                        })}
+                      </select>
+                    </div>
+                    <button
+                      className="action organizer"
+                      onClick={this.updateTime}
+                    >
+                      <img src={update} alt="edit" />
+                    </button>
+                  </span>
                 </div>
               </div>
 
               <div className="invite-switch">
-                <h3>By Invite Only: </h3>
-                <Toggle>
-                  <label className="switch">
-                    <input
-                      className="switch-button"
-                      onClick={this.inviteOnlySwitchHandler}
-                      type="checkbox"
-                    />
-                    <span className="slider" />
-                  </label>
-                </Toggle>
+                <div className="info-row">
+                  <div className="event-info-label">By Invite Only: </div>
+                  <div className="event-info-data">
+                    <Toggle>
+                      <label className="switch">
+                        <input
+                          className="switch-button"
+                          onClick={this.inviteOnlySwitchHandler}
+                          type="checkbox"
+                        />
+                        <span className="slider" />
+                      </label>
+                    </Toggle>
+                  </div>
+                </div>
               </div>
             </EventRow>
 
@@ -548,9 +647,12 @@ class Info extends React.Component {
               <EventRow>
                 {this.state.location ? (
                   <div className="event-location-name">
-                    <h2>
-                      Place: <span>{this.state.location.name}</span>
-                    </h2>
+                    <div className="info-row">
+                      <div className="event-info-label">Place:</div>
+                      <div className="event-info-data">
+                        {this.state.location.name}
+                      </div>
+                    </div>
                     <EditLocation
                       event={this.props.event}
                       updateLocation={this.updateLocation}
@@ -564,11 +666,20 @@ class Info extends React.Component {
                 <div className="event location">
                   {this.state.location ? (
                     <>
-                      <img
-                        className="location-image"
-                        alt="location"
-                        src={this.state.location.photo}
-                      />
+                      {this.state.location.photo.length === 0 ? (
+                        <img
+                          className="location-image"
+                          alt="location"
+                          src={pizzaplaceholder}
+                        />
+                      ) : (
+                        <img
+                          className="location-image"
+                          alt="location"
+                          src={this.state.location.photo}
+                        />
+                      )}
+
                       <div className="location-address">
                         <h2>Address:</h2>
                         <address>
@@ -597,13 +708,24 @@ class Info extends React.Component {
                         lat={this.state.location.center.lat}
                         lng={this.state.location.center.lng}
                       />
-                      {this.state.location ? (
+                      {this.state.location.opening_hours ? (
                         <div className="location-hours">
                           <h2>Hours: </h2>
-                          <div>
-                            {this.state.location.hours.map((hour, index) => {
-                              return <div key={index}>{hour}</div>;
-                            })}
+                          <div className="opening-hours">
+                            <div className="days">
+                              {this.state.location.opening_hours.days.map(
+                                (day, index) => {
+                                  return <div key={index}>{day}</div>;
+                                }
+                              )}
+                            </div>
+                            <div className="hours">
+                              {this.state.location.opening_hours.hours.map(
+                                (hour, index) => {
+                                  return <div key={index}>{hour}</div>;
+                                }
+                              )}
+                            </div>
                           </div>
                         </div>
                       ) : (
@@ -618,7 +740,7 @@ class Info extends React.Component {
             </EventColumn>
           </EventBox>
         ) : (
-          <div> Loading...</div>
+          <div />
         )}
       </EventBox>
     );

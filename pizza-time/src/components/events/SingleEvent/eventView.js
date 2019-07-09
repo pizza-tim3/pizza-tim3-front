@@ -304,7 +304,6 @@ class EventView extends React.Component {
   // Update the entire event with the event's data using axios call
   updateLocation = place_id => {
     let currentEvent = this.state.event;
-
     this.setState({
       event: {
         id: currentEvent.id,
@@ -318,6 +317,7 @@ class EventView extends React.Component {
         place: place_id,
       },
     });
+    this.updateEvent(this.state.event.place);
   };
   updateEvent = event_id => {
     this.setState({
@@ -346,7 +346,6 @@ class EventView extends React.Component {
         // if (res.status === 200) {
         updatedEvent.invitedUsers = currentEvent.invitedUsers;
         updatedEvent.comments = currentEvent.comments;
-        updatedEvent.place = currentEvent.place;
         updatedEvent.inviteOnly = currentEvent.inviteOnly;
 
         this.setState({
