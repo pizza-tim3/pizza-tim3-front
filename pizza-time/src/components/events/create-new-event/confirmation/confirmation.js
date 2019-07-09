@@ -75,8 +75,6 @@ const ConfirmationPage = (props) => {
 }
 
 const mstp = state => {
-    console.log(state)
-    // console.log('FROM CONFIRMATION:', state.userReducer.firebase_uid);
     return {
         uid: state.userReducer.firebase_uid,
         placeName: state.EventReducer.placeName,
@@ -91,29 +89,3 @@ const mstp = state => {
 }
 
 export default connect(mstp, {setLoading, setEID})(ConfirmationPage);
-
-
-// axios.post(await ("http://localhost:5500/api/events", requestObject))
-//             .then(res => {
-//                 if(res.status === 200) {
-//                     console.log('IN REQ #3')
-//                     let { eventId } = res.data;
-//                     const newUrl = `${fUrl}${eventId}`;
-//                     console.log(newUrl)
-        
-//                     axios.post(newUrl, props.friends)
-                    
-//                         .then(resp => {
-//                             console.log('IN REQ #4')
-//                             if(resp.status === 200) {
-//                                 console.log(resp);
-//                             } else {
-//                                 console.log('IN REQ #5')
-//                                 console.log('cannot find the event')
-//                             }
-//                         }).catch(e => console.log(e))
-//                 } else {
-//                     console.log('IN REQ #5')
-//                     console.log('error')
-//                 }
-//             }).catch(e => console.log(e))

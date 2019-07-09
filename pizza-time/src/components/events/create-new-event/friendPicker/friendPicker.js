@@ -154,8 +154,6 @@ const mstp = state => {
 
 export default connect(mstp, {setFriends, setLoading})(FriendPicker)
 
-//http://localhost:5500/api/users/jNpViqXD4DXmf9H2FbkQnAy10000/friends
-
 
 
 
@@ -165,7 +163,7 @@ export default connect(mstp, {setFriends, setLoading})(FriendPicker)
 // const [chosenFriends, setChosenFriends] = useState([]);
 
 // console.log(props.uid)
-// const url = `http://localhost:5500/api/friends/${props.uid}`
+
 
 // useEffect(() => {
 //     console.log(props)

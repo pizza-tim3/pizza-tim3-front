@@ -14,7 +14,6 @@ import axios from 'axios';
 
 const NotifyFriends = (props) => {
     const url = 'https://pizza-tim3-be.herokuapp.com/api/invited';
-    // const url = 'http://localhost:5500/api/invited';
 
     const handleInvite = () => {
         props.setLoading(true);
