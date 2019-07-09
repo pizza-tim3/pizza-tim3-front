@@ -6,7 +6,6 @@ import {
 } from '../../styles/loadingStyles.js';
 
 const Loading = () => {
-  console.log('loading')
   return (
     <div>
       <img src={loading} alt={'pizza loading'} id="loading-pizza"/>

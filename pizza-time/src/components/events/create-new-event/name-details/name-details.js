@@ -28,7 +28,6 @@ class NameAndDetails extends Component {
     }
 
     handleBool = (val) => {
-        console.log("Button clicked:", val)
         let newVal;
         switch(val) {
             case "Yes":
@@ -43,12 +42,9 @@ class NameAndDetails extends Component {
             ...this.state,
             inviteOnly: newVal
         });
-
-        console.log(this.state.inviteOnly)
     };
 
     handleSubmit = () => {
-        console.log(this.state.eventName, this.state.eventDesc)
         this.props.setEventName(this.state.eventName);
         this.props.setEventDesc(this.state.eventDesc);
         this.props.setInviteOnly(this.state.inviteOnly);
@@ -104,7 +100,6 @@ class NameAndDetails extends Component {
 }
 
 const mstp = state => {
-    console.log(state)
     return {
         eventName: state.EventReducer.eventName,
         eventDesc: state.EventReducer.eventDesc,

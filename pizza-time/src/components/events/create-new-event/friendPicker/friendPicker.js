@@ -28,7 +28,6 @@ class FriendPicker extends Component {
             toggle: false,
             url: 'https://pizza-tim3-be.herokuapp.com/api/friends/'
         }
-        console.log(this.props)
     }
     
     componentDidMount() {
@@ -44,7 +43,6 @@ class FriendPicker extends Component {
     }
     
     moreItems = () => {
-        console.log('clicked')
         const dataLength = this.state.friends.length;
         if(this.state.dataIndex < dataLength) {
             let newDI = this.state.dataIndex + 4
@@ -144,7 +142,6 @@ class FriendPicker extends Component {
 }
 
 const mstp = state => {
-    console.log(state)
     return {
         loading: state.EventReducer.loading,
         uid: state.userReducer.firebase_uid,
@@ -153,82 +150,3 @@ const mstp = state => {
 }
 
 export default connect(mstp, {setFriends, setLoading})(FriendPicker)
-
-
-
-
-// const [dataIndex, setDataIndex] = useState(4);
-// const [data, setData] = useState([]);
-// const [friends, setFriends] = useState([]);
-// const [chosenFriends, setChosenFriends] = useState([]);
-
-// console.log(props.uid)
-
-
-// useEffect(() => {
-//     console.log(props)
-//     axios.get(url)
-//         .then(res => {
-//             setFriends(res.data);
-//             setLoading(false);
-//         }).catch(err => console.log(err));
-// }, [])
-
-// const moreItems = () => {
-//     const dataLength = friends.length;
-//     if(dataIndex < dataLength) {
-//         setDataIndex(dataIndex + 4);
-//     }
-// }
-
-// const lessItems = () => {
-//     if(dataIndex > 4) {
-//         setDataIndex(dataIndex - 4);    
-//     }
-// }
-
-// const addToInvited = (friend) => {
-//     setChosenFriends([...chosenFriends, friend]);
-// }
-
-// const handleNext = () => {
-//     props.setFriends(chosenFriends);
-//     props.handleClick();
-// }
-
-// return(
-//     <PlacesSearchWrap>
-//         <PlacesSearchInner>
-//             <PlacesHeading>
-//                 <h2>Invite your friends!:</h2>
-//             </PlacesHeading>
-//             {props.loading ? <Loading /> : 
-//             <>
-//                 <FriendsWrap>
-//                         {data && data.map(data => {
-//                             return(
-//                             <FriendCard key={data.firebase_uid} className="friendWrapper">
-//                                 <img src={UserImage} alt="user avatar" height="60px" width="60px"/>
-//                                 <p>{data.first_name} {data.last_name}</p>
-//                                 <button 
-//                                     className={chosenFriends.includes(data) ? 'active' : 'inactive'}
-//                                     onClick={() => {addToInvited(data)}}>
-//                                     Invite
-//                                 </button>
-//                             </FriendCard>
-//                         )})}
-//                     </FriendsWrap>
-//                     <ButtonsWrap>
-//                         <ShowMore onClick={lessItems}>
-//                             <img src={prev} alt="previous arrow" />
-//                         </ShowMore>
-//                         <ShowMore onClick={moreItems}>
-//                             <img src={next} alt="next arrow" />
-//                         </ShowMore>
-//                     </ButtonsWrap>
-//                     <NextStep onClick={() => {handleNext()}}>Next Step</NextStep>
-//             </>
-//             }
-//         </PlacesSearchInner>
-//     </PlacesSearchWrap>
-// );

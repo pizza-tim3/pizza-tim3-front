@@ -18,7 +18,6 @@ const NotifyFriends = (props) => {
     const handleInvite = () => {
         props.setLoading(true);
         const newUrl = `${url}/${props.eid}`;
-        console.log(props.friends)
         axios.post(newUrl, props.friends)
             .then(res => {
                 console.log(res);
@@ -48,8 +47,6 @@ const NotifyFriends = (props) => {
 }
 
 const mstp = state => {
-    console.log(state)
-    // console.log('FROM CONFIRMATION:', state.userReducer.firebase_uid);
     return {
         eid: state.EventReducer.eid,
         friends: state.EventReducer.friends,

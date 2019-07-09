@@ -47,7 +47,6 @@ class PlacesSearch extends Component {
     }
 
     render() {
-        console.log(this.state.show)
             return(
                 <PlacesSearchWrap>
                     <XButton>

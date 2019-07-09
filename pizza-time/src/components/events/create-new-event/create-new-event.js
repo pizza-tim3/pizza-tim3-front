@@ -25,8 +25,7 @@ class CreateNewEvent extends Component {
 
     handleNextPage = () => {
         this.setState({ page: this.state.page + 1 });
-        setLoading(true)
-        console.log(this.state.page);
+        setLoading(true);
     }
 
     render() {

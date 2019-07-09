@@ -19,7 +19,6 @@ const DatePicker = (props) => {
             date: inputs.date,
             time: inputs.time
         }
-        console.log(dateTime)
         props.setDateTime(dateTime);
         props.handleClick();
     }
@@ -57,7 +56,6 @@ const DatePicker = (props) => {
     )};
 
 const mstp = state => {
-    console.log(state)
     return {
         eventName: state.EventReducer.eventName,
         eventDesc: state.EventReducer.eventDesc

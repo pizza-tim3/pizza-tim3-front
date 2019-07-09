@@ -13,7 +13,6 @@ import { setLoading, setEID } from '../../../../actions/eventActions';
 
 const ConfirmationPage = (props) => {
     setLoading(false);
-    console.log(props)
     const url = "https://pizza-tim3-be.herokuapp.com/api/events";
     let dateString = `${props.dateTime.date}: ${props.dateTime.time}`
     let date = new Date(dateString).getTime().toString();

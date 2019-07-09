@@ -13,12 +13,10 @@ class Location extends React.Component {
   }
 
   loadMap = () => {
-    // console.log("load map .... ", this.state.url);
     loadScript(this.state.url);
   };
 
   initMap = async () => {
-    // console.log("INIT MAP .... ");
     let map = new window.google.maps.Map(document.getElementById("map"));
     let service = new window.google.maps.places.PlacesService(map);
 
@@ -33,7 +31,6 @@ class Location extends React.Component {
     service.getDetails(req, async (place, status) => {
       const serviceStatus = window.google.maps.places.PlacesServiceStatus;
       if (serviceStatus.OK) {
-        // console.log("Place = ", place);
         this.setState({
           location: place.name,
         });
@@ -47,8 +44,6 @@ class Location extends React.Component {
   }
 
   getLocation = req => {
-    // console.log("HERE IS TYHE LOCATION REQ", req);
-    // console.log("HERE IS TYHE LOCATION Name", req.name);
     this.setState({ location: req.name });
   };
 

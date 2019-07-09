@@ -21,20 +21,17 @@ class Card extends React.Component {
 
 
   componentDidMount() {
-    console.log("REACHED HERE");
     const eventId= this.props.event.event_id
 
     axios
       .get("http://localhost:5500/api/comments/event/messages/user/" + this.props.event.event_id)
       .then(res => {
-        console.log("COUNT COMMENT RESPONSE", res);
         this.setState({ comments: res.data.comments });
       })
       .catch(error => {
         this.setState({ error });
       });
     axios.get("http://localhost:5500/api/invited/" + this.props.event.event_id).then(res => {
-      console.log("INVITEES RESPONSE", res);
       this.setState({ attendees: res.data });
     });
   }
@@ -43,7 +40,6 @@ class Card extends React.Component {
     event.preventDefault();
     
     const show = !this.state.showMessages;
-    console.log("Show message now : ", show)
     this.setState({showMessages:show})
 
 
@@ -53,18 +49,15 @@ class Card extends React.Component {
     const id = localStorage.getItem("userFireBaseId");
     const event_id = event.target.getAttribute("event_id");
     const user_id = event.target.getAttribute("user_id");
-    console.log("Event id and user id ", event_id, user_id);
     const newItem = {
       event_id: event_id,
       user_id: user_id,
       status: "Accepted"
     };
-    console.log("Event neing posted ", newItem);
 
     axios
       .put(`http://localhost:5500/api/events/status/${id}`, newItem)
       .then(res => {
-        console.log("New Item is updated now", res.data.results);
         window.location.reload();
       })
       .catch(error => {
@@ -76,7 +69,6 @@ class Card extends React.Component {
     const id = localStorage.getItem("userFireBaseId");
     const event_id = event.target.getAttribute("event_id");
     const user_id = event.target.getAttribute("user_id");
-    console.log("Eventid and UserId are", event_id, user_id);
     const newItem = {
       event_id: event_id,
       user_id: user_id,
@@ -85,7 +77,6 @@ class Card extends React.Component {
     axios
       .put(`http://localhost:5500/api/events/status/${id}`, newItem)
       .then(res => {
-        console.log("Response for Decline", res.data.results);
         window.location.reload();
       })
       .catch(error => {
@@ -96,7 +87,6 @@ class Card extends React.Component {
   render() {
     const date = new Date(this.props.event.event_date).toString().substring(0,15);
     
-    console.log("COME FOR THE EVENT", this.props.event);
     return (
       <CardBox>
         <Inner>
@@ -132,7 +122,6 @@ class Card extends React.Component {
               {this.state.comments.map(comment => {
                 if (this.state.showMessages) {
                   // return <DashComment key={comment.id} comment={comment} />;
-                   console.log("COMMENT TIME")
                   return (
                    
                     <div>

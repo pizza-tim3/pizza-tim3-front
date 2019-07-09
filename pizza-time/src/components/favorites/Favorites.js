@@ -86,7 +86,6 @@ class Favorites extends React.Component {
   };
 
   render() {
-    console.log("favorites-render");
     const { favorites, placesData, filterValue, filterCities } = this.state;
     const dataLoaded = placesData && placesData.length === favorites.length;
 
