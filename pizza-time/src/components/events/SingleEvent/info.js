@@ -1,6 +1,7 @@
 import React from "react";
 import Calendar from "react-calendar";
 import calendar from "./../../../assets/calendar.svg";
+import axios from "axios";
 import LocationMap from "./locationMap.js";
 import edit from "./../../../assets/edit.png";
 import trash from "./../../../assets/trash.png";
@@ -33,6 +34,7 @@ class Info extends React.Component {
         minutes: 0,
         am: "AM",
       },
+      organizerAvatar: "",
       show: false,
       deleteShow: false,
       eventForm: false,
@@ -62,8 +64,33 @@ class Info extends React.Component {
     this.handleDeleteShow = this.handleDeleteShow.bind(this);
     this.handleDeleteClose = this.handleDeleteClose.bind(this);
   }
-
-  componentDidMount() {
+  async fetchUsers() {
+    try {
+      let users = await axios.get(
+        `https://pizza-tim3-be.herokuapp.com/api/users`
+      );
+      if (users) {
+        let organizer = users.data.filter(
+          user => this.props.event.organizer === user.firebase_uid
+        );
+        if (organizer) {
+          this.setState({
+            organizerAvatar: organizer[0].avatar,
+          });
+        } else {
+          this.setState({
+            organizerAvatar: "",
+          });
+        }
+      }
+    } catch (e) {
+      this.setState({
+        organizerAvatar: "",
+      });
+      console.log(e);
+    }
+  }
+  async componentDidMount() {
     let eventDate = new Date(Number(this.props.event.event_date));
     if (this.props.event.place) {
       this.setState({
@@ -124,6 +151,7 @@ class Info extends React.Component {
       },
     });
     // Set the info state's date, eventName and hides headers edit form
+    await this.fetchUsers();
   }
   handleApiLoaded = (map, maps) => {
     // use map and maps objects
@@ -625,6 +653,20 @@ class Info extends React.Component {
               </div>
 
               <div className="invite-switch">
+                <div className="organizer-info">
+                  {this.state.organizerAvatar.length > 0 ? (
+                    <>
+                      <div className="event-info-label">Organizer: </div>
+                      <img
+                        className="organizer-avatar"
+                        src={this.state.organizerAvatar}
+                        alt="organizer avatar"
+                      />
+                    </>
+                  ) : (
+                    <></>
+                  )}
+                </div>
                 <div className="info-row">
                   <div className="event-info-label">By Invite Only: </div>
                   <div className="event-info-data">

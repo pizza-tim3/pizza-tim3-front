@@ -240,7 +240,13 @@ div.gm-style-iw.gm-style-iw-c {
 .friend-avatar.friend-invited {
   border: 3.5px solid orange;
 }
-
+.search-btn {
+  margin: 10px 0px;
+}
+.search-btn img {
+  width: 40px;
+  height: 40px;
+}
 .btn-close.action {
   border: 1px solid orange;
   opacity: 1;

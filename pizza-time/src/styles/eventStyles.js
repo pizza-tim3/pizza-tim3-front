@@ -7,11 +7,15 @@ export const EventBox = styled.div`
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
+    border-bottom: 2px solid ${colors.black};
+    padding-bottom: 15px;
     .action.trash img {
       padding: 6px 12px 6px 0px;
     }
     ${media.tablet} {
       justify-content: flex-start;
+      border-bottom: none;
+      padding-bottom: 0px;
     }
   }
 `;
@@ -69,7 +73,7 @@ export const Inner = styled.div`
   .event-wrapper {
     width: 100%;
     text-align: left;
-    padding: 5px 0px;
+    padding: 5px 0px 0px;
     ${media.tablet} {
       width: 100%;
     }
@@ -81,7 +85,7 @@ export const Inner = styled.div`
     min-width: 50px;
     text-align: left;
     ${media.tablet} {
-      max-width: 65px;
+      min-width: 65px;
     }
   }
   .event-info-data {
@@ -93,9 +97,27 @@ export const Inner = styled.div`
     display: flex;
     flex-direction: row;
     align-items: flex-end;
-    // justify-content: space-between;
   }
-  ${media.tablet} {
+  .organizer-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 25px;
+    ${media.desktop} {
+      justify-content: flex-end;
+      margin-bottom: 12px;
+    }
+  }
+  .organizer-avatar {
+    height: 66px;
+    width: 66px;
+    border-radius: 50%;
+  }
+  #search-map-icon {
+    margin-right: -3px;
+  }
+  ${media.desktop} {
     width: 80%;
     .event-header {
       flex-direction: row;
@@ -130,16 +152,17 @@ export const Inner = styled.div`
   }
   .event-header {
     width: 91%;
-    border-bottom: 2px solid ${colors.black} !important;
     display: flex;
     justify-content: space-between;
     margin: 0px auto;
-    padding: 20px 0px;
+    padding: 20px 0px 0px;
     align-items: center;
-    flex-direction: column;
+    flex-direction: column-reverse;
 
     ${media.desktop} {
+      border-bottom: 2px solid ${colors.black} !important;
       height: 85px;
+      padding: 20px 0px;
       width: 100%;
       flex-direction: row;
     }
@@ -148,13 +171,13 @@ export const Inner = styled.div`
     }
     .header-edit {
       display: flex;
-      height: 48px;
       justify-content: space-between;
-
+      padding-top: 15px;
       ${media.desktop} {
         input {
           width: 300px;
         }
+        padding-top: 0px;
         height: 40px;
         width: 100%;
         display: flex;
@@ -166,6 +189,7 @@ export const Inner = styled.div`
       display: flex;
       width: 100%;
       align-items: flex-end;
+      padding-top: 15px;
       ${media.tablet} {
         width: 100%;
       }
@@ -200,7 +224,6 @@ export const Inner = styled.div`
       font-size: 13px;
       color: ${colors.white};
       width: 84px;
-      margin: 0px 5px;
       align-self: center;
       ${media.desktop} {
         width: 130px;
@@ -224,7 +247,7 @@ export const Inner = styled.div`
     }
   }
   .event-date {
-    margin: 30px 25px 34px;
+    margin: 20px 20px 34px;
     flex-direction: column;
     ${media.desktop} {
       margin: 40px 20px 0px;
@@ -244,7 +267,7 @@ export const Inner = styled.div`
       font-size: 1.3rem;
     }
     ${media.desktop} {
-      width: 100%;
+      width: 50%;
     }
   }
   location-info {
@@ -468,7 +491,6 @@ export const EventRow = styled.div`
     justify-content: space-between;
     display: flex;
     padding-bottom: 0px;
-    // width: 100%;
   }
 
   .calendar-row:nth-child(2) {
@@ -477,10 +499,11 @@ export const EventRow = styled.div`
   .invite-switch {
     width: 100%;
     display: flex;
-    ${media.tablet} {
-      width: 50%;
+    flex-direction: column;
+    ${media.desktop} {
+      min-height: 133px;
+        width: 50%;
       justify-content: space-between;
-
     }
     .event-info-label {
       max-width: 150px;
@@ -606,10 +629,6 @@ export const EventRow = styled.div`
         width: 70%;
         margin-right: 0;
       }
-    }
-    span {
-      // display: none;
-      // align-self: center;
     }
     span ul {
       display: flex;
