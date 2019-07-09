@@ -35,7 +35,7 @@ class FriendSearchBox extends React.Component{
          const id =localStorage.getItem("userFireBaseId")
                
           console.log("HERE IS THE ID",id)
-          let matchedUsers  = axios.post("http://localhost:5500/api/users/find/name/", {
+          let matchedUsers  = axios.post("http://pizza-tim3-be.herokuapp.com/api/users/find/name/", {
             "first_name":name,
             "user_id" : id
           })

@@ -15,9 +15,7 @@ class Card extends React.Component {
       comments: [],
       showMessages: false,
       attendees: [],
-      showActions : this.props.showActions,
-      host : "localhost:5500"
-      // host = "pizza-tim3-be.herokuapp.com"
+      showActions : this.props.showActions
     };
   }
 
@@ -27,7 +25,7 @@ class Card extends React.Component {
     const eventId= this.props.event.event_id
 
     axios
-      .get("http://" + this.state.host + "/api/comments/event/messages/user/" + this.props.event.event_id)
+      .get("http://pizza-tim3-be.herokuapp.com/api/comments/event/messages/user/" + this.props.event.event_id)
       .then(res => {
         console.log("COUNT COMMENT RESPONSE", res);
         this.setState({ comments: res.data.comments });
@@ -35,7 +33,7 @@ class Card extends React.Component {
       .catch(error => {
         this.setState({ error });
       });
-    axios.get("http://" + this.state.host + "/api/invited/" + this.props.event.event_id).then(res => {
+    axios.get("http://pizza-tim3-be.herokuapp.com/api/invited/" + this.props.event.event_id).then(res => {
       console.log("INVITEES RESPONSE", res);
       this.setState({ attendees: res.data });
     });
@@ -64,7 +62,7 @@ class Card extends React.Component {
     console.log("Event neing posted ", newItem);
 
     axios
-      .put("http://" + this.state.host + "/api/events/status/" + id, newItem)
+      .put("http://pizza-tim3-be.herokuapp.com/api/events/status/" + id, newItem)
       .then(res => {
         console.log("New Item is updated now", res.data.results);
         window.location.reload();
@@ -85,7 +83,7 @@ class Card extends React.Component {
       status: "Declined"
     };
     axios
-      .put("http://"+ this.state.host + "/api/events/status/" + id, newItem)
+      .put("http://pizza-tim3-be.herokuapp.com/api/events/status/" + id, newItem)
       .then(res => {
         console.log("Response for Decline", res.data.results);
         window.location.reload();
