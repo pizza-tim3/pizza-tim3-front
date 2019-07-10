@@ -1,4 +1,4 @@
-const registerWithBackend = async userObj => {
+export const registerWithBackend = async userObj => {
   const url = `${process.env.REACT_APP_BACK_END_URL}/api/users`;
   const body = userObj;
   const data = {
@@ -13,7 +13,7 @@ const registerWithBackend = async userObj => {
 };
 
 // takes the result from a register with pop up call
-const registerWithPopup = async result => {
+export const registerWithPopup = async result => {
   console.log(result);
   const {
     user: { uid, photoURL },
@@ -32,13 +32,9 @@ const registerWithPopup = async result => {
     avatar: photoURL
   };
   //send information to backend
-  console.log(userObj);
+  // console.log(userObj);
   const response = await registerWithBackend(userObj);
   console.log(response);
   return response;
 };
 
-module.exports = {
-  registerWithPopup,
-  registerWithBackend
-};

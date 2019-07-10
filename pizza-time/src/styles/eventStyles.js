@@ -5,8 +5,18 @@ export const EventBox = styled.div`
   width: 100%;
   .event-save {
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     justify-content: space-between;
+    border-bottom: 2px solid ${colors.black};
+    padding-bottom: 15px;
+    .action.trash img {
+      padding: 6px 12px 6px 0px;
+    }
+    ${media.tablet} {
+      justify-content: flex-start;
+      border-bottom: none;
+      padding-bottom: 0px;
+    }
   }
 `;
 
@@ -56,12 +66,58 @@ export const Inner = styled.div`
     border: none;
     border-bottom: 1.5px solid ${colors.primary};
     margin-right: 15px;
-    text-transform: capitalize;
     &:focus {
       outline: none;
     }
   }
-  ${media.tablet} {
+  .event-wrapper {
+    width: 100%;
+    text-align: left;
+    padding: 5px 0px 0px;
+    ${media.tablet} {
+      width: 100%;
+    }
+  }
+  .event-info-label {
+    font-size: 1.3rem;
+    font-weight: 600;
+    margin-right: 10px;
+    min-width: 50px;
+    text-align: left;
+    ${media.tablet} {
+      min-width: 65px;
+    }
+  }
+  .event-info-data {
+    font-size: 1.2rem;
+    font-weight: 400;
+    align-self: flex-end;
+  }
+  .info-row {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+  }
+  .organizer-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 25px;
+    ${media.desktop} {
+      justify-content: flex-end;
+      margin-bottom: 12px;
+    }
+  }
+  .organizer-avatar {
+    height: 66px;
+    width: 66px;
+    border-radius: 50%;
+  }
+  #search-map-icon {
+    margin-right: -3px;
+  }
+  ${media.desktop} {
     width: 80%;
     .event-header {
       flex-direction: row;
@@ -90,39 +146,52 @@ export const Inner = styled.div`
       background: ${colors.white};
     }
   }
-
+  .event-save-wrapper {
+    width: 100%;
+    justify-content: flex-end;
+  }
   .event-header {
     width: 91%;
-    border-bottom: 2px solid ${colors.black} !important;
     display: flex;
     justify-content: space-between;
     margin: 0px auto;
-    padding: 20px 0px;
+    padding: 20px 0px 0px;
     align-items: center;
-    height: 85px;
+    flex-direction: column-reverse;
+
+    ${media.desktop} {
+      border-bottom: 2px solid ${colors.black} !important;
+      height: 85px;
+      padding: 20px 0px;
+      width: 100%;
+      flex-direction: row;
+    }
     .action {
       padding-left: 0px;
     }
     .header-edit {
       display: flex;
-      height: 48px;
+      justify-content: space-between;
+      padding-top: 15px;
       ${media.desktop} {
+        input {
+          width: 300px;
+        }
+        padding-top: 0px;
         height: 40px;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
       }
     }
     .event-name {
       justify-content: space-between;
       display: flex;
-      width: 78%;
-      align-items: center;
-      h1 {
-        align-items: center;
-        // align-self: center;
-        span {
-          font-size: 1.4rem;
-          padding-left: 10px;
-          text-transform: capitalize;
-        }
+      width: 100%;
+      align-items: flex-end;
+      padding-top: 15px;
+      ${media.tablet} {
+        width: 100%;
       }
     }
     h1 {
@@ -136,7 +205,10 @@ export const Inner = styled.div`
       width: 96%;
 
       .event-name {
-        width: 50%;
+        width: 100%;
+        .info-row {
+          width: 78%;
+        }
       }
       h1 {
         font-size: 2rem;
@@ -151,8 +223,7 @@ export const Inner = styled.div`
       font-weight: 600;
       font-size: 13px;
       color: ${colors.white};
-      width: 50px;
-      margin-left: 3px;
+      width: 84px;
       align-self: center;
       ${media.desktop} {
         width: 130px;
@@ -176,10 +247,10 @@ export const Inner = styled.div`
     }
   }
   .event-date {
-    margin: 30px 25px 34px;
+    margin: 20px 20px 34px;
     flex-direction: column;
     ${media.desktop} {
-      margin: 40px 20px 34px;
+      margin: 40px 20px 0px;
       flex-direction: row;
     }
   }
@@ -191,11 +262,12 @@ export const Inner = styled.div`
   .event-location-name {
     display: flex;
     justify-content: space-between;
+    align-items: flex-start;
     span {
       font-size: 1.3rem;
     }
     ${media.desktop} {
-      width: 100%;
+      width: 50%;
     }
   }
   location-info {
@@ -211,6 +283,21 @@ export const Inner = styled.div`
     ${media.desktop} {
       height: 100%;
     }
+  }
+  .location-hours {
+    width: 85%;
+    margin: 0px auto;
+    .opening-hours {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+  .location-hours .days {
+    display: flex;
+    font-weight: 500;
+    flex-direction: column;
+    align-items: flex-start;
   }
   .location-address {
     address {
@@ -346,7 +433,7 @@ export const EventRow = styled.div`
   justify-content: space-between;
   padding: 15px auto;
   flex-direction: column;
-  margin: 0px 25px 34px;
+  margin: 0px 20px 25px;
   ${media.desktop} {
     flex-direction: row;
   }
@@ -384,6 +471,8 @@ export const EventRow = styled.div`
       display: flex;
       justify-content: space-between;
       padding-left: 0px;
+      align-items: center;
+      margin-top: 19px;
     }
     select {
       border: none;
@@ -401,14 +490,41 @@ export const EventRow = styled.div`
   .calendar-row {
     justify-content: space-between;
     display: flex;
-    padding-bottom: 25px;
+    padding-bottom: 0px;
+  }
+
+  .calendar-row:nth-child(2) {
+    padding: 20px 0px 0px;
   }
   .invite-switch {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    ${media.desktop} {
+      min-height: 133px;
+        width: 50%;
+      justify-content: space-between;
+    }
+    .event-info-label {
+      max-width: 150px;
+    }
+    align-items: flex-end;
+    .info-row {
+      justify-content: space-between;
+      display: flex;
+      width: 100%;
+
+      ${media.tablet} {
+        width: 100%;
+        justify-content: flex-end;
+      }
+    }
     h3 {
       margin-bottom: 0px;
       margin-right: 8px;
     }
     display: flex;
+    align-items: flex-start;
     justify-content: space-between;
   }
   .event {
@@ -417,10 +533,11 @@ export const EventRow = styled.div`
     ${media.desktop} {
       width: 50%;
     }
-    .location-image,
-    #map {
+    .location-image, #location-map {
       min-height: 300px;
       max-height: 300px;
+      box-shadow: 0px 0px 22px 1px #D2D2D2;
+      width: 100%;
     }
     &.location {
       display: flex;
@@ -428,10 +545,6 @@ export const EventRow = styled.div`
     }
     #map {
       display: none;
-    }
-    #location-map {
-      height: 300px; /* The height is 400 pixels */
-      width: 100%;
     }
     .marker {
       width: 40px;
@@ -472,7 +585,7 @@ export const EventRow = styled.div`
       flex-direction: row;
     }
     div {
-      margin-right: 10px;
+      margin-right: -26px;
       padding: 5px;
       display: flex;
       align-items: start;
@@ -490,17 +603,19 @@ export const EventRow = styled.div`
         cursor: pointer;
       }
       span {
-        padding: 7px 14px;
+        padding: 9px 18px;
         background-color: ${colors.primary};
         border-radius: 50%;
         display: flex;
         align-items: center;
         justify-content: center;
         margin-right: 8px;
+        margin-left: -6px;
         p {
           margin-bottom: 0px;
           font-weight: bold;
           color: white;
+          font-size: 1.4rem;
         }
       }
     }
@@ -515,10 +630,6 @@ export const EventRow = styled.div`
         margin-right: 0;
       }
     }
-    span {
-      // display: none;
-      // align-self: center;
-    }
     span ul {
       display: flex;
       align-self: center;
@@ -530,6 +641,7 @@ export const EventRow = styled.div`
     .invited img {
       border-radius: 50%;
       width: 55px;
+      border: 2px solid white;
     }
   }
   .event-invite,
@@ -547,18 +659,23 @@ export const EventRow = styled.div`
     display: flex;
     flex-direction: column;
     align-items: start;
+    
     .comment {
       display: flex;
       align-items: center;
-      // justify-content: space-between;
       flex-direction: row;
-      margin-bottom: 15px;
+      margin-bottom: 0px;
       p {
         align-self: center;
         text-align: left;
+        display: flex;
+        flex-direction: column;
         margin-bottom: 0px;
-        // padding-left: 12px;
         padding-right: 12px;
+      }
+      .comment-wraper {
+        dispay: flex;
+        flex-direction: column;
       }
     }
     img {
@@ -566,6 +683,19 @@ export const EventRow = styled.div`
       ${media.tablet} {
         margin-right: 12px;
       }
+    }
+    .comment-date {
+      color: rgba(0,0,0,0.5);
+      padding: 0px 0px 0px 62px;
+    }
+    .comment-error {
+      color: rgba(255, 105, 100, .8);
+      padding-top: 5px;
+      margin-bottom: 50px;
+    }
+    .comment-date, .comment-error {
+      font-size: 0.8rem;
+      text-align: left;
     }
   }
   .add-user img {

@@ -143,7 +143,7 @@ class Participants extends React.Component {
                         <>
                           <h2>No friends to invite</h2>
                           <Link to={"/profile"} className="action organizer">
-                            <img src={searchusers} className="dada" />
+                            <img src={searchusers} alt="search" />
                           </Link>
                         </>
                       )}
@@ -194,7 +194,6 @@ class Participants extends React.Component {
                   <span>
                     <p>{this.props.event.invitedUsers.length}</p>
                   </span>
-                  going
                 </div>
 
                 {this.props.userReducer.firebase_uid ===

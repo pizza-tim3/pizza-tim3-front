@@ -10,6 +10,7 @@ export const Wrap = styled.div`
   flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
+  margin-top: 10px;
 
   h1 {
     font-family: ${fonts.primary};

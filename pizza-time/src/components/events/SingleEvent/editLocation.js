@@ -24,11 +24,18 @@ class EditLocation extends React.Component {
     });
   }
   // Choose location on click and update the state's id
-  chooseLocation = id => {
+  chooseLocation = (id, place) => {
     this.setState({
       place_id: id,
     });
-    console.log("place_id" + this.state.place_id);
+    // Toggle css based on the id selected
+    let locationHtml = Array.from(document.getElementsByClassName("card"));
+    let selectedLocation = document.getElementById(id);
+    locationHtml.map(location => {
+      location.className = "";
+      location.className = "card";
+    });
+    selectedLocation.className = "card active-location";
   };
   // Hide the modal
 
@@ -43,14 +50,13 @@ class EditLocation extends React.Component {
   updateLocationHandler = e => {
     e.preventDefault();
     let currentId = this.state.place_id;
-    // this.setState({
-    //   place_id: currentId,
-    // });
+    this.setState({
+      place_id: currentId,
+    });
     this.props.updateLocation(currentId);
     this.setState({
       show: false,
     });
-    console.log("id submitted" + this.state.place_id);
   };
   render() {
     return (
@@ -65,7 +71,7 @@ class EditLocation extends React.Component {
             </button>
           </Modal.Footer>
         </Modal>
-        <button className="action organizer">
+        <button id="search-map-icon" className="action organizer">
           {this.props.userReducer.firebase_uid ===
           this.props.event.organizer ? (
             <img src={searchmap} alt="edit" onClick={this.handleShow} />
