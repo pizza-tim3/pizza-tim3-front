@@ -1,11 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Carousel } from "react-bootstrap";
-import axios from "axios";
-import HomeHeader from "./../../components//home-header/home-header.js";
 
 import { Wrap, Inner, Buttons } from "../../styles/landingStyles.js";
-// import CarouselTest from '../../assets/carouseltest.jpg';
+import SlideOne from '../../assets/slide_one.png';
+import SlideTwo from '../../assets/slide_two.png';
+import SlideThree from '../../assets/slide_three.png';
+import SlideFour from '../../assets/slide_four.png';
+import SlideFive from '../../assets/slide_five.png';
+import SlideSix from '../../assets/slide_six.png';
 
 class Landing extends React.Component {
   constructor(props, context) {
@@ -21,11 +24,16 @@ class Landing extends React.Component {
   }
 
   componentDidMount() {
-    // let imgs = [CarouselTest];
+    let imgs = [
+      SlideOne,
+      SlideTwo,
+      SlideThree,
+      SlideFour,
+      SlideFive,
+      SlideSix
+    ];
 
-    //  this.setState({
-    //    carousel: imgs
-    //  })
+    this.setState({ carousel: imgs })
   }
 
   handleSelect(selectedIndex, e) {
@@ -43,7 +51,7 @@ class Landing extends React.Component {
           <>
             <h1>Pizza Time</h1>
             <div className="small-carousel">
-              {/* <Carousel
+              <Carousel
                 activeIndex={index}
                 direction={direction}
                 onSelect={this.handleSelect}
@@ -55,7 +63,7 @@ class Landing extends React.Component {
                     </Carousel.Item>
                   );
                 })}
-              </Carousel> */}
+              </Carousel>
             </div>
             <Buttons>
               <Link className="loginBtn" to="/login">Login</Link>
