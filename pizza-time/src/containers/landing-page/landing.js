@@ -55,6 +55,7 @@ class Landing extends React.Component {
                 activeIndex={index}
                 direction={direction}
                 onSelect={this.handleSelect}
+                interval="2500"
               >
                 {this.state.carousel.map((image, index) => {
                   return (
