@@ -23,47 +23,44 @@ export const Inner = styled.div`
 
   h1 {
     font-family: ${fonts.secondary};
-    font-size: 50px;
+    font-size: 56px;
     color: ${colors.white};
+      ${media.tablet} { font-size: 58px; }
+      ${media.desktop} { font-size: 64px; }
   }
 
   img {
-    width: 100%;
-    height: auto;
+    width: 300px;
+    height: 440px;
+    margin-top: 40px;
   }
 `;
 
 export const Buttons = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 54px;
-  ${media.tablet} {
-    margin-top: 62px;
-  }
-  ${media.desktop} {
-    margin-top: 70px;
-  }
+  margin-top: 30px;
 
   .loginBtn,
   .registerBtn {
-    background-color: transparent;
+    background-color: ${colors.white};
     border: 3px solid ${colors.white};
     padding: 8px 20px;
     width: 110px;
-    color: ${colors.white};
+    color: ${colors.black};
     text-decoration: none;
     margin: 0 6px;
     font-family: ${fonts.primary};
     font-weight: 600;
     font-size: 15px;
       &:hover {
-        background-color: ${colors.white};
-        color: ${colors.black};
+        color: ${colors.white};
       }
     ${media.tablet} {
       &:hover {
-        background-color: ${colors.white};
-        color: ${colors.black};
+        background-color: ${colors.black};
+        border: 3px solid ${colors.black};
+        color: ${colors.white};
       }
     }
   }

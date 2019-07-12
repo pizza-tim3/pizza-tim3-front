@@ -169,20 +169,30 @@ select:-webkit-autofill:focus {
   }
 }
 
-.carousel-indicators li {
-  background-image: url("https://images.vexels.com/media/users/3/157292/isolated/preview/1013ce3cf5903ef5afe01f0fd443dc03-colorful-whole-pizza-design-by-vexels.png") !important;
-  width: 43px;
-  height: 43px;
-  background-size: cover;
-  background-color: transparent;
-}
-.carousel-indicators li.active {
-  transform: rotate(180deg);
-  -webkit-transform: rotate(180deg);
-  -ms-transform: rotate(180deg);
-  transition: 200ms linear all;
+/* .carousel-indicators li {
+  display: none;
+} */
+
+ol.carousel-indicators {
+  display: none;
+  width: 1px;
+  height: 1px;
+  border: 1px solid red;
 }
 
+ol.carousel-indicators li {
+  display: none;
+  width: 1px;
+  height: 1px;
+  border: 1px solid red;
+}
+
+<<<<<<< HEAD
+.carousel-control-prev, .carousel-control-next {
+  display: none;
+}
+
+=======
 
 #loading-pizza {
   animation: loading-spin infinite 2s linear;
@@ -197,6 +207,7 @@ select:-webkit-autofill:focus {
     transform: rotate(360deg);
   }
 }
+>>>>>>> 5c50945e32e50a3553c004a6950938d0d307a175
 .missing {
   margin: 25px auto 30px;
 }
