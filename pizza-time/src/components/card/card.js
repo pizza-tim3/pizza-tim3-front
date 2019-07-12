@@ -4,9 +4,9 @@ import axios from "axios";
 import Envelope from "../../assets/envelope.svg";
 import Comment from "../../assets/comment.svg";
 import { CardBox, Inner, Content, Action } from "../../styles/cardStyles.js";
-//import DashComment from "../../containers/user-dashboard/DashComment";
 import Location from "../../containers/user-dashboard/Location.js";
 import { bold } from "ansi-colors";
+import {Link}  from "react-router-dom";
 
 class Card extends React.Component {
   constructor(props) {
@@ -25,7 +25,7 @@ class Card extends React.Component {
     const eventId= this.props.event.event_id
 
     axios
-      .get("http://localhost:5500/api/comments/event/messages/user/" + this.props.event.event_id)
+      .get("http://pizza-tim3-be.herokuapp.com/api/comments/event/messages/user/" + this.props.event.event_id)
       .then(res => {
         console.log("COUNT COMMENT RESPONSE", res);
         this.setState({ comments: res.data.comments });
@@ -33,7 +33,7 @@ class Card extends React.Component {
       .catch(error => {
         this.setState({ error });
       });
-    axios.get("http://localhost:5500/api/invited/" + this.props.event.event_id).then(res => {
+    axios.get("http://pizza-tim3-be.herokuapp.com/api/invited/" + this.props.event.event_id).then(res => {
       console.log("INVITEES RESPONSE", res);
       this.setState({ attendees: res.data });
     });
@@ -62,7 +62,7 @@ class Card extends React.Component {
     console.log("Event neing posted ", newItem);
 
     axios
-      .put(`http://localhost:5500/api/events/status/${id}`, newItem)
+      .put("http://pizza-tim3-be.herokuapp.com/api/events/status/" + id, newItem)
       .then(res => {
         console.log("New Item is updated now", res.data.results);
         window.location.reload();
@@ -83,7 +83,7 @@ class Card extends React.Component {
       status: "Declined"
     };
     axios
-      .put(`http://localhost:5500/api/events/status/${id}`, newItem)
+      .put("http://pizza-tim3-be.herokuapp.com/api/events/status/" + id, newItem)
       .then(res => {
         console.log("Response for Decline", res.data.results);
         window.location.reload();
@@ -94,12 +94,15 @@ class Card extends React.Component {
   };
 
   render() {
-    const date = new Date(this.props.event.event_date).toString().substring(0,15);
+    const eventDate = parseInt(this.props.event.event_date);
+    const date = new Date(eventDate).toString().substring(0,15);
+    const event_id = this.props.event.event_id;
     
     console.log("COME FOR THE EVENT", this.props.event);
     return (
       <CardBox>
         <Inner>
+        <Link id={this.props.event.event_id} to={"/event/" + event_id} >
           <Content>
             <img src={Envelope} />
             <div className="content">
@@ -120,8 +123,12 @@ class Card extends React.Component {
                   return [attende.first_name, "  ", attende.last_name, ","," "]
                 })}
              </b> </p>
-            </div>
+             
+              
+            </div>  
           </Content>
+          </Link>
+
           <Action>
             <div className="comment">
               <img src={Comment} onClick={this.commentHandler} />
@@ -136,9 +143,10 @@ class Card extends React.Component {
                   return (
                    
                     <div>
-                    <b>{comment.first_name}</b>{comment.time}<br/>
+                    <b>{comment.first_name}</b>{" "}{comment.time.substring(0,15)}<br/>
                      
-                    <b> {comment.message }</b>
+                    <i> {comment.message }</i>
+                    <br/>
                     </div>          
                   )
                 } 

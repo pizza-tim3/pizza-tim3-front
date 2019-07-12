@@ -21,10 +21,8 @@ class UserDashboard extends React.Component {
         process.env.REACT_APP_GOOGLE_PLACES_API_KEY
       }&libraries=places&callback=initMap`,
       mapLoaded : false
-         
-         
         }
-        localStorage.setItem("userFireBaseId","RaJMLmDUTWTP870aXFUQ6mLVb1M2");
+        // localStorage.setItem("userFireBaseId","RaJMLmDUTWTP870aXFUQ6mLVb1M2");
       };
     
     
@@ -78,7 +76,7 @@ upcomingHandler = event => {
     
     const id = localStorage.getItem("userFireBaseId");
     axios
-      .get(`http://localhost:5500/api/events/upcoming/${id}`)
+      .get("http://pizza-tim3-be.herokuapp.com/api/events/upcoming/" + id)
       
       .then(res => {
         // console.log("Response for UpcomingEvents", res);
@@ -101,7 +99,7 @@ upcomingHandler = event => {
     const id = localStorage.getItem("userFireBaseId");
     console.log("User id ", id)
     axios
-      .get(`http://localhost:5500/api/events/pending/${id}`)
+      .get("http://pizza-tim3-be.herokuapp.com/api/events/pending/" + id)
       .then(res => {
         // console.log("RESPONSE OF PENDING EVENTS", res);
         this.setState({
@@ -121,7 +119,7 @@ upcomingHandler = event => {
     const id = localStorage.getItem("userFireBaseId");
     event.preventDefault();
     axios
-      .get(`http://pizza-tim3-be.herokuapp.com/api/events/past/${id}`)
+      .get("http://pizza-tim3-be.herokuapp.com/api/events/past/" + id)
       .then(res => {
         // console.log("RESPONSE OF PAST EVENTS", res);
         this.setState({

@@ -14,6 +14,7 @@ const FriendsList = ({ firebase_uid }) => {
     //Immediately Invoked Function Expression
     /*https://developer.mozilla.org/en-US/docs/Glossary/IIFE#targetText=An%20IIFE%20(Immediately%20Invoked%20Function,and%20contains%20two%20major%20parts.*/
     (async function() {
+      console.log("ID",firebase_uid)
       const response = await fetch(`${backend}/api/friends/${firebase_uid}`);
       const json = await response.json();
       setFriends(json);
