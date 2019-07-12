@@ -34,13 +34,13 @@ class UserDashboard extends React.Component {
   };
 
   initMap = async () => {
-    console.log("Init map called..")
+    // console.log("Init map called..")
     let map = new window.google.maps.Map(document.getElementById("map"));//search for the div id having map
     let service = new window.google.maps.places.PlacesService(map);
 
    
 
-    console.log("Upcoming events " , this.state.upcomingEvents)
+    // console.log("Upcoming events " , this.state.upcomingEvents)
     //for each favorite make a call and set state with the data. HARD LIMIT 10
     let events = this.state.upcomingEvents;
     if (this.state.selectedTab == "PendingEvents") {
@@ -57,8 +57,8 @@ class UserDashboard extends React.Component {
       service.getDetails(req, async (place, status) => {
         const serviceStatus = window.google.maps.places.PlacesServiceStatus;
         if (serviceStatus.OK) {
-          console.log("WHOLE PLACE IS", place)
-          console.log("Place = ", place.name);
+          // console.log("WHOLE PLACE IS", place)
+          // console.log("Place = ", place.name);
           // this.setState(prevState => {
           //   return {
           //     ...prevState,
@@ -81,7 +81,7 @@ upcomingHandler = event => {
       .get(`http://localhost:5500/api/events/upcoming/${id}`)
       
       .then(res => {
-        console.log("Response for UpcomingEvents", res);
+        // console.log("Response for UpcomingEvents", res);
         this.setState({
           upcomingEvents: res.data.result,
           selectedTab: "UpcomingEvents",
@@ -103,7 +103,7 @@ upcomingHandler = event => {
     axios
       .get(`http://localhost:5500/api/events/pending/${id}`)
       .then(res => {
-        console.log("RESPONSE OF PENDING EVENTS", res);
+        // console.log("RESPONSE OF PENDING EVENTS", res);
         this.setState({
           pendingEvents: res.data.result,
           selectedTab: "PendingEvents",
@@ -123,7 +123,7 @@ upcomingHandler = event => {
     axios
       .get(`http://pizza-tim3-be.herokuapp.com/api/events/past/${id}`)
       .then(res => {
-        console.log("RESPONSE OF PAST EVENTS", res);
+        // console.log("RESPONSE OF PAST EVENTS", res);
         this.setState({
           pastEvents: res.data.result,
           selectedTab: "PastEvents",

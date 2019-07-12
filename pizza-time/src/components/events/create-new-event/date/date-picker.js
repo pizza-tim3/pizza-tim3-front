@@ -1,11 +1,15 @@
 import React from 'react';
 import useForm from '../../../../customHooks/customFormHooks';
 import { 
-    DatePickerWrap,
+    PlacesSearchWrap,
+    PlacesSearchInner,
     PlacesHeading,
     Form,
-    Button
-} from '../../../../styles/datePickerStyles';
+    NextStep
+} from '../../../../styles/placesSearchStyles';
+import { setDateTime } from './../../../../actions';
+import { connect } from 'react-redux';
+
 
 
 const DatePicker = (props) => {
@@ -15,37 +19,49 @@ const DatePicker = (props) => {
             date: inputs.date,
             time: inputs.time
         }
-        props.handleClick('dateTime', dateTime);
+        console.log(dateTime)
+        props.setDateTime(dateTime);
+        props.handleClick();
     }
 
     // const classes = useStyles();
     const {inputs, handleInputChange, handleSubmit} = useForm(sendData);
     
     return (
-        <DatePickerWrap>
-            <PlacesHeading>
-                <h2>Step 3: Choose a time and date</h2>
-            </PlacesHeading>
-            <Form noValidate>
-                <input
-                    name="date"
-                    id="date"
-                    type="date"
-                    onChange={handleInputChange}
-                    value={inputs.date}
-                />
-            </Form>
-            <Form noValidate>
-                <input
-                    name="time"
-                    id="time"
-                    type="time"
-                    onChange={handleInputChange}
-                    value={inputs.time}
-                />
-            </Form>
-            <Button type='submit' onClick={() => {handleSubmit()}}>Next Step</Button>
-        </DatePickerWrap>
+        <PlacesSearchWrap>
+            <PlacesSearchInner>
+                <PlacesHeading>
+                    <h2>Choose a time and date</h2>
+                </PlacesHeading>
+                <Form noValidate>
+                    <input
+                        name="date"
+                        id="date"
+                        type="date"
+                        onChange={handleInputChange}
+                        value={inputs.date || ''}
+                    />
+                </Form>
+                <Form noValidate>
+                    <input
+                        name="time"
+                        id="time"
+                        type="time"
+                        onChange={handleInputChange}
+                        value={inputs.time || ''}
+                    />
+                </Form>
+                <NextStep type='submit' onClick={() => {handleSubmit()}}>Next Step</NextStep>
+            </PlacesSearchInner>
+        </PlacesSearchWrap>
     )};
 
-export default DatePicker
+const mstp = state => {
+    console.log(state)
+    return {
+        eventName: state.EventReducer.eventName,
+        eventDesc: state.EventReducer.eventDesc
+    }
+}
+
+export default connect(mstp, {setDateTime})(DatePicker)

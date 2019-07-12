@@ -19,8 +19,32 @@
   color: white;
 }
 
+button:focus {
+  outline: none;
+}
+
+button:active {
+  outline: none;
+}
+
 .App-link {
   color: #61dafb;
+}
+
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover, 
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill,
+select:-webkit-autofill:hover,
+select:-webkit-autofill:focus {
+  border: none;
+  -webkit-text-fill-color: #000;
+  -webkit-box-shadow: 0 0 0px 1000px #FFF inset;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .react-calendar {
@@ -120,7 +144,7 @@
 }
 @media (max-width: 991px) {
   .modal {
-    margin-top: 75px;
+    /* margin-top: 75px; */
   }
   .carousel-indicators {
     bottom: 2%;
@@ -163,10 +187,27 @@ ol.carousel-indicators li {
   border: 1px solid red;
 }
 
+<<<<<<< HEAD
 .carousel-control-prev, .carousel-control-next {
   display: none;
 }
 
+=======
+
+#loading-pizza {
+  animation: loading-spin infinite 2s linear;
+  pointer-events: none;
+}
+
+@keyframes loading-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+>>>>>>> 5c50945e32e50a3553c004a6950938d0d307a175
 .missing {
   margin: 25px auto 30px;
 }
@@ -210,7 +251,13 @@ div.gm-style-iw.gm-style-iw-c {
 .friend-avatar.friend-invited {
   border: 3.5px solid orange;
 }
-
+.search-btn {
+  margin: 10px 0px;
+}
+.search-btn img {
+  width: 40px;
+  height: 40px;
+}
 .btn-close.action {
   border: 1px solid orange;
   opacity: 1;
@@ -235,4 +282,9 @@ div.gm-style-iw.gm-style-iw-c {
 .modal .action img {
   width: 40px;
   height: 40px;
+}
+
+.active-location {
+  border: 1px solid orange !important;
+  border-radius: 3px;
 }
