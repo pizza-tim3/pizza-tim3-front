@@ -21,11 +21,11 @@ class Card extends React.Component {
 
 
   componentDidMount() {
-    console.log("REACHED HERE");
+    //console.log("REACHED HERE");
     const eventId= this.props.event.event_id
 
     axios
-      .get("http://pizza-tim3-be.herokuapp.com/api/comments/event/messages/user/" + this.props.event.event_id)
+      .get(`https://pizza-tim3-be.herokuapp.com/api/comments/event/messages/user/${this.props.event.event_id}`)
       .then(res => {
         console.log("COUNT COMMENT RESPONSE", res);
         this.setState({ comments: res.data.comments });
@@ -33,7 +33,7 @@ class Card extends React.Component {
       .catch(error => {
         this.setState({ error });
       });
-    axios.get("http://pizza-tim3-be.herokuapp.com/api/invited/" + this.props.event.event_id).then(res => {
+    axios.get(`https://pizza-tim3-be.herokuapp.com/api/invited/${this.props.event.event_id}`).then(res => {
       console.log("INVITEES RESPONSE", res);
       this.setState({ attendees: res.data });
     });
@@ -41,13 +41,13 @@ class Card extends React.Component {
 
   commentHandler = event => {
     event.preventDefault();
-    
     const show = !this.state.showMessages;
     console.log("Show message now : ", show)
     this.setState({showMessages:show})
 
 
   };
+  //use for accepting an invitation
   clickHandler = event => {
     event.preventDefault();
     const id = localStorage.getItem("userFireBaseId");
@@ -62,7 +62,7 @@ class Card extends React.Component {
     console.log("Event neing posted ", newItem);
 
     axios
-      .put("http://pizza-tim3-be.herokuapp.com/api/events/status/" + id, newItem)
+      .put(`https://pizza-tim3-be.herokuapp.com/api/events/status/${id}`, newItem)
       .then(res => {
         console.log("New Item is updated now", res.data.results);
         window.location.reload();
@@ -71,6 +71,7 @@ class Card extends React.Component {
         this.setState({ error });
       });
   };
+  //use for declining an invitation
   ButtonHandler = event => {
     event.preventDefault();
     const id = localStorage.getItem("userFireBaseId");
@@ -83,7 +84,7 @@ class Card extends React.Component {
       status: "Declined"
     };
     axios
-      .put("http://pizza-tim3-be.herokuapp.com/api/events/status/" + id, newItem)
+      .put(`https://pizza-tim3-be.herokuapp.com/api/events/status/${id}`, newItem)
       .then(res => {
         console.log("Response for Decline", res.data.results);
         window.location.reload();
@@ -98,7 +99,7 @@ class Card extends React.Component {
     const date = new Date(eventDate).toString().substring(0,15);
     const event_id = this.props.event.event_id;
     
-    console.log("COME FOR THE EVENT", this.props.event);
+    //console.log("COME FOR THE EVENT", this.props.event);
     return (
       <CardBox>
         <Inner>
@@ -114,7 +115,7 @@ class Card extends React.Component {
               </p>
               <p>
                 <span>location:</span>{" "} {this.props.event.location}
-                {/* <Location google_place_id={this.props.event.google_place_id} /> */}
+                
               </p>
               <p> <b>
                 <span>Attending:</span>

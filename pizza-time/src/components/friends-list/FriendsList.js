@@ -25,7 +25,7 @@ const FriendsList = ({ firebase_uid }) => {
     <div>
       <ListToolBar>
         <FriendSearchBox />
-        <a href="#">Invite A Friend!</a>
+       
       </ListToolBar>
       <ProfileListContainer>
         {friends.map(friend => (
