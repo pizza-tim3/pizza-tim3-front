@@ -12,7 +12,7 @@ class NewFriend extends React.Component{
         event.preventDefault();
         const id =localStorage.getItem("userFireBaseId")
                
-        const invite= axios.post("http://pizza-tim3-be.herokuapp.com/api/friends/request/" + id +"/" + this.props.user.firebase_uid)
+        const invite= axios.post("https://pizza-tim3-be.herokuapp.com/api/friends/request/" + id +"/" + this.props.user.firebase_uid)
                            .then(res =>{
                                console.log("RESPONSE OF MEW FRIEND RFEQUEST",res)
                                window.location .reload();

@@ -35,16 +35,17 @@ class FriendSearchBox extends React.Component{
          const id =localStorage.getItem("userFireBaseId")
                
           console.log("HERE IS THE ID",id)
-          let matchedUsers  = axios.post("http://pizza-tim3-be.herokuapp.com/api/users/find/name/", {
+          axios.post("https://pizza-tim3-be.herokuapp.com/api/users/find/name/", {
             "first_name":name,
             "user_id" : id
+          },{headers:{
+            "Access-Control-Allow-Origin": "*"
+          }}).then (res =>{
+              console.log(" NEW FRIEND RESPONSE",res)
+              this.setState({matchedUsers:res.data.result})
+          }).catch(error=>{
+               console.log(error);
           })
-                                   .then (res =>{
-                                        console.log(" NEW FRIEND RESPONSE",res)
-                                        this.setState({matchedUsers:res.data.result})
-                                   }).catch(error=>{
-                                        console.log(error);
-                                   })
         }
         inputHandler=(event)=>{
           this.setState({searchName:event.target.value})

@@ -76,7 +76,7 @@ upcomingHandler = event => {
     
     const id = localStorage.getItem("userFireBaseId");
     axios
-      .get("http://pizza-tim3-be.herokuapp.com/api/events/upcoming/" + id)
+      .get("https://pizza-tim3-be.herokuapp.com/api/events/upcoming/" + id)
       
       .then(res => {
         // console.log("Response for UpcomingEvents", res);
@@ -99,7 +99,7 @@ upcomingHandler = event => {
     const id = localStorage.getItem("userFireBaseId");
     console.log("User id ", id)
     axios
-      .get("http://pizza-tim3-be.herokuapp.com/api/events/pending/" + id)
+      .get("https://pizza-tim3-be.herokuapp.com/api/events/pending/" + id)
       .then(res => {
         // console.log("RESPONSE OF PENDING EVENTS", res);
         this.setState({
@@ -119,7 +119,7 @@ upcomingHandler = event => {
     const id = localStorage.getItem("userFireBaseId");
     event.preventDefault();
     axios
-      .get("http://pizza-tim3-be.herokuapp.com/api/events/past/" + id)
+      .get("https://pizza-tim3-be.herokuapp.com/api/events/past/" + id)
       .then(res => {
         // console.log("RESPONSE OF PAST EVENTS", res);
         this.setState({
