@@ -5,7 +5,6 @@ import axios from "axios";
 import LocationMap from "./locationMap.js";
 import edit from "./../../../assets/edit.png";
 import trash from "./../../../assets/trash.png";
-import fakemap from "./../../../assets/fakemap.png";
 import pizzaplaceholder from "./../../../assets/pizzaplaceholder.png";
 import update from "./../../../assets/update.png";
 import { withRouter } from "react-router-dom";
