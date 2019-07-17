@@ -207,7 +207,6 @@ class Info extends React.Component {
     this.props.updateDate(updateTime);
   };
   getDetails = req => {
-    let locationHours = req.opening_hours.weekday_text;
     // Google's get image url function
     let bigLeague = req.photos[0].getUrl();
 
@@ -221,7 +220,7 @@ class Info extends React.Component {
     let currentPlaceId = this.props.event.place;
     let currentDays = [];
     let currentHours = [];
-    let hourDays = req.opening_hours.weekday_text.map(hour => {
+    req.opening_hours.weekday_text.map(hour => {
       let cutOffindex = hour.indexOf(dayCutOff);
       let day = hour.slice(0, cutOffindex);
       let hourItem = hour.slice(day.length + 1);
