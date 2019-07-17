@@ -36,6 +36,7 @@ export default function Login(props) {
     console.log(state.email.length);
     if (state.email.length === 0 || state.password.length === 0) {
       state.inputError = true;
+      dispatch({ type: "SET_ERROR", payload: "" });
       dispatch({ type: "INPUT_ERROR", payload: "Both fields are required." });
 
       console.log(state.inputError);
