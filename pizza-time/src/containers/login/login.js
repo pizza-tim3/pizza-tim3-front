@@ -21,38 +21,50 @@ export default function Login(props) {
           return { ...previousState, error: action.payload };
         case "CLEAR_ERROR":
           return { ...previousState, error: action.payload };
+        case "INPUT_ERROR":
+          return { ...previousState, inputError: action.payload };
         default:
           throw new Error("unexpected action type");
       }
     },
 
-    { email: "", password: "", error: "" }
+    { email: "", password: "", error: "", inputError: false }
   );
 
   const submit = async e => {
     e.preventDefault();
+    console.log(state.email.length);
+    if (state.email.length === 0 || state.password.length === 0) {
+      state.inputError = true;
+      dispatch({ type: "INPUT_ERROR", payload: "Both fields are required." });
 
-    try {
-      await firebaseApp
-        .auth()
-        .setPersistence(
-          firebase.auth.Auth.Persistence.LOCAL /* | [.SESSION,| .NONE]*/
-        );
+      console.log(state.inputError);
+    } else {
+      dispatch({ type: "INPUT_ERROR", payload: "" });
 
-      //Sign in with registered Email and password
-      const user = await firebaseApp
-        .auth()
-        .signInWithEmailAndPassword(state.email, state.password);
+      try {
+        await firebaseApp
+          .auth()
+          .setPersistence(
+            firebase.auth.Auth.Persistence.LOCAL /* | [.SESSION,| .NONE]*/
+          );
 
-      //get the token off of the current user
-      //token to send to the backend to display data
-      const token = await firebaseApp.auth().currentUser.getIdToken();
-      props.history.push("/home");
-    } catch (err) {
-      dispatch({ type: "SET_ERROR", payload: err.message });
+        //Sign in with registered Email and password
+        const user = await firebaseApp
+          .auth()
+          .signInWithEmailAndPassword(state.email, state.password);
+        console.log(user);
+        //get the token off of the current user
+        //token to send to the backend to display data
+        const token = await firebaseApp.auth().currentUser.getIdToken();
+        props.history.push("/home");
+      } catch (err) {
+        console.log(err);
+        // if
+        dispatch({ type: "SET_ERROR", payload: err.code });
+      }
     }
   };
-
 
   //TODO added checks to make sure that the registered users registered on our back and
   const signInWithGoogle = async e => {
@@ -106,8 +118,24 @@ export default function Login(props) {
             dispatch({ type: "SET_PASSWORD", payload: e.target.value });
           }}
         />
+        <div className="login-errors">
+          {state.inputError.length > 0 ? (
+            <p>Both fields are required</p>
+          ) : (
+            <></>
+          )}
+        </div>
+        <div className="login-errors">
+          {state.error.length > 0 ? (
+            <p>Credentials don't match our records</p>
+          ) : (
+            <></>
+          )}
+        </div>
         <button type="submit">Sign In</button>
-        <button onClick={signInWithGoogle} type="button">Google Sign In</button>
+        <button onClick={signInWithGoogle} type="button">
+          Google Sign In
+        </button>
         <p>
           Dont have an account?
           <br />
