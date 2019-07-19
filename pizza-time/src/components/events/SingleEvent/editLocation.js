@@ -4,8 +4,6 @@ import { Modal } from "react-bootstrap";
 import searchmap from "./../../../assets/searchmap.png";
 import { withRouter } from "react-router-dom";
 import { connect } from "react-redux";
-import update from "./../../../assets/update.png";
-import cancel from "./../../../assets/cancel.svg";
 
 class EditLocation extends React.Component {
   constructor(props) {
