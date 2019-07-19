@@ -187,12 +187,8 @@ ol.carousel-indicators li {
   border: 1px solid red;
 }
 
-<<<<<<< HEAD
-.carousel-control-prev, .carousel-control-next {
-  display: none;
-}
 
-=======
+
 
 #loading-pizza {
   animation: loading-spin infinite 2s linear;
@@ -207,7 +203,7 @@ ol.carousel-indicators li {
     transform: rotate(360deg);
   }
 }
->>>>>>> 5c50945e32e50a3553c004a6950938d0d307a175
+
 .missing {
   margin: 25px auto 30px;
 }

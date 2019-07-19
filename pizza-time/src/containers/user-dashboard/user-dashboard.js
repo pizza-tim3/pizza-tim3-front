@@ -32,9 +32,15 @@ class UserDashboard extends React.Component {
   };
 
   initMap = async () => {
+
+    // console.log("Init map called..")
     let map = new window.google.maps.Map(document.getElementById("map"));//search for the div id having map
     let service = new window.google.maps.places.PlacesService(map);
-    
+
+   
+
+    // console.log("Upcoming events " , this.state.upcomingEvents)
+
     //for each favorite make a call and set state with the data. HARD LIMIT 10
     let events = this.state.upcomingEvents;
     if (this.state.selectedTab == "PendingEvents") {
@@ -51,7 +57,9 @@ class UserDashboard extends React.Component {
       service.getDetails(req, async (place, status) => {
         const serviceStatus = window.google.maps.places.PlacesServiceStatus;
         if (serviceStatus.OK) {
-            event.location = place.name;
+
+          event.location = place.name;
+r
           this.setState({mapLoaded : true});
         }
       });
@@ -62,9 +70,12 @@ class UserDashboard extends React.Component {
 upcomingHandler = event => {
     event.preventDefault();
     const id = localStorage.getItem("userFireBaseId");
+
     axios .get(`https://pizza-tim3-be.herokuapp.com/api/events/upcoming/${id}`)
           .then(res => {
         
+
+   
         this.setState({
           upcomingEvents: res.data.result,
           selectedTab: "UpcomingEvents",
@@ -82,9 +93,11 @@ upcomingHandler = event => {
   };
   pendingHandler = event => {
     const id = localStorage.getItem("userFireBaseId");
+
       axios.get(`https://pizza-tim3-be.herokuapp.com/api/events/pending/${id}`)
            .then(res => {
         
+
         this.setState({
           pendingEvents: res.data.result,
           selectedTab: "PendingEvents",
@@ -101,9 +114,11 @@ upcomingHandler = event => {
   pastHandler = event => {
     const id = localStorage.getItem("userFireBaseId");
     event.preventDefault();
+
     axios.get(`https://pizza-tim3-be.herokuapp.com/api/events/past/${id}`)
          .then(res => {
        
+
         this.setState({
           pastEvents: res.data.result,
           selectedTab: "PastEvents",
