@@ -135,7 +135,7 @@ class Card extends React.Component {
                   {date}
                 </p>
                 <p>
-                  <span>location:</span> {this.props.event.location}
+                  <span>Location:</span> {this.props.event.location}
                 </p>
                 <p>
                   {" "}
