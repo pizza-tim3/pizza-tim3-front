@@ -8,7 +8,6 @@ import {
     FriendCard
  } from './../../../../styles/placesSearchStyles';
 import { connect } from 'react-redux';
-import UserImage from '../../../../assets/user.png';
 import axios from 'axios';
 
 
