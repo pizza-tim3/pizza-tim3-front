@@ -154,20 +154,22 @@ class Card extends React.Component {
                   </b>{" "}
                 </p>
               </div>
-              <FacebookShareButton
-                url={window.location.href}
-                media={this.props.event.event_name}
-                className="button"
-              >
-                <FacebookIcon size={32} round={false} />
-              </FacebookShareButton>
-              <TwitterShareButton
-                url={window.location.href}
-                media={this.props.event.event_name}
-                className="button"
-              >
-                <TwitterIcon size={32} round={false} />
-              </TwitterShareButton>
+              <div className="share-socials">
+                <FacebookShareButton
+                  url={window.location.href}
+                  media={this.props.event.event_name}
+                  className="button"
+                >
+                  <FacebookIcon size={32} round={false} />
+                </FacebookShareButton>
+                <TwitterShareButton
+                  url={window.location.href}
+                  media={this.props.event.event_name}
+                  className="button"
+                >
+                  <TwitterIcon size={32} round={false} />
+                </TwitterShareButton>
+              </div>
             </Content>
           </Link>
 
