@@ -140,9 +140,10 @@ class Discussion extends React.Component {
           newComment
         )
         .then(res => {
+          console.log(res);
           if (res.status === 201) {
             // If successfull push new comments to front-end state
-            newComment.id = res.data[0];
+            newComment.id = res.data.id;
             newComment.avatar = this.props.userReducer.avatar;
 
             this.setState(state => {
