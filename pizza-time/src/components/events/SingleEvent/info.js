@@ -5,7 +5,6 @@ import axios from "axios";
 import LocationMap from "./locationMap.js";
 import edit from "./../../../assets/edit.png";
 import trash from "./../../../assets/trash.png";
-import fakemap from "./../../../assets/fakemap.png";
 import pizzaplaceholder from "./../../../assets/pizzaplaceholder.png";
 import update from "./../../../assets/update.png";
 import { withRouter } from "react-router-dom";
@@ -208,7 +207,6 @@ class Info extends React.Component {
     this.props.updateDate(updateTime);
   };
   getDetails = req => {
-    let locationHours = req.opening_hours.weekday_text;
     // Google's get image url function
     let bigLeague = req.photos[0].getUrl();
 
@@ -222,7 +220,7 @@ class Info extends React.Component {
     let currentPlaceId = this.props.event.place;
     let currentDays = [];
     let currentHours = [];
-    let hourDays = req.opening_hours.weekday_text.map(hour => {
+    req.opening_hours.weekday_text.map(hour => {
       let cutOffindex = hour.indexOf(dayCutOff);
       let day = hour.slice(0, cutOffindex);
       let hourItem = hour.slice(day.length + 1);

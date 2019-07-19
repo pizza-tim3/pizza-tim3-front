@@ -6,7 +6,14 @@ import Comment from "../../assets/comment.svg";
 import { CardBox, Inner, Content, Action } from "../../styles/cardStyles.js";
 import Location from "../../containers/user-dashboard/Location.js";
 import { bold } from "ansi-colors";
-import {Link}  from "react-router-dom";
+import { Link } from "react-router-dom";
+
+import {
+  FacebookShareButton,
+  FacebookIcon,
+  TwitterShareButton,
+  TwitterIcon,
+} from "react-share";
 
 class Card extends React.Component {
   constructor(props) {
@@ -15,17 +22,20 @@ class Card extends React.Component {
       comments: [],
       showMessages: false,
       attendees: [],
-      showActions : this.props.showActions
+      showActions: this.props.showActions,
     };
   }
 
-
   componentDidMount() {
     //console.log("REACHED HERE");
-    const eventId= this.props.event.event_id
+    const eventId = this.props.event.event_id;
 
     axios
-      .get(`https://pizza-tim3-be.herokuapp.com/api/comments/event/messages/user/${this.props.event.event_id}`)
+      .get(
+        `https://pizza-tim3-be.herokuapp.com/api/comments/event/messages/user/${
+          this.props.event.event_id
+        }`
+      )
       .then(res => {
         console.log("COUNT COMMENT RESPONSE", res);
         this.setState({ comments: res.data.comments });
@@ -33,19 +43,23 @@ class Card extends React.Component {
       .catch(error => {
         this.setState({ error });
       });
-    axios.get(`https://pizza-tim3-be.herokuapp.com/api/invited/${this.props.event.event_id}`).then(res => {
-      console.log("INVITEES RESPONSE", res);
-      this.setState({ attendees: res.data });
-    });
+    axios
+      .get(
+        `https://pizza-tim3-be.herokuapp.com/api/invited/${
+          this.props.event.event_id
+        }`
+      )
+      .then(res => {
+        console.log("INVITEES RESPONSE", res);
+        this.setState({ attendees: res.data });
+      });
   }
 
   commentHandler = event => {
     event.preventDefault();
     const show = !this.state.showMessages;
-    console.log("Show message now : ", show)
-    this.setState({showMessages:show})
-
-
+    console.log("Show message now : ", show);
+    this.setState({ showMessages: show });
   };
   //use for accepting an invitation
   clickHandler = event => {
@@ -57,12 +71,15 @@ class Card extends React.Component {
     const newItem = {
       event_id: event_id,
       user_id: user_id,
-      status: "Accepted"
+      status: "Accepted",
     };
     console.log("Event neing posted ", newItem);
 
     axios
-      .put(`https://pizza-tim3-be.herokuapp.com/api/events/status/${id}`, newItem)
+      .put(
+        `https://pizza-tim3-be.herokuapp.com/api/events/status/${id}`,
+        newItem
+      )
       .then(res => {
         console.log("New Item is updated now", res.data.results);
         window.location.reload();
@@ -81,10 +98,13 @@ class Card extends React.Component {
     const newItem = {
       event_id: event_id,
       user_id: user_id,
-      status: "Declined"
+      status: "Declined",
     };
     axios
-      .put(`https://pizza-tim3-be.herokuapp.com/api/events/status/${id}`, newItem)
+      .put(
+        `https://pizza-tim3-be.herokuapp.com/api/events/status/${id}`,
+        newItem
+      )
       .then(res => {
         console.log("Response for Decline", res.data.results);
         window.location.reload();
@@ -96,38 +116,61 @@ class Card extends React.Component {
 
   render() {
     const eventDate = parseInt(this.props.event.event_date);
-    const date = new Date(eventDate).toString().substring(0,15);
+    const date = new Date(eventDate).toString().substring(0, 15);
     const event_id = this.props.event.event_id;
-    
+
     //console.log("COME FOR THE EVENT", this.props.event);
     return (
       <CardBox>
         <Inner>
-        <Link id={this.props.event.event_id} to={"/event/" + event_id} >
-          <Content>
-            <img src={Envelope} />
-            <div className="content">
-              <p>
-                <span>Name:</span> {this.props.event.event_name}{" "}
-              </p>
-              <p>
-                <span>Date:</span>{date}
-              </p>
-              <p>
-                <span>location:</span>{" "} {this.props.event.location}
-                
-              </p>
-              <p> <b>
-                <span>Attending:</span>
-              
-                {this.state.attendees.map(attende => {
-                  return [attende.first_name, "  ", attende.last_name, ","," "]
-                })}
-             </b> </p>
-             
-              
-            </div>  
-          </Content>
+          <Link id={this.props.event.event_id} to={"/event/" + event_id}>
+            <Content>
+              <img src={Envelope} />
+              <div className="content">
+                <p>
+                  <span>Name:</span> {this.props.event.event_name}{" "}
+                </p>
+                <p>
+                  <span>Date:</span>
+                  {date}
+                </p>
+                <p>
+                  <span>Location:</span> {this.props.event.location}
+                </p>
+                <p>
+                  {" "}
+                  <b>
+                    <span>Attending:</span>
+
+                    {this.state.attendees.map(attende => {
+                      return [
+                        attende.first_name,
+                        "  ",
+                        attende.last_name,
+                        ",",
+                        " ",
+                      ];
+                    })}
+                  </b>{" "}
+                </p>
+              </div>
+              <div className="share-socials">
+                <FacebookShareButton
+                  url={window.location.href}
+                  media={this.props.event.event_name}
+                  className="button"
+                >
+                  <FacebookIcon size={32} round={false} />
+                </FacebookShareButton>
+                <TwitterShareButton
+                  url={window.location.href}
+                  media={this.props.event.event_name}
+                  className="button"
+                >
+                  <TwitterIcon size={32} round={false} />
+                </TwitterShareButton>
+              </div>
+            </Content>
           </Link>
 
           <Action>
@@ -140,41 +183,47 @@ class Card extends React.Component {
               {this.state.comments.map(comment => {
                 if (this.state.showMessages) {
                   // return <DashComment key={comment.id} comment={comment} />;
-                   console.log("COMMENT TIME")
+                  console.log("COMMENT TIME");
                   return (
-                   
                     <div>
-                    <b>{comment.first_name}</b>{" "}{comment.time.substring(0,15)}<br/>
-                     
-                    <i> {comment.message }</i>
-                    <br/>
-                    </div>          
-                  )
-                } 
+                      <b>{comment.first_name}</b>{" "}
+                      {comment.time.substring(0, 15)}
+                      <br />
+                      <i> {comment.message}</i>
+                      <br />
+                    </div>
+                  );
+                }
               })}
             </div>
-            {
-              
-             ['a'].map( x => {
-                  if (this.state.showActions) {
-                    return (  
-                      <div className="buttons">
-                        <button onClick={this.clickHandler}event_id={this.props.event.event_id}
-                         // this event is the object eventhaving all attributes:name,date
-                          user_id={this.props.event.user_id}>Let's Go!</button>
-                        <button  onClick={this.ButtonHandler}
-                                 event_id={this.props.event.event_id}
-                                 user_id={this.props.event.user_id}>Not This Time</button>
-                      </div>);
-                  }
-              })
-            }
+            {["a"].map(x => {
+              if (this.state.showActions) {
+                return (
+                  <div className="buttons">
+                    <button
+                      onClick={this.clickHandler}
+                      event_id={this.props.event.event_id}
+                      // this event is the object eventhaving all attributes:name,date
+                      user_id={this.props.event.user_id}
+                    >
+                      Let's Go!
+                    </button>
+                    <button
+                      onClick={this.ButtonHandler}
+                      event_id={this.props.event.event_id}
+                      user_id={this.props.event.user_id}
+                    >
+                      Not This Time
+                    </button>
+                  </div>
+                );
+              }
+            })}
           </Action>
         </Inner>
       </CardBox>
     );
   }
-
 }
 
 export default Card;
