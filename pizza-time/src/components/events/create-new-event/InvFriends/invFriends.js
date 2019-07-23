@@ -1,6 +1,6 @@
 import React from 'react';
 import { setLoading } from './../../../../actions/eventActions';
-import { 
+import {
     PlacesSearchWrap,
     PlacesSearchInner,
     PlacesHeading,
@@ -12,15 +12,24 @@ import axios from 'axios';
 
 
 const NotifyFriends = (props) => {
-    const url = 'https://pizza-tim3-be.herokuapp.com/api/invited';
+    const url = '';
 
     const handleInvite = () => {
-        props.setLoading(true);
-        const newUrl = `${url}/${props.eid}`;
+        // props.setLoading(true);
+        console.log(props.eid)
+        console.log(props.friends)
+        axios.get(`https://pizza-tim3-be.herokuapp.com/api/events/${props.eid}`).then(res => {
+            console.log(res)
+        }).catch(e => console.log(e))
+        const newUrl = `https://pizza-tim3-be.herokuapp.com/api/invited/${props.eid}`;
         axios.post(newUrl, props.friends)
             .then(res => {
+                // props.setLoading(false)
                 console.log(res);
-            }).catch(err => console.log(err))
+            }).catch(err => {
+                // props.setLoading(false)
+                console.log(err)
+            })
     }
 
     return(
