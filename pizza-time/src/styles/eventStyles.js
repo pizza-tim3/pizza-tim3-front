@@ -7,6 +7,7 @@ export const EventBox = styled.div`
     display: flex;
     flex-direction: row-reverse;
     justify-content: space-between;
+    border-bottom: 2px solid ${colors.black};
 
     .action.trash img {
       padding: 6px 12px 6px 0px;
