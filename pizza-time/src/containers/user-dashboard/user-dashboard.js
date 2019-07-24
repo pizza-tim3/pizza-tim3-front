@@ -21,6 +21,10 @@ class UserDashboard extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.pendingHandler();
+  }
+
   loadMap = () => {
     loadScript(this.state.url);
   };
