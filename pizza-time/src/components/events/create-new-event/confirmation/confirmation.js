@@ -6,8 +6,8 @@ import Loading from '../../../loading/loading';
 import { setLoading, setEID } from '../../../../actions/eventActions';
 
 // props from create-new-event
-// place={placeId} 
-// event={eventDetails} 
+// place={placeId}
+// event={eventDetails}
 // dateTime={dateTime}
 // friends={friends}
 
@@ -19,20 +19,20 @@ const ConfirmationPage = (props) => {
     let newDate = new Date(dateString).toDateString();
     let newTime = new Date(dateString).toLocaleTimeString();
 
-    //TODO: connect this method to the button and have a good response 
+    //TODO: connect this method to the button and have a good response
     //set a show completed page flag and create a new component to show
     //when request was successful to let user know
     const handleSubmitData = () => {
+        const id = localStorage.getItem("userFireBaseId");
         props.setLoading(true);
         let requestObject = {
             event_name: props.eventName,
             event_date: date,
-            inviteOnly: props.inviteOnly,
-            organizer: props.uid,
+            organizer: id,
             place: props.placeId,
             event_description: props.eventDesc
         }
-        
+
         axios.post(url, requestObject)
             .then((res) => {
                 props.setLoading(false);
@@ -43,17 +43,15 @@ const ConfirmationPage = (props) => {
                 props.setLoading(false);
                 console.log(e)
             })
-        
     };
 
-    
     return(
         <PlacesSearchWrap>
             <PlacesSearchInner>
                 <PlacesHeading>
                     <h2>Confirm your event:</h2>
                 </PlacesHeading>
-                {props.loading ? <Loading /> : 
+                {props.loading ? <Loading /> :
                 <>
                     <div>
                         <h2>{props.eventName}</h2>
@@ -67,7 +65,7 @@ const ConfirmationPage = (props) => {
                     <NextStep onClick={() => {handleSubmitData()}}>Next</NextStep>
                 </>
             }
-                
+
             </PlacesSearchInner>
         </PlacesSearchWrap>
     )
