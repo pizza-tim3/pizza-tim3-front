@@ -178,7 +178,7 @@ class Card extends React.Component {
               <img src={Comment} onClick={this.commentHandler} />
               {/* {(false && <DashComment/> )}  */}
               <p>{this.state.comments.length}</p>
-              <div claasName="message" />
+              <div className="message" />
 
               {this.state.comments.map(comment => {
                 if (this.state.showMessages) {
