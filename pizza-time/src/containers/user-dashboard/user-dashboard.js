@@ -139,19 +139,19 @@ class UserDashboard extends React.Component {
               </TabList>
               <TabPanel className="tab">
                 {this.state.upcomingEvents.map(event => {
-                  return <Card key={event.event_id} event={event} />;
+                  return <Card key={event.id} event={event} />;
                 })}
               </TabPanel>
               <TabPanel>
                 {this.state.pendingEvents.map(event => {
                   return (
-                    <Card key={event.event_id} event={event} showActions={true} />
+                    <Card key={event.id} event={event} showActions={true} />
                   );
                 })}
               </TabPanel>
               <TabPanel>
                 {this.state.pastEvents.map(event => {
-                  return <Card key={event.event_id} event={event} />;
+                  return <Card key={event.id} event={event} />;
                 })}
               </TabPanel>
             </Tabs>
