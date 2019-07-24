@@ -6,14 +6,13 @@ import {
     PlacesHeading,
     PlacesSearchInner,
     NextStep,
-    XButton
+    ButtonGroup
 } from '../../../../styles/placesSearchStyles.js';
 import { connect } from 'react-redux';
 import { setLoading } from '../../../../actions/eventActions';
-import close from '../../../../assets/close.png';
 import { Link } from 'react-router-dom';
 // props from create-new-event
-// handleClick={handleNextPage} 
+// handleClick={handleNextPage}
 // handleUpdateState={handleUpdateState}
 
 class PlacesSearch extends Component {
@@ -49,28 +48,28 @@ class PlacesSearch extends Component {
     render() {
             return(
                 <PlacesSearchWrap>
-                    <XButton>
-                        <Link to="/home">
-                            <img src={close} alt='close' />
-                        </Link>
-                    </XButton>
                     <PlacesSearchInner>
                         <PlacesHeading>
                             <h2>Choose Your Location:</h2>
                         </PlacesHeading>
 
-                        
+
                         <SearchBar handleGetSearchData={this.handleGetSearchData}/>
 
-                        {this.state.show ? 
-                            <GoogleMap 
-                                getPlaceData={this.handleGetPlaceData} 
-                                searchData={this.state.searchData}/> : 
+                        {this.state.show ?
+                            <GoogleMap
+                                getPlaceData={this.handleGetPlaceData}
+                                searchData={this.state.searchData}/> :
                             <div />
                         }
-                        <NextStep onClick={() => {this.props.handleClick('placeData', this.state.placeData)}}>
-                            Next Step
-                        </NextStep>
+                        <ButtonGroup>
+                            <NextStep>
+                                <Link to="/home">Cancel</Link>
+                            </NextStep>
+                            <NextStep onClick={() => {this.props.handleClick('placeData', this.state.placeData)}}>
+                                Next Step
+                            </NextStep>
+                        </ButtonGroup>
                     </PlacesSearchInner>
                 </PlacesSearchWrap>
             )

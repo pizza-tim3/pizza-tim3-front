@@ -9,26 +9,18 @@ import {
  } from './../../../../styles/placesSearchStyles';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 
 const NotifyFriends = (props) => {
-    const url = '';
-
     const handleInvite = () => {
-        // props.setLoading(true);
-        console.log(props.eid)
-        console.log(props.friends)
-        axios.get(`https://pizza-tim3-be.herokuapp.com/api/events/${props.eid}`).then(res => {
-            console.log(res)
-        }).catch(e => console.log(e))
-        const newUrl = `https://pizza-tim3-be.herokuapp.com/api/invited/${props.eid}`;
-        axios.post(newUrl, props.friends)
+        props.setLoading(true);
+        axios.post(`https://pizza-tim3-be.herokuapp.com/api/invited/${props.eid}`, props.friends)
             .then(res => {
-                // props.setLoading(false)
-                console.log(res);
+                props.setLoading(false)
             }).catch(err => {
-                // props.setLoading(false)
-                console.log(err)
+                props.setLoading(false)
+                console.log(err);
             })
     }
 
@@ -48,7 +40,9 @@ const NotifyFriends = (props) => {
                         )
                     })}
                 </div>
-                <NextStep onClick={() => {handleInvite()}}>Send</NextStep>
+                <NextStep onClick={() => {handleInvite()}}>
+                    <Link to="/home">Send</Link>
+                </NextStep>
             </PlacesSearchInner>
         </PlacesSearchWrap>
     )

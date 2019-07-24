@@ -10,12 +10,14 @@ import {
     NextStep,
     FriendsWrap,
     FriendCard,
-    ButtonsWrap
+    ButtonsWrap,
+    ButtonGroup
 } from '../../../../styles/placesSearchStyles';
 import { connect } from 'react-redux';
 import { setFriends, setLoading } from '../../../../actions';
 import Loading from '../../../loading/loading';
 import { ShowMore } from './../../../../styles/placesListStyles';
+import { Link } from 'react-router-dom';
 
 class FriendPicker extends Component {
     constructor(props) {
@@ -29,7 +31,7 @@ class FriendPicker extends Component {
             url: 'https://pizza-tim3-be.herokuapp.com/api/friends/'
         }
     }
-    
+
     componentDidMount() {
         axios.get(`${this.state.url}${this.props.uid}`)
         .then(res => {
@@ -39,9 +41,9 @@ class FriendPicker extends Component {
                 data: res.data.slice(this.state.dataIndex - 4, this.state.dataIndex)
             });
             this.props.setLoading(false);
-        }).catch(err => console.log(err));        
+        }).catch(err => console.log(err));
     }
-    
+
     moreItems = () => {
         const dataLength = this.state.friends.length;
         if(this.state.dataIndex < dataLength) {
@@ -62,7 +64,7 @@ class FriendPicker extends Component {
                 ...this.state,
                 dataIndex: newDI,
                 data: this.state.friends.slice(newDI, newDI +4)
-            });  
+            });
         } else {
             let test = this.state.friends.slice(0, 4);
             this.setState({
@@ -102,7 +104,7 @@ class FriendPicker extends Component {
                 <PlacesHeading>
                     <h2>Invite your friends!:</h2>
                 </PlacesHeading>
-                {this.props.loading ? <Loading /> : 
+                {this.props.loading ? <Loading /> :
                 <>
                     <FriendsWrap>
                             {this.state.data.map(data => {
@@ -110,9 +112,9 @@ class FriendPicker extends Component {
                                 <FriendCard key={data.firebase_uid} className="friendWrapper">
                                     <img src={data.avatar} alt="user avatar" height="60px" width="60px"/>
                                     <p>{data.first_name} {data.last_name}</p>
-                                    <button 
+                                    <button
                                         className={
-                                            this.state.chosenFriends && 
+                                            this.state.chosenFriends &&
                                             this.state.chosenFriends.includes(data) ?
                                             'active' : ''
                                         }
@@ -131,8 +133,12 @@ class FriendPicker extends Component {
                                 <img src={next} alt="next arrow" />
                             </ShowMore>
                         </ButtonsWrap>
-
-                        <NextStep onClick={() => {this.handleNext()}}>Next Step</NextStep>
+                        <ButtonGroup>
+                            <NextStep>
+                                <Link to="/home">Cancel</Link>
+                            </NextStep>
+                            <NextStep onClick={() => {this.handleNext()}}>Next Step</NextStep>
+                        </ButtonGroup>
             </>
             }
         </PlacesSearchInner>

@@ -1,9 +1,18 @@
 import React from 'react';
 import axios from 'axios';
-import { PlacesSearchWrap, PlacesHeading, PlacesSearchInner, NextStep, SpanWrap, ConfirmWrap} from '../../../../styles/placesSearchStyles';
+import {
+    PlacesSearchWrap,
+    PlacesHeading,
+    PlacesSearchInner,
+    NextStep,
+    SpanWrap,
+    ConfirmWrap,
+    ButtonGroup
+} from '../../../../styles/placesSearchStyles';
 import { connect } from 'react-redux';
 import Loading from '../../../loading/loading';
 import { setLoading, setEID } from '../../../../actions/eventActions';
+import { Link } from 'react-router-dom';
 
 // props from create-new-event
 // place={placeId}
@@ -30,11 +39,14 @@ const ConfirmationPage = (props) => {
             event_date: date,
             organizer: id,
             place: props.placeId,
-            event_description: props.eventDesc
+            event_description: props.eventDesc,
+            inviteOnly: props.inviteOnly
         }
+        console.log(requestObject)
 
-        axios.post(url, requestObject)
+        axios.post('https://pizza-tim3-be.herokuapp.com/api/events/', requestObject)
             .then((res) => {
+                console.log(res)
                 props.setLoading(false);
                 const { id } = res.data.id;
                 props.setEID(id);
@@ -62,7 +74,12 @@ const ConfirmationPage = (props) => {
                             <p><SpanWrap>Time:</SpanWrap> {newTime}</p>
                         </ConfirmWrap>
                     </div>
-                    <NextStep onClick={() => {handleSubmitData()}}>Next</NextStep>
+                    <ButtonGroup>
+                        <NextStep>
+                            <Link to="/home">Cancel</Link>
+                        </NextStep>
+                        <NextStep onClick={() => {handleSubmitData()}}>Next</NextStep>
+                    </ButtonGroup>
                 </>
             }
 

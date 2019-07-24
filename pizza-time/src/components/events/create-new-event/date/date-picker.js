@@ -1,15 +1,16 @@
 import React from 'react';
 import useForm from '../../../../customHooks/customFormHooks';
-import { 
+import {
     PlacesSearchWrap,
     PlacesSearchInner,
     PlacesHeading,
     Form,
-    NextStep
+    NextStep,
+    ButtonGroup
 } from '../../../../styles/placesSearchStyles';
 import { setDateTime } from './../../../../actions';
 import { connect } from 'react-redux';
-
+import { Link } from 'react-router-dom';
 
 
 const DatePicker = (props) => {
@@ -25,7 +26,7 @@ const DatePicker = (props) => {
 
     // const classes = useStyles();
     const {inputs, handleInputChange, handleSubmit} = useForm(sendData);
-    
+
     return (
         <PlacesSearchWrap>
             <PlacesSearchInner>
@@ -50,7 +51,12 @@ const DatePicker = (props) => {
                         value={inputs.time || ''}
                     />
                 </Form>
-                <NextStep type='submit' onClick={() => {handleSubmit()}}>Next Step</NextStep>
+                <ButtonGroup>
+                    <NextStep>
+                        <Link to="/home">Cancel</Link>
+                    </NextStep>
+                    <NextStep type='submit' onClick={() => {handleSubmit()}}>Next Step</NextStep>
+                </ButtonGroup>
             </PlacesSearchInner>
         </PlacesSearchWrap>
     )};
