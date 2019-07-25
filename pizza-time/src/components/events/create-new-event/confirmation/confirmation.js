@@ -28,9 +28,6 @@ const ConfirmationPage = (props) => {
     let newDate = new Date(dateString).toDateString();
     let newTime = new Date(dateString).toLocaleTimeString();
 
-    //TODO: connect this method to the button and have a good response
-    //set a show completed page flag and create a new component to show
-    //when request was successful to let user know
     const handleSubmitData = () => {
         const id = localStorage.getItem("userFireBaseId");
         props.setLoading(true);
@@ -59,21 +56,19 @@ const ConfirmationPage = (props) => {
 
     return(
         <PlacesSearchWrap>
+            <PlacesHeading>
+                <h2>Confirm your event:</h2>
+            </PlacesHeading>
             <PlacesSearchInner>
-                <PlacesHeading>
-                    <h2>Confirm your event:</h2>
-                </PlacesHeading>
                 {props.loading ? <Loading /> :
                 <>
-                    <div>
+                    <ConfirmWrap>
                         <h2>{props.eventName}</h2>
-                        <h4>{props.eventDesc}</h4>
-                        <ConfirmWrap>
-                            <p><SpanWrap>Location:</SpanWrap> {props.placeName}</p>
-                            <p><SpanWrap>Date:</SpanWrap> {newDate}</p>
-                            <p><SpanWrap>Time:</SpanWrap> {newTime}</p>
-                        </ConfirmWrap>
-                    </div>
+                        <h5>{props.eventDesc}</h5>
+                        <p><SpanWrap>Location:</SpanWrap> {props.placeName}</p>
+                        <p><SpanWrap>Date:</SpanWrap> {newDate}</p>
+                        <p><SpanWrap>Time:</SpanWrap> {newTime}</p>
+                    </ConfirmWrap>
                     <ButtonGroup>
                         <NextStep>
                             <Link to="/home">Cancel</Link>
