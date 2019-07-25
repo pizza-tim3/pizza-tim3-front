@@ -13,10 +13,24 @@ import Friend from './friend';
 
 
 const NotifyFriends = (props) => {
-    const handleInvite = () => {
+
+    const handleInvite = async() => {
+        const emailReq = props.friends.map(fr => {
+            return {
+                name: fr.first_name,
+                toEmail: fr.email
+            }
+        });
+
         props.setLoading(true);
-        axios.post(`https://pizza-tim3-be.herokuapp.com/api/invited/${props.eid}`, props.friends)
-            .then(res => {
+        await axios.post(`https://pizza-tim3-be.herokuapp.com/api/invited/${props.eid}`, props.friends)
+            .then(async res => {
+
+                await emailReq.forEach(email => {
+                    axios.post(`https://pizza-tim3-be.herokuapp.com/api/sendEmail`, email)
+                        .then(resp => console.log(resp))
+                }).catch(err => console.log(err));
+
                 props.setLoading(false)
             }).catch(err => {
                 props.setLoading(false)
