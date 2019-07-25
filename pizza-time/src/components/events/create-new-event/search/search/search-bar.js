@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { SearchContainer } from '../../../../../styles/searchbarStyles';
-import next from '../../../../../assets/nextArrow.png';
+import next from '../../../../../assets/searchOrange.png';
 
 class SearchBar extends Component {
     constructor(props) {
@@ -21,18 +21,17 @@ class SearchBar extends Component {
     render() {
         return(
             <SearchContainer>
-                <input 
-                    type="search" 
-                    placeholder="City, State" 
-                    name="search" 
+                <input
+                    type="search"
+                    placeholder="City, State"
+                    name="search"
                     id="bar"
                     onChange={this.handleChange}
                     value={this.state.search}
                 />
-                <button 
-                    onClick={() => {this.handleSubmit()}}>
-                        <img src={next} alt="next arrow" />
-                </button>
+                <div onClick={() => {this.handleSubmit()}} className="search">
+                    <img src={next} alt="search" />
+                </div>
             </SearchContainer>
         )
     }

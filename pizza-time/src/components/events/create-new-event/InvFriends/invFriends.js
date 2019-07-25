@@ -40,10 +40,10 @@ const NotifyFriends = (props) => {
 
     return(
         <PlacesSearchWrap>
+            <PlacesHeading>
+                <h2>Let your friends know</h2>
+            </PlacesHeading>
             <PlacesSearchInner>
-                <PlacesHeading>
-                    <h2>Let your Friends know they're invited!:</h2>
-                </PlacesHeading>
                 <div>
                     {props.friends.map(fr => {
                         return <Friend key={fr.firebase_uid} friend={fr}/>

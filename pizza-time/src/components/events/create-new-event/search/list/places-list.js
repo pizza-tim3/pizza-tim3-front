@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PlacesContainer, Span, ShowMore } from '../../../../../styles/placesListStyles';
+import { PlacesContainer, ShowMore } from '../../../../../styles/placesListStyles';
 import next from '../../../../../assets/next-orange.png';
 import prev from '../../../../../assets/prev-orange.png';
 import Place from './place';

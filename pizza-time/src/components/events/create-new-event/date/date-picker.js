@@ -29,10 +29,10 @@ const DatePicker = (props) => {
 
     return (
         <PlacesSearchWrap>
+            <PlacesHeading>
+                <h2>When is it?</h2>
+            </PlacesHeading>
             <PlacesSearchInner>
-                <PlacesHeading>
-                    <h2>Choose a time and date</h2>
-                </PlacesHeading>
                 <Form noValidate>
                     <input
                         name="date"

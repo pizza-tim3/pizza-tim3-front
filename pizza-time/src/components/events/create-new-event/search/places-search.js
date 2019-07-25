@@ -48,12 +48,11 @@ class PlacesSearch extends Component {
     render() {
             return(
                 <PlacesSearchWrap>
+                    <PlacesHeading>
+                        <h2>Where is it?</h2>
+                    </PlacesHeading>
+
                     <PlacesSearchInner>
-                        <PlacesHeading>
-                            <h2>Choose Your Location:</h2>
-                        </PlacesHeading>
-
-
                         <SearchBar handleGetSearchData={this.handleGetSearchData}/>
 
                         {this.state.show ?

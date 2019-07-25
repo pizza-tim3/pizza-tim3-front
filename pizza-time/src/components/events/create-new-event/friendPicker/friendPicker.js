@@ -101,35 +101,35 @@ class FriendPicker extends Component {
     render() {
         return(
             <PlacesSearchWrap>
-                <PlacesSearchInner>
                 <PlacesHeading>
                     <h2>Invite your friends!:</h2>
                 </PlacesHeading>
-                {this.props.loading ? <Loading /> :
-                <>
-                    <FriendsWrap>
-                            {this.state.data.map(data => {
-                                return(
-                                <Friend key={data.firebase_uid} friend={data} addToInvited={this.addToInvited}/>
-                            )})}
-                        </FriendsWrap>
+                <PlacesSearchInner>
+                    {this.props.loading ? <Loading /> :
+                        <>
+                            <FriendsWrap>
+                                    {this.state.data.map(data => {
+                                        return(
+                                        <Friend key={data.firebase_uid} friend={data} addToInvited={this.addToInvited}/>
+                                    )})}
+                                </FriendsWrap>
 
-                        <ButtonsWrap>
-                            <ShowMore onClick={this.lessItems}>
-                                <img src={prev} alt="previous arrow" />
-                            </ShowMore>
-                            <ShowMore onClick={this.moreItems}>
-                                <img src={next} alt="next arrow" />
-                            </ShowMore>
-                        </ButtonsWrap>
-                        <ButtonGroup>
-                            <NextStep>
-                                <Link to="/home">Cancel</Link>
-                            </NextStep>
-                            <NextStep onClick={() => {this.handleNext()}}>Next Step</NextStep>
-                        </ButtonGroup>
-            </>
-            }
+                                <ButtonsWrap>
+                                    <ShowMore onClick={this.lessItems}>
+                                        <img src={prev} alt="previous arrow" />
+                                    </ShowMore>
+                                    <ShowMore onClick={this.moreItems}>
+                                        <img src={next} alt="next arrow" />
+                                    </ShowMore>
+                                </ButtonsWrap>
+                                <ButtonGroup>
+                                    <NextStep>
+                                        <Link to="/home">Cancel</Link>
+                                    </NextStep>
+                                    <NextStep onClick={() => {this.handleNext()}}>Next Step</NextStep>
+                                </ButtonGroup>
+                        </>
+                    }
         </PlacesSearchInner>
     </PlacesSearchWrap>
         )

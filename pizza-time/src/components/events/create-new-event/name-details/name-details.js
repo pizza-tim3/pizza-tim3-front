@@ -60,10 +60,10 @@ class NameAndDetails extends Component {
     render() {
         return(
         <PlacesSearchWrap>
+            <PlacesHeading>
+                <h2>What are we doing?</h2>
+            </PlacesHeading>
             <PlacesSearchInner>
-                <PlacesHeading>
-                    <h2>Add your event name and description</h2>
-                </PlacesHeading>
                 <Form>
                     <input
                         type='text'
