@@ -41,7 +41,6 @@ const Profile = props => {
 
 //Here I've destructured the single reducer
 const mstp = ({ userReducer /**,otherReducer */ }) => {
-  // console.log(userReducer);
   return { userReducer };
 };
 

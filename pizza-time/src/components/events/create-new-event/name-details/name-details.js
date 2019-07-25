@@ -1,14 +1,17 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { setEventName, setEventDesc, setInviteOnly } from './../../../../actions';
-import { 
+import {
     PlacesSearchWrap,
     PlacesHeading,
     PlacesSearchInner,
     NextStep,
     Form,
-    InviteOnlyWrap
+    InviteOnlyWrap,
+    ButtonGroup,
+    InviteOnlyButton
 } from '../../../../styles/placesSearchStyles';
+import { Link } from 'react-router-dom';
 
 class NameAndDetails extends Component {
     constructor(props) {
@@ -16,7 +19,9 @@ class NameAndDetails extends Component {
         this.state = {
             eventName: "",
             eventDesc: "",
-            inviteOnly: false
+            inviteOnly: false,
+            yesSelected: false,
+            noSelected: false
         }
     }
 
@@ -27,28 +32,25 @@ class NameAndDetails extends Component {
         })
     }
 
-    handleBool = (val) => {
-        console.log("Button clicked:", val)
-        let newVal;
-        switch(val) {
-            case "Yes":
-                newVal = true;
-                break;
-            case "No":
-                newVal = false;
-                break;
-        }
-
+    handleYes = () => {
         this.setState({
             ...this.state,
-            inviteOnly: newVal
-        });
-
-        console.log(this.state.inviteOnly)
+            inviteOnly: !this.state.inviteOnly,
+            yesSelected: !this.state.yesSelected,
+            noSelected: false
+        })
     };
 
+    handleNo = () => {
+        this.setState({
+            ...this.state,
+            inviteOnly: !this.state.inviteOnly,
+            noSelected: !this.state.noSelected,
+            yesSelected: false
+        })
+    }
+
     handleSubmit = () => {
-        console.log(this.state.eventName, this.state.eventDesc)
         this.props.setEventName(this.state.eventName);
         this.props.setEventDesc(this.state.eventDesc);
         this.props.setInviteOnly(this.state.inviteOnly);
@@ -70,7 +72,7 @@ class NameAndDetails extends Component {
                         value={this.state.eventName}
                         placeholder="Event Name"
                         required />
-                    <input 
+                    <input
                         type='text'
                         name='eventDesc'
                         onChange={this.onChange}
@@ -79,32 +81,34 @@ class NameAndDetails extends Component {
                         required />
 
                     <InviteOnlyWrap className="inviteOnly">
-                        <span>Invite-Only?:</span>
-                        <button type='button' name="yes" onClick={() => this.handleBool("Yes")}>
+                        <span>Invite-Only:</span>
+                        <InviteOnlyButton active={this.state.yesSelected} type='button' name="yes" onClick={() => this.handleYes()}>
                             Yes
-                        </button>
-                        <button type='button' name="no" onClick={() => this.handleBool("No")}>
+                        </InviteOnlyButton>
+                        <InviteOnlyButton active={this.state.noSelected} type='button' name="no" onClick={() => this.handleNo()}>
                             No
-                        </button>
+                        </InviteOnlyButton>
                     </InviteOnlyWrap>
 
-                    <div className='buttonWrap'>
-                    <NextStep 
-                        type='button'
-                        onClick={() => {this.handleSubmit()}}>
-                            Next Step
-                    </NextStep>
-                    </div>
+                    <ButtonGroup>
+                            <NextStep>
+                                <Link to="/home">Cancel</Link>
+                            </NextStep>
+                            <NextStep
+                                type='button'
+                                onClick={() => {this.handleSubmit()}}>
+                                    Next Step
+                            </NextStep>
+                    </ButtonGroup>
                 </Form>
             </PlacesSearchInner>
         </PlacesSearchWrap>
         )
     }
-    
+
 }
 
 const mstp = state => {
-    console.log(state)
     return {
         eventName: state.EventReducer.eventName,
         eventDesc: state.EventReducer.eventDesc,

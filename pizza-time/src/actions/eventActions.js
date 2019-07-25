@@ -9,7 +9,6 @@ export const SET_INVITE_ONLY = "SET_INVITE_ONLY";
 export const SET_EID = "SET_EID";
 
 export function setPlaceId(id) {
-    // console.log('PlaceID', id)
     return {
         type: SET_PLACE_ID,
         payload: id
@@ -17,7 +16,6 @@ export function setPlaceId(id) {
 }
 
 export function setPlaceName(name) {
-    // console.log('PlaceName', name)
     return {
         type: SET_PLACE_NAME,
         payload: name
@@ -25,7 +23,6 @@ export function setPlaceName(name) {
 }
 
 export function setEventName(eName) {
-    // console.log('EventName', eName)
     return{
         type: SET_EVENT_NAME,
         payload: eName
@@ -33,7 +30,6 @@ export function setEventName(eName) {
 }
 
 export function setEventDesc(desc) {
-    // console.log('EventDesc', desc)
     return {
         type: SET_EVENT_DESC,
         payload: desc
@@ -41,7 +37,6 @@ export function setEventDesc(desc) {
 }
 
 export function setDateTime(dt) {
-    console.log('setDateTime', dt)
     return {
         type: SET_DATE_TIME,
         payload: dt
@@ -49,7 +44,6 @@ export function setDateTime(dt) {
 }
 
 export function setFriends(friend) {
-    console.log('friends', friend)
     return {
         type: SET_FRIENDS,
         payload: friend
@@ -57,7 +51,6 @@ export function setFriends(friend) {
 }
 
 export function setLoading(status) {
-    console.log('Loading:', status)
     return{
         type: SET_LOADING,
         payload: status
@@ -65,7 +58,6 @@ export function setLoading(status) {
 }
 
 export function setInviteOnly(invite) {
-    console.log('InviteOnly:', invite);
     return {
         type: SET_INVITE_ONLY,
         payload: invite
@@ -73,7 +65,6 @@ export function setInviteOnly(invite) {
 }
 
 export function setEID(eid) {
-    console.log('EID:', eid);
     return {
         type: SET_EID,
         payload: eid

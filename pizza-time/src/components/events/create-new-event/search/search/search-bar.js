@@ -15,7 +15,6 @@ class SearchBar extends Component {
     }
 
     handleSubmit = () => {
-        console.log(this.state.search)
         this.props.handleGetSearchData(this.state.search)
     }
 

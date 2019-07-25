@@ -12,14 +12,14 @@ export const PlacesSearchWrap = styled.div`
   align-items: center;
 `;
 
-export const XButton = styled.span`
-  width: 10px;
-  position: fixed;
-  top: 2%;
-  right: 5%;
+export const ButtonGroup = styled.span`
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
 
-  ${media.xs} { right: 20%; }
-  ${media.tablet} { right: 8%; }
+  // ${media.xs} { right: 20%; }
+  // ${media.tablet} { right: 8%; }
 `
 
   export const PlacesHeading = styled.div`
@@ -35,7 +35,7 @@ export const XButton = styled.span`
       font-size: 23px;
       color: ${colors.gray};
         ${media.mobile} { font-size: 24px; }
-        
+
     }
   `;
 
@@ -58,14 +58,14 @@ export const XButton = styled.span`
 
   export const NextStep = styled.button`
     border: none;
-    width: 30%;
+    width: auto;
     border-radius: 25px;
     background: linear-gradient(155.4deg, ${colors.secondary} 0%, ${colors.primary} 99.11%);
     font-family: ${fonts.primary};
     font-size: 20px;
     font-weight: 600;
     color: ${colors.white};
-    padding: 10px 5px;
+    padding: 5px 20px;
     margin: 15px auto;
       &:hover { text-decoration: underline}
       ${media.mobile} { font-size: 22px; }
@@ -79,7 +79,7 @@ export const Form = styled.div`
   flex-direction: column;
   margin: 0 auto;
   align-content: center;
-    
+
 
   input {
     margin: 10px auto;
@@ -104,7 +104,7 @@ export const FriendsWrap = styled.div`
 export const FriendCard = styled.div`
   width: 40%;
   margin: 5px auto;
-  border: 1px solid 
+  border: 1px solid
 
   border: 2px solid #EEE;
   border-radius: 10px;
@@ -124,10 +124,9 @@ export const FriendCard = styled.div`
     border-radius: 50%;
   }
 
-  .active {
-    background: #FFC900;
-    font-size: 20px;
-  }
+  ${({ active }) => active && `
+    border: 3px solid ${colors.secondary};
+  `}
 `
 
 export const ButtonsWrap = styled.div`
@@ -152,27 +151,45 @@ export const ConfirmWrap = styled.div`
 `
 
 export const InviteOnlyWrap = styled.div`
-  width: 40%;
+  width: 80%;
   margin: 0 auto;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   align-content: center;
 
   span {
     align-self: center;
+    color: gray;
   }
+`
 
-  button {
-    background: linear-gradient(155.4deg, ${colors.secondary} 0%, ${colors.primary} 99.11%);
-    border: none;
-    color: white;
-    border-radius: 15px;
-    padding: 5px 10px;
-  }
+export const InviteOnlyButton = styled.button`
+  background: linear-gradient(155.4deg, ${colors.secondary} 0%, ${colors.primary} 99.11%);
+  border: none;
+  color: white;
+  border-radius: 15px;
+  padding: 0 12px;
+  margin-left: 5px;
 
-  .active {
-    background: #FFC900;
-    font-size: 20px;
-  }
+  ${({ active }) => active && `
+    border: 3px solid ${colors.secondary};
+  `}
+`
+
+export const PlacesCard = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  border: 3px solid #EEE;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 4px 5px 6px #CDCDCD;
+
+  ${({ active }) => active && `
+    border: 3px solid ${colors.secondary};
+  `}
 `

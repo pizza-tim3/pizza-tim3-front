@@ -62,7 +62,6 @@ class UserDashboard extends React.Component {
     axios
       .get(`https://pizza-tim3-be.herokuapp.com/api/events/upcoming/${id}`)
       .then(res => {
-        console.log(res);
         this.setState({
           upcomingEvents: res.data.result,
           selectedTab: "UpcomingEvents",
