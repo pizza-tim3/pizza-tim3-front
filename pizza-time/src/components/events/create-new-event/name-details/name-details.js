@@ -8,7 +8,8 @@ import {
     NextStep,
     Form,
     InviteOnlyWrap,
-    ButtonGroup
+    ButtonGroup,
+    InviteOnlyButton
 } from '../../../../styles/placesSearchStyles';
 import { Link } from 'react-router-dom';
 
@@ -34,16 +35,18 @@ class NameAndDetails extends Component {
     handleYes = () => {
         this.setState({
             ...this.state,
-            inviteOnly: true,
-            yesSelected: !this.yesSelected
+            inviteOnly: !this.state.inviteOnly,
+            yesSelected: !this.state.yesSelected,
+            noSelected: false
         })
     };
 
     handleNo = () => {
         this.setState({
             ...this.state,
-            inviteOnly: false,
-            noSelected: !this.noSelected
+            inviteOnly: !this.state.inviteOnly,
+            noSelected: !this.state.noSelected,
+            yesSelected: false
         })
     }
 
@@ -78,13 +81,13 @@ class NameAndDetails extends Component {
                         required />
 
                     <InviteOnlyWrap className="inviteOnly">
-                        <span>Invite-Only?</span>
-                        <button className={this.state.yesSelected ? "active" : ""} type='button' name="yes" onClick={() => this.handleYes()}>
+                        <span>Invite-Only:</span>
+                        <InviteOnlyButton active={this.state.yesSelected} type='button' name="yes" onClick={() => this.handleYes()}>
                             Yes
-                        </button>
-                        <button className={this.state.noSelected ? "active" : ""} type='button' name="no" onClick={() => this.handleNo()}>
+                        </InviteOnlyButton>
+                        <InviteOnlyButton active={this.state.noSelected} type='button' name="no" onClick={() => this.handleNo()}>
                             No
-                        </button>
+                        </InviteOnlyButton>
                     </InviteOnlyWrap>
 
                     <ButtonGroup>

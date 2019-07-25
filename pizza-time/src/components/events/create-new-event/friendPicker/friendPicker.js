@@ -18,6 +18,7 @@ import { setFriends, setLoading } from '../../../../actions';
 import Loading from '../../../loading/loading';
 import { ShowMore } from './../../../../styles/placesListStyles';
 import { Link } from 'react-router-dom';
+import Friend from '../InvFriends/friend';
 
 class FriendPicker extends Component {
     constructor(props) {
@@ -109,19 +110,7 @@ class FriendPicker extends Component {
                     <FriendsWrap>
                             {this.state.data.map(data => {
                                 return(
-                                <FriendCard key={data.firebase_uid} className="friendWrapper">
-                                    <img src={data.avatar} alt="user avatar" height="60px" width="60px"/>
-                                    <p>{data.first_name} {data.last_name}</p>
-                                    <button
-                                        className={
-                                            this.state.chosenFriends &&
-                                            this.state.chosenFriends.includes(data) ?
-                                            'active' : ''
-                                        }
-                                        onClick={() => {this.addToInvited(data)}}>
-                                        Invite
-                                    </button>
-                                </FriendCard>
+                                <Friend key={data.firebase_uid} friend={data} addToInvited={this.addToInvited}/>
                             )})}
                         </FriendsWrap>
 

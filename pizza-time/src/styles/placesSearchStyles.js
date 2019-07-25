@@ -124,10 +124,9 @@ export const FriendCard = styled.div`
     border-radius: 50%;
   }
 
-  .active {
-    background: #FFC900;
-    font-size: 20px;
-  }
+  ${({ active }) => active && `
+    border: 3px solid ${colors.secondary};
+  `}
 `
 
 export const ButtonsWrap = styled.div`
@@ -161,21 +160,21 @@ export const InviteOnlyWrap = styled.div`
 
   span {
     align-self: center;
+    color: gray;
   }
+`
 
-  button {
-      background: linear-gradient(155.4deg, ${colors.secondary} 0%, ${colors.primary} 99.11%);
-      border: none;
-      color: white;
-      border-radius: 15px;
-      padding: 2px 10px;
-      margin-left: 5px;
+export const InviteOnlyButton = styled.button`
+  background: linear-gradient(155.4deg, ${colors.secondary} 0%, ${colors.primary} 99.11%);
+  border: none;
+  color: white;
+  border-radius: 15px;
+  padding: 0 12px;
+  margin-left: 5px;
 
-    .active {
-      background: #FFC900;
-      font-size: 20px;
-    }
-  }
+  ${({ active }) => active && `
+    border: 3px solid ${colors.secondary};
+  `}
 `
 
 export const PlacesCard = styled.div`

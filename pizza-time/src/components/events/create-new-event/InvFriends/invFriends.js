@@ -4,12 +4,12 @@ import {
     PlacesSearchWrap,
     PlacesSearchInner,
     PlacesHeading,
-    NextStep,
-    FriendCard
+    NextStep
  } from './../../../../styles/placesSearchStyles';
 import { connect } from 'react-redux';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Friend from './friend';
 
 
 const NotifyFriends = (props) => {
@@ -32,12 +32,7 @@ const NotifyFriends = (props) => {
                 </PlacesHeading>
                 <div>
                     {props.friends.map(fr => {
-                        return (
-                            <FriendCard key={fr.firebase_uid} className="friendWrapper">
-                                <img src={fr.avatar} alt="user avatar" height="60px" width="60px"/>
-                                <p>{fr.first_name} {fr.last_name}</p>
-                            </FriendCard>
-                        )
+                        return <Friend key={fr.firebase_uid} friend={fr}/>
                     })}
                 </div>
                 <NextStep onClick={() => {handleInvite()}}>
