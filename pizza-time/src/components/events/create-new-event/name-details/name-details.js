@@ -21,7 +21,8 @@ class NameAndDetails extends Component {
             eventDesc: "",
             inviteOnly: false,
             yesSelected: false,
-            noSelected: false
+            noSelected: false,
+            showError: false
         }
     }
 
@@ -51,10 +52,19 @@ class NameAndDetails extends Component {
     }
 
     handleSubmit = () => {
-        this.props.setEventName(this.state.eventName);
-        this.props.setEventDesc(this.state.eventDesc);
-        this.props.setInviteOnly(this.state.inviteOnly);
-        this.props.handleClick();
+        if(this.state.eventName === "" || this.state.eventDesc === "" || !this.state.inviteOnly) {
+            this.setState({
+                showError: true
+            })
+        } else {
+            this.setState({
+                showError: false
+            })
+            this.props.setEventName(this.state.eventName);
+            this.props.setEventDesc(this.state.eventDesc);
+            this.props.setInviteOnly(this.state.inviteOnly);
+            this.props.handleClick();
+        }
     }
 
     render() {
@@ -89,6 +99,10 @@ class NameAndDetails extends Component {
                             No
                         </InviteOnlyButton>
                     </InviteOnlyWrap>
+
+                    {this.state.showError ? (
+                            <div className="error">You must fill out all sections!</div>
+                        ) : <></>}
 
                     <ButtonGroup>
                             <NextStep>
