@@ -21,7 +21,8 @@ class PlacesSearch extends Component {
         this.state = {
             placesData: {},
             searchData: '',
-            show: false
+            show: false,
+            showError: false
         }
     }
 
@@ -41,8 +42,20 @@ class PlacesSearch extends Component {
         this.setState({
             ...this.state,
             searchData: searchString,
-            show: true
+            show: true,
+            showError: false
         });
+    }
+
+    handleButton = () => {
+        if(!this.state.show) {
+            this.setState({
+                ...this.state,
+                showError: true
+            })
+        } else {
+            this.props.handleClick('placeData', this.state.placeData);
+        }
     }
 
     render() {
@@ -61,11 +74,16 @@ class PlacesSearch extends Component {
                                 searchData={this.state.searchData}/> :
                             <div />
                         }
+
+                        {this.state.showError ? (
+                            <div className="error">You must select a location!</div>
+                        ) : <></>}
+
                         <ButtonGroup>
                             <NextStep>
                                 <Link to="/home">Cancel</Link>
                             </NextStep>
-                            <NextStep onClick={() => {this.props.handleClick('placeData', this.state.placeData)}}>
+                            <NextStep onClick={() => this.handleButton()}>
                                 Next Step
                             </NextStep>
                         </ButtonGroup>

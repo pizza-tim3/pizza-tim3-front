@@ -1,11 +1,11 @@
 import styled from 'styled-components';
-import { colors, fonts, media } from '../styles/variables.js';
+import { colors, fonts, media, mediaMF } from '../styles/variables.js';
 
 export const PlacesSearchWrap = styled.div`
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
+  height: 100%;
   background-color: ${colors.lightGray};
-  height: calc(var(--vh, 1vh) * 100);
   display: flex;
   flex-direction: column;
 `;
@@ -18,6 +18,7 @@ export const ButtonGroup = styled.span`
 `
 
   export const PlacesHeading = styled.div`
+    border-top: 5px solid ${colors.primary};
     width: 100%;
     padding: 20px 0;
     background-color: ${colors.white};
@@ -35,6 +36,18 @@ export const ButtonGroup = styled.span`
     display: flex;
     flex-flow: column nowrap;
     width: 100%;
+
+    .error {
+      margin: 20px auto 10px;
+      color: ${colors.primary};
+      font-size: 18px;
+    }
+
+    ${media.tablet} {
+      width: 50%;
+      margin: 40px auto;
+    }
+    ${media.modern} {width: 30%;}
   `;
 
   export const NextStep = styled.button`
@@ -43,15 +56,14 @@ export const ButtonGroup = styled.span`
     border-radius: 10px;
     background: linear-gradient(155.4deg, ${colors.secondary} 0%, ${colors.primary} 99.11%);
     font-family: ${fonts.primary};
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     color: ${colors.white};
     padding: 2px 20px;
     margin: 15px auto;
       &:hover { text-decoration: underline}
-      ${media.mobile} { font-size: 22px; }
-      ${media.tablet} { font-size: 24px; }
-      ${media.desktop} { font-size: 26px; }
+      ${media.mobile} { font-size: 20px; }
+      ${media.tablet} { font-size: 22px; }
   `;
 
 export const Form = styled.div`
@@ -142,7 +154,7 @@ export const ConfirmWrap = styled.div`
 `
 
 export const InviteOnlyWrap = styled.div`
-  width: 60%;
+  width: 90%;
   margin: 0 auto;
   display: flex;
   flex-direction: row;
@@ -153,6 +165,10 @@ export const InviteOnlyWrap = styled.div`
     align-self: center;
     color: gray;
   }
+
+  ${media.mobile} {width: 40%;}
+  ${media.tablet} {width: 60%;}
+  ${media.largeDt} {width: 40%;}
 `
 
 export const InviteOnlyButton = styled.button`

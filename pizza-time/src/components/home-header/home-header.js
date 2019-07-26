@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 // import firebaseApp from "../../firebase/firebaseApp";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-
+import home from '../../assets/home.png';
 import { Wrap, Inner } from "../../styles/navStyles.js";
 
 // TEST IMAGE
@@ -24,7 +24,10 @@ const Nav = props => {
             )}
             <Link to="/create-event" className="newEventBtn">Create Event</Link>
           </div>
-          <Link to="/" className="newEventBtn">Logout</Link>
+          <div className="navigation">
+            <Link to="/" className="newEventBtn">Logout</Link>
+            <Link to='/home'><img src={home} alt='home' className="home"/></Link>
+          </div>
         </div>
       </Inner>
     </Wrap>

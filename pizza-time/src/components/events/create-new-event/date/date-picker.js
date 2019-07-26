@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useForm from '../../../../customHooks/customFormHooks';
 import {
     PlacesSearchWrap,
@@ -14,6 +14,7 @@ import { Link } from 'react-router-dom';
 
 
 const DatePicker = (props) => {
+    const [showError, setError] = useState(false);
 
     const sendData = () => {
         let dateTime = {
@@ -22,6 +23,15 @@ const DatePicker = (props) => {
         }
         props.setDateTime(dateTime);
         props.handleClick();
+    }
+
+    const handleClick = () => {
+        if(inputs.date === undefined || inputs.time === undefined) {
+            setError(true);
+        } else {
+            setError(false);
+            handleSubmit();
+        }
     }
 
     // const classes = useStyles();
@@ -51,11 +61,16 @@ const DatePicker = (props) => {
                         value={inputs.time || ''}
                     />
                 </Form>
+
+                {showError ? (
+                    <div className="error">You must fill out all sections!</div>
+                ) : <></>}
+
                 <ButtonGroup>
                     <NextStep>
                         <Link to="/home">Cancel</Link>
                     </NextStep>
-                    <NextStep type='submit' onClick={() => {handleSubmit()}}>Next Step</NextStep>
+                    <NextStep type='submit' onClick={() => {handleClick()}}>Next Step</NextStep>
                 </ButtonGroup>
             </PlacesSearchInner>
         </PlacesSearchWrap>

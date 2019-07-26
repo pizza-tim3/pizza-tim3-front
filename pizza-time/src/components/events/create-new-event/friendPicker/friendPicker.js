@@ -29,7 +29,8 @@ class FriendPicker extends Component {
             friends: [],
             chosenFriends: [],
             toggle: false,
-            url: 'https://pizza-tim3-be.herokuapp.com/api/friends/'
+            url: 'https://pizza-tim3-be.herokuapp.com/api/friends/',
+            showError: false
         }
     }
 
@@ -93,8 +94,19 @@ class FriendPicker extends Component {
     }
 
     handleNext = () => {
-        this.props.setFriends(this.state.chosenFriends);
-        this.props.handleClick();
+        if(this.state.chosenFriends.length <= 0) {
+            this.setState({
+                ...this.state,
+                showError: true
+            });
+        } else {
+            this.setState({
+                ...this.state,
+                showError: false
+            });
+            this.props.setFriends(this.state.chosenFriends);
+            this.props.handleClick();
+        }
     }
 
 
@@ -122,6 +134,11 @@ class FriendPicker extends Component {
                                         <img src={next} alt="next arrow" />
                                     </ShowMore>
                                 </ButtonsWrap>
+
+                                {this.state.showError ? (
+                                    <div className="error">You have to choose a friend!</div>
+                                ) : <></>}
+
                                 <ButtonGroup>
                                     <NextStep>
                                         <Link to="/home">Cancel</Link>

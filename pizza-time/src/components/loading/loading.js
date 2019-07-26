@@ -1,17 +1,19 @@
 import React from 'react';
-import loading from '../../assets/loading_pizza.png';
+import { makeStyles } from '@material-ui/core/styles';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
-import {
-  Wrap,
-} from '../../styles/loadingStyles.js';
+const useStyles = makeStyles(theme => ({
+  progress: {
+    margin: theme.spacing(2),
+  },
+}));
 
-const Loading = () => {
+export default function Loading() {
+  const classes = useStyles();
+
   return (
     <div>
-      <img src={loading} alt={'pizza loading'} id="loading-pizza"/>
-      <h1>Loading ...</h1>
+      <CircularProgress className={classes.progress} color="secondary" />
     </div>
-  )
+  );
 }
-
-export default Loading;
