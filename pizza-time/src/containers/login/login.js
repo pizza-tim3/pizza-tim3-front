@@ -3,6 +3,7 @@ import firebaseApp from "../../firebase/firebaseApp";
 import { Link } from "react-router-dom";
 import { googleProvider } from "../../firebase/authProviders";
 import { registerWithPopup } from "../register/registerUtils";
+import axios from 'axios';
 
 import firebase from "firebase/app";
 import "firebase/auth";
@@ -31,40 +32,39 @@ export default function Login(props) {
     { email: "", password: "", error: "", inputError: false }
   );
 
+  // const formValidation = () => {
+  //   if (state.email.length === 0 || state.password.length === 0) {
+  //     state.inputError = true;
+  //     dispatch({ type: "SET_ERROR", payload: "" });
+  //     dispatch({ type: "INPUT_ERROR", payload: "Both fields are required." });
+
+  //     console.log(state.inputError);
+  //   } else {
+  //     dispatch({ type: "INPUT_ERROR", payload: "" });
+  //   }
+  // }
+
   const submit = async e => {
     e.preventDefault();
-    console.log(state.email.length);
-    if (state.email.length === 0 || state.password.length === 0) {
-      state.inputError = true;
-      dispatch({ type: "SET_ERROR", payload: "" });
-      dispatch({ type: "INPUT_ERROR", payload: "Both fields are required." });
-
-      console.log(state.inputError);
-    } else {
-      dispatch({ type: "INPUT_ERROR", payload: "" });
+    // formValidation();
 
       try {
-        await firebaseApp
-          .auth()
-          .setPersistence(
-            firebase.auth.Auth.Persistence.LOCAL /* | [.SESSION,| .NONE]*/
-          );
-
-        //Sign in with registered Email and password
-        const user = await firebaseApp
-          .auth()
-          .signInWithEmailAndPassword(state.email, state.password);
+        const { user } = await firebase.auth().signInWithEmailAndPassword(state.email, state.password);
         console.log(user);
-        //get the token off of the current user
-        //token to send to the backend to display data
-        const token = await firebaseApp.auth().currentUser.getIdToken();
-        props.history.push("/home");
+        console.log(firebase.auth().currentUser)
+        console.log(axios.defaults.headers.common)
+        if(user) {
+          return firebase.auth().currentUser.getIdToken().then(async idToken => {
+            console.log(idToken)
+            axios.defaults.headers.common['Authorization'] = idToken;
+            props.history.push("/home");
+          }).catch(e => console.log(e));
+        }
       } catch (err) {
         console.log(err);
         // if
         dispatch({ type: "SET_ERROR", payload: err.code });
       }
-    }
   };
 
   //TODO added checks to make sure that the registered users registered on our back and
@@ -127,11 +127,11 @@ export default function Login(props) {
           )}
         </div>
         <div className="login-errors">
-          {state.error.length > 0 ? (
+          {/* {state.error.length > 0 ? (
             <p>Credentials don't match our records</p>
           ) : (
             <></>
-          )}
+          )} */}
         </div>
         <button type="submit">Sign In</button>
         <button onClick={signInWithGoogle} type="button">
