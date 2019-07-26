@@ -156,6 +156,7 @@ class Info extends React.Component {
     // use map and maps objects
   };
   updateLocation = place_id => {
+    console.log(place_id);
     this.setState({
       place: place_id,
     });
@@ -367,7 +368,7 @@ class Info extends React.Component {
 
   submitUpdateEventHandler = e => {
     e.preventDefault();
-    this.props.updateEvent(this.props.event.id);
+    this.props.updateEvent(this.props.match.params.id);
   };
   handleDeleteClose() {
     this.setState({ deleteShow: false });

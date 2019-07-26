@@ -6,6 +6,8 @@ import Info from "./info.js";
 import axios from "axios";
 import Participants from "./participants";
 import Discussion from "./discussion";
+import { setPlaceId } from "../../../actions/eventActions";
+
 import { Inner } from "../../../styles/eventStyles";
 import loading from "../../../assets/loading.gif";
 import missing from "../../../assets/404.jpg";
@@ -29,6 +31,7 @@ class EventView extends React.Component {
       let currentEvent = await axios.get(
         `https://pizza-tim3-be.herokuapp.com/api/events/${currentId}/details`
       );
+      console.log(currentEvent.data.event);
       if (currentEvent) {
         this.setState({
           event: currentEvent.data.event,
@@ -120,18 +123,18 @@ class EventView extends React.Component {
     }
   }
 
-  async componentDidUpdate(prevProps) {
-    const newId = this.props.match.params.id;
-    if (newId !== prevProps.match.params.id) {
-      await this.fetchEvent();
-      await this.fetchFriends();
-    }
-    const currentUser = this.props.userReducer.firebase_uid;
-    if (currentUser !== prevProps.userReducer.firebase_uid) {
-      // await this.fetchEvent();
-      await this.fetchFriends();
-    }
-  }
+  // async componentDidUpdate(prevProps) {
+  //   const newId = this.props.match.params.id;
+  //   if (newId !== prevProps.match.params.id) {
+  //     await this.fetchEvent();
+  //     await this.fetchFriends();
+  //   }
+  //   const currentUser = this.props.userReducer.firebase_uid;
+  //   if (currentUser !== prevProps.userReducer.firebase_uid) {
+  //     await this.fetchEvent();
+  //     await this.fetchFriends();
+  //   }
+  // }
 
   // Select user to be added to an selectedToInvite array that will be post to eventInvited table
   selectAdditional = user => {
@@ -303,39 +306,47 @@ class EventView extends React.Component {
 
   // Update the entire event with the event's data using axios call
   updateLocation = place_id => {
+    console.log(place_id);
     let currentEvent = this.state.event;
+    this.props.setPlaceId(place_id);
+
     this.setState({
       event: {
-        id: currentEvent.id,
-        comments: currentEvent.comments,
-        event_name: currentEvent.event_name,
-        event_description: currentEvent.event_description,
-        event_date: currentEvent.event_date,
-        invitedUsers: currentEvent.invitedUsers,
-        organizer: currentEvent.organizer,
-        inviteOnly: currentEvent.inviteOnly,
-        place: place_id,
+        // id: currentEvent.id,
+        // comments: currentEvent.comments,
+        // event_name: currentEvent.event_name,
+        // event_description: currentEvent.event_description,
+        // event_date: currentEvent.event_date,
+        // invitedUsers: currentEvent.invitedUsers,
+        // organizer: currentEvent.organizer,
+        // inviteOnly: currentEvent.inviteOnly,
+        place: this.props.EventReducer.placeId,
+        location: this.props.EventReducer.placeId,
       },
     });
-    this.updateEvent(this.state.event.place);
+    this.updateEvent(this.props.match.params.id);
   };
+
   updateEvent = event_id => {
+    console.log(event_id);
     this.setState({
       loading: true,
     });
-
     let currentFriends = this.state.friends;
-    let currentEvent = this.state.event;
+    // let currentEvent = this.state.event;
 
     let updatedEvent = {
-      id: event_id,
-      event_name: currentEvent.event_name,
-      event_description: currentEvent.event_description,
-      event_date: currentEvent.event_date,
-      organizer: currentEvent.organizer,
-      place: currentEvent.place,
-      inviteOnly: currentEvent.inviteOnly,
+      // id: event_id,
+      event_name: this.state.event.event_name,
+      event_description: this.state.event.event_description,
+      event_date: this.state.event.event_date,
+      organizer: this.state.event.organizer,
+      place: this.props.EventReducer.placeId,
+      // location: this.props.EventReducer.placeId,
+      inviteOnly: this.state.event.inviteOnly,
     };
+    console.log(updatedEvent);
+    console.log(`https://pizza-tim3-be.herokuapp.com/api/events/${event_id}`);
     axios
       .put(
         `https://pizza-tim3-be.herokuapp.com/api/events/${event_id}`,
@@ -344,9 +355,14 @@ class EventView extends React.Component {
       .then(res => {
         // If response successfull, update the state with the new info
         // if (res.status === 200) {
-        updatedEvent.invitedUsers = currentEvent.invitedUsers;
-        updatedEvent.comments = currentEvent.comments;
-        updatedEvent.inviteOnly = currentEvent.inviteOnly;
+        // updatedEvent.id = this.state.event.id;
+        // updatedEvent.event_name = this.state.event.event_name;
+        this.props.setPlaceId(updatedEvent.place);
+        updatedEvent.invitedUsers = this.state.event.invitedUsers;
+        updatedEvent.comments = this.state.event.comments;
+        updatedEvent.inviteOnly = this.state.event.inviteOnly;
+        updatedEvent.location = this.props.EventReducer.placeId;
+        updatedEvent.place = this.props.EventReducer.placeId;
 
         this.setState({
           event: updatedEvent,
@@ -359,6 +375,7 @@ class EventView extends React.Component {
         console.log(err);
         this.setState({
           loading: false,
+          // event: currentEvent,
         });
       });
     let switchButton = document.getElementsByClassName("switch")[0];
@@ -455,12 +472,12 @@ class EventView extends React.Component {
   }
 }
 
-const mstp = ({ userReducer /**,otherReducer */ }) => {
-  return { userReducer };
+const mstp = ({ userReducer, EventReducer }) => {
+  return { userReducer, EventReducer };
 };
 export default withRouter(
   connect(
     mstp,
-    {}
+    { setPlaceId }
   )(EventView)
 );

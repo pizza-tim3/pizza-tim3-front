@@ -20,13 +20,15 @@ const UpdatePlacesSearch = props => {
     };
     props.chooseLocation(id, place);
     setPlaceData(data);
+    console.log(props);
+    console.log(place);
   };
 
   const handleGetSearchData = searchString => {
     setSearch(searchString);
     setShow(!show);
   };
-  
+
   return (
     <Inner>
       <div>

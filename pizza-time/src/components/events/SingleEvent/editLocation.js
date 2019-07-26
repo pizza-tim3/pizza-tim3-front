@@ -46,12 +46,14 @@ class EditLocation extends React.Component {
   }
   // updateLocationHandler
   updateLocationHandler = e => {
+    console.log(this.props);
+    console.log(this.props.EventReducer.placeId);
     e.preventDefault();
-    let currentId = this.state.place_id;
+    let currentId = this.props.EventReducer.placeId;
     this.setState({
-      place_id: currentId,
+      place_id: this.props.EventReducer.placeId,
     });
-    this.props.updateLocation(currentId);
+    this.props.updateLocation(this.props.EventReducer.placeId);
     this.setState({
       show: false,
     });
@@ -81,8 +83,8 @@ class EditLocation extends React.Component {
     );
   }
 }
-const mstp = ({ userReducer /**,otherReducer */ }) => {
-  return { userReducer };
+const mstp = ({ userReducer, EventReducer }) => {
+  return { userReducer, EventReducer };
 };
 export default withRouter(
   connect(
