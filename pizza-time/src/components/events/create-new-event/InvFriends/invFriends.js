@@ -1,56 +1,63 @@
 import React from 'react';
 import { setLoading } from './../../../../actions/eventActions';
-import { 
+import {
     PlacesSearchWrap,
     PlacesSearchInner,
     PlacesHeading,
-    NextStep,
-    FriendCard
+    NextStep
  } from './../../../../styles/placesSearchStyles';
 import { connect } from 'react-redux';
-import UserImage from '../../../../assets/user.png';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import Friend from './friend';
 
 
 const NotifyFriends = (props) => {
-    const url = 'https://pizza-tim3-be.herokuapp.com/api/invited';
-    // const url = 'http://localhost:5500/api/invited';
 
-    const handleInvite = () => {
+    const handleInvite = async() => {
+        const emailReq = props.friends.map(fr => {
+            return {
+                name: fr.first_name,
+                toEmail: fr.email
+            }
+        });
+
         props.setLoading(true);
-        const newUrl = `${url}/${props.eid}`;
-        console.log(props.friends)
-        axios.post(newUrl, props.friends)
-            .then(res => {
-                console.log(res);
-            }).catch(err => console.log(err))
+        await axios.post(`https://pizza-tim3-be.herokuapp.com/api/invited/${props.eid}`, props.friends)
+            .then(async res => {
+
+                await emailReq.forEach(email => {
+                    axios.post(`https://pizza-tim3-be.herokuapp.com/api/sendEmail`, email)
+                        .then(resp => console.log(resp))
+                }).catch(err => console.log(err));
+
+                props.setLoading(false)
+            }).catch(err => {
+                props.setLoading(false)
+                console.log(err);
+            })
     }
 
     return(
         <PlacesSearchWrap>
+            <PlacesHeading>
+                <h2>Let your friends know</h2>
+            </PlacesHeading>
             <PlacesSearchInner>
-                <PlacesHeading>
-                    <h2>Let your Friends know they're invited!:</h2>
-                </PlacesHeading>
                 <div>
                     {props.friends.map(fr => {
-                        return (
-                            <FriendCard key={fr.firebase_uid} className="friendWrapper">
-                                <img src={fr.avatar} alt="user avatar" height="60px" width="60px"/>
-                                <p>{fr.first_name} {fr.last_name}</p>
-                            </FriendCard>
-                        )
+                        return <Friend key={fr.firebase_uid} friend={fr}/>
                     })}
                 </div>
-                <NextStep onClick={() => {handleInvite()}}>Send</NextStep>
+                <NextStep onClick={() => {handleInvite()}}>
+                    <Link to="/home">Send</Link>
+                </NextStep>
             </PlacesSearchInner>
         </PlacesSearchWrap>
     )
 }
 
 const mstp = state => {
-    console.log(state)
-    // console.log('FROM CONFIRMATION:', state.userReducer.firebase_uid);
     return {
         eid: state.EventReducer.eid,
         friends: state.EventReducer.friends,

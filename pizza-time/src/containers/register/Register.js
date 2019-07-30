@@ -35,7 +35,6 @@ export default function Register(props) {
     } catch (err) {
       const errorCode = err.code;
       const errorMessage = err.message;
-      console.log(errorCode, errorMessage);
       setError(errorMessage);
     }
   };
@@ -47,7 +46,6 @@ export default function Register(props) {
       const result = await firebaseApp.auth().signInWithPopup(googleProvider);
       const { additionalUserInfo: { isNewUser }} = result;
       //check to see if the users new
-      console.log(result);
       if (isNewUser) {
         //get user picture and other stuff to add onto result
         // register uses information on our backend
@@ -61,7 +59,6 @@ export default function Register(props) {
       }
       // TODO set global user info
     } catch (err) {
-      console.log(err);
       setError(err.message);
     }
   };

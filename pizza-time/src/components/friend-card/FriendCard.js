@@ -25,7 +25,6 @@ function FriendCard({
   const request = async url => {
     const response = await fetch(url);
     const json = await response.json();
-    console.log(json);
     setPending(false);
   };
 

@@ -26,7 +26,7 @@ const UpdatePlacesSearch = props => {
     setSearch(searchString);
     setShow(!show);
   };
-  // console.log(searchData)
+  
   return (
     <Inner>
       <div>

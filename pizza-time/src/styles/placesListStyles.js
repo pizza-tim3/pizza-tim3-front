@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { colors, fonts, media } from '../styles/variables.js';
 
 export const PlacesContainer = styled.div`
-  width: 80%;
+  width: 90%;
   margin: 0px auto;
   margin-top: 30px;
     ${media.mobile} { margin-top: 36px; }

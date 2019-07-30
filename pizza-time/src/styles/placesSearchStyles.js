@@ -1,76 +1,69 @@
 import styled from 'styled-components';
-import { colors, fonts, media } from '../styles/variables.js';
+import { colors, fonts, media, mediaMF } from '../styles/variables.js';
 
 export const PlacesSearchWrap = styled.div`
   width: 100%;
-  height: 100vh;
-  height: calc(var(--vh, 1vh) * 100);
-  background: linear-gradient(155.4deg, ${colors.secondary} 0%, ${colors.primary} 99.11%);
+  min-height: 100vh;
+  height: 100%;
+  background-color: ${colors.lightGray};
   display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
-  align-items: center;
+  flex-direction: column;
 `;
 
-export const XButton = styled.span`
-  width: 10px;
-  position: fixed;
-  top: 2%;
-  right: 5%;
-
-  ${media.xs} { right: 20%; }
-  ${media.tablet} { right: 8%; }
+export const ButtonGroup = styled.span`
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
 `
 
   export const PlacesHeading = styled.div`
+    border-top: 5px solid ${colors.primary};
     width: 100%;
-    text-decoration: underline;
-    padding: 30px 0 30px 0;
-      ${media.mobile} { padding: 40px 0 40px 0; }
-      ${media.tablet} { padding: 50px 0 50px 0; }
-
-    h2 {
-      font-family: ${fonts.primary};
-      font-weight: 600;
-      font-size: 23px;
-      color: ${colors.gray};
-        ${media.mobile} { font-size: 24px; }
-        
-    }
+    padding: 20px 0;
+    background-color: ${colors.white};
+    color: ${colors.gray}
+    width: 100%;
+    font-family: ${fonts.primary};
+    font-weight: 600;
+    font-size: 23px;
+    box-shadow: 4px 4px 4px ${colors.lightShadow};
   `;
 
   export const PlacesSearchInner = styled.div`
+    margin-top: 40px;
+    background-color: ${colors.lightGray};
     display: flex;
     flex-flow: column nowrap;
-    border: 1px solid ${colors.white};
-    background-color: ${colors.white};
-    border-radius: 10px;
-    margin: 40px 0 30px 0;
-    width: 80%;
+    width: 100%;
 
-      ${media.mobile} {
-        width: 500px;
-        margin: 50px 0 30px 0;
-      }
-      ${media.tablet} { margin: 60px 0 30px 0; }
-      ${media.desktop} { margin: 70px 0 30px 0; }
+    .error {
+      margin: 20px auto 10px;
+      color: ${colors.primary};
+      font-size: 18px;
+    }
+
+    ${media.tablet} {
+      width: 50%;
+      margin: 40px auto;
+    }
+    ${media.modern} {width: 30%;}
   `;
 
   export const NextStep = styled.button`
     border: none;
-    width: 30%;
-    border-radius: 25px;
+    width: auto;
+    border-radius: 10px;
     background: linear-gradient(155.4deg, ${colors.secondary} 0%, ${colors.primary} 99.11%);
     font-family: ${fonts.primary};
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 600;
     color: ${colors.white};
-    padding: 10px 5px;
+    padding: 2px 20px;
     margin: 15px auto;
       &:hover { text-decoration: underline}
-      ${media.mobile} { font-size: 22px; }
-      ${media.tablet} { font-size: 24px; }
-      ${media.desktop} { font-size: 26px; }
+      ${media.mobile} { font-size: 20px; }
+      ${media.tablet} { font-size: 22px; }
   `;
 
 export const Form = styled.div`
@@ -79,14 +72,14 @@ export const Form = styled.div`
   flex-direction: column;
   margin: 0 auto;
   align-content: center;
-    
+
 
   input {
     margin: 10px auto;
     width: 80%;
-    padding: 11px 15px;
+    padding: 5px 10px;
     border: 2px solid #EEE;
-    border-radius: 20px;
+    border-radius: 10px;
     box-shadow: 4px 5px 6px #CDCDCD;
   }
   }
@@ -104,9 +97,8 @@ export const FriendsWrap = styled.div`
 export const FriendCard = styled.div`
   width: 40%;
   margin: 5px auto;
-  border: 1px solid 
-
-  border: 2px solid #EEE;
+  background-color: ${colors.white};
+  border: none;
   border-radius: 10px;
   box-shadow: 4px 5px 6px #CDCDCD;
 
@@ -124,14 +116,14 @@ export const FriendCard = styled.div`
     border-radius: 50%;
   }
 
-  .active {
-    background: #FFC900;
-    font-size: 20px;
-  }
+  ${({ active }) => active && `
+    border: 3px solid ${colors.secondary};
+  `}
 `
 
 export const ButtonsWrap = styled.div`
   display: flex;
+  justify-content: space-around;
   margin: 0 auto;
 `
 
@@ -141,9 +133,19 @@ export const SpanWrap = styled.span`
 `
 
 export const ConfirmWrap = styled.div`
-  width: 100%;
+  width: 70%;
   text-align: center;
   margin: 0 auto;
+  color: ${colors.gray};
+  text-align: left;
+
+  h2 {
+    text-align: center;
+    text-decoration: underline;
+    text-decoration-color: ${colors.primary};
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+  }
 
   .invited {
     margin: 0;
@@ -152,7 +154,7 @@ export const ConfirmWrap = styled.div`
 `
 
 export const InviteOnlyWrap = styled.div`
-  width: 40%;
+  width: 90%;
   margin: 0 auto;
   display: flex;
   flex-direction: row;
@@ -161,18 +163,41 @@ export const InviteOnlyWrap = styled.div`
 
   span {
     align-self: center;
+    color: gray;
   }
 
-  button {
-    background: linear-gradient(155.4deg, ${colors.secondary} 0%, ${colors.primary} 99.11%);
-    border: none;
-    color: white;
-    border-radius: 15px;
-    padding: 5px 10px;
-  }
+  ${media.mobile} {width: 40%;}
+  ${media.tablet} {width: 60%;}
+  ${media.largeDt} {width: 40%;}
+`
 
-  .active {
-    background: #FFC900;
-    font-size: 20px;
-  }
+export const InviteOnlyButton = styled.button`
+  background: linear-gradient(155.4deg, ${colors.secondary} 0%, ${colors.primary} 99.11%);
+  border: none;
+  color: white;
+  border-radius: 10px;
+  padding: 1px 15px;
+  margin-left: 5px;
+
+  ${({ active }) => active && `
+    border: 3px solid ${colors.secondary};
+  `}
+`
+
+export const PlacesCard = styled.div`
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  background-color: ${colors.white};
+  flex-direction: column;
+  text-align: left;
+  border: none;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  box-shadow: 4px 5px 6px ${colors.lightShadow};
+
+  ${({ active }) => active && `
+    border: 2px solid ${colors.secondary};
+  `}
 `

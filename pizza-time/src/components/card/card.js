@@ -4,8 +4,6 @@ import axios from "axios";
 import Envelope from "../../assets/envelope.svg";
 import Comment from "../../assets/comment.svg";
 import { CardBox, Inner, Content, Action } from "../../styles/cardStyles.js";
-import Location from "../../containers/user-dashboard/Location.js";
-import { bold } from "ansi-colors";
 import { Link } from "react-router-dom";
 
 import {
@@ -27,7 +25,6 @@ class Card extends React.Component {
   }
 
   componentDidMount() {
-    //console.log("REACHED HERE");
     const eventId = this.props.event.event_id;
 
     axios
@@ -37,7 +34,6 @@ class Card extends React.Component {
         }`
       )
       .then(res => {
-        console.log("COUNT COMMENT RESPONSE", res);
         this.setState({ comments: res.data.comments });
       })
       .catch(error => {
@@ -50,7 +46,6 @@ class Card extends React.Component {
         }`
       )
       .then(res => {
-        console.log("INVITEES RESPONSE", res);
         this.setState({ attendees: res.data });
       });
   }
@@ -58,8 +53,9 @@ class Card extends React.Component {
   commentHandler = event => {
     event.preventDefault();
     const show = !this.state.showMessages;
-    console.log("Show message now : ", show);
-    this.setState({ showMessages: show });
+    this.setState({showMessages:show})
+
+
   };
   //use for accepting an invitation
   clickHandler = event => {
@@ -67,13 +63,11 @@ class Card extends React.Component {
     const id = localStorage.getItem("userFireBaseId");
     const event_id = event.target.getAttribute("event_id");
     const user_id = event.target.getAttribute("user_id");
-    console.log("Event id and user id ", event_id, user_id);
     const newItem = {
       event_id: event_id,
       user_id: user_id,
       status: "Accepted",
     };
-    console.log("Event neing posted ", newItem);
 
     axios
       .put(
@@ -81,7 +75,6 @@ class Card extends React.Component {
         newItem
       )
       .then(res => {
-        console.log("New Item is updated now", res.data.results);
         window.location.reload();
       })
       .catch(error => {
@@ -94,7 +87,6 @@ class Card extends React.Component {
     const id = localStorage.getItem("userFireBaseId");
     const event_id = event.target.getAttribute("event_id");
     const user_id = event.target.getAttribute("user_id");
-    console.log("Eventid and UserId are", event_id, user_id);
     const newItem = {
       event_id: event_id,
       user_id: user_id,
@@ -106,7 +98,6 @@ class Card extends React.Component {
         newItem
       )
       .then(res => {
-        console.log("Response for Decline", res.data.results);
         window.location.reload();
       })
       .catch(error => {
@@ -183,7 +174,6 @@ class Card extends React.Component {
               {this.state.comments.map(comment => {
                 if (this.state.showMessages) {
                   // return <DashComment key={comment.id} comment={comment} />;
-                  console.log("COMMENT TIME");
                   return (
                     <div>
                       <b>{comment.first_name}</b>{" "}

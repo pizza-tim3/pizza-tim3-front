@@ -6,14 +6,13 @@ import {
     PlacesHeading,
     PlacesSearchInner,
     NextStep,
-    XButton
+    ButtonGroup
 } from '../../../../styles/placesSearchStyles.js';
 import { connect } from 'react-redux';
 import { setLoading } from '../../../../actions/eventActions';
-import close from '../../../../assets/close.png';
 import { Link } from 'react-router-dom';
 // props from create-new-event
-// handleClick={handleNextPage} 
+// handleClick={handleNextPage}
 // handleUpdateState={handleUpdateState}
 
 class PlacesSearch extends Component {
@@ -22,7 +21,8 @@ class PlacesSearch extends Component {
         this.state = {
             placesData: {},
             searchData: '',
-            show: false
+            show: false,
+            showError: false
         }
     }
 
@@ -42,36 +42,51 @@ class PlacesSearch extends Component {
         this.setState({
             ...this.state,
             searchData: searchString,
-            show: true
+            show: true,
+            showError: false
         });
     }
 
+    handleButton = () => {
+        if(!this.state.show) {
+            this.setState({
+                ...this.state,
+                showError: true
+            })
+        } else {
+            this.props.handleClick('placeData', this.state.placeData);
+        }
+    }
+
     render() {
-        console.log(this.state.show)
             return(
                 <PlacesSearchWrap>
-                    <XButton>
-                        <Link to="/home">
-                            <img src={close} alt='close' />
-                        </Link>
-                    </XButton>
-                    <PlacesSearchInner>
-                        <PlacesHeading>
-                            <h2>Choose Your Location:</h2>
-                        </PlacesHeading>
+                    <PlacesHeading>
+                        <h2>Where is it?</h2>
+                    </PlacesHeading>
 
-                        
+                    <PlacesSearchInner>
                         <SearchBar handleGetSearchData={this.handleGetSearchData}/>
 
-                        {this.state.show ? 
-                            <GoogleMap 
-                                getPlaceData={this.handleGetPlaceData} 
-                                searchData={this.state.searchData}/> : 
+                        {this.state.show ?
+                            <GoogleMap
+                                getPlaceData={this.handleGetPlaceData}
+                                searchData={this.state.searchData}/> :
                             <div />
                         }
-                        <NextStep onClick={() => {this.props.handleClick('placeData', this.state.placeData)}}>
-                            Next Step
-                        </NextStep>
+
+                        {this.state.showError ? (
+                            <div className="error">You must select a location!</div>
+                        ) : <></>}
+
+                        <ButtonGroup>
+                            <NextStep>
+                                <Link to="/home">Cancel</Link>
+                            </NextStep>
+                            <NextStep onClick={() => this.handleButton()}>
+                                Next Step
+                            </NextStep>
+                        </ButtonGroup>
                     </PlacesSearchInner>
                 </PlacesSearchWrap>
             )
