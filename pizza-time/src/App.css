@@ -187,9 +187,11 @@ ol.carousel-indicators li {
   border: 1px solid red;
 }
 
+
 .carousel-control-prev, .carousel-control-next {
   display: none;
 }
+
 
 
 #loading-pizza {
@@ -205,6 +207,7 @@ ol.carousel-indicators li {
     transform: rotate(360deg);
   }
 }
+
 .missing {
   margin: 25px auto 30px;
 }

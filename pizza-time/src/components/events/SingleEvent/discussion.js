@@ -330,9 +330,9 @@ class Discussion extends React.Component {
                   </button>
                 </div>
                 {this.state.commentError && (
-                  <span className="comment-error">
-                    Message empty or too short.
-                  </span>
+
+                  <span className="comment-error">Message too short.</span>
+
                 )}
               </div>
             ) : (

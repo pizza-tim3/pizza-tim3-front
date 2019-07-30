@@ -651,20 +651,10 @@ class Info extends React.Component {
               </div>
 
               <div className="invite-switch">
-                <div className="organizer-info">
+              <div className="organizer-info">
                   {this.state.organizerAvatar.length > 0 ? (
                     <>
                       <div className="event-info-label">Organizer: </div>
-                      <img
-                        className="organizer-avatar"
-                        src={this.state.organizerAvatar}
-                        alt="organizer avatar"
-                      />
-                    </>
-                  ) : (
-                    <></>
-                  )}
-                </div>
                 <div className="info-row">
                   <div className="event-info-label">By Invite Only: </div>
                   <div className="event-info-data">

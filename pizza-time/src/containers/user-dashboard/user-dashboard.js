@@ -30,8 +30,10 @@ class UserDashboard extends React.Component {
   };
 
   initMap = async () => {
+
     let map = new window.google.maps.Map(document.getElementById("map")); //search for the div id having map
     let service = new window.google.maps.places.PlacesService(map);
+
 
     //for each favorite make a call and set state with the data. HARD LIMIT 10
     let events = this.state.upcomingEvents;
@@ -49,8 +51,10 @@ class UserDashboard extends React.Component {
       service.getDetails(req, async (place, status) => {
         const serviceStatus = window.google.maps.places.PlacesServiceStatus;
         if (serviceStatus.OK) {
+
           event.location = place.name;
           this.setState({ mapLoaded: true });
+
         }
       });
     });
@@ -59,9 +63,16 @@ class UserDashboard extends React.Component {
   upcomingHandler = event => {
     event.preventDefault();
     const id = localStorage.getItem("userFireBaseId");
-    axios
-      .get(`https://pizza-tim3-be.herokuapp.com/api/events/upcoming/${id}`)
-      .then(res => {
+
+
+
+    axios .get(`https://pizza-tim3-be.herokuapp.com/api/events/upcoming/${id}`)
+          .then(res => {
+        
+
+   
+
+
         this.setState({
           upcomingEvents: res.data.result,
           selectedTab: "UpcomingEvents",
@@ -76,9 +87,13 @@ class UserDashboard extends React.Component {
   };
   pendingHandler = event => {
     const id = localStorage.getItem("userFireBaseId");
-    axios
-      .get(`https://pizza-tim3-be.herokuapp.com/api/events/pending/${id}`)
-      .then(res => {
+
+
+      axios.get(`https://pizza-tim3-be.herokuapp.com/api/events/pending/${id}`)
+           .then(res => {
+        
+
+
         this.setState({
           pendingEvents: res.data.result,
           selectedTab: "PendingEvents",
@@ -94,9 +109,13 @@ class UserDashboard extends React.Component {
   pastHandler = event => {
     const id = localStorage.getItem("userFireBaseId");
     event.preventDefault();
-    axios
-      .get(`https://pizza-tim3-be.herokuapp.com/api/events/past/${id}`)
-      .then(res => {
+
+
+    axios.get(`https://pizza-tim3-be.herokuapp.com/api/events/past/${id}`)
+         .then(res => {
+       
+
+
         this.setState({
           pastEvents: res.data.result,
           selectedTab: "PastEvents",
