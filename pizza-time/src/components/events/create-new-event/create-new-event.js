@@ -5,7 +5,6 @@ import FriendPicker from './friendPicker/friendPicker';
 import ConfirmationPage from './confirmation/confirmation';
 import PlacesSearch from './search/places-search';
 import NameAndDetails from './name-details/name-details';
-import { CreateNewEventWrap } from '../../../styles/createNewEventStyles';
 import { connect } from 'react-redux';
 import { setLoading } from './../../../actions/eventActions';
 import NotifyFriends from './InvFriends/invFriends';
@@ -25,8 +24,7 @@ class CreateNewEvent extends Component {
 
     handleNextPage = () => {
         this.setState({ page: this.state.page + 1 });
-        setLoading(true)
-        console.log(this.state.page);
+        setLoading(true);
     }
 
     render() {
@@ -38,7 +36,7 @@ class CreateNewEvent extends Component {
                     return <PlacesSearch handleClick={this.handleNextPage}/>
                 case 2:
                     return <NameAndDetails handleClick={this.handleNextPage}/>
-                case 3: 
+                case 3:
                     return <DatePicker handleClick={this.handleNextPage}/>
                 case 4:
                     return <FriendPicker handleClick={this.handleNextPage}/>

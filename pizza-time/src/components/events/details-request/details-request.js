@@ -17,8 +17,7 @@ const Details = props => {
   const sendToParent = req => {
     props.getDetails(req);
   };
-
-  //   console.log(props)
+  
   const renderMap = () => {
     setIsLoading(true);
     loadScript(url);

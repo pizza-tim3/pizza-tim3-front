@@ -39,7 +39,6 @@ function getData() {
     var objectStoreRequest = objectStore.get("firebase:authUser:AIzaSyCitaEbYQsGXYRnuUk0PthEzuwuTmV37PQ:[DEFAULT]");
     objectStoreRequest.onsuccess = function(event) {
         var myRecord = objectStoreRequest.result;
-        console.log(myRecord.value.stsTokenManager.accessToken)
     };
 }
 ```

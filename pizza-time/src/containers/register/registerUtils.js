@@ -14,7 +14,6 @@ export const registerWithBackend = async userObj => {
 
 // takes the result from a register with pop up call
 export const registerWithPopup = async result => {
-  console.log(result);
   const {
     user: { uid, photoURL },
     additionalUserInfo: {
@@ -32,9 +31,7 @@ export const registerWithPopup = async result => {
     avatar: photoURL
   };
   //send information to backend
-  // console.log(userObj);
   const response = await registerWithBackend(userObj);
-  console.log(response);
   return response;
 };
 

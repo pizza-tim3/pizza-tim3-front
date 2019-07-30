@@ -22,7 +22,6 @@ function Private() {
       "http://localhost:5500/api/restricted",
       "get"
     );
-    console.log(json);
     setData(json);
   };
 
@@ -32,7 +31,6 @@ function Private() {
       `http://localhost:5500/api/restricted/${uid}`,
       "get"
     );
-    console.log(json);
     setData(json);
   };
 
@@ -46,7 +44,6 @@ function Private() {
     //  for the changes totake effect
     await firebaseApp.auth().currentUser.getIdToken(true);
     setData(json);
-    console.log(json);
   };
 
   const demoteAdminStatus = async () => {
@@ -58,7 +55,6 @@ function Private() {
     //  for the changes totake effect
     await firebaseApp.auth().currentUser.getIdToken(true);
     setData(json);
-    console.log(json);
   };
 
   const makeAdminRequiredRequest = async () => {
@@ -67,13 +63,11 @@ function Private() {
       "get"
     );
     setData(json);
-    console.log(json);
   };
 
   const test = async (url, body) => {
     const json = await authorizedRequest(url, "get", body);
     setData(json);
-    console.log(json);
   };
 
   return (
@@ -112,7 +106,6 @@ function Private() {
 
 //Here I've destructured the single reducer
 const mstp = ({ userReducer /**,otherReducer */ }) => {
-  console.log(userReducer);
   return { userReducer };
 };
 

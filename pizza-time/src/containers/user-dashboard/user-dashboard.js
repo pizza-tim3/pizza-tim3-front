@@ -21,6 +21,10 @@ class UserDashboard extends React.Component {
     };
   }
 
+  componentDidMount() {
+    this.pendingHandler();
+  }
+
   loadMap = () => {
     loadScript(this.state.url);
   };
@@ -61,11 +65,13 @@ class UserDashboard extends React.Component {
     const id = localStorage.getItem("userFireBaseId");
 
 
+
     axios .get(`https://pizza-tim3-be.herokuapp.com/api/events/upcoming/${id}`)
           .then(res => {
         
 
    
+
 
         this.setState({
           upcomingEvents: res.data.result,
@@ -155,19 +161,19 @@ class UserDashboard extends React.Component {
               </TabList>
               <TabPanel className="tab">
                 {this.state.upcomingEvents.map(event => {
-                  return <Card key={event.id} event={event} />;
+                  return <Card key={event.event_id} event={event} />;
                 })}
               </TabPanel>
               <TabPanel>
                 {this.state.pendingEvents.map(event => {
                   return (
-                    <Card key={event.id} event={event} showActions={true} />
+                    <Card key={event.event_id} event={event} showActions={true} />
                   );
                 })}
               </TabPanel>
               <TabPanel>
                 {this.state.pastEvents.map(event => {
-                  return <Card key={event.id} event={event} />;
+                  return <Card key={event.event_id} event={event} />;
                 })}
               </TabPanel>
             </Tabs>

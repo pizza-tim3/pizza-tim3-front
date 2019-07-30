@@ -64,7 +64,6 @@ class GoogleMap extends Component {
     }
 
     render() {
-      console.log(this.props)
       return(
         <div>
           {this.state.isLoading ?
