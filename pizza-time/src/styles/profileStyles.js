@@ -2,17 +2,27 @@ import styled from "styled-components";
 import { colors, fonts, media } from "../styles/variables.js";
 
 //container for friends and favorites
-export const ProfileListContainer = styled.div`
-  display: grid;
-  padding: 25px;
-  justify-items: start;
-  grid-template-columns: 1fr 1fr;
-  grid-row-gap: 25px;
 
-  /* @ 700px break to one column */
-  @media only screen and (max-width: 700px) {
-    grid-template-columns: 1fr;
-  }
+export const Wrap = styled.div`
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ProfileListContainer = styled.div`
+  margin-top: 20px;
+  // display: grid;
+  // padding: 25px;
+  // justify-items: start;
+  // grid-template-columns: 1fr 1fr;
+  // grid-row-gap: 25px;
+
+  // /* @ 700px break to one column */
+  // @media only screen and (max-width: 700px) {
+  //   grid-template-columns: 1fr;
+  // }
 
   h4 {
     font-size: 1rem;
@@ -73,6 +83,7 @@ export const ListToolBar = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 0px 25px;
+  margin-top: 60px;
 `;
 
 export const Button = styled.button`
