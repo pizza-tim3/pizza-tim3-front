@@ -45,7 +45,11 @@ class UserDashboard extends React.Component {
       service.getDetails(req, async (place, status) => {
         const serviceStatus = window.google.maps.places.PlacesServiceStatus;
         if (serviceStatus.OK) {
-          event.location = place.name;
+          if (place) {
+            event.location = place.name;
+          } else {
+            event.location = "Can not read";
+          }
           this.setState({ mapLoaded: true });
         }
       });
@@ -58,7 +62,6 @@ class UserDashboard extends React.Component {
     axios
       .get(`https://pizza-tim3-be.herokuapp.com/api/events/upcoming/${id}`)
       .then(res => {
-        console.log(res);
         this.setState({
           upcomingEvents: res.data.result,
           selectedTab: "UpcomingEvents",

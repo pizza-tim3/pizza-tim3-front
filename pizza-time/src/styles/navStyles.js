@@ -27,21 +27,11 @@ export const Inner = styled.div`
     text-decoration: none;
   }
 
-  // h1 {
-  //   font-size: 26px;
-  //   margin-left: 0px;
-  //   text-align: left;
-  //   width: 200px;
-  //   font-family: ${fonts.primary};
-  //   color: ${colors.white};
-  //   font-weight: 600;
-
-  //   ${media.tablet} {
-  //     font-size: 30px;
-  //     margin-left: 26px;
-  //     text-align: center;
-  //     width: 100%;
-  //   }
+  .home {
+    width: 30px;
+    margin-left: 20px;
+    align-self: center;
+    justify-self: center;
   }
 
   .userBox {

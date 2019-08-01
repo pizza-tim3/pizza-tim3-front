@@ -18,6 +18,8 @@ export const fonts = {
 };
 
 export const media = {
+  modern: '@media(min-width: 1920px)',
+  largeDt: '@media(min-width: 1300px)',
   desktop: '@media(min-width: 1100px)',
   tablet: '@media(min-width: 900px)',
   mobile: '@media(min-width: 600px)',
