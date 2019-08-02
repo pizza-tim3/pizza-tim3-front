@@ -29,17 +29,6 @@ export const Content = styled.div`
   justify-content: flex-start;
   align-items: center;
   padding: 15px 0 15px 0;
-  .share-socials {
-    width: 50px;
-    padding-right: 12px;
-    .SocialMediaShareButton {
-      padding-bottom: 13px;
-      margin-left: 0px;
-      ${media.desktop} {
-        margin-left: 33px;
-      }
-    }
-  }
   ${media.mobile} {
     padding: 25px 0 25px 0;
   }
@@ -128,7 +117,25 @@ export const Action = styled.div`
   }
 
   .buttons {
-    margin-right: 20px;
+    margin-right: 16px;
+    display: flex;
+
+    .share-socials {
+      margin: 5px 5px 0 0;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+  
+      .button {
+        padding-right: 8px;
+      }
+
+      .SocialMediaShareButton {
+        ${media.desktop} {
+          // margin-left: 33px;
+        }
+      }
+    }
 
     button {
       border: 1px solid ${colors.primary};
@@ -141,7 +148,7 @@ export const Action = styled.div`
       padding: 0 14px 0 14px;
       height: 32px;
       border-radius: 3px;
-      &:nth-child(2) {
+      &:nth-child(4) {
         margin-right: 0;
         border: 1px solid ${colors.white};
         background-color: ${colors.white};

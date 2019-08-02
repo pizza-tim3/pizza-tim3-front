@@ -1,7 +1,6 @@
 import React from "react";
 import axios from "axios";
 
-import Envelope from "../../assets/envelope.svg";
 import Comment from "../../assets/comment.svg";
 import { CardBox, Inner, Content, Action } from "../../styles/cardStyles.js";
 import { Link } from "react-router-dom";
@@ -116,50 +115,28 @@ class Card extends React.Component {
         <Inner>
           <Link id={this.props.event.event_id} to={"/event/" + event_id}>
             <Content>
-              <img src={Envelope} />
               <div className="content">
                 <p>
-                  <span>Name:</span> {this.props.event.event_name}{" "}
+                  <span>Name:</span>{this.props.event.event_name}
                 </p>
                 <p>
-                  <span>Date:</span>
-                  {date}
+                  <span>Date:</span>{date}
                 </p>
                 <p>
-                  <span>Location:</span> {this.props.event.location}
+                  <span>Location:</span>{this.props.event.location}
                 </p>
                 <p>
-                  {" "}
-                  <b>
-                    <span>Attending:</span>
-
-                    {this.state.attendees.map(attende => {
-                      return [
-                        attende.first_name,
-                        "  ",
-                        attende.last_name,
-                        ",",
-                        " ",
-                      ];
-                    })}
-                  </b>{" "}
+                  <span>Attending:</span>
+                  {this.state.attendees.map(attende => {
+                    return [
+                      attende.first_name,
+                      "  ",
+                      attende.last_name,
+                      ",",
+                      " ",
+                    ];
+                  })}
                 </p>
-              </div>
-              <div className="share-socials">
-                <FacebookShareButton
-                  url={window.location.href}
-                  media={this.props.event.event_name}
-                  className="button"
-                >
-                  <FacebookIcon size={32} round={false} />
-                </FacebookShareButton>
-                <TwitterShareButton
-                  url={window.location.href}
-                  media={this.props.event.event_name}
-                  className="button"
-                >
-                  <TwitterIcon size={32} round={false} />
-                </TwitterShareButton>
               </div>
             </Content>
           </Link>
@@ -170,7 +147,7 @@ class Card extends React.Component {
               {/* {(false && <DashComment/> )}  */}
               <p>{this.state.comments.length}</p>
               <div className="message" />
-
+              
               {this.state.comments.map(comment => {
                 if (this.state.showMessages) {
                   // return <DashComment key={comment.id} comment={comment} />;
@@ -190,6 +167,22 @@ class Card extends React.Component {
               if (this.state.showActions) {
                 return (
                   <div className="buttons">
+                    <div className="share-socials">
+                      <FacebookShareButton
+                        url={window.location.href}
+                        media={this.props.event.event_name}
+                        className="button"
+                      >
+                        <FacebookIcon size={32} round={false} />
+                      </FacebookShareButton>
+                      <TwitterShareButton
+                        url={window.location.href}
+                        media={this.props.event.event_name}
+                        className="button"
+                      >
+                        <TwitterIcon size={32} round={false} />
+                      </TwitterShareButton>
+                    </div>
                     <button
                       onClick={this.clickHandler}
                       event_id={this.props.event.event_id}
