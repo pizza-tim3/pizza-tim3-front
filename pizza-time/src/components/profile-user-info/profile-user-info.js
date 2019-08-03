@@ -1,4 +1,5 @@
 import React from "react";
+import { UserBox } from '../../styles/profileUserInfoStyles';
 
 export default function ProfileUserInfo({
   avatar,
@@ -10,22 +11,18 @@ export default function ProfileUserInfo({
   crust
 }) {
   return (
-    <>
-      <div>
-        <img height="100px" width="100px" alt="UserAvatar" src={avatar} />
-        <h2>
-          {first_name} {last_name}
-        </h2>
+    <UserBox>
+      <div className="userAvatar">
+        <img alt="UserAvatar" src={avatar} />
       </div>
-      <p>
-        Slices Per Month: <span>{slices}</span>
-      </p>
-      <p>
-        Topping: <span>{topping}</span>
-      </p>
-      <p>
-        Crust: <span>{crust}</span>
-      </p>
-    </>
+      
+      <div className="userProfile" >
+        <h2>{first_name} {last_name}</h2>
+        <p>Slices Per Month: <span>{slices}</span></p>
+        <p>Topping: <span>{topping}</span></p>
+        <p>Crust: <span>{crust}</span></p>
+        <button>Edit Profile</button>
+      </div>
+    </UserBox>
   );
 }

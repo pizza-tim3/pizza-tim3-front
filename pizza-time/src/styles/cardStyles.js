@@ -18,9 +18,9 @@ export const Inner = styled.div`
   width: 86%;
   margin: 0px auto;
   box-shadow: 0 0 6px 0px ${colors.shadow};
-  margin-top: 20px;
+  margin-top: 30px;
   ${media.desktop} {
-    width: 100%;
+    width: 800px;
   }
 `;
 
@@ -28,61 +28,60 @@ export const Content = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 15px 0 15px 0;
-  .share-socials {
-    width: 50px;
-    padding-right: 12px;
-    .SocialMediaShareButton {
-      padding-bottom: 13px;
-      margin-left: 0px;
-      ${media.desktop} {
-        margin-left: 33px;
-      }
-    }
-  }
+  padding: 15px 0 5px 0;
   ${media.mobile} {
-    padding: 25px 0 25px 0;
+    padding: 25px 0 10px 0;
   }
 
-  img {
-    width: 90px;
-    height: 80px;
-    margin: 0 10px 0 20px;
-    ${media.mobile} {
-      width: 100px;
-      height: 90px;
-      margin-left: 25px;
-    }
-    ${media.tablet} {
-      width: 120px;
-      height: 110px;
-    }
-    ${media.desktop} {
-      width: 130px;
-      height: 120px;
-      margin-left: 30px;
+  .envelope {
+    border: 1px solid red;
+    height: 100%;
+
+    img {
+      width: 90px;
+      height: 80px;
+      margin: 0 10px 0 20px;
+      ${media.mobile} {
+        width: 100px;
+        height: 90px;
+        margin-left: 25px;
+      }
+      ${media.tablet} {
+        width: 120px;
+        height: 110px;
+      }
+      ${media.desktop} {
+        width: 130px;
+        height: 120px;
+        margin-left: 30px;
+      }
     }
   }
 
   .content {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
     text-align: left;
-    margin: -3px 0 0 10px;
+    margin: 0 0 0 25px;
+    // border: 1px solid red;
 
     p {
       font-family: ${fonts.primary};
       font-size: 15px;
-      &:nth-child(2) {
-        padding: 5px 0 5px 0;
-        ${media.mobile} {
-          padding: 6px 0 6px 0;
-        }
-        ${media.tablet} {
-          padding: 8px 0 8px 0;
-        }
-        ${media.desktop} {
-          padding: 10px 0 10px 0;
-        }
-      }
+      // border: 1px solid blue;
+      // &:nth-child(2) {
+      //   padding: 5px 0 5px 0;
+      //   ${media.mobile} {
+      //     padding: 6px 0 6px 0;
+      //   }
+      //   ${media.tablet} {
+      //     padding: 8px 0 8px 0;
+      //   }
+      //   ${media.desktop} {
+      //     padding: 10px 0 10px 0;
+      //   }
+      // }
 
       ${media.mobile} {
         font-size: 16px;
@@ -128,7 +127,26 @@ export const Action = styled.div`
   }
 
   .buttons {
-    margin-right: 20px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    .share-socials {
+      margin: 3px 0 0 14px;
+      display: flex;
+      flex-flow: row nowrap;
+      justify-content: space-between;
+  
+      .button {
+        padding-right: 8px;
+      }
+
+      .SocialMediaShareButton {
+        ${media.desktop} {
+          // margin-left: 33px;
+        }
+      }
+    }
 
     button {
       border: 1px solid ${colors.primary};
@@ -141,7 +159,7 @@ export const Action = styled.div`
       padding: 0 14px 0 14px;
       height: 32px;
       border-radius: 3px;
-      &:nth-child(2) {
+      &:nth-child(4) {
         margin-right: 0;
         border: 1px solid ${colors.white};
         background-color: ${colors.white};
