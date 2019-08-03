@@ -28,9 +28,9 @@ export const Content = styled.div`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  padding: 15px 0 15px 0;
+  padding: 15px 0 5px 0;
   ${media.mobile} {
-    padding: 25px 0 25px 0;
+    padding: 25px 0 10px 0;
   }
 
   img {
@@ -54,24 +54,29 @@ export const Content = styled.div`
   }
 
   .content {
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-between;
     text-align: left;
-    margin: -3px 0 0 10px;
+    margin: 0 0 0 25px;
+    // border: 1px solid red;
 
     p {
       font-family: ${fonts.primary};
       font-size: 15px;
-      &:nth-child(2) {
-        padding: 5px 0 5px 0;
-        ${media.mobile} {
-          padding: 6px 0 6px 0;
-        }
-        ${media.tablet} {
-          padding: 8px 0 8px 0;
-        }
-        ${media.desktop} {
-          padding: 10px 0 10px 0;
-        }
-      }
+      // border: 1px solid blue;
+      // &:nth-child(2) {
+      //   padding: 5px 0 5px 0;
+      //   ${media.mobile} {
+      //     padding: 6px 0 6px 0;
+      //   }
+      //   ${media.tablet} {
+      //     padding: 8px 0 8px 0;
+      //   }
+      //   ${media.desktop} {
+      //     padding: 10px 0 10px 0;
+      //   }
+      // }
 
       ${media.mobile} {
         font-size: 16px;
