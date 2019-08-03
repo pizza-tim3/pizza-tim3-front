@@ -142,27 +142,6 @@ class Card extends React.Component {
           </Link>
 
           <Action>
-            <div className="comment">
-              <img src={Comment} onClick={this.commentHandler} />
-              {/* {(false && <DashComment/> )}  */}
-              <p>{this.state.comments.length}</p>
-              <div className="message" />
-              
-              {this.state.comments.map(comment => {
-                if (this.state.showMessages) {
-                  // return <DashComment key={comment.id} comment={comment} />;
-                  return (
-                    <div>
-                      <b>{comment.first_name}</b>{" "}
-                      {comment.time.substring(0, 15)}
-                      <br />
-                      <i> {comment.message}</i>
-                      <br />
-                    </div>
-                  );
-                }
-              })}
-            </div>
             {["a"].map(x => {
               if (this.state.showActions) {
                 return (
@@ -183,21 +162,23 @@ class Card extends React.Component {
                         <TwitterIcon size={32} round={false} />
                       </TwitterShareButton>
                     </div>
-                    <button
-                      onClick={this.clickHandler}
-                      event_id={this.props.event.event_id}
-                      // this event is the object eventhaving all attributes:name,date
-                      user_id={this.props.event.user_id}
-                    >
-                      Let's Go!
-                    </button>
-                    <button
-                      onClick={this.ButtonHandler}
-                      event_id={this.props.event.event_id}
-                      user_id={this.props.event.user_id}
-                    >
-                      Not This Time
-                    </button>
+                    <div className="action-btns">
+                      <button
+                        onClick={this.clickHandler}
+                        event_id={this.props.event.event_id}
+                        // this event is the object eventhaving all attributes:name,date
+                        user_id={this.props.event.user_id}
+                      >
+                        Let's Go!
+                      </button>
+                      <button
+                        onClick={this.ButtonHandler}
+                        event_id={this.props.event.event_id}
+                        user_id={this.props.event.user_id}
+                      >
+                        Not This Time
+                      </button>
+                    </div>
                   </div>
                 );
               }

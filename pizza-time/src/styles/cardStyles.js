@@ -117,11 +117,12 @@ export const Action = styled.div`
   }
 
   .buttons {
-    margin-right: 16px;
+    width: 100%;
     display: flex;
+    justify-content: space-between;
 
     .share-socials {
-      margin: 5px 5px 0 0;
+      margin: 3px 0 0 14px;
       display: flex;
       flex-flow: row nowrap;
       justify-content: space-between;
