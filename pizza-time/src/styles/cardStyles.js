@@ -18,9 +18,9 @@ export const Inner = styled.div`
   width: 86%;
   margin: 0px auto;
   box-shadow: 0 0 6px 0px ${colors.shadow};
-  margin-top: 20px;
+  margin-top: 30px;
   ${media.desktop} {
-    width: 100%;
+    width: 800px;
   }
 `;
 
@@ -33,23 +33,28 @@ export const Content = styled.div`
     padding: 25px 0 10px 0;
   }
 
-  img {
-    width: 90px;
-    height: 80px;
-    margin: 0 10px 0 20px;
-    ${media.mobile} {
-      width: 100px;
-      height: 90px;
-      margin-left: 25px;
-    }
-    ${media.tablet} {
-      width: 120px;
-      height: 110px;
-    }
-    ${media.desktop} {
-      width: 130px;
-      height: 120px;
-      margin-left: 30px;
+  .envelope {
+    border: 1px solid red;
+    height: 100%;
+
+    img {
+      width: 90px;
+      height: 80px;
+      margin: 0 10px 0 20px;
+      ${media.mobile} {
+        width: 100px;
+        height: 90px;
+        margin-left: 25px;
+      }
+      ${media.tablet} {
+        width: 120px;
+        height: 110px;
+      }
+      ${media.desktop} {
+        width: 130px;
+        height: 120px;
+        margin-left: 30px;
+      }
     }
   }
 

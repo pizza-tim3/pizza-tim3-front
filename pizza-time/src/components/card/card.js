@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 
 import Comment from "../../assets/comment.svg";
+import Envelope from "../../assets/envelope.svg";
 import { CardBox, Inner, Content, Action } from "../../styles/cardStyles.js";
 import { Link } from "react-router-dom";
 
@@ -115,6 +116,9 @@ class Card extends React.Component {
         <Inner>
           <Link id={this.props.event.event_id} to={"/event/" + event_id}>
             <Content>
+              {/* <div className="envelope">
+                <img src={Envelope} />
+              </div> */}
               <div className="content">
                 <p>
                   <span>Name:</span>{this.props.event.event_name}
