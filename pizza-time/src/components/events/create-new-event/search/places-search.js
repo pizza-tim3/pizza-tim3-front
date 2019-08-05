@@ -11,9 +11,6 @@ import {
 import { connect } from 'react-redux';
 import { setLoading } from '../../../../actions/eventActions';
 import { Link } from 'react-router-dom';
-// props from create-new-event
-// handleClick={handleNextPage}
-// handleUpdateState={handleUpdateState}
 
 class PlacesSearch extends Component {
     constructor(props) {
