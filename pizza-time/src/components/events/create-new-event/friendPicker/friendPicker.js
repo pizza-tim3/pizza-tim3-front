@@ -35,8 +35,8 @@ class FriendPicker extends Component {
     }
 
     componentDidMount() {
-        console.log(this.props.uid)
-        axios.get(`https://pizza-tim3-be.herokuapp.com/api/friends/${this.props.uid}`)
+        axios
+        .get(`https://pizza-tim3-be.herokuapp.com/api/friends/${this.props.uid}`)
         .then(res => {
             this.setState({
                 ...this.state,
@@ -44,7 +44,8 @@ class FriendPicker extends Component {
                 data: res.data.slice(this.state.dataIndex - 4, this.state.dataIndex)
             });
             this.props.setLoading(false);
-        }).catch(err => console.log(err));
+        })
+        .catch(err => console.log(err));
     }
 
     moreItems = () => {
@@ -121,35 +122,35 @@ class FriendPicker extends Component {
                     {this.props.loading ? <Loading /> :
                         <>
                             <FriendsWrap>
-                                    {this.state.data.map(data => {
-                                        return(
-                                        <Friend key={data.firebase_uid} friend={data} addToInvited={this.addToInvited}/>
-                                    )})}
-                                </FriendsWrap>
+                                {this.state.data.map(data => {
+                                    return(
+                                    <Friend key={data.firebase_uid} friend={data} addToInvited={this.addToInvited}/>
+                                )})}
+                            </FriendsWrap>
 
-                                <ButtonsWrap>
-                                    <ShowMore onClick={this.lessItems}>
-                                        <img src={prev} alt="previous arrow" />
-                                    </ShowMore>
-                                    <ShowMore onClick={this.moreItems}>
-                                        <img src={next} alt="next arrow" />
-                                    </ShowMore>
-                                </ButtonsWrap>
+                            <ButtonsWrap>
+                                <ShowMore onClick={this.lessItems}>
+                                    <img src={prev} alt="previous arrow" />
+                                </ShowMore>
+                                <ShowMore onClick={this.moreItems}>
+                                    <img src={next} alt="next arrow" />
+                                </ShowMore>
+                            </ButtonsWrap>
 
-                                {this.state.showError ? (
-                                    <div className="error">You have to choose a friend!</div>
-                                ) : <></>}
+                            {this.state.showError ? (
+                                <div className="error">You have to choose a friend!</div>
+                            ) : <></>}
 
-                                <ButtonGroup>
-                                    <NextStep>
-                                        <Link to="/home">Cancel</Link>
-                                    </NextStep>
-                                    <NextStep onClick={() => {this.handleNext()}}>Next Step</NextStep>
-                                </ButtonGroup>
+                            <ButtonGroup>
+                                <NextStep>
+                                    <Link to="/home">Cancel</Link>
+                                </NextStep>
+                                <NextStep onClick={() => {this.handleNext()}}>Next Step</NextStep>
+                            </ButtonGroup>
                         </>
                     }
-        </PlacesSearchInner>
-    </PlacesSearchWrap>
+                </PlacesSearchInner>
+            </PlacesSearchWrap>
         )
     }
 }
