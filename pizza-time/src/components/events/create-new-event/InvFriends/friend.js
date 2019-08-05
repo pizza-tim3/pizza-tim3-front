@@ -4,9 +4,7 @@ import {FriendCard} from './../../../../styles/placesSearchStyles';
 export default class Friend extends Component {
     constructor(props) {
         super(props);
-        this.state = {
-            active: false
-        }
+        this.state = { active: false }
     }
 
     handleClick = (e) => {
@@ -19,7 +17,6 @@ export default class Friend extends Component {
     }
 
     handleToggle = () => {
-        console.log('clicked')
         this.setState({ active: !this.state.active });
     }
 
