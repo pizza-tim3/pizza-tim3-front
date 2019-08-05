@@ -14,12 +14,6 @@ import Loading from '../../../loading/loading';
 import { setLoading, setEID } from '../../../../actions/eventActions';
 import { Link } from 'react-router-dom';
 
-// props from create-new-event
-// place={placeId}
-// event={eventDetails}
-// dateTime={dateTime}
-// friends={friends}
-
 const ConfirmationPage = (props) => {
     setLoading(false);
     const url = "https://pizza-tim3-be.herokuapp.com/api/events";
@@ -39,11 +33,9 @@ const ConfirmationPage = (props) => {
             event_description: props.eventDesc,
             inviteOnly: props.inviteOnly
         }
-        console.log(requestObject)
 
         axios.post('https://pizza-tim3-be.herokuapp.com/api/events/', requestObject)
             .then((res) => {
-                console.log(res)
                 props.setLoading(false);
                 const { id } = res.data.id;
                 props.setEID(id);
