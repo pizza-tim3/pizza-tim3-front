@@ -13,14 +13,10 @@ import NotifyFriends from './InvFriends/invFriends';
 class CreateNewEvent extends Component {
     constructor() {
         super();
-        this.state = {
-            page: 1
-        }
+        this.state = { page: 1 }
     }
 
-    componentDidMount() {
-        setLoading(false)
-    }
+    componentDidMount() { setLoading(false) }
 
     handleNextPage = () => {
         this.setState({ page: this.state.page + 1 });
@@ -54,9 +50,7 @@ class CreateNewEvent extends Component {
 }
 
 const mstp = state => {
-    return {
-        loading: state.EventReducer.loading
-    }
+    return { loading: state.EventReducer.loading }
 }
 
 export default connect (mstp, { setLoading })(CreateNewEvent)
