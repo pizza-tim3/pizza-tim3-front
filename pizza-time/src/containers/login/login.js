@@ -32,34 +32,24 @@ export default function Login(props) {
     { email: "", password: "", error: "", inputError: false }
   );
 
-  // const formValidation = () => {
-  //   if (state.email.length === 0 || state.password.length === 0) {
-  //     state.inputError = true;
-  //     dispatch({ type: "SET_ERROR", payload: "" });
-  //     dispatch({ type: "INPUT_ERROR", payload: "Both fields are required." });
+  const formValidation = () => {
+    if (state.email.length === 0 || state.password.length === 0) {
+      state.inputError = true;
+      dispatch({ type: "SET_ERROR", payload: "" });
+      dispatch({ type: "INPUT_ERROR", payload: "Both fields are required." });
 
-  //     console.log(state.inputError);
-  //   } else {
-  //     dispatch({ type: "INPUT_ERROR", payload: "" });
-  //   }
-  // }
+      console.log(state.inputError);
+    } else {
+      dispatch({ type: "INPUT_ERROR", payload: "" });
+    }
+  }
 
   const submit = async e => {
     e.preventDefault();
-    // formValidation();
+    formValidation();
 
       try {
-        const { user } = await firebase.auth().signInWithEmailAndPassword(state.email, state.password);
-        console.log(user);
-        console.log(firebase.auth().currentUser)
-        console.log(axios.defaults.headers.common)
-        if(user) {
-          return firebase.auth().currentUser.getIdToken().then(async idToken => {
-            console.log(idToken)
-            axios.defaults.headers.common['Authorization'] = idToken;
-            props.history.push("/home");
-          }).catch(e => console.log(e));
-        }
+        firebase.auth().signInWithEmailAndPassword(state.email, state.password).catch(e => console.log(e));
       } catch (err) {
         console.log(err);
         // if

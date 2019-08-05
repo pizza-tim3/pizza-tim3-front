@@ -58,7 +58,7 @@ class UserDashboard extends React.Component {
 
   upcomingHandler = event => {
     event.preventDefault();
-    const id = localStorage.getItem("userFireBaseId");
+    const id = localStorage.getItem("firebase_uid");
     axios
       .get(`https://pizza-tim3-be.herokuapp.com/api/events/upcoming/${id}`)
       .then(res => {
@@ -75,7 +75,7 @@ class UserDashboard extends React.Component {
       });
   };
   pendingHandler = event => {
-    const id = localStorage.getItem("userFireBaseId");
+    const id = localStorage.getItem("firebase_uid");
     axios
       .get(`https://pizza-tim3-be.herokuapp.com/api/events/pending/${id}`)
       .then(res => {
@@ -92,7 +92,7 @@ class UserDashboard extends React.Component {
       });
   };
   pastHandler = event => {
-    const id = localStorage.getItem("userFireBaseId");
+    const id = localStorage.getItem("firebase_uid");
     event.preventDefault();
     axios
       .get(`https://pizza-tim3-be.herokuapp.com/api/events/past/${id}`)

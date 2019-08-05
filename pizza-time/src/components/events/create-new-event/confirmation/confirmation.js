@@ -29,7 +29,7 @@ const ConfirmationPage = (props) => {
     let newTime = new Date(dateString).toLocaleTimeString();
 
     const handleSubmitData = () => {
-        const id = localStorage.getItem("userFireBaseId");
+        const id = localStorage.getItem("firebase_uid");
         props.setLoading(true);
         let requestObject = {
             event_name: props.eventName,

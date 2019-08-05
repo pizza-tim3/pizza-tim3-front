@@ -26,43 +26,35 @@ class App extends Component {
   }
 
   componentDidMount(){
-    this.listener = firebaseApp.auth().onAuthStateChanged(async user => {
-      console.log(user)
-      console.log(firebaseApp.auth.currentUser)
-      //firebase
-      if (this.props.user && user) {
-
-        //HANDLE USER STATE IN REDUX/COMPONENT STATE
-        //get user info from our server
-        return firebaseApp.auth.currentUser.getIdToken().then(async idToken => {
-          axios.defaults.headers.common['Authorization'] = idToken;
-          console.log(idToken)
-
-          const { uid } = user;
-          const response = await fetch(
-            `${process.env.REACT_APP_BACK_END_URL}/api/users/${uid}`);
-          const userInfo = await response.json();
-          this.props.setUser(userInfo);
-
-          this.setState({
-            authenticated: false
-          })
-        }).catch(e => console.log(e));
-
+    // when authStateChanges, ie. when user logs in or out this will run
+    firebaseApp.auth().onAuthStateChanged(authUser => {
+      // if there is a user (meaning the user is loggin in not out) get the auth token from firebase
+      if(authUser) {
+        return firebaseApp.auth().currentUser.getIdToken()
+          .then(idToken => {
+            // intercept all axios calls and add an authorization header
+            axios.defaults.headers.common['Authorization'] = idToken;
+            // get all user data from server
+            axios.get(`https://pizza-tim3-be.herokuapp.com/api/users/${authUser.uid}`)
+              .then(res => {
+                console.log(res);
+                // set user in redux
+                this.props.setUser(res.data);
+                // set Authenticated to true
+                this.setState({ authenticated: true });
+                // set uid in localStorage
+                localStorage.setItem('firebase_uid', res.data.firebase_uid);
+                this.props.history.push('/home')
+              }).catch(e => console.log('ERROR:', e));
+          }).catch();
       } else {
-
-        localStorage.removeItem("lastLoginState");
-        this.props.clearUser();
-        this.setState({
-          authenticated: false
-        }) // TODO CREATE AUTH REDUCER
+        // if user is logging out, clear the localStorage... set authenticated to false and push to login screen
+        localStorage.clear();
+        this.setState({ authenticated: false });
+        this.props.history.push('/login');
       }
-    });
-  }
-
-  componentWillUnmount() {
-    this.listener();
-  }
+    }
+  )};
 
   render() {
     const { authenticated } = this.state;
@@ -76,7 +68,6 @@ class App extends Component {
           <Route path="/create-event" component={CreateNewEvent} />
           <Route exact path="/event/:id" component={EventView} />
           <Route exact path="/" component={Landing} />
-          {/* TODO Change landing to exact */}
 
           <PrivateRoute
             path="/profile"
