@@ -4,10 +4,6 @@ import GoogleMap from "./map/map";
 import searchmap from "./../../../../assets/searchmap.png";
 import { Inner } from "../../../../styles/editLocationStyles.js";
 
-// props from create-new-event
-// handleClick={handleNextPage}
-// handleUpdateState={handleUpdateState}
-
 const UpdatePlacesSearch = props => {
   const [placeData, setPlaceData] = useState("");
   const [searchData, setSearch] = useState("");
@@ -18,6 +14,7 @@ const UpdatePlacesSearch = props => {
       placeId: id,
       placeName: place,
     };
+    
     props.chooseLocation(id, place);
     setPlaceData(data);
   };
