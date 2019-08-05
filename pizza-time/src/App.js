@@ -35,6 +35,7 @@ class App extends Component {
           return firebaseApp.auth().currentUser.getIdToken()
             .then(idToken => {
               axios.defaults.headers.common['Authorization'] = idToken;
+              console.log(idToken)
 
               axios.get(`https://pizza-tim3-be.herokuapp.com/api/users/${authUser.uid}`)
                 .then(res => {

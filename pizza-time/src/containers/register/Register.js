@@ -51,18 +51,21 @@ export default function Register(props) {
         .then(res => {
           console.log(res.user.uid)
           const user = {
-            email: email.toLowerCase(),
+            email: email,
             firebase_uid: res.user.uid,
-            username: username.toLowerCase(),
-            first_name: firstname.toLowerCase(),
-            last_name: lastname.toLowerCase()
+            username: username,
+            first_name: firstname,
+            last_name: lastname
           }
 
-          axios.post('https://pizza-tim3-be.herokuapp.com/register', user)
+          if(res.user.uid) {
+            axios.post('https://pizza-tim3-be.herokuapp.com/register', user)
             .then(res => {
-              localStorage['signUpStatus'] = '1'
+              console.log(res)
               localStorage.setItem('firebase_uid', res.user.uid);
+              localStorage['signUpStatus'] = '1'
             }).catch(err => console.log(err))
+          }
         })
         .catch(e => console.log(e));
 

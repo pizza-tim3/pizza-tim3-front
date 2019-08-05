@@ -625,7 +625,7 @@ export const EventRow = styled.div`
       border-top: 1px solid ${colors.primary};
       width: 100%;
       ${media.tablet} {
-      
+
         width: 70%;
         margin-right: 0;
       }
@@ -659,7 +659,7 @@ export const EventRow = styled.div`
     display: flex;
     flex-direction: column;
     align-items: start;
-    
+
     .comment {
       display: flex;
       align-items: center;
