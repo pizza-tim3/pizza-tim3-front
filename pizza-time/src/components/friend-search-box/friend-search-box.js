@@ -8,10 +8,10 @@ class FriendSearchBox extends React.Component{
         constructor(props){
           super(props);
           this.state={
-            
+
             searchName : "",
             matchedUsers:[]
-            
+
           }
         }
         searchHandler=(event)=>{
@@ -20,11 +20,11 @@ class FriendSearchBox extends React.Component{
           if(name.length===0){
             return
           }
-          
-          
-         const id =localStorage.getItem("userFireBaseId")
-               
-          
+
+
+         const id =localStorage.getItem("firebase_uid")
+
+
           axios.post(`https://pizza-tim3-be.herokuapp.com/api/users/find/name/`, {
             "first_name":name,
             "user_id" : id
@@ -38,13 +38,14 @@ class FriendSearchBox extends React.Component{
         inputHandler=(event)=>{
           this.setState({searchName:event.target.value})
         }
-          
+
      render(){
-        
+
         return (
          <Wrap>
           <form onSubmit={this.searchHandler}>
-            <input type="text" name="name" placeholder="Find a new friend" onChange={this.inputHandler} />
+            <h3>Find friends:</h3>
+            <input type="text" name="name" placeholder="Search by first name..." onChange={this.inputHandler} />
             <button>Search</button>
             {this.state.matchedUsers.map(user=>{
               return   <NewFriend key={user.id} user={user}/>
@@ -53,7 +54,7 @@ class FriendSearchBox extends React.Component{
           </form>
         </Wrap>
         )
-     }  
+     }
 
 }
 export default FriendSearchBox

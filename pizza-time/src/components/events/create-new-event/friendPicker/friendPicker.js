@@ -35,7 +35,8 @@ class FriendPicker extends Component {
     }
 
     componentDidMount() {
-        axios.get(`${this.state.url}${this.props.uid}`)
+        console.log(this.props.uid)
+        axios.get(`https://pizza-tim3-be.herokuapp.com/api/friends/${this.props.uid}`)
         .then(res => {
             this.setState({
                 ...this.state,

@@ -62,15 +62,19 @@ export const UserBox = styled.div`
       color: ${colors.black};
       background-color: ${colors.white};
       box-shadow: 0 0 6px ${colors.shadow};
-      
+
       &:hover {
         background-color: ${colors.primary};
         color: ${colors.white};
       }
-
-      ${media.tablet} {
-        margin-left: -100px;
-      }
     }
   }
 `;
+
+export const Buttons = styled.div`
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
+`

@@ -12,9 +12,6 @@ const initialState = {
   email: "",
   location: "",
   avatar: "",
-  crust: "",
-  topping: "",
-  slicesPerMonth: "",
   error: null,
   firebase_uid: "",
 };
@@ -36,9 +33,6 @@ export const userReducer = (state = initialState, action) => {
         location: "",
         uid: "",
         avatar: "",
-        crust: "",
-        topping: "",
-        slicesPerMonth: "",
         firebase_uid: "",
       };
     case SET_USER_ERROR:

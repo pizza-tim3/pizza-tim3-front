@@ -60,7 +60,7 @@ class Card extends React.Component {
   //use for accepting an invitation
   clickHandler = event => {
     event.preventDefault();
-    const id = localStorage.getItem("userFireBaseId");
+    const id = localStorage.getItem("firebase_uid");
     const event_id = event.target.getAttribute("event_id");
     const user_id = event.target.getAttribute("user_id");
     const newItem = {
@@ -84,7 +84,7 @@ class Card extends React.Component {
   //use for declining an invitation
   ButtonHandler = event => {
     event.preventDefault();
-    const id = localStorage.getItem("userFireBaseId");
+    const id = localStorage.getItem("firebase_uid");
     const event_id = event.target.getAttribute("event_id");
     const user_id = event.target.getAttribute("user_id");
     const newItem = {
