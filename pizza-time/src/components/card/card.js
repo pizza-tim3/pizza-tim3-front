@@ -1,8 +1,6 @@
 import React from "react";
 import axios from "axios";
 
-import Comment from "../../assets/comment.svg";
-import Envelope from "../../assets/envelope.svg";
 import { CardBox, Inner, Content, Action } from "../../styles/cardStyles.js";
 import { Link } from "react-router-dom";
 
@@ -28,36 +26,21 @@ class Card extends React.Component {
     const eventId = this.props.event.event_id;
 
     axios
-      .get(
-        `https://pizza-tim3-be.herokuapp.com/api/comments/event/messages/user/${
-          this.props.event.event_id
-        }`
-      )
-      .then(res => {
-        this.setState({ comments: res.data.comments });
-      })
-      .catch(error => {
-        this.setState({ error });
-      });
+      .get(`https://pizza-tim3-be.herokuapp.com/api/comments/event/messages/user/${this.props.event.event_id}`)
+      .then(res => this.setState({ comments: res.data.comments }))
+      .catch(error => this.setState({ error }));
+
     axios
-      .get(
-        `https://pizza-tim3-be.herokuapp.com/api/invited/${
-          this.props.event.event_id
-        }`
-      )
-      .then(res => {
-        this.setState({ attendees: res.data });
-      });
+      .get(`https://pizza-tim3-be.herokuapp.com/api/invited/${this.props.event.event_id}`)
+      .then(res => this.setState({ attendees: res.data }));
   }
 
   commentHandler = event => {
     event.preventDefault();
     const show = !this.state.showMessages;
     this.setState({showMessages:show})
-
-
   };
-  //use for accepting an invitation
+
   clickHandler = event => {
     event.preventDefault();
     const id = localStorage.getItem("firebase_uid");
@@ -70,18 +53,11 @@ class Card extends React.Component {
     };
 
     axios
-      .put(
-        `https://pizza-tim3-be.herokuapp.com/api/events/status/${id}`,
-        newItem
-      )
-      .then(res => {
-        window.location.reload();
-      })
-      .catch(error => {
-        this.setState({ error });
-      });
+      .put(`https://pizza-tim3-be.herokuapp.com/api/events/status/${id}`, newItem)
+      .then(res => window.location.reload())
+      .catch(error => this.setState({ error }));
   };
-  //use for declining an invitation
+
   ButtonHandler = event => {
     event.preventDefault();
     const id = localStorage.getItem("firebase_uid");
@@ -92,17 +68,11 @@ class Card extends React.Component {
       user_id: user_id,
       status: "Declined",
     };
+
     axios
-      .put(
-        `https://pizza-tim3-be.herokuapp.com/api/events/status/${id}`,
-        newItem
-      )
-      .then(res => {
-        window.location.reload();
-      })
-      .catch(error => {
-        this.setState({ error });
-      });
+      .put(`https://pizza-tim3-be.herokuapp.com/api/events/status/${id}`, newItem)
+      .then(res => window.location.reload())
+      .catch(error => this.setState({ error }));
   };
 
   render() {
@@ -116,21 +86,11 @@ class Card extends React.Component {
         <Inner>
           <Link id={this.props.event.event_id} to={"/event/" + event_id}>
             <Content>
-              {/* <div className="envelope">
-                <img src={Envelope} />
-              </div> */}
               <div className="content">
-                <p>
-                  <span>Name:</span>{this.props.event.event_name}
-                </p>
-                <p>
-                  <span>Date:</span>{date}
-                </p>
-                <p>
-                  <span>Location:</span>{this.props.event.location}
-                </p>
-                <p>
-                  <span>Attending:</span>
+                <p><span>Name:</span>{this.props.event.event_name}</p>
+                <p><span>Date:</span>{date}</p>
+                <p><span>Location:</span>{this.props.event.location}</p>
+                <p><span>Attending:</span>
                   {this.state.attendees.map(attende => {
                     return [
                       attende.first_name,
@@ -156,21 +116,20 @@ class Card extends React.Component {
                         media={this.props.event.event_name}
                         className="button"
                       >
-                        <FacebookIcon size={32} round={false} />
+                      <FacebookIcon size={32} round={false} />
                       </FacebookShareButton>
                       <TwitterShareButton
                         url={window.location.href}
                         media={this.props.event.event_name}
                         className="button"
                       >
-                        <TwitterIcon size={32} round={false} />
+                      <TwitterIcon size={32} round={false} />
                       </TwitterShareButton>
                     </div>
                     <div className="action-btns">
                       <button
                         onClick={this.clickHandler}
                         event_id={this.props.event.event_id}
-                        // this event is the object eventhaving all attributes:name,date
                         user_id={this.props.event.user_id}
                       >
                         Let's Go!
