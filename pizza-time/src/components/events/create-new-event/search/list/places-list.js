@@ -3,8 +3,6 @@ import { PlacesContainer, ShowMore } from '../../../../../styles/placesListStyle
 import next from '../../../../../assets/next-orange.png';
 import prev from '../../../../../assets/prev-orange.png';
 import Place from './place';
-//props from map : data={placesData} handleClick = {handleOnClick}
-
 
 const PlacesList = (props) => {
     const [dataIndex, setDataIndex] = useState(3);
