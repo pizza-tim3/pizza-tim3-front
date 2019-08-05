@@ -24,7 +24,9 @@ const Nav = props => {
             {!props.userReducer.avatar ? (
               <img src={image} className="user" alt="placeholder" />
             ) : (
-              <img className="user" src={props.userReducer.avatar}/>
+              <Link to="/profile">
+                <img className="user" src={props.userReducer.avatar}/>
+              </Link>
             )}
             <Link to="/create-event" className="newEventBtn">Create Event</Link>
           </div>

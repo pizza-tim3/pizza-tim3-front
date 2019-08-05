@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import NewFriend from "./NewFriend.js"
 
+import { Wrap } from '../../styles/friendSearchBoxStyles.js';
 
 class FriendSearchBox extends React.Component{
         constructor(props){
@@ -41,17 +42,16 @@ class FriendSearchBox extends React.Component{
      render(){
 
         return (
-         <div>
+         <Wrap>
           <form onSubmit={this.searchHandler}>
-           <input type="text" name="name" placeholder="Find a new friend" onChange={this.inputHandler} />
-           <button>submit</button>
-           {this.state.matchedUsers.map(user=>{
-            return   <NewFriend key={user.id} user={user}/>
-             })
-           }
-
+            <input type="text" name="name" placeholder="Find a new friend" onChange={this.inputHandler} />
+            <button>Search</button>
+            {this.state.matchedUsers.map(user=>{
+              return   <NewFriend key={user.id} user={user}/>
+              })
+            }
           </form>
-        </div>
+        </Wrap>
         )
      }
 

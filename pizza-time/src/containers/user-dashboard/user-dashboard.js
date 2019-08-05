@@ -49,7 +49,11 @@ class UserDashboard extends React.Component {
       service.getDetails(req, async (place, status) => {
         const serviceStatus = window.google.maps.places.PlacesServiceStatus;
         if (serviceStatus.OK) {
-          event.location = place.name;
+          if (place) {
+            event.location = place.name;
+          } else {
+            event.location = "Can not read";
+          }
           this.setState({ mapLoaded: true });
         }
       });
