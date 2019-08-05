@@ -22,7 +22,9 @@ const Nav = props => {
         <div className="userBox">
           <div className="avatar">
             {!props.userReducer.avatar ? (
-              <img src={image} className="user" alt="placeholder" />
+              <Link to="/profile">
+                <img src={image} className="user" alt="placeholder" />
+              </Link>
             ) : (
               <Link to="/profile">
                 <img className="user" src={props.userReducer.avatar}/>

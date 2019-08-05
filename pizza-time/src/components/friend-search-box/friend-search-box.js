@@ -44,7 +44,8 @@ class FriendSearchBox extends React.Component{
         return (
          <Wrap>
           <form onSubmit={this.searchHandler}>
-            <input type="text" name="name" placeholder="Find a new friend" onChange={this.inputHandler} />
+            <h3>Find friends:</h3>
+            <input type="text" name="name" placeholder="Search by first name..." onChange={this.inputHandler} />
             <button>Search</button>
             {this.state.matchedUsers.map(user=>{
               return   <NewFriend key={user.id} user={user}/>

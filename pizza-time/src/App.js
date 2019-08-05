@@ -26,35 +26,32 @@ class App extends Component {
   }
 
   componentDidMount(){
-    // when authStateChanges, ie. when user logs in or out this will run
-    firebaseApp.auth().onAuthStateChanged(authUser => {
-      // if there is a user (meaning the user is loggin in not out) get the auth token from firebase
-      if(authUser) {
-        return firebaseApp.auth().currentUser.getIdToken()
-          .then(idToken => {
-            // intercept all axios calls and add an authorization header
-            axios.defaults.headers.common['Authorization'] = idToken;
-            // get all user data from server
-            axios.get(`https://pizza-tim3-be.herokuapp.com/api/users/${authUser.uid}`)
-              .then(res => {
-                console.log(res);
-                // set user in redux
-                this.props.setUser(res.data);
-                // set Authenticated to true
-                this.setState({ authenticated: true });
-                // set uid in localStorage
-                localStorage.setItem('firebase_uid', res.data.firebase_uid);
-                this.props.history.push('/home')
-              }).catch(e => console.log('ERROR:', e));
-          }).catch();
-      } else {
-        // if user is logging out, clear the localStorage... set authenticated to false and push to login screen
-        localStorage.clear();
-        this.setState({ authenticated: false });
-        this.props.history.push('/login');
-      }
+    const userSigningUp = localStorage.getItem('signUpStatus');
+    if(userSigningUp === '0') {
+      return
+    } else {
+      firebaseApp.auth().onAuthStateChanged(authUser => {
+        if(authUser) {
+          return firebaseApp.auth().currentUser.getIdToken()
+            .then(idToken => {
+              axios.defaults.headers.common['Authorization'] = idToken;
+
+              axios.get(`https://pizza-tim3-be.herokuapp.com/api/users/${authUser.uid}`)
+                .then(res => {
+                  this.props.setUser(res.data);
+                  this.setState({ authenticated: true });
+                  localStorage.setItem('firebase_uid', res.data.firebase_uid);
+                  this.props.history.push('/home')
+                }).catch(e => console.log('ERROR:', e));
+            }).catch();
+        } else {
+          localStorage.clear();
+          this.setState({ authenticated: false });
+          this.props.history.push('/login');
+        }
+      });
     }
-  )};
+  };
 
   render() {
     const { authenticated } = this.state;
@@ -68,8 +65,9 @@ class App extends Component {
           <Route path="/create-event" component={CreateNewEvent} />
           <Route exact path="/event/:id" component={EventView} />
           <Route exact path="/" component={Landing} />
+          <Route exact path="/profile" component={Profile} />
 
-          <PrivateRoute
+          {/* <PrivateRoute
             path="/profile"
             authenticated={authenticated}
             component={Profile}
@@ -79,7 +77,7 @@ class App extends Component {
             path="/private"
             component={Private}
             authenticated={authenticated} //pass global authenticated status here
-          />
+          /> */}
         </Switch>
       </div>
     )

@@ -18,11 +18,13 @@ class UserDashboard extends React.Component {
         process.env.REACT_APP_GOOGLE_PLACES_API_KEY
       }&libraries=places&callback=initMap`,
       mapLoaded: false,
+      userEvents: []
     };
   }
 
   componentDidMount() {
     this.pendingHandler();
+    this.getAllEventsUserMade();
   }
 
   loadMap = () => {
@@ -60,14 +62,46 @@ class UserDashboard extends React.Component {
     });
   };
 
+
+  getAllEventsUserMade = () => {
+    const id = localStorage.getItem('firebase_uid');
+    axios.get('https://pizza-tim3-be.herokuapp.com/api/events')
+      .then(res => {
+        const date = new Date().getTime() / 1000;
+        let upcoming = res.data.filter(item => {
+          return item.organizer === id
+        })
+        upcoming = upcoming.filter(item => {
+          return item.event_date > date
+        })
+        upcoming = upcoming.map(i => {
+          return {
+            event_date: i.event_date,
+            event_id: i.id,
+            event_name: i.event_name,
+            google_place_id: i.place,
+            pending: false,
+            user_id: i.organizer
+          }
+        })
+
+        this.setState({
+          ...this.state,
+          userEvents: upcoming
+        });
+      }).catch(e => console.log(e))
+  }
+
+
   upcomingHandler = event => {
     event.preventDefault();
     const id = localStorage.getItem("firebase_uid");
     axios
       .get(`https://pizza-tim3-be.herokuapp.com/api/events/upcoming/${id}`)
       .then(res => {
+
         this.setState({
-          upcomingEvents: res.data.result,
+          upcomingEvents: res.data.result.concat(this.state.userEvents),
           selectedTab: "UpcomingEvents",
           mapLoaded: false,
         });
@@ -78,6 +112,8 @@ class UserDashboard extends React.Component {
         this.setState({ error });
       });
   };
+
+
   pendingHandler = event => {
     const id = localStorage.getItem("firebase_uid");
     axios
@@ -95,6 +131,8 @@ class UserDashboard extends React.Component {
         this.setState({ error });
       });
   };
+
+
   pastHandler = event => {
     const id = localStorage.getItem("firebase_uid");
     event.preventDefault();

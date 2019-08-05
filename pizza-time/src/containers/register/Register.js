@@ -3,6 +3,7 @@ import firebaseApp from "../../firebase/firebaseApp";
 import { googleProvider } from "../../firebase/authProviders";
 import { registerWithBackend, registerWithPopup } from "./registerUtils";
 import { Link } from "react-router-dom";
+import axios from 'axios';
 
 import { Wrap, Form } from "../../styles/registerLoginStyles.js";
 
@@ -13,55 +14,63 @@ export default function Register(props) {
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [error, setError] = useState("");
+  const [isActive, setActive] = useState();
 
-  const submit = async e => {
-    e.preventDefault();
-    try {
-      //Destructure the nested object that contains the uid
-      const {user: { uid: firebase_uid }} = await firebaseApp
-        .auth()
-        .createUserWithEmailAndPassword(email, password);
-
-      const userObj = {
-        email,
-        username,
-        first_name: firstname,
-        last_name: lastname,
-        firebase_uid
-      };
-
-      const response = await registerWithBackend(userObj);
-      props.history.push("/home");
-    } catch (err) {
-      const errorCode = err.code;
-      const errorMessage = err.message;
-      setError(errorMessage);
+  const formValidation = () => {
+    if(!email.includes('@') || !email.includes('.com') || !email.length > 6) {
+      setActive(false);
+      setError('Invalid Email Format');
+      return
     }
-  };
-
-  const signInWithGoogle = async e => {
-    e.preventDefault();
-    try {
-      // sign in/register with popup window
-      const result = await firebaseApp.auth().signInWithPopup(googleProvider);
-      const { additionalUserInfo: { isNewUser }} = result;
-      //check to see if the users new
-      if (isNewUser) {
-        //get user picture and other stuff to add onto result
-        // register uses information on our backend
-        const user = await registerWithPopup(result);
-        // set state with user
-        props.history.push("/home");
-      } else if (/**user dne on backend */ false) {
-        //this would be an error on our db's part
-      } else {
-        props.history.push("/home");
-      }
-      // TODO set global user info
-    } catch (err) {
-      setError(err.message);
+    if(username.length >= 5 === false) {
+      setActive(false);
+      setError('Username is not long enough. Must be 5 characters or more')
+      return
     }
-  };
+    if(password.length >= 8 === false) {
+      setActive(false);
+      setError('Password is too short. Please enter a password greater than 8 characters');
+      return
+    }
+    if(firstname.length > 1 === false || lastname.length > 1 === false) {
+      setActive(false);
+      setError('Please enter a first and last name');
+      return
+    }
+    setError(null)
+    setActive(true)
+  }
+
+
+
+  const submit = async(e) => {
+    e.preventDefault();
+    localStorage.setItem('signUpStatus', '0');
+    try {
+      await firebaseApp.auth().createUserWithEmailAndPassword(email, password)
+        .then(res => {
+          console.log(res.user.uid)
+          const user = {
+            email: email.toLowerCase(),
+            firebase_uid: res.user.uid,
+            username: username.toLowerCase(),
+            first_name: firstname.toLowerCase(),
+            last_name: lastname.toLowerCase()
+          }
+
+          axios.post('https://pizza-tim3-be.herokuapp.com/register', user)
+            .then(res => {
+              localStorage['signUpStatus'] = '1'
+              localStorage.setItem('firebase_uid', res.user.uid);
+            }).catch(err => console.log(err))
+        })
+        .catch(e => console.log(e));
+
+    } catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
     <Wrap>
       <Form onSubmit={submit}>
@@ -75,6 +84,7 @@ export default function Register(props) {
           onChange={e => {
             setEmail(e.target.value);
           }}
+          onBlur={() => formValidation()}
         />
         <input
           name="password"
@@ -85,6 +95,7 @@ export default function Register(props) {
           onChange={e => {
             setPassword(e.target.value);
           }}
+          onBlur={() => formValidation()}
         />
         <input
           name="username"
@@ -95,6 +106,7 @@ export default function Register(props) {
           onChange={e => {
             setUsername(e.target.value);
           }}
+          onBlur={() => formValidation()}
         />
         <input
           name="firstname"
@@ -105,6 +117,7 @@ export default function Register(props) {
           onChange={e => {
             setFirstname(e.target.value);
           }}
+          onBlur={() => formValidation()}
         />
         <input
           name="lastname"
@@ -115,16 +128,19 @@ export default function Register(props) {
           onChange={e => {
             setLastname(e.target.value);
           }}
+          onBlur={() => formValidation()}
         />
-        <button type="submit">Sign Up</button>
-        <button onClick={signInWithGoogle} type="button">Google Sign In</button>
+
+        {error && <p>{error}</p>}
+        <button type="submit" disabled={error ? true : false}>
+          Sign Up
+        </button>
         <p>
           Already have an account?
           <br />
           <Link to="/login" className="link">Sign In Here</Link>
         </p>
       </Form>
-      {error && <p>{error}</p>}
     </Wrap>
   );
 }
