@@ -20,18 +20,14 @@ class GoogleMap extends Component {
       }&libraries=places&callback=initMap`,
     };
   }
-  loadMap = () => {
-    loadScript(this.state.url);
-  };
+
+  loadMap = () => loadScript(this.state.url);
 
     initMap = () => {
       let map = new window.google.maps.Map(document.getElementById("map"));
       let service = new window.google.maps.places.PlacesService(map);
 
-    // let searchLocation = new window.google.maps.LatLng(this.state.lat, this.state.lng)
-    let request = {
-      query: `Pizza ${this.state.searchString}`,
-    };
+      let request = { query: `Pizza ${this.state.searchString}`,};
 
       const callback = (results, status) => {
         if (status == window.google.maps.places.PlacesServiceStatus.OK) {
@@ -46,12 +42,13 @@ class GoogleMap extends Component {
     };
 
     componentDidMount() {
-        this.setState({
-          ...this.state,
-          isLoading: true
-        })
-        window.initMap = this.initMap;
-        this.loadMap();  
+      this.setState({
+        ...this.state,
+        isLoading: true
+      })
+      
+      window.initMap = this.initMap;
+      this.loadMap();  
     }
 
     handleOnClick = (id, placeName) => {
@@ -59,6 +56,7 @@ class GoogleMap extends Component {
         ...this.state,
         searchString: this.props.searchData 
       });
+
       this.props.setPlaceId(id)
       this.props.setPlaceName(placeName)
     }
@@ -72,7 +70,6 @@ class GoogleMap extends Component {
               data={this.state.placesData} 
               handleClick={this.handleOnClick}/>
           }
-
           <div id="map"></div>
         </div>
       )
