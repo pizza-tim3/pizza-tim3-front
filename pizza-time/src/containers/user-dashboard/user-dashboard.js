@@ -188,11 +188,16 @@ class UserDashboard extends React.Component {
                 })}
               </TabPanel>
               <TabPanel>
-                {this.state.pendingEvents.map(event => {
-                  return (
-                    <Card key={event.event_id} event={event} showActions={true} />
-                  );
-                })}
+                {this.state.pendingEvents.length >= 1 ?
+                  this.state.pendingEvents.map(event => {
+                    return (
+                      <Card key={event.event_id} event={event} showActions={true} />
+                    );
+                  }) :
+                  <div>
+                    <h2>Nothing to show...</h2>
+                  </div>
+                }
               </TabPanel>
               <TabPanel>
                 {this.state.pastEvents.map(event => {

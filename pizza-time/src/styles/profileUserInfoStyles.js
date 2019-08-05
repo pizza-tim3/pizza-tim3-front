@@ -67,16 +67,14 @@ export const UserBox = styled.div`
         background-color: ${colors.primary};
         color: ${colors.white};
       }
-
-      ${media.tablet} {
-        margin-left: -100px;
-      }
     }
   }
 `;
 
 export const Buttons = styled.div`
+  margin: 0 auto;
   display: flex;
   flex-direction: row;
-  justify-content: space-around
+  align-content: center;
+  justify-content: space-between;
 `
