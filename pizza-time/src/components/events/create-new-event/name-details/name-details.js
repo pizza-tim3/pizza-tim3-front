@@ -53,13 +53,9 @@ class NameAndDetails extends Component {
 
     handleSubmit = () => {
         if(this.state.eventName === "" || this.state.eventDesc === "" || !this.state.inviteOnly) {
-            this.setState({
-                showError: true
-            })
+            this.setState({ showError: true })
         } else {
-            this.setState({
-                showError: false
-            })
+            this.setState({ showError: false })
             this.props.setEventName(this.state.eventName);
             this.props.setEventDesc(this.state.eventDesc);
             this.props.setInviteOnly(this.state.inviteOnly);
