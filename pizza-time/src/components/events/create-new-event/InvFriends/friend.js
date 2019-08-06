@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {FriendCard} from './../../../../styles/placesSearchStyles';
+import UserImage from '../../../../assets/user.png'
 
 export default class Friend extends Component {
     constructor(props) {
@@ -26,7 +27,7 @@ export default class Friend extends Component {
     render() {
         return (
             <FriendCard active={this.state.active} onClick={() => this.handleClick()}>
-                <img src={this.props.friend.avatar} alt="user avatar" height="60px" width="60px"/>
+                <img src={this.props.friend.avatar ? this.props.friend.avatar : UserImage} alt="user avatar" height="60px" width="60px"/>
                 <p>{this.props.friend.first_name} {this.props.friend.last_name}</p>
             </FriendCard>
         )
