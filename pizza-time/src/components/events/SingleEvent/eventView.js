@@ -8,7 +8,7 @@ import Participants from "./participants";
 import Discussion from "./discussion";
 import { Inner } from "../../../styles/eventStyles";
 import loading from "../../../assets/loading.gif";
-import missing from "../../../assets/404.jpg";
+import missing from "../../../assets/404.svg";
 // import { func } from "prop-types";
 
 class EventView extends React.Component {
@@ -442,9 +442,9 @@ class EventView extends React.Component {
               </Inner>
             ) : (
               <>
-                <h1 className="missing">Event? What event?</h1>
+                <h1 className="missing">We've deleted your event</h1>
                 <Inner>
-                  <img src={missing} alt="dog eating a pizza" />
+                  <img className="deleted" src={missing} alt="dog eating a pizza" />
                 </Inner>
               </>
             )}

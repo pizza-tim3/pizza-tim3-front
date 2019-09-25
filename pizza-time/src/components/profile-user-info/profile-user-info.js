@@ -1,31 +1,37 @@
 import React from "react";
+import { UserBox, Buttons } from '../../styles/profileUserInfoStyles';
+import { connect } from "react-redux";
+import UserImage from "../../assets/user.png";
 
-export default function ProfileUserInfo({
-  avatar,
-  slices,
-  topping,
-  username,
-  first_name,
-  last_name,
-  crust
-}) {
+function ProfileUserInfo(props) {
   return (
-    <>
-      <div>
-        <img height="100px" width="100px" alt="UserAvatar" src={avatar} />
-        <h2>
-          {first_name} {last_name}
-        </h2>
+    <UserBox>
+      <div className="userAvatar">
+        { props.avatar ?
+          <img alt="UserAvatar" src={props.avatar} /> :
+          <img alt="UserAvatar" src={UserImage} />
+        }
       </div>
-      <p>
-        Slices Per Month: <span>{slices}</span>
-      </p>
-      <p>
-        Topping: <span>{topping}</span>
-      </p>
-      <p>
-        Crust: <span>{crust}</span>
-      </p>
-    </>
+
+      <div className="userProfile" >
+        <h2>{props.first_name} {props.last_name}</h2>
+        <p>{props.email}</p>
+        <Buttons>
+          <button>Change Password</button>
+          <button>Edit Profile</button>
+        </Buttons>
+      </div>
+    </UserBox>
   );
 }
+
+const mstp = state => {
+  return {
+    avatar: state.userReducer.avatar,
+    email: state.userReducer.email,
+    first_name: state.userReducer.first_name,
+    last_name: state.userReducer.last_name
+  };
+};
+
+export default connect( mstp, {})(ProfileUserInfo)

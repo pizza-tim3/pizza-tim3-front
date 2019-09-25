@@ -209,6 +209,11 @@ ol.carousel-indicators li {
   margin: 25px auto 30px;
 }
 
+.deleted {
+  width: 300px;
+  margin: auto;
+}
+
 div.gm-style-iw.gm-style-iw-c {
   display: block;
   height: 100px;

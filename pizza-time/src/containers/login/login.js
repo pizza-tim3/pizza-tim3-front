@@ -1,10 +1,6 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useEffect } from "react";
 import firebaseApp from "../../firebase/firebaseApp";
 import { Link } from "react-router-dom";
-import { googleProvider } from "../../firebase/authProviders";
-import { registerWithPopup } from "../register/registerUtils";
-
-import firebase from "firebase/app";
 import "firebase/auth";
 
 import { Wrap, Form } from "../../styles/registerLoginStyles.js";
@@ -31,9 +27,13 @@ export default function Login(props) {
     { email: "", password: "", error: "", inputError: false }
   );
 
-  const submit = async e => {
-    e.preventDefault();
-    console.log(state.email.length);
+  useEffect(() => {
+    if(localStorage.getItem('signUpStatus')) {
+      localStorage.removeItem('signUpStatus')
+    }
+  }, [])
+
+  const formValidation = () => {
     if (state.email.length === 0 || state.password.length === 0) {
       state.inputError = true;
       dispatch({ type: "SET_ERROR", payload: "" });
@@ -42,56 +42,21 @@ export default function Login(props) {
       console.log(state.inputError);
     } else {
       dispatch({ type: "INPUT_ERROR", payload: "" });
-
-      try {
-        await firebaseApp
-          .auth()
-          .setPersistence(
-            firebase.auth.Auth.Persistence.LOCAL /* | [.SESSION,| .NONE]*/
-          );
-
-        //Sign in with registered Email and password
-        const user = await firebaseApp
-          .auth()
-          .signInWithEmailAndPassword(state.email, state.password);
-        console.log(user);
-        //get the token off of the current user
-        //token to send to the backend to display data
-        const token = await firebaseApp.auth().currentUser.getIdToken();
-        props.history.push("/home");
-      } catch (err) {
-        console.log(err);
-        // if
-        dispatch({ type: "SET_ERROR", payload: err.code });
-      }
     }
-  };
+  }
 
-  //TODO added checks to make sure that the registered users registered on our back and
-  const signInWithGoogle = async e => {
+  const submit = async e => {
     e.preventDefault();
+    console.log('called')
+    formValidation();
     try {
-      // sign in/register with popup window
-      const result = await firebaseApp.auth().signInWithPopup(googleProvider);
-
-      const {
-        additionalUserInfo: { isNewUser },
-      } = result;
-      //check to see if the users new
-      if (isNewUser) {
-        // register uses information on our backend
-        const user = await registerWithPopup(result);
-        // set state with user
-        props.history.push("/home");
-      } else if (/**user dne on backend */ false) {
-        //this would be an error on our db's part
-      } else {
-        //get user info from backend by uid
-        props.history.push("/home");
-      }
-      // TODO set global user info
+      firebaseApp.auth().signInWithEmailAndPassword(state.email, state.password).catch(e => {
+        console.log(e)
+        dispatch({ type: "SET_ERROR", payload: e.code })
+      });
     } catch (err) {
-      dispatch({ type: "SET_ERROR", payload: err.message });
+      console.log(err);
+      dispatch({ type: "SET_ERROR", payload: err.code });
     }
   };
 
@@ -134,9 +99,6 @@ export default function Login(props) {
           )}
         </div>
         <button type="submit">Sign In</button>
-        <button onClick={signInWithGoogle} type="button">
-          Google Sign In
-        </button>
         <p>
           Dont have an account?
           <br />

@@ -1,8 +1,8 @@
 import React from "react";
 import axios from "axios";
 
-import Envelope from "../../assets/envelope.svg";
 import Comment from "../../assets/comment.svg";
+import Envelope from "../../assets/envelope.svg";
 import { CardBox, Inner, Content, Action } from "../../styles/cardStyles.js";
 import { Link } from "react-router-dom";
 
@@ -60,7 +60,7 @@ class Card extends React.Component {
   //use for accepting an invitation
   clickHandler = event => {
     event.preventDefault();
-    const id = localStorage.getItem("userFireBaseId");
+    const id = localStorage.getItem("firebase_uid");
     const event_id = event.target.getAttribute("event_id");
     const user_id = event.target.getAttribute("user_id");
     const newItem = {
@@ -84,7 +84,7 @@ class Card extends React.Component {
   //use for declining an invitation
   ButtonHandler = event => {
     event.preventDefault();
-    const id = localStorage.getItem("userFireBaseId");
+    const id = localStorage.getItem("firebase_uid");
     const event_id = event.target.getAttribute("event_id");
     const user_id = event.target.getAttribute("user_id");
     const newItem = {
@@ -116,50 +116,31 @@ class Card extends React.Component {
         <Inner>
           <Link id={this.props.event.event_id} to={"/event/" + event_id}>
             <Content>
-              <img src={Envelope} />
+              {/* <div className="envelope">
+                <img src={Envelope} />
+              </div> */}
               <div className="content">
                 <p>
-                  <span>Name:</span> {this.props.event.event_name}{" "}
+                  <span>Name:</span>{this.props.event.event_name}
                 </p>
                 <p>
-                  <span>Date:</span>
-                  {date}
+                  <span>Date:</span>{date}
                 </p>
                 <p>
-                  <span>Location:</span> {this.props.event.location}
+                  <span>Location:</span>{this.props.event.location}
                 </p>
                 <p>
-                  {" "}
-                  <b>
-                    <span>Attending:</span>
-
-                    {this.state.attendees.map(attende => {
-                      return [
-                        attende.first_name,
-                        "  ",
-                        attende.last_name,
-                        ",",
-                        " ",
-                      ];
-                    })}
-                  </b>{" "}
+                  <span>Attending:</span>
+                  {this.state.attendees.map(attende => {
+                    return [
+                      attende.first_name,
+                      "  ",
+                      attende.last_name,
+                      ",",
+                      " ",
+                    ];
+                  })}
                 </p>
-              </div>
-              <div className="share-socials">
-                <FacebookShareButton
-                  url={window.location.href}
-                  media={this.props.event.event_name}
-                  className="button"
-                >
-                  <FacebookIcon size={32} round={false} />
-                </FacebookShareButton>
-                <TwitterShareButton
-                  url={window.location.href}
-                  media={this.props.event.event_name}
-                  className="button"
-                >
-                  <TwitterIcon size={32} round={false} />
-                </TwitterShareButton>
               </div>
             </Content>
           </Link>
@@ -190,21 +171,39 @@ class Card extends React.Component {
               if (this.state.showActions) {
                 return (
                   <div className="buttons">
-                    <button
-                      onClick={this.clickHandler}
-                      event_id={this.props.event.event_id}
-                      // this event is the object eventhaving all attributes:name,date
-                      user_id={this.props.event.user_id}
-                    >
-                      Let's Go!
-                    </button>
-                    <button
-                      onClick={this.ButtonHandler}
-                      event_id={this.props.event.event_id}
-                      user_id={this.props.event.user_id}
-                    >
-                      Not This Time
-                    </button>
+                    <div className="share-socials">
+                      <FacebookShareButton
+                        url={window.location.href}
+                        media={this.props.event.event_name}
+                        className="button"
+                      >
+                        <FacebookIcon size={32} round={false} />
+                      </FacebookShareButton>
+                      <TwitterShareButton
+                        url={window.location.href}
+                        media={this.props.event.event_name}
+                        className="button"
+                      >
+                        <TwitterIcon size={32} round={false} />
+                      </TwitterShareButton>
+                    </div>
+                    <div className="action-btns">
+                      <button
+                        onClick={this.clickHandler}
+                        event_id={this.props.event.event_id}
+                        // this event is the object eventhaving all attributes:name,date
+                        user_id={this.props.event.user_id}
+                      >
+                        Let's Go!
+                      </button>
+                      <button
+                        onClick={this.ButtonHandler}
+                        event_id={this.props.event.event_id}
+                        user_id={this.props.event.user_id}
+                      >
+                        Not This Time
+                      </button>
+                    </div>
                   </div>
                 );
               }
