@@ -146,6 +146,27 @@ class Card extends React.Component {
           </Link>
 
           <Action>
+            <div className="comment">
+              <img src={Comment} onClick={this.commentHandler} />
+              {/* {(false && <DashComment/> )}  */}
+              <p>{this.state.comments.length}</p>
+              <div claasName="message" />
+
+              {this.state.comments.map(comment => {
+                if (this.state.showMessages) {
+                  // return <DashComment key={comment.id} comment={comment} />;
+                  return (
+                    <div>
+                      <b>{comment.first_name}</b>{" "}
+                      {comment.time.substring(0, 15)}
+                      <br />
+                      <i> {comment.message}</i>
+                      <br />
+                    </div>
+                  );
+                }
+              })}
+            </div>
             {["a"].map(x => {
               if (this.state.showActions) {
                 return (
