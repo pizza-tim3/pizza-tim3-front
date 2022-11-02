@@ -1633,6 +1633,10 @@
     "@webassemblyjs/wast-parser" "1.8.5"
     "@xtuc/long" "4.2.2"
 
+"@xmldom/xmldom@^0.8.3":
+  version "0.8.5"
+  resolved "https://registry.yarnpkg.com/@xmldom/xmldom/-/xmldom-0.8.5.tgz#7f4b797cfda39355b512b4cfcc66b49b5d93d5f3"
+
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@xtuc/ieee754/-/ieee754-1.2.0.tgz#eef014a3145ae477a1cbc00cd1e552336dceb790"
@@ -3418,6 +3422,10 @@ dotenv@6.2.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-6.2.0.tgz#941c0410535d942c8becf28d3f357dbd9d476064"
 
+dotenv@^8.0.0:
+  version "8.6.0"
+  resolved "https://registry.yarnpkg.com/dotenv/-/dotenv-8.6.0.tgz#061af664d19f7f4d8fc6e4ff9b584ce237adcb8b"
+
 dref@0.0.x:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/dref/-/dref-0.0.6.tgz#48e265949364b03a413cb09d997328fcff2b966c"
@@ -5132,11 +5140,11 @@ jasmine-node@1.0.x:
     walkdir ">= 0.0.1"
 
 jasmine-reporters@>=0.2.0:
-  version "2.3.2"
-  resolved "https://registry.yarnpkg.com/jasmine-reporters/-/jasmine-reporters-2.3.2.tgz#898818ffc234eb8b3f635d693de4586f95548d43"
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/jasmine-reporters/-/jasmine-reporters-2.5.1.tgz#0c1a14b592e60ca5bb3c5c7cfb2eb1f77647c6a2"
   dependencies:
-    mkdirp "^0.5.1"
-    xmldom "^0.1.22"
+    "@xmldom/xmldom" "^0.8.3"
+    mkdirp "^1.0.4"
 
 jest-changed-files@^24.8.0:
   version "24.8.0"
@@ -6177,6 +6185,10 @@ mkdirp@0.5.1, mkdirp@0.5.x, mkdirp@^0.5.0, mkdirp@^0.5.1, mkdirp@~0.5.0, mkdirp@
   resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-0.5.1.tgz#30057438eac6cf7f8c4767f38648d6697d75c903"
   dependencies:
     minimist "0.0.8"
+
+mkdirp@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/mkdirp/-/mkdirp-1.0.4.tgz#3eb5ed62622756d79a5f0e2a221dfebad75c2f7e"
 
 moment@^2.24.0:
   version "2.24.0"
@@ -9941,10 +9953,6 @@ xml-name-validator@^3.0.0:
 xmlchars@^1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/xmlchars/-/xmlchars-1.3.1.tgz#1dda035f833dbb4f86a0c28eaa6ca769214793cf"
-
-xmldom@^0.1.22:
-  version "0.1.27"
-  resolved "https://registry.yarnpkg.com/xmldom/-/xmldom-0.1.27.tgz#d501f97b3bdb403af8ef9ecc20573187aadac0e9"
 
 xmlhttprequest@1.8.0:
   version "1.8.0"
